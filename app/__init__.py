@@ -10,14 +10,15 @@ SECRET_KEY = 'development key'
 USERNAME = 'admin'
 PASSWORD = 'default'
 
+#Initialise the app and its subparts
 app = Flask(__name__)
 app.config.from_object(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database/test.db'
+
 db = SQLAlchemy(app)
 
 # import the rest of the application
 from app.controllers.userController import *
-from app.controllers.userController2 import *
 from app.models.user import User
 
 def testUser():

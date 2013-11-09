@@ -1,22 +1,75 @@
-'''
-Created on 6-nov.-2013
+from flask import *
+from functools import wraps
 
-@author: Boris
-'''
 from app import app
+from app import db
+from app.models.user import User
+from app.forms.loginForm import LoginForm
 
-@app.route('/')
-def hello_world():
-    return 'Hello World hallloooo oo oo oo'
+def login_required(test):
+    @wraps(test)
+    def wrap(*args, **kwargs):
+        if 'logged_in' in session:
+            return test(*args, **kwargs)
+        else:
+            flash('you need to login first.')
+            return redirect(url_for('login.html'))
+    return wrap
 
-@app.route('/user/login')
+@app.route('/home')
+def home():
+    return render_template('pages/dashboard.html')
+
+@app.route('/welcome')
+@login_required
+def welcome():
+    return 'dit is de welkom-pagina, na inloggen'
+
+@app.route('/login' , methods=['GET','POST'])
 def login():
-    return "log in"
+    error = None
+    
+    #-------------------------------------------------------- form = LoginForm()
+    #--------------------------------------------- if form.validate_on_submit():
+        #---------------------------------------------------- return "u moe der"
+    #--------------------- return render_template('pages/login.html', form=form)
+    
+    if request.method == 'POST':
+        if not isValidLogin(request.form['username'],request.form['password']):
+            error = 'invalid username or password, please try again.'
+        else:
+            session['user'] = User.query.filter_by(username= username).first()
+            return redirect(url_for('welcome'))
+    return render_template('pages/login.html' , error = error)
+   
 
-@app.route('/user/logout')
+def isValidLogin( username, password):
+    user = User.query.filter_by(username= username).first()
+    if user == None or user.getPass != password:
+        return False
+    return True    
+
+@app.route('/logout')
 def logout():
-    return "log out"
+    session.pop('user',None)
+    return redirect(url_for('login.html'))
 
-@app.route('/user/register')
+@app.route('/register' , methods = ['GET','POST'])
 def register():
-    return "log register"
+    error = None
+    email = request.form['email']
+    name = request.form['name']
+    lastname = request.form['lastname']
+    password = request.form['password']
+    if email == None or name == None or lastname == None or password == None:
+        error = 'some of the data you entered was invalid, please check again.'
+    else:
+        user = User(email, lastname, name, password)
+        db.session.add(user)
+        db.session.commit()
+        flash('You were successfully registered and can login now')
+        return redirect(url_for('login'))
+    return render_template('register.html' , error = error)
+
+if __name__ == '__main__':
+    app.run()
