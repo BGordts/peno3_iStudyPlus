@@ -17,6 +17,7 @@ db = SQLAlchemy(app)
 
 # import the rest of the application
 from app.controllers.userController import *
+from app.controllers.userController2 import *
 from app.models.user import User
 
 def testUser():
