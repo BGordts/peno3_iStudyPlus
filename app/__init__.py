@@ -21,6 +21,17 @@ db = SQLAlchemy(app)
 from app.controllers.userController import *
 from app.models.user import User
 
+def createTestData():
+    db.drop_all()
+    db.create_all()
+    
+    admin = User('admin@example.com', 'admin', 'adminus', 'kaka')
+    guest = User('b@a.be', 'kaka', 'pipi', 'kaka')
+    
+    db.session.add(admin)
+    db.session.add(guest)
+    db.session.commit()
+
 def testUser():
     db.drop_all()
     db.create_all()
@@ -32,4 +43,5 @@ def testUser():
     db.session.add(guest)
     db.session.commit()
     
-testUser()
+#testUser()
+createTestData()
