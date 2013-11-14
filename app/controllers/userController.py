@@ -44,7 +44,7 @@ def login():
         if not isValidLogin(request.form['username'],request.form['password']):
             error = 'invalid username or password, please try again.'
         else:
-            session['userID'] = User.query.filter_by(email= request.form['username']).first().getID()
+            session['userID'] = User.query.filter_by(email= request.form['username']).first().id
             return redirect(url_for("welcome"))
     return render_template('pages/login.html' , error = error)
    

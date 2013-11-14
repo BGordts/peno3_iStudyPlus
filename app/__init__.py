@@ -19,13 +19,16 @@ db = SQLAlchemy(app)
 
 # import the rest of the application
 from app.controllers.userController import *
+from app.controllers.sessionController import *
+from app.controllers.sensorDataController import *
+
 from app.models.user import User
 
 def createTestData():
     db.drop_all()
     db.create_all()
     
-    admin = User('admin@example.com', 'admin', 'adminus', 'kaka')
+    admin = User('admin@example.com', 'admin', 'admin', 'admin')
     guest = User('b@a.be', 'kaka', 'pipi', 'kaka')
     
     db.session.add(admin)

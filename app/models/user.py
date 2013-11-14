@@ -13,9 +13,10 @@ class User(db.Model):
         self.name = name
         self.surname = surname
         self.password = password    
-            
-    def getID(self):
-        return "0"
+    
+    @staticmethod
+    def getAdminUser():
+        return User.query.filter_by(id = 1).first()   
     
     def __repr__(self):
         return '<User %r>' % self.email
