@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>iStudy+</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+		
+		<!-- Bootstrap -->
+		<link href="{{ url_for('static', filename='css/lib/bootstrap/css/bootstrap.css')}}" rel="stylesheet" media="screen">
+		<link href="{{ url_for('static', filename='css/iStudy+_style.css')}}" rel="stylesheet" media="screen">
+		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+			<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+			<script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+		<![endif]-->
+		
+	    <link rel="apple-touch-icon" sizes="57x57" href="{{url_for('static', filename='favicons/apple-touch-icon-57x57.png')}}" />
+	    <link rel="apple-touch-icon" sizes="57x57" href="{{url_for('static', filename='favicons/apple-touch-icon-114x114.png')}}" />
+	    <link rel="apple-touch-icon" sizes="57x57" href="{{url_for('static', filename='favicons/apple-touch-icon-72x72.png')}}" />
+	    <link rel="apple-touch-icon" sizes="57x57" href="{{url_for('static', filename='favicons/apple-touch-icon-144x144.png')}}" />
+	    <link rel="apple-touch-icon" sizes="57x57" href="{{url_for('static', filename='favicons/apple-touch-icon-60x60.png')}}" />
+	    <link rel="apple-touch-icon" sizes="57x57" href="{{url_for('static', filename='favicons/apple-touch-icon-120x120.png')}}" />
+	    <link rel="apple-touch-icon" sizes="57x57" href="{{url_for('static', filename='favicons/apple-touch-icon-76x76.png')}}" />
+	    <link rel="apple-touch-icon" sizes="57x57" href="{{url_for('static', filename='favicons/apple-touch-icon-152x152.png')}}" />
+		<link rel="icon" type="image/png" href="{{url_for('static', filename='favicons/favicon-32x32.png')}}" sizes="16x16" />
+		<link rel="icon" type="image/png" href="{{url_for('static', filename='favicons/favicon-96x96.png')}}" sizes="16x16" />
+		<link rel="icon" type="image/png" href="{{url_for('static', filename='favicons/favicon-160x160.png')}}" sizes="16x16" />
+
+	    <meta name="msapplication-TileColor" content="#da532c" />
+	    <meta name="msapplication-TileImage" content="{{url_for('static', filename='favicons/mstile-144x144.png')}}" />
+	    <meta name="msapplication-square70x70logo" content="{{url_for('static', filename='favicons/mstile-70x70.png')}}" />
+	    <meta name="msapplication-square150x150logo" content="{{url_for('static', filename='favicons/mstile-150x150.png')}}" />
+	    <meta name="msapplication-square310x310logo" content="{{url_for('static', filename='favicons/mstile-310x310.png')}}" />
+	</head>
+	<body ng-app>
+		<div class="navbar navbar-default navbar-fixed-top is_navbar" role="banner">
+			<div class="c">
+				<div class="navbar-collapse bs-navbar-collapse collapse is_navbar-btns" role="navigation">
+					<ul class="nav navbar-nav is_border-overlay-mobile">
+						<li>
+							<a href="../getting-started">Getting started</a>
+						</li>
+						<li>
+							<a href="../css">CSS</a>
+						</li>
+						<li class="active">
+							<a href="../components">Components</a>
+						</li>
+						<li>
+							<a href="../javascript">JavaScript</a>
+						</li>
+						<li>
+							<a href="../customize">Customize</a>
+						</li>
+					</ul>
+					<!--<ul class="nav navbar-nav navbar-right is_border-overlay-mobile">
+<li>
+<a href="../about">About</a>
+</li>
+</ul>-->
+				</div>
+				<div class="nav navbar-left">
+					<button class="navbar-toggle is_toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse" data-followers=".is_follow-navbar" data-follow-class="is_follow-navbar-style">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a href="../" class="navbar-brand is_border-overlay">
+						<img src="{{url_for('static', filename='is_logo40.png')}}" alt="iStudy+">
+					</a>
+					<button class="navbar-toggle width pull-right is_toggle" type="button" data-toggle="collapse" data-is-target=".is_sidepanel-collapse" data-followers=".is_follow-sidepanel" data-follow-class="is_follow-sidepanel-style">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+				</div>
+			</div>
+		</div>
+		<div class="is_sidepanel-collapse is_sidepanel is_follow-navbar">
+			<div class="is_sidepanel-content">
+				<h1>Ikke</h1>
+				<h1>"De student"</h1>
+				<h1>Zoeken</h1>
+				<h2>iemand anders</h2>
+				<h2>iemand anders</h2>
+				<h2>iemand anders</h2>
+				<h2>iemand anders</h2>
+				<h2>iemand anders</h2>
+				<h2>iemand anders</h2>
+				<h2>iemand anders</h2>
+				<h2>iemand anders</h2>
+				<h2>iemand anders</h2>
+				<h2>iemand anders</h2>
+				<h2>iemand anders</h2>
+				<h2>iemand anders</h2>
+				<h2>iemand anders</h2>
+				<h2>iemand anders</h2>
+				<h2>iemand anders</h2>
+				<h2>iemand anders</h2>
+				<h2>iemand anders</h2>
+				<h2>iemand anders</h2>
+				<h2>iemand anders</h2>
+				<h2>iemand anders</h2>
+			</div>
+		</div>
+		<div class="row">
+			<div class="is_content is_follow-navbar is_follow-sidepanel is_follow-sidepanel-style">
+				<div class="col-xs-12 is_header">
+					<div class="col-xs-6 is_profile-info">
+						<div class="is_info-background">
+							<div class="is_profile-pic-container">
+								<img class="img-rounded img-responsive" src="https://graph.facebook.com/jacobspelle/picture?width=200&height=200"></img>
+							</div>
+							<div class="is_info">
+								<h2>First name Last name</h2>
+								<a href="#">University</a>
+								<br>Study
+								<span class="badge">phase</span>
+								<br>Study
+								<span class="badge">phase</span>
+								<br>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6"></div>
+				</div>
+				<div class="is_user-abstract is_follow-navbar affix-top" data-spy="affix" data-offset-top="305">
+					<div class="is_profile-pic-container">
+						<img class="img-rounded img-responsive" src="https://graph.facebook.com/jacobspelle/picture?width=200&height=200"></img>
+					</div>
+					<h4>First name Last name</h4>
+				</div>
+				<div class="clearfix xs-visible"></div>
+				<div>
+					<div class="breadcrumb-wrap">
+						<ol class="breadcrumb is_follow-navbar" data-spy="affix" data-offset-top="305">
+							<li>
+								<a href="#">Dashboard</a>
+							</li>
+							<li>
+								<a href="#">Vak</a>
+							</li>
+							<li class="active">Sessie</li>
+						</ol>
+					</div>
+				</div>
+				<div class="container" style="max-width:100%">
+					<h1>Hello, world!</h1>
+					<div class="panel-group" id="accordion">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h4 class="panel-title">
+									<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Collapsible Group Item #1</a>
+								</h4>
+							</div>
+							<div id="collapseOne" class="panel-collapse collapse in">
+								<div class="panel-body">Cupcake ipsum dolor sit amet soufflé unerdwear.com wafer ice cream. Lemon drops tiramisu jelly beans chupa chups. Sweet jelly beans chocolate bar. Liquorice cupcake chocolate cake. Gummi bears icing biscuit candy canes. Cheesecake macaroon applicake brownie caramels macaroon lollipop jelly fruitcake. Fruitcake halvah gingerbread candy canes gingerbread. Candy donut jujubes bonbon. Jelly beans tart tootsie roll gummies. Lemon drops apple pie oat cake powder jelly-o. Icing wafer caramels gingerbread pastry jelly beans. Macaroon carrot cake sweet roll cookie apple pie jujubes gummi bears. Gingerbread sesame snaps cheesecake powder tart lemon drops halvah marzipan cake.</div>
+							</div>
+						</div>
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h4 class="panel-title">
+									<a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">Collapsible Group Item #2</a>
+								</h4>
+							</div>
+							<div id="collapseTwo" class="panel-collapse collapse">
+								<div class="panel-body">Croissant ice cream candy tart powder pudding. Sweet roll donut bonbon jujubes biscuit biscuit sweet roll tootsie roll tart. Candy canes cake marshmallow dessert dragée donut. Soufflé chocolate cake gingerbread. Chocolate bar tart pie cupcake chocolate cake jelly-o macaroon. Gummi bears powder cotton candy jelly beans bonbon macaroon caramels tiramisu. Wafer cookie applicake gingerbread soufflé chocolate bar chupa chups. Bear claw sweet roll sweet roll. Danish lollipop macaroon marshmallow bear claw muffin. Croissant marzipan bonbon. Danish pastry gummies chupa chups jelly-o wafer pastry powder sweet roll. Pastry pudding ice cream jelly pie. Tiramisu apple pie dragée cupcake sweet.</div>
+							</div>
+						</div>
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h4 class="panel-title">
+									<a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">Collapsible Group Item #3</a>
+								</h4>
+							</div>
+							<div id="collapseThree" class="panel-collapse collapse">
+								<div class="panel-body">Chupa chups croissant halvah marzipan brownie. Oat cake macaroon applicake donut. Wafer topping wafer pie lemon drops jelly beans. Dessert macaroon liquorice jelly biscuit croissant. Sugar plum liquorice icing chocolate bar jelly beans. Jujubes dessert lollipop chocolate cake. Caramels bonbon gummi bears cupcake. Wafer soufflé jujubes. Topping jelly cheesecake candy. Jelly beans pie unerdwear.com macaroon applicake topping dragée jujubes bonbon. Ice cream ice cream powder chupa chups muffin. Pudding chupa chups ice cream brownie marshmallow caramels brownie jujubes. Lollipop lollipop dessert unerdwear.com pudding gummi bears cheesecake. Sugar plum liquorice dessert. Biscuit marshmallow bear claw pie pudding ice cream jujubes sesame snaps. Biscuit gummies cookie. Sweet bonbon marzipan applicake jelly-o pudding carrot cake cookie applicake. Dragée cupcake liquorice jelly-o sweet roll halvah. Ice cream chupa chups danish cake croissant liquorice. Liquorice carrot cake icing gingerbread. Powder jujubes cupcake macaroon applicake tart gummi bears cookie. Chupa chups caramels cupcake wafer soufflé. Icing croissant jelly-o cookie icing topping sweet roll candy carrot cake. Halvah marzipan cotton candy. Tart croissant dessert apple pie donut chocolate muffin. Cupcake sweet roll cotton candy sweet topping cheesecake jelly soufflé. Oat cake gingerbread topping tootsie roll. Oat cake donut lollipop ice cream tootsie roll. Marzipan dessert chocolate cake cupcake macaroon gummies cake. Donut cotton candy dessert brownie sesame snaps croissant. Wafer soufflé marzipan cupcake soufflé toffee bonbon. Jelly-o tootsie roll jelly beans pudding jelly-o pie. Fruitcake topping candy pastry oat cake donut. Lemon drops halvah chocolate jelly beans. Sugar plum sweet roll cupcake sweet. Apple pie bonbon marshmallow pastry sweet macaroon chocolate candy canes. Sweet roll cookie bear claw jujubes jelly-o sweet cookie. Ice cream tiramisu bear claw liquorice donut. Candy canes macaroon gummies brownie powder gummi bears wafer. Sugar plum chupa chups pie apple pie cupcake apple pie cupcake candy.</div>
+							</div>
+						</div>
+					</div>ta
+					<br>ta
+					<br>ti
+					<br>ti
+					<br>ta
+					<br>
+					<br>ta
+					<br>ta
+					<br>ti
+					<br>ti
+					<br>ta
+					<br>
+					<br>ta
+					<br>ta
+					<br>ti
+					<br>ti
+					<br>ta
+					<br>
+					<br>ta
+					<br>ta
+					<br>ti
+					<br>ti
+					<br>ta
+					<br>
+					<br>ta
+					<br>ta
+					<br>ti
+					<br>ti
+					<br>ta
+					<br>
+					<br>ta
+					<br>ta
+					<br>ti
+					<br>ti
+					<br>ta
+					<br>
+					<br>ta
+					<br>ta
+					<br>ti
+					<br>ti
+					<br>ta
+					<br>
+					<br>ta
+					<br>ta
+					<br>ti
+					<br>ti
+					<br>ta
+					<br>
+					<br>ta
+					<br>ta
+					<br>ti
+					<br>ti
+					<br>ta
+					<br>
+					<br>ta
+					<br>ta
+					<br>ti
+					<br>ti
+					<br>ta
+					<br>
+					<br>ta
+					<br>ta
+					<br>ti
+					<br>ti
+					<br>ta
+					<br>
+					<br>ta
+					<br>ta
+					<br>ti
+					<br>ti
+					<br>ta
+					<br>
+					<br>
+					<div class="col-sm-6">bo</div>
+					<div class="col-sm-6">bi</div>
+				</div>
+				<div class="is_footer">
+					<div class="container" style="max-width:100%">Blabla over gebruiksvoorwaarden, contact, links naar sociale netwerken en meer van dat soort dingen...</div>
+				</div>
+			</div>
+		</div>
+		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+		<script src="https://code.jquery.com/jquery.js"></script>
+		
+		<!-- Include all compiled plugins (below), or include individual files as needed -->
+		<script src="{{url_for('static', filename='js/lib/bootstrap/js/bootstrap.js')}}"></script>
+		<script src="{{url_for('static', filename='js/lib/angularjs/angular.js')}}"></script>
+		<script src="{{url_for('static', filename='js/iStudy+.js')}}"></script>
+	</body>
+
+</html>
