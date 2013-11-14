@@ -1,6 +1,9 @@
+from werkzeug._internal import _log
+from datetime import datetime
+
 from app import app
 from app import db
-from datetime import datetime
+
 
 class Session(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -26,8 +29,14 @@ class Session(db.Model):
         self.end_date = datetime.utcnow()
     
     @staticmethod
-    def hasRunningSession(userid):
-        lastRunningSession = Session.query.filter_by(user_id = userid).order_by(Session.start_date).first()
+    def hasRunningSession(user):
+        lastRunningSession = user.sessions.order_by(Session.start_date).first()
+        
+        _log('info', "lastrunningsession " + lastRunningSession.__str__())
+        _log('info', "lastrunningsession user: " + user.__str__())
+        
+        if( not lastRunningSession.end_date):
+            _log('info', "lastrunningsession indeed! ")
         
         return lastRunningSession
         

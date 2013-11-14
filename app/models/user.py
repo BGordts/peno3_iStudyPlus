@@ -17,5 +17,9 @@ class User(db.Model):
     def getID(self):
         return "0"
     
+    @staticmethod
+    def getAdminUser():
+        return User.query.filter_by(id = 1).first()   
+    
     def __repr__(self):
         return '<User %r>' % self.email

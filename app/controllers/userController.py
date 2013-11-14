@@ -41,11 +41,11 @@ def login():
     return render_template('pages/login.html' , error = error)
    
 
-def isValidLogin( username, password):
+def isValidLogin(username, password):
     user = User.query.filter_by(email=username).first()
     if user == None or (not user.password == password):
         return False
-    return True    
+    return True
 
 @app.route('/user/logout')
 def logout():
@@ -74,7 +74,7 @@ def register():
             db.session.commit()
             error = 'You were successfully registered and can login now'
             _log('info', error)
-            return redirect(url_for('user/login'))
+            return redirect(url_for('login'))
     return render_template('pages/register.html' , error = error)
 
 if __name__ == '__main__':
