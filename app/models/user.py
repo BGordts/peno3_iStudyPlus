@@ -12,11 +12,10 @@ class User(db.Model):
         self.email = email
         self.name = name
         self.surname = surname
-        self.password = password     
-        
-    @staticmethod
-    def getAdminUser():
-        return User.query.filter_by(id = 1).first()   
-
+        self.password = password    
+            
+    def getID(self):
+        return "0"
+    
     def __repr__(self):
         return '<User %r>' % self.email
