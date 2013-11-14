@@ -37,14 +37,13 @@
     <div class="container">
       <form method="POST" action="/login" class="form-signin">
         <h2 class="form-signin-heading">Please sign in</h2>
-		    {{ form.hidden_tag() }}
-		    {{ form.email(size=20, class_='form-control', placeholder='Email address') }}
-		    {{ form.password(size=20, class_='form-control', placeholder='Password') }}
-		    <!--  <label class="checkbox">
-	          <input type="checkbox" value="remember-me"> Remember me
-	        </label>-->
-		    <input class="btn btn-lg btn-primary btn-block" type="submit" value="Sign in">
-        
+		<h2 class="form-signin-heading">Please sign in</h2>
+        <input type="text" class="form-control" placeholder="Email address" required autofocus>
+        <input type="password" class="form-control" placeholder="Password" required>
+        <label class="checkbox">
+          <input type="checkbox" value="remember-me"> Remember me
+        </label>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
       </form>
 
     </div> <!-- /container -->

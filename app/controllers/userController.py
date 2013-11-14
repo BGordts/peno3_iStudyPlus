@@ -27,13 +27,7 @@ def welcome():
 
 @app.route('/login' , methods=['GET','POST'])
 def login():
-    error = None
-    
-    #-------------------------------------------------------- form = LoginForm()
-    #--------------------------------------------- if form.validate_on_submit():
-        #---------------------------------------------------- return "u moe der"
-    #--------------------- return render_template('pages/login.html', form=form)
-    
+    error = None    
     if request.method == 'POST':
         if not isValidLogin(request.form['username'],request.form['password']):
             error = 'invalid username or password, please try again.'
