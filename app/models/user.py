@@ -12,7 +12,11 @@ class User(db.Model):
         self.email = email
         self.name = name
         self.surname = surname
-        self.password = password        
+        self.password = password     
+        
+    @staticmethod
+    def getAdminUser():
+        return User.query.filter_by(id = 1).first()   
 
     def __repr__(self):
         return '<User %r>' % self.email
