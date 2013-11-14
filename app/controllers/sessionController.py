@@ -30,4 +30,5 @@ def isSessionRunning():
     
     _log('info', u.__str__())
     _log('info', s.__str__())
-    return u.__str__()
+    
+    return "Ge hebt runnende sessies" if s else "geen runnende sessies"
