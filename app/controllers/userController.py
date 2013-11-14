@@ -27,7 +27,7 @@ def home():
 def welcome():
     return 'dit is de welkom-pagina, na inloggen'
 
-@app.route('/login' , methods=['GET','POST'])
+@app.route('/user/login' , methods=['GET','POST'])
 def login():
     error = None    
     if request.method == 'POST':
@@ -47,27 +47,35 @@ def isValidLogin( username, password):
         return False
     return True    
 
-@app.route('/logout')
+@app.route('/user/logout')
 def logout():
     session.pop('userID',None)
     return redirect(url_for('login'))
 
-@app.route('/register' , methods = ['GET','POST'])
+@app.route('/user/register' , methods = ['GET','POST'])
 def register():
     error = None
-    email = request.form['email']
-    name = request.form['name']
-    lastname = request.form['lastname']
-    password = request.form['password']
-    if email == None or name == None or lastname == None or password == None:
-        error = 'some of the data you entered was invalid, please check again.'
-    else:
-        user = User(email, lastname, name, password)
-        db.session.add(user)
-        db.session.commit()
-        flash('You were successfully registered and can login now')
-        return redirect(url_for('login'))
-    return render_template('register.html' , error = error)
+    if request.method == 'POST':
+        _log('info',request.form['email'] )
+        _log('info',request.form['name'] )
+        _log('info',request.form['lastname'] )
+        _log('info',request.form['pass1'] )
+        email = request.form['email']
+        name = request.form['name']
+        lastname = request.form['lastname']
+        password = request.form['pass1']
+        
+        if False:
+            error = 'some of the data you entered was invalid, please check again.'
+        else:
+            _log('info', "test")
+            user = User(email, lastname, name, password)
+            db.session.add(user)
+            db.session.commit()
+            error = 'You were successfully registered and can login now'
+            _log('info', error)
+            return redirect(url_for('user/login'))
+    return render_template('pages/register.html' , error = error)
 
 if __name__ == '__main__':
     app.run()

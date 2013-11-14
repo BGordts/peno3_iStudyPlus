@@ -79,10 +79,10 @@
             <img src="../is_logo40.png" />
         </div>
 
-        <form class="form-signin">
+        <form method="POST" action="/user/register" class="form-signin">
             <h2 class="form-signin-heading">Register Today</h2>
-            <input type="Username" class="form-control" placeholder="First name" required>
-            <input type="Username" class="form-control" placeholder="Last Name" required>
+            <input type="Username" class="form-control" placeholder="First name" name = "name" required>
+            <input type="Username" class="form-control" placeholder="Last Name" name = "lastname"  required>
             <!-- <select type="Education" class="form-control" placeholder="Institution" required>
                 <option>Institution</option>
                 <option>KULeuven</option>
@@ -93,9 +93,9 @@
                 <option>Opleiding</option>
                 <option>Burgerlijk Ingenieur</option>
             </select>
-            <input type="text" class="form-control" placeholder="Email address" required>
-            <input type="password" class="form-control" placeholder="Password" required>
-            <input type="password" class="form-control" placeholder="Confirm password" required>
+            <input type="text" class="form-control" placeholder="Email address" name = "email" required>
+            <input type="password" class="form-control" placeholder="Password" name = "pass1" required>
+            <input type="password" class="form-control" placeholder="Confirm password" name = "pass2" required>
 
             <label class="checkbox">
                 <input type="checkbox" value="remember-me">Ik wil verdere info ontvangen omtrend updates
