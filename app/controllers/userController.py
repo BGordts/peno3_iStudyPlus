@@ -1,16 +1,17 @@
 from flask import *
+from flask.ext.sqlalchemy import SQLAlchemy
 from functools import wraps
 
 from app import app
 from app import db
 from app.models.user import User
 from werkzeug._internal import _log
-from app.forms.loginForm import LoginForm
+# from app.forms.loginForm import LoginForm
 
 def login_required(test):
     @wraps(test)
     def wrap(*args, **kwargs):
-        if 'logged_in' in session:
+        if 'userID' in session:
             return test(*args, **kwargs)
         else:
             flash('you need to login first.')
@@ -30,25 +31,26 @@ def welcome():
 def login():
     error = None    
     if request.method == 'POST':
-        if not request.form["username"] == "admin" and False:
-        #if not isValidLogin(request.form['username'],request.form['password']):
+        if not isValidLogin(request.form['username'],request.form['password']):
             error = 'invalid username or password, please try again.'
+        elif 'userID' in session:
+            error = "log out first"
         else:
-            #session['user'] = User.query.filter_by(email= username).first()
+            session['userID'] = User.query.filter_by(email= request.form['username']).first().getID()
             return redirect(url_for("welcome"))
     return render_template('pages/login.html' , error = error)
    
 
 def isValidLogin( username, password):
-    user = User.query.filter_by(username= username).first()
-    if user == None or user.getPass != password:
+    user = User.query.filter_by(email=username).first()
+    if user == None or (not user.password == password):
         return False
     return True    
 
 @app.route('/logout')
 def logout():
-    session.pop('user',None)
-    return redirect(url_for('login.html'))
+    session.pop('userID',None)
+    return redirect(url_for('login'))
 
 @app.route('/register' , methods = ['GET','POST'])
 def register():
