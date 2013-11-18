@@ -3,6 +3,8 @@ from flask import *
 from app import app
 from app import db
 
+from app.models.session import Session
+
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), unique=True)
@@ -22,7 +24,18 @@ class User(db.Model):
     
     @staticmethod
     def getUserFromSession():
-        return User.query.filter_by(id = session['userID']).first()
+        return User.getUserByID(session['userID'])
     
+    #staticmethod
+    def getUserByID(ID):
+        return User.query.filter_by(id = ID).first()
+    
+    def getRunningSession(self):
+        if session['sessionID']:
+            if session['isPauzed']:
+                return Session.getSessionByID(session['sessionID'])
+        
+        return None
+        
     def __repr__(self):
         return '<User %r>' % self.email

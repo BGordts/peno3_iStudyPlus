@@ -43,14 +43,6 @@ class Session(db.Model):
     @classmethod
     def getSessionByID(sessionID):
         return User.query.filter_by(id = sessionID).first()
-    
-    '''
-    Classmethod to check wheter the given User has a running session or not.
-    '''
-    @staticmethod
-    def hasRunningSession(user):
-        lastRunningSession = user.sessions.order_by(Session.start_date).first()
-        return True if lastRunningSession.end_date else False        
         
     def __repr__(self):
         return '<Session %r>' % self.title
