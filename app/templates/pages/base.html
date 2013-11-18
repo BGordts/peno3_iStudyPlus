@@ -34,12 +34,12 @@
 	    <meta name="msapplication-square150x150logo" content="{{url_for('static', filename='favicons/mstile-150x150.png')}}" />
 	    <meta name="msapplication-square310x310logo" content="{{url_for('static', filename='favicons/mstile-310x310.png')}}" />
 	</head>
-	<body ng-app>
+	<body ng-app="app"  ng-controller="appCtrl">
 
 		{% block navigation %}{% endblock %}	
 
 		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-		<script src="https://code.jquery.com/jquery.js"></script>
+		<script src="{{url_for('static', filename='js/lib/jquery/jquery-1.10.2.js')}}"></script>
 
 		<!-- Include all compiled plugins (below), or include individual files as needed -->
 		<script src="{{url_for('static', filename='js/lib/bootstrap/js/bootstrap.js')}}"></script>
