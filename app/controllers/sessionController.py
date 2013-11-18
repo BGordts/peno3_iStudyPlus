@@ -1,13 +1,15 @@
 from flask import *
 from flask.ext.sqlalchemy import SQLAlchemy
+
+from functools import wraps
 from werkzeug._internal import _log
-from app.controllers.userController import login_required
+
 from app import app
 from app import db
+
 from app.models.user import User
 from app.models.session import Session
-from functools import wraps
-
+from app.controllers.userController import login_required
 
 def session_required(test):
     @wraps(test)
@@ -29,10 +31,9 @@ def endSession_required(test):
             return redirect(url_for('create'))
     return wrap
 
-
 @app.route('/session/create')
-@login_required
 @endSession_required
+@login_required
 def create():
     user = User.getUserFromSession()
     #sessionName = request.form['sessionName']
@@ -46,7 +47,6 @@ def create():
   
 @app.route('/session/start')
 @session_required
-@login_required
 def startSession():
     _log('info',Session.query.filter_by(id=session['sessionID']).first().__str__())
     Session.query.filter_by(id=session['sessionID']).first().start()
@@ -54,13 +54,11 @@ def startSession():
 
 @app.route('/session/pauze')
 @session_required
-@login_required
 def pauzeSession():
     session['isPauzed'] = True
 
 @app.route('/session/end')
 @session_required
-@login_required
 def endSession():
     Session.query.filter_by(id=session['sessionID']).first().end()
     session.pop('sessionID',None)
