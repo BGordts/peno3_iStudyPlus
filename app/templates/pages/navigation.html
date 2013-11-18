@@ -1,4 +1,4 @@
-{% extends "pages/dashboard.html" %}
+{% extends "pages/base.html" %}
 {% block navigation %}
   <div class="navbar navbar-default navbar-fixed-top is_navbar" role="banner">
 			<div class="c">
@@ -57,9 +57,10 @@
 				</div>
 				<div class="is_sidepanel-student-list-wrap is_follow-navbar">
 					<div class="is_sidepanel-student-list">
-						<div class="is_sidepanel-list-item" ng-repeat="student in commonStudents | filter:searchEntry">{{student.name}}</div>
+						<div class="is_sidepanel-list-item" ng-repeat="student in commonStudents | filter:searchEntry">[[student.name]]</div>
 					</div>
 				</div>
 			</div>
-		</div>		
+		</div>
+		{% block content %}{% endblock %}
 {% endblock %}
