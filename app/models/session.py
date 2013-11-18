@@ -1,9 +1,10 @@
+from flask import *
+from flask.ext.sqlalchemy import SQLAlchemy 
 from werkzeug._internal import _log
 from datetime import datetime
 
 from app import app
 from app import db
-
 
 class Session(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -23,26 +24,17 @@ class Session(db.Model):
         self.feedback_score = feedback_score
         
     
-    def startSession(self):
+    def start(self):
         self.start_date = datetime.utcnow()
-        while not self.isSessionEnded():
-            self.updateValues()
-            
-    def isSessionEnded(self):
-        return self.end_date == None
+        db.session.commit()
     
-    def updateValues(self):
-        "steekt de waardes van de arduino in de gepaste lijst van dit object"
-        pass
-
-    
-    def endSession(self):
-        "commit de session in de db"
-        self.end_date = datetime.utcnow()
+    def end(self):
+        self.end_date = datetime.utcnow()  
+        db.session.commit()
         
     @classmethod
     def getSessionByID(sessionID):
-        return User.query.filter_by(id = sessionID).first()
+        return Session.query.filter_by(id = sessionID).first()
         
     def __repr__(self):
         return '<Session %r>' % self.title
