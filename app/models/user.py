@@ -1,3 +1,5 @@
+from flask import *
+
 from app import app
 from app import db
 
@@ -17,6 +19,10 @@ class User(db.Model):
     @staticmethod
     def getAdminUser():
         return User.query.filter_by(id = 1).first()   
+    
+    @staticmethod
+    def getUserFromSession():
+        return User.query.filter_by(id = session['userID']).first()
     
     def __repr__(self):
         return '<User %r>' % self.email

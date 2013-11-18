@@ -39,6 +39,10 @@ class Session(db.Model):
     def endSession(self):
         "commit de session in de db"
         self.end_date = datetime.utcnow()
+        
+    @classmethod
+    def getSessionByID(sessionID):
+        return User.query.filter_by(id = sessionID).first()
     
     '''
     Classmethod to check wheter the given User has a running session or not.
