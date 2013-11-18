@@ -26,7 +26,7 @@ class User(db.Model):
     def getUserFromSession():
         return User.getUserByID(session['userID'])
     
-    #staticmethod
+    @staticmethod
     def getUserByID(ID):
         return User.query.filter_by(id = ID).first()
     
