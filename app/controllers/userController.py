@@ -6,6 +6,7 @@ from app import app
 from app import db
 from app.models.user import User
 from werkzeug._internal import _log
+from app.controllers.sessionController import endSession_required
 
 def login_required(test):
     @wraps(test)
@@ -56,6 +57,7 @@ def isValidLogin( username, password):
     return True    
 
 @app.route('/user/logout')
+@endSession_required
 def logout():
     session.pop('userID',None)
     return redirect(url_for('login'))
