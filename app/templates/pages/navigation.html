@@ -1,0 +1,65 @@
+{% extends "dashboard.html" %}
+{% block navigation %}
+  <div class="navbar navbar-default navbar-fixed-top is_navbar" role="banner">
+			<div class="c">
+				<div class="navbar-collapse bs-navbar-collapse collapse is_navbar-btns" role="navigation">
+					<ul class="nav navbar-nav is_border-overlay-mobile">
+						<li>
+							<a href="../getting-started">Getting started</a>
+						</li>
+						<li>
+							<a href="../css">CSS</a>
+						</li>
+						<li class="active">
+							<a href="../components">Components</a>
+						</li>
+						<li>
+							<a href="../javascript">JavaScript</a>
+						</li>
+						<li>
+							<a href="../customize">Customize</a>
+						</li>
+					</ul>
+					<!--<ul class="nav navbar-nav navbar-right is_border-overlay-mobile">
+<li>
+<a href="../about">About</a>
+</li>
+</ul>-->
+				</div>
+				<div class="nav navbar-left">
+					<button class="navbar-toggle is_toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse" data-followers=".is_follow-navbar" data-follow-class="is_follow-navbar-style">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a href="../" class="navbar-brand is_border-overlay">
+						<img src="{{url_for('static', filename='is_logo40.png')}}" alt="iStudy+">
+					</a>
+					<button class="navbar-toggle width pull-right is_toggle is_sidepanel-toggle" type="button" data-toggle="collapse" data-is-target=".is_sidepanel-collapse" data-followers=".is_follow-sidepanel" data-follow-class="is_follow-sidepanel-style">
+						<span class="sr-only">Toggle navigation</span>
+						<i class="fi-results-demographics large"></i>
+					</button>
+				</div>
+			</div>
+		</div>
+		<div class="is_sidepanel-collapse is_sidepanel is_follow-navbar">
+			<div class="is_sidepanel-content">
+				<div class="is_sidepanel-top">
+					<div class="is_sidepanel-list-item">First name Last name</div>
+					<div class="is_sidepanel-list-item">Student met de pet</div>
+				</div>
+				<div>
+					<label class="is_user-search">
+						<i class="fi-magnifying-glass"></i>
+						<input type="text" placeholder="Zoeken" ng-model="searchEntry">
+					</label>
+				</div>
+				<div class="is_sidepanel-student-list-wrap is_follow-navbar">
+					<div class="is_sidepanel-student-list">
+						<div class="is_sidepanel-list-item" ng-repeat="student in commonStudents | filter:searchEntry">{{student.name}}</div>
+					</div>
+				</div>
+			</div>
+		</div>		
+{% endblock %}
