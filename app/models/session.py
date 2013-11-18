@@ -21,11 +21,23 @@ class Session(db.Model):
         self.start_date = None
         self.end_date = None
         self.feedback_score = feedback_score
+        
     
     def startSession(self):
         self.start_date = datetime.utcnow()
+        while not self.isSessionEnded():
+            self.updateValues()
+            
+    def isSessionEnded(self):
+        return self.end_date == None
+    
+    def updateValues(self):
+        "steekt de waardes van de arduino in de gepaste lijst van dit object"
+        pass
+
     
     def endSession(self):
+        "commit de session in de db"
         self.end_date = datetime.utcnow()
     
     '''
@@ -34,8 +46,7 @@ class Session(db.Model):
     @staticmethod
     def hasRunningSession(user):
         lastRunningSession = user.sessions.order_by(Session.start_date).first()
-        
-        return False if lastRunningSession.end_date else True        
+        return True if lastRunningSession.end_date else False        
         
     def __repr__(self):
         return '<Session %r>' % self.title

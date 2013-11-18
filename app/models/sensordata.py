@@ -14,7 +14,7 @@ class Sensordata(db.Model):
 
     def __init__(self, sensor_type, session, value):
         self.sensor_type = sensor_type
-        self.session = session
+        self.sessionID = session
         self.date = datetime.utcnow()
         self.value = value
 
