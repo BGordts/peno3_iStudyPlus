@@ -1,9 +1,10 @@
+from flask import *
+from flask.ext.sqlalchemy import SQLAlchemy 
 from werkzeug._internal import _log
 from datetime import datetime
 
 from app import app
 from app import db
-
 
 class Session(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -23,30 +24,13 @@ class Session(db.Model):
         self.feedback_score = feedback_score
         
     
-    def startSession(self):
+    def start(self):
         self.start_date = datetime.utcnow()
-        while not self.isSessionEnded():
-            self.updateValues()
-            
-    def isSessionEnded(self):
-        return self.end_date == None
+        db.session.commit()
     
-    def updateValues(self):
-        "steekt de waardes van de arduino in de gepaste lijst van dit object"
-        pass
-
-    
-    def endSession(self):
-        "commit de session in de db"
-        self.end_date = datetime.utcnow()
-    
-    '''
-    Classmethod to check wheter the given User has a running session or not.
-    '''
-    @staticmethod
-    def hasRunningSession(user):
-        lastRunningSession = user.sessions.order_by(Session.start_date).first()
-        return True if lastRunningSession.end_date else False        
+    def end(self):
+        self.end_date = datetime.utcnow()  
+        db.session.commit()
         
     def __repr__(self):
         return '<Session %r>' % self.title
