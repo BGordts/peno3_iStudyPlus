@@ -28,18 +28,14 @@ class Session(db.Model):
     def endSession(self):
         self.end_date = datetime.utcnow()
     
+    '''
+    Classmethod to check wheter the given User has a running session or not.
+    '''
     @staticmethod
     def hasRunningSession(user):
         lastRunningSession = user.sessions.order_by(Session.start_date).first()
         
-        _log('info', "lastrunningsession " + lastRunningSession.__str__())
-        _log('info', "lastrunningsession user: " + user.__str__())
-        
-        if( not lastRunningSession.end_date):
-            _log('info', "lastrunningsession indeed! ")
-        
-        return lastRunningSession
-        
+        return True if lastRunningSession.end_date else False        
         
     def __repr__(self):
         return '<Session %r>' % self.title
