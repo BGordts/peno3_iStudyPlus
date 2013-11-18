@@ -6,7 +6,6 @@ from app import app
 from app import db
 from app.models.user import User
 from werkzeug._internal import _log
-from app.controllers.sessionController import endSession_required
 
 def login_required(test):
     @wraps(test)
@@ -56,6 +55,7 @@ def isValidLogin( username, password):
         return False
     return True    
 
+from app.controllers.sessionController import endSession_required
 @app.route('/user/logout')
 @endSession_required
 def logout():
@@ -72,7 +72,7 @@ def register():
         lastname = request.form['lastname']
         pass1 = request.form['pass1'] 
         pass2 = request.form['pass2']       
-        if not isValidPass(pass1,pass2):
+        if not isValidPass:
             error = 'The passwords you entered did not match'
             errors = errors + {"password" : error}
         if not isValidEmail:
@@ -94,3 +94,6 @@ def isValidEmail(email):
 
 def isValidPass(pass1 , pass2):
     return pass1 == pass2
+
+if __name__ == '__main__':
+    app.run()

@@ -1,12 +1,12 @@
 from flask import *
 from flask.ext.sqlalchemy import SQLAlchemy
 from werkzeug._internal import _log
+from functools import wraps
 
 from app import app
 from app import db
 from app.models.user import User
 from app.models.session import Session
-from functools import wraps
 from app.controllers.userController import login_required
 
 def session_required(test):
