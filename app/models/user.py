@@ -13,9 +13,6 @@ class User(db.Model):
         self.name = name
         self.surname = surname
         self.password = password    
-            
-    def getID(self):
-        return "0"
     
     @staticmethod
     def getAdminUser():

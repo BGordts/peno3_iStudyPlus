@@ -14,21 +14,22 @@ from app.models.session import Session
 
 @app.route('/session/create')
 def create():
-    u = User.getAdminUser()
-    s = Session("testsessie", u)
-    s.startSession()
+    user = User.getAdminUser()
+    session = Session("testsessie", user)
+    session.startSession()
     
-    db.session.add(s)
+    db.session.add(session)
     db.session.commit()    
     
     return "sessie aangemaakt"
   
 @app.route('/session/isSessionRunning')  
 def isSessionRunning():
-    u = User.getAdminUser()
-    s = Session.hasRunningSession(u)
+    user = User.getAdminUser()
+    sensor = Session.hasRunningSession(user)
     
-    _log('info', u.__str__())
-    _log('info', s.__str__())
+    _log('info', user.__str__())
+    _log('info', sensor.__str__())
     
-    return "Ge hebt runnende sessies" if s else "geen runnende sessies"
+    return "Ge hebt runnende sessies" if sensor else "geen runnende sessies"
+
