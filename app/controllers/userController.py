@@ -34,7 +34,7 @@ def home():
 @app.route('/welcome')
 @login_required
 def welcome():
-    return 'dit is de welkom-pagina, na inloggen'
+    return render_template('pages/dashboard.html')
 
 @app.route('/user/login' , methods=['GET','POST'])
 @logout_required
