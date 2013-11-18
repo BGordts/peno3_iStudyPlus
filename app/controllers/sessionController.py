@@ -6,7 +6,6 @@ Created on 7-nov.-2013
 from flask.ext.sqlalchemy import SQLAlchemy
 from werkzeug._internal import _log
 
-
 from app import app
 from app import db
 from app.models.user import User
@@ -23,6 +22,7 @@ def create():
     
     return "sessie aangemaakt"
   
+def startSession
 @app.route('/session/isSessionRunning')  
 def isSessionRunning():
     user = User.getAdminUser()
