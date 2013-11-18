@@ -3,6 +3,10 @@ from flask.ext.sqlalchemy import SQLAlchemy
 
 from functools import wraps
 from werkzeug._internal import _log
+<<<<<<< HEAD
+=======
+from functools import wraps
+>>>>>>> 84a28518461ae0857cf614e7fc2a2998a6f20ccc
 
 from app import app
 from app import db
