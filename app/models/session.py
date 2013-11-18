@@ -35,7 +35,7 @@ class Session(db.Model):
     def hasRunningSession(user):
         lastRunningSession = user.sessions.order_by(Session.start_date).first()
         
-        return True if lastRunningSession.end_date else False        
+        return False if lastRunningSession.end_date else True        
         
     def __repr__(self):
         return '<Session %r>' % self.title

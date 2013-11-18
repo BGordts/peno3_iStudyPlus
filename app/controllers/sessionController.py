@@ -28,7 +28,4 @@ def isSessionRunning():
     u = User.getAdminUser()
     s = Session.hasRunningSession(u)
     
-    _log('info', u.__str__())
-    _log('info', s.__str__())
-    
     return "Ge hebt runnende sessies" if s else "geen runnende sessies"
