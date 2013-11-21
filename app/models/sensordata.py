@@ -12,11 +12,11 @@ class Sensordata(db.Model):
     session_id = db.Column(db.Integer, db.ForeignKey('session.id'))
     session = db.relationship('Session', backref=db.backref('sensordata', lazy='dynamic'))
 
-    def __init__(self, sensor_type, session, value):
+    def __init__(self, sensor_type, session, value, date):
         self.sensor_type = sensor_type
         self.sessionID = session
-        self.date = datetime.utcnow()
         self.value = value
+        self.date = date        
 
     def __repr__(self):
         return '<Sensordata %r>' % self.sensor_type

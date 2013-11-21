@@ -6,6 +6,9 @@ from app import app
 from app import db
 from app.models.user import User
 from werkzeug._internal import _log
+from werkzeug import secure_filename
+
+import os
 
 def login_required(test):
     @wraps(test)
@@ -52,7 +55,6 @@ def login():
             return redirect(url_for("welcome"))
     return render_template('pages/login.html' , error = error)
 
-
 def isValidLogin( username, password):
     user = User.query.filter_by(email=username).first()
     if user == None or (not user.password == password):
@@ -76,7 +78,7 @@ def register():
         lastname = request.form['lastname']
         pass1 = request.form['pass1']
         pass2 = request.form['pass2']
-        if not isValidPass:
+        if not isValidPass(pass1,pass2):
             error = 'The passwords you entered did not match'
             errors = errors + {"password" : error}
         if not isValidEmail:
@@ -89,7 +91,6 @@ def register():
             return redirect(url_for('login'))
     return render_template('pages/register.html' , errors = errors)
 
-
 def isValidEmail(email):
     user = User.query.filter_by(email=username).first()
     if user == None:
@@ -99,8 +100,51 @@ def isValidEmail(email):
 def isValidPass(pass1 , pass2):
     return pass1 == pass2
 
-def searchUser(Username):
-    pass
+@app.route('/user/newProfilePic' , methods = ['GET' , 'POST'])
+@login_required
+def changeProfilPic():
+    if request.method == 'POST':
+        pic = request.files['pic']
+        if pic and allowed_file(pic.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            User.query.filter_by(id=session['userID']).first().setProfilePic(path)
+            return redirect(url_for('uploaded_file', filename=filename))
 
-if __name__ == '__main__':
-    app.run()
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
+           
+@app.route('/user/settings' , methods = ['GET','POST'])
+@login_required
+def changeUserinfo():
+    user = User.query.filter_by(id=session['userID']).first()
+    errors = {}
+    email = request.form['email']
+    name = request.form['name']
+    lastname = request.form['lastname']
+    oldPass = request.form['oldPass']
+    pass1 = request.form['pass1']
+    pass2 = request.form['pass2']
+    if(email == None):
+        email = user.email
+    if(name == None):
+        name = user.surname
+    if(lastName == None):
+        lastName = user.name
+    if(oldPass == None):
+        pass1 = user.password
+        pass2 = user.password
+    if not(user.password == oldPass):
+        error = 'The old password you entered did not match'
+        errors = errors + {"password" : error}
+    if not isValidPass(pass1,pass2):
+            error = 'The passwords you entered did not match'
+            errors = errors + {"password" : error}
+    if not((errors and True) or False):
+        user.changeSetting(self , email , name , surname , password)
+    return render_template('pages/changeUserInfo.html' , errors = errors)
+
+def searchUser(Username):
+    user = User.query.filter_by()

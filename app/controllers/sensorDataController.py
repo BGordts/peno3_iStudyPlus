@@ -1,4 +1,8 @@
+from flask import *
 from flask.ext.sqlalchemy import SQLAlchemy
+from werkzeug._internal import _log
+
+import datetime
 
 from app import app
 from app import db
@@ -6,28 +10,38 @@ from app import db
 from app.models.sensordata import Sensordata
 from app.models.session import Session
 from app.models.user import User
+from app.models.device import Device
    
-@app.route('/sensorData/postSensorData') 
+'''
+The pi device sends his recorded sensor data to this url to store it in the database
+'''
+
+@app.route('/sensorData/postSensorData', methods = ['GET']) 
 def postSensorData():
     #What the client sends to us
-    userID = request.form["userID"]
-    sensor_type = request.form["sensortype"]
-    value = request.form["value"]
+    device_key = request.args["deviceKey"]
+    sensor_type = request.args["sensortype"]
+    value = request.args["value"]
+    #Date in miliseconds
+    dateInMilis = request.args["date"]
     
-    user = User.getUserByID(userID)
+    device = Device.getDeviceByKey(device_key)
+    _log('info', "device: " + device.__repr__())
+    user = Device.getDeviceByKey(device_key).getUser()
+    _log('info', "user: " + user.__repr__())
     session = user.getRunningSession()
+    _log('info', "session: " + session.__repr__())
+    
+    date = datetime.datetime.fromtimestamp(dateInMilis/1000.0)
+    _log('info', "date: " + date.__repr__())
     
     #Check whether the user has a running session
     if session:
-        sensorData = SensorData(sensor_type, session, value)
+        sensorData = SensorData(sensor_type, session, value, date)
     
         db.session.add(sensorData)
         db.session.commit()
     #If the user has no running session, just do nothing
         
     return ""
-
-@app.route('/sensorData/registerDevice') 
-def registerDevice():
-    device_key = request.form["devicekey"]
     
