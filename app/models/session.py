@@ -3,6 +3,8 @@ from flask.ext.sqlalchemy import SQLAlchemy
 from werkzeug._internal import _log
 from datetime import datetime
 
+import json
+
 from app import app
 from app import db
 
@@ -28,7 +30,8 @@ class Session(db.Model):
             self.start_date = datetime.utcnow()
             db.session.commit()
         else:
-            #self.pauzes = Pauzes([session['isPauzed'],datetime.utcnow()])
+            pauze = ([session['isPauzed'],datetime.utcnow()])
+            json.dump(pauze)
             pass
                     
     def end(self):

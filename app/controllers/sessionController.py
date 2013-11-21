@@ -69,4 +69,6 @@ def endSession():
     session.pop('isPauzed',None)
     return "sessie beindigt"
 
+def postFeedBack():
+    pass
 

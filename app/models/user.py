@@ -26,6 +26,12 @@ class User(db.Model):
     def getUserFromSession():
         return User.getUserByID(session['userID'])
     
+    def getProfilePic(self):
+        pass
+    
+    def setProfilePic(self):
+        pass
+    
     @staticmethod
     def getUserByID(ID):
         return User.query.filter_by(id = ID).first()
@@ -34,8 +40,13 @@ class User(db.Model):
         if session['sessionID']:
             if session['isPauzed']:
                 return Session.getSessionByID(session['sessionID'])
-        
         return None
-        
+    
+    def changeSetting(self):
+        pass
+       
+    def getUsers(self):
+        pass
+    
     def __repr__(self):
         return '<User %r>' % self.email
