@@ -25,6 +25,7 @@ from app.controllers.sensorDataController import *
 from app.models.user import User
 
 def createTestData():
+    db.delete_all()
     db.create_all()
     admin = User('admin@example.com', 'admin', 'admin', 'admin')
     guest = User('b@a.be', 'kaka', 'pipi', 'kaka')
