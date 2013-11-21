@@ -45,6 +45,9 @@ class User(db.Model):
                 return Session.getSessionByID(session['sessionID'])
         return None
     
+    def getDevice(self):
+        return self.device.first()
+    
     def changeSetting(self , email , name , surname , password):
         if not (email == self.email):
             self.email = email
