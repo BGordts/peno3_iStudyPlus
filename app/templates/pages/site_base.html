@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>iStudy+</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+		<!-- Bootstrap -->
+		<link href="{{ url_for('static', filename='css/lib/bootstrap/css/bootstrap.css')}}" rel="stylesheet" media="screen">
+		<link href="{{ url_for('static', filename='css/iStudyPlus_style.css')}}" rel="stylesheet" media="screen">
+		<link href="{{ url_for('static', filename='css/site.css')}}" rel="stylesheet" media="screen">
+		<link href="{{ url_for('static', filename='css/register.css')}}" rel="stylesheet" media="screen">
+		<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900' rel='stylesheet' type='text/css'>
+		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+			<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+			<script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+		<![endif]-->
+		<link rel="apple-touch-icon" sizes="57x57" href="{{url_for('static', filename='favicons/apple-touch-icon-57x57.png')}}" />
+		<link rel="apple-touch-icon" sizes="57x57" href="{{url_for('static', filename='favicons/apple-touch-icon-114x114.png')}}" />
+		<link rel="apple-touch-icon" sizes="57x57" href="{{url_for('static', filename='favicons/apple-touch-icon-72x72.png')}}" />
+		<link rel="apple-touch-icon" sizes="57x57" href="{{url_for('static', filename='favicons/apple-touch-icon-144x144.png')}}" />
+		<link rel="apple-touch-icon" sizes="57x57" href="{{url_for('static', filename='favicons/apple-touch-icon-60x60.png')}}" />
+		<link rel="apple-touch-icon" sizes="57x57" href="{{url_for('static', filename='favicons/apple-touch-icon-120x120.png')}}" />
+		<link rel="apple-touch-icon" sizes="57x57" href="{{url_for('static', filename='favicons/apple-touch-icon-76x76.png')}}" />
+		<link rel="apple-touch-icon" sizes="57x57" href="{{url_for('static', filename='favicons/apple-touch-icon-152x152.png')}}" />
+		<link rel="icon" type="image/png" href="{{url_for('static', filename='favicons/favicon-32x32.png')}}" sizes="16x16" />
+		<link rel="icon" type="image/png" href="{{url_for('static', filename='favicons/favicon-96x96.png')}}" sizes="16x16" />
+		<link rel="icon" type="image/png" href="{{url_for('static', filename='favicons/favicon-160x160.png')}}" sizes="16x16" />
+		<meta name="msapplication-TileColor" content="#da532c" />
+		<meta name="msapplication-TileImage" content="{{url_for('static', filename='favicons/mstile-144x144.png')}}" />
+		<meta name="msapplication-square70x70logo" content="{{url_for('static', filename='favicons/mstile-70x70.png')}}" />
+		<meta name="msapplication-square150x150logo" content="{{url_for('static', filename='favicons/mstile-150x150.png')}}" />
+		<meta name="msapplication-square310x310logo" content="{{url_for('static', filename='favicons/mstile-310x310.png')}}" />
+	</head>
+	<body>
+
+				{% block site_navigation %}{% endblock %}
+		<!-- /container -->
+		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+		<script src="https://code.jquery.com/jquery.js"></script>
+		<!-- Include all compiled plugins (below), or include individual files as needed -->
+		<script src="{{url_for('static', filename='js/lib/bootstrap/js/bootstrap.js')}}"></script>
+		<script src="{{url_for('static', filename='js/lib/angularjs/angular.js')}}"></script>
+		<script src="{{url_for('static', filename='js/iStudyPlus.js')}}"></script>
+	</body>
+
+</html>

@@ -1,32 +1,36 @@
 body {
-    padding-top: 55px;
-    padding-bottom: 40px;
-    background-color: #5C5CAD;
-    /*background-color: rgba(67, 17, 150, 0.2); */
+	padding-top: 55px;
+	padding-bottom: 40px;
 }
-    .form-signin {
-    max-width: 330px;
-    padding: 15px;
-    margin: 0 auto;
-    color: #FFFFFF;
+	h2 {
+	margin-bottom: 20px;
+	text-align: center;
 }
-    .form-signin .form-signin-heading,
-.form-signin .checkbox {
-    margin-bottom: 10px;
+	video,
+canvas {
+	max-width: 100%;
+	max-height: 398px;
+	display: block;
+	margin: 0 auto;
 }
-    .form-signin .checkbox {
-    font-weight: normal;
+	.form-signin {
+	max-width: 330px;
+	margin: 0 auto;
 }
-    .form-signin .form-control {
-    position: relative;
-    margin-bottom: 10px;
-    font-size: 16px;
-    height: auto;
-    padding: 10px;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
+	.form-signin .checkbox {
+	font-weight: normal;
+	margin-bottom: 10px;
 }
-    .form-signin .form-control: focus {
-    z-index: 2;
+	.form-signin .form-control {
+	position: relative;
+	margin-bottom: 10px;
+	font-size: 16px;
+	height: auto;
+	padding: 10px;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+	.form-signin .form-control: focus {
+	z-index: 2;
 }

@@ -27,7 +27,9 @@ def logout_required(test):
             return redirect(url_for('home'))
     return wrap
 
-from app.controllers.sessionController import endSession_required
+@app.route("/")
+def hello():
+    return render_template('index.html')
 
 @app.route('/home')
 def home():
@@ -41,7 +43,7 @@ def welcome():
 @app.route('/user/login' , methods=['GET','POST'])
 @logout_required
 def login():
-    error = None    
+    error = None
     if request.method == 'POST':
         if not isValidLogin(request.form['username'],request.form['password']):
             error = 'invalid username or password, please try again.'
@@ -49,15 +51,15 @@ def login():
             session['userID'] = User.query.filter_by(email= request.form['username']).first().id
             return redirect(url_for("welcome"))
     return render_template('pages/login.html' , error = error)
-   
+
 
 def isValidLogin( username, password):
     user = User.query.filter_by(email=username).first()
     if user == None or (not user.password == password):
         return False
-    return True    
+    return True
 
-
+from app.controllers.sessionController import endSession_required
 @app.route('/user/logout')
 @endSession_required
 def logout():
@@ -72,8 +74,8 @@ def register():
         email = request.form['email']
         name = request.form['name']
         lastname = request.form['lastname']
-        pass1 = request.form['pass1'] 
-        pass2 = request.form['pass2']       
+        pass1 = request.form['pass1']
+        pass2 = request.form['pass2']
         if not isValidPass:
             error = 'The passwords you entered did not match'
             errors = errors + {"password" : error}

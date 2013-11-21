@@ -10,6 +10,9 @@
 	overflow-y: scroll;
 	overflow-x: hidden;
 	outline: 0 !important;
+	font: 14px/1.6 "Source Sans Pro", "Lucida Sans", "Lucida Grande", "Lucida Sans Unicode", Calibri, sans-serif;
+	/* text-shadow: 0 1px 0 rgba(255,255,255,0.75); */
+	font-weight: 400;
 }
 	/*  //////////  */
 	/*  NAVBAR TOP  */
@@ -172,7 +175,7 @@
 }
 	.is_header {
 	background-color: #abc;
-	background-image: url({{url_for('static', filename='header_img2.jpg')}});
+	background-image: url(/header_img2.jpg);
 	background-repeat: no-repeat;
 	/*background-attachment:fixed;*/
 	-webkit-background-size: cover;
@@ -290,7 +293,7 @@
 	float: right;
 }
 	.is_content-actions .btn-group .btn {
-	height: 36px;
+	height: 38px;
 }
 	.panel-group {
 	-webkit-box-shadow: 0 !important;
