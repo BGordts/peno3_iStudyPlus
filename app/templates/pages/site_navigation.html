@@ -1,0 +1,38 @@
+{% extends "pages/site_base.html" %}
+{% block site_navigation %}
+	<div class="navbar navbar-default navbar-fixed-top is_navbar" role="banner">
+	<div class="container">
+		<div class="navbar-collapse bs-navbar-collapse collapse is_navbar-btns" role="navigation">
+			<ul class="nav navbar-nav is_border-overlay-mobile">
+				<li>
+					<a href="../getting-started">Getting started</a>
+				</li>
+				<li>
+					<a href="../css">CSS</a>
+				</li>
+				<li class="active">
+					<a href="../components">Components</a>
+				</li>
+				<li>
+					<a href="../javascript">JavaScript</a>
+				</li>
+				<li>
+					<a href="../customize">Customize</a>
+				</li>
+			</ul>
+		</div>
+		<div class="nav navbar-left">
+			<button class="navbar-toggle is_toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse" data-followers=".is_follow-navbar" data-follow-class="is_follow-navbar-style">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a href="../" class="navbar-brand is_border-overlay">
+				<img src="{{url_for('static', filename='is_logo40.png')}}" alt="iStudy+">
+			</a>
+		</div>
+	</div>
+</div>
+		{% block site_content %}{% endblock %}
+{% endblock %}
