@@ -3,6 +3,8 @@ from flask.ext.sqlalchemy import SQLAlchemy
 from werkzeug._internal import _log
 from datetime import datetime
 
+import json
+
 from app import app
 from app import db
 
@@ -12,7 +14,7 @@ class Session(db.Model):
     feedback_score = db.Column(db.Integer)
     start_date = db.Column(db.DateTime)
     end_date = db.Column(db.DateTime)
-
+    
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     user = db.relationship('User', backref=db.backref('sessions', lazy='dynamic'))
 
@@ -23,13 +25,20 @@ class Session(db.Model):
         self.end_date = None
         self.feedback_score = feedback_score
         
-    
     def start(self):
-        self.start_date = datetime.utcnow()
-        db.session.commit()
-    
+        if(session['isPauzed'] == None):
+            self.start_date = datetime.utcnow()
+            db.session.commit()
+        else:
+            pauze = ([session['isPauzed'],datetime.utcnow()])
+            json.dump(pauze)
+            pass
+                    
     def end(self):
-        self.end_date = datetime.utcnow()  
+        if not self.start_date == None:
+            self.end_date = datetime.utcnow()
+        else:
+            db.session.delete(self)
         db.session.commit()
         
     @classmethod

@@ -99,5 +99,8 @@ def isValidEmail(email):
 def isValidPass(pass1 , pass2):
     return pass1 == pass2
 
+def searchUser(Username):
+    pass
+
 if __name__ == '__main__':
     app.run()
