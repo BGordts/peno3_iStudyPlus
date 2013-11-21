@@ -27,6 +27,8 @@ def logout_required(test):
             return redirect(url_for('home'))
     return wrap
 
+from app.controllers.sessionController import endSession_required
+
 @app.route('/home')
 def home():
     return render_template('pages/dashboard.html')
@@ -55,7 +57,7 @@ def isValidLogin( username, password):
         return False
     return True    
 
-from app.controllers.sessionController import endSession_required
+
 @app.route('/user/logout')
 @endSession_required
 def logout():
