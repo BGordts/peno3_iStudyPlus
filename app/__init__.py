@@ -23,6 +23,11 @@ from app.controllers.sessionController import *
 from app.controllers.sensorDataController import *
 
 from app.models.user import User
+from app.models.session import Session
+
+UPLOAD_FOLDER = '/static/images/profilePics'
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 def createTestData():
     db.create_all()

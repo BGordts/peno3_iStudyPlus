@@ -2,7 +2,8 @@ from flask import *
 from flask.ext.sqlalchemy import SQLAlchemy
 
 from functools import wraps
-from datetime import datetime 
+from datetime import datetime
+import time
 from werkzeug._internal import _log
 
 from app import app
@@ -58,17 +59,24 @@ def startSession():
 @session_required
 @login_required
 def pauzeSession():
-    session['isPauzed'] = datetime.utcnow()
+    session['isPauzed'] = time.time()
+    return "gepauzeerd"
 
 @app.route('/session/end')
 @session_required
 @login_required
 def endSession():
+    sessionID = session['sessionID']
     Session.query.filter_by(id=session['sessionID']).first().end()
     session.pop('sessionID',None)
     session.pop('isPauzed',None)
-    return "sessie beindigt"
+    return json.dumps(sessionID)
 
-def postFeedBack():
-    pass
+@app.route('/session/postFeedback' , methods = ['GET' , 'POST'])
+@login_required
+def postFeedback():
+    sessionID = request.form['sessionID']
+    Session.query.filter_by(id=session['sessionID']).first().setFeedback()
+    return render_template('pages/dashboard.html')
+    
 

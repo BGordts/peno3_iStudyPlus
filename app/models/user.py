@@ -11,12 +11,14 @@ class User(db.Model):
     name = db.Column(db.String(80), unique=False)
     surname = db.Column(db.String(80), unique=False)
     password = db.Column(db.String(30), unique=False)
-
-    def __init__(self, email, name, surname, password):
+    profilePic = db.Column(db.String(300), unique = True)
+    
+    def __init__(self, email, name, surname, password, profilePic = None):
         self.email = email
         self.name = name
         self.surname = surname
-        self.password = password    
+        self.password = password
+        self.profilePic = profilePic    
     
     @staticmethod
     def getAdminUser():
@@ -26,11 +28,12 @@ class User(db.Model):
     def getUserFromSession():
         return User.getUserByID(session['userID'])
     
-    def getProfilePic(self):
-        pass
+    def setProfilePic(self, path):
+        self.profilePic = path
+        db.session.commit()
     
-    def setProfilePic(self):
-        pass
+    def getProfilePic(self):
+        return self.profilePic
     
     @staticmethod
     def getUserByID(ID):
@@ -42,10 +45,19 @@ class User(db.Model):
                 return Session.getSessionByID(session['sessionID'])
         return None
     
-    def changeSetting(self):
-        pass
-       
+    def changeSetting(self , email , name , surname , password):
+        if not (email == self.email):
+            self.email = email
+        if not (name == self.name):
+            self.name = name    
+        if not (surname == self.surname):
+            self.surname = surname
+        if not (password == self.password):
+            self.password = password
+        db.session.commit()
+    
     def getUsers(self):
+        "enkel users met dezelfde vakken als de huidige gebruiker."
         pass
     
     def __repr__(self):
