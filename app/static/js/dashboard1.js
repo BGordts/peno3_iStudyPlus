@@ -173,11 +173,17 @@ controller('appCtrl', function ($scope) {
         height: 300,
         'bar': 'aaa'
     };
-    $scope.data = d3.range(40).map(function(i) {
-  return {x: i / 39, y: i % 5 ? (Math.sin(i / 3) + 2) / 4 : null};
-});
-    console.log($scope.data)
-
+    $scope.data = d3.range(40).map(function (i) {
+        return {
+            x: i / 39,
+            y: i % 5 ? (Math.sin(i / 3) + 2) / 4 : null
+        };
+    });
+    $scope.hovered = function (d) {
+        $scope.barValue = d;
+        $scope.$apply();
+    };
+    $scope.barValue = 'None';
 })
     .directive('barChart', function () {
         var chart = d3.custom.barChart();
@@ -188,13 +194,22 @@ controller('appCtrl', function ($scope) {
             scope: {
                 height: '=height',
                 data: '=data',
+                hovered: '&hovered'
             },
             link: function (scope, element, attrs) {
                 var chartEl = d3.select(element[0]);
-
+                chart.on('customHover', function (d, i) {
+                    scope.hovered({
+                        args: d
+                    });
+                });
                 scope.$watch('data', function (newVal, oldVal) {
                     chartEl.datum(newVal).call(chart);
                 });
+
+                scope.$watch('height', function (d, i) {
+                    chartEl.call(chart.height(scope.height));
+                })
             }
         }
     })
@@ -208,7 +223,7 @@ controller('appCtrl', function ($scope) {
                 };
 
                 function randomData() {
-                    d3.range(40).map(function (i) {
+                    return d3.range(40).map(function (i) {
                         return {
                             x: i / 39,
                             y: i % 5 ? (Math.sin(i / 3) + 2) / 4 : null
@@ -224,17 +239,17 @@ controller('appCtrl', function ($scope) {
         }
     });
 
-d3.custom = {};
 
+d3.custom = {};
 d3.custom.barChart = function module() {
     var margin = {
         top: 20,
         right: 20,
-        bottom: 40,
+        bottom: 30,
         left: 40
     },
-        width = 500,
-        height = 500,
+        width = 960 - margin.left - margin.right,
+        height = 500 - margin.top - margin.bottom,
         gap = 0,
         ease = 'cubic-in-out';
     var svg, duration = 500;
@@ -243,31 +258,35 @@ d3.custom.barChart = function module() {
 
     function exports(_selection) {
         _selection.each(function (_data) {
-            console.log(_data)
 
-            var margin = {
-                top: 20,
-                right: 20,
-                bottom: 30,
-                left: 40
-            },
-                width = 960 - margin.left - margin.right,
-                height = 500 - margin.top - margin.bottom;
+            var chartW = width - margin.left - margin.right,
+                chartH = height - margin.top - margin.bottom;
 
+            var x1 = d3.scale.ordinal()
+                .domain(_data.map(function (d, i) {
+                    return i;
+                }))
+                .rangeRoundBands([0, chartW], .1);
+
+            var y1 = d3.scale.linear()
+                .domain([0, d3.max(_data, function (d, i) {
+                    return d;
+                })])
+                .range([chartH, 0]);
             var x = d3.scale.linear()
                 .range([0, width]);
-
             var y = d3.scale.linear()
                 .range([height, 0]);
 
             var xAxis = d3.svg.axis()
                 .scale(x)
-                .orient("bottom");
+                .orient('bottom');
 
             var yAxis = d3.svg.axis()
                 .scale(y)
-                .orient("left");
+                .orient('left');
 
+            var barW = chartW / _data.length;
             var line = d3.svg.line()
                 .defined(function (d) {
                     return d.y != null;
@@ -285,24 +304,38 @@ d3.custom.barChart = function module() {
                 .y1(line.y())
                 .y0(y(0));
 
-            var svg = d3.select("body").append("svg")
-                .datum(_data)
-                .attr("width", width + margin.left + margin.right)
-                .attr("height", height + margin.top + margin.bottom)
-                .append("g")
-                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+            if (!svg) {
+                svg = d3.select(this)
+                    .append('svg')
+                    .classed('chart', true)
+                    .attr("width", width + margin.left + margin.right)
+                    .attr("height", height + margin.top + margin.bottom)
+                    .append("g")
+                    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+                //  var container = svg.append('g').classed('container-group', true);
+            }
+
+            svg.transition().duration(duration).attr({
+                width: width,
+                height: height
+            })
+            svg.select('.container-group')
+                .attr({
+                    transform: 'translate(' + margin.left + ',' + margin.top + ')'
+                });
+
 
             svg.append("path")
                 .attr("class", "area")
                 .attr("d", area);
 
             svg.append("g")
-                .attr("class", "x axis")
+                .attr("class", "xAxis")
                 .attr("transform", "translate(0," + height + ")")
                 .call(xAxis);
 
             svg.append("g")
-                .attr("class", "y axis")
+                .attr("class", "yAxis")
                 .call(yAxis);
 
             svg.append("path")
@@ -318,6 +351,32 @@ d3.custom.barChart = function module() {
                 .attr("cx", line.x())
                 .attr("cy", line.y())
                 .attr("r", 3.5);
+
+            duration = 500;
+
         });
     }
+    exports.width = function (_x) {
+        if (!arguments.length) return width;
+        width = parseInt(_x);
+        return this;
+    };
+    exports.height = function (_x) {
+        if (!arguments.length) return height;
+        height = parseInt(_x);
+        duration = 0;
+        return this;
+    };
+    exports.gap = function (_x) {
+        if (!arguments.length) return gap;
+        gap = _x;
+        return this;
+    };
+    exports.ease = function (_x) {
+        if (!arguments.length) return ease;
+        ease = _x;
+        return this;
+    };
+    d3.rebind(exports, dispatch, 'on');
+    return exports;
 };
