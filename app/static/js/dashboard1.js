@@ -226,7 +226,7 @@ controller('appCtrl', function ($scope) {
                     return d3.range(40).map(function (i) {
                         return {
                             x: i / 39,
-                            y: i % 5 ? (Math.sin(i / 3) + 2) / 4 : null
+                            y: i 
                         };
                     });
                 }
@@ -252,7 +252,7 @@ d3.custom.barChart = function module() {
         height = 500 - margin.top - margin.bottom,
         gap = 0,
         ease = 'cubic-in-out';
-    var svg, duration = 500;
+    var svg,duration = 500;;
 
     var dispatch = d3.dispatch('customHover');
 
@@ -314,15 +314,9 @@ d3.custom.barChart = function module() {
                     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
                 //  var container = svg.append('g').classed('container-group', true);
             }
-
-            svg.transition().duration(duration).attr({
-                width: width,
-                height: height
-            })
+   svg.transition().duration(duration).attr({width: width, height: height})
             svg.select('.container-group')
-                .attr({
-                    transform: 'translate(' + margin.left + ',' + margin.top + ')'
-                });
+                .attr({transform: 'translate(' + margin.left + ',' + margin.top + ')'});
 
 
             svg.append("path")
@@ -361,7 +355,7 @@ d3.custom.barChart = function module() {
         width = parseInt(_x);
         return this;
     };
-    exports.height = function (_x) {
+        exports.height = function(_x) {
         if (!arguments.length) return height;
         height = parseInt(_x);
         duration = 0;
