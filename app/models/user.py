@@ -57,6 +57,15 @@ class User(db.Model):
                 return Session.getSessionByID(session['sessionID'])
         return None
     
+    def getRunningsession2(self):
+        session = Session.query.filter_by(user=self).order_by(Session.start_date.desc()).first()
+        
+        if(session.end_date):
+            return session
+        else:
+            return None
+        
+    
     def getDevice(self):
         return self.device.first()
     
