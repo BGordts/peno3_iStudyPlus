@@ -44,8 +44,8 @@ class Userstatistics(db.Model):
         
     def updateTotals(self, userSession):
         oldTotalTime = self.totalTime
-        self.totalTime = oldTotalTime + userSession.getDuration()
-        sessionWeight = userSession.getDuration()/self.totalTime
+        self.totalTime = oldTotalTime + userSession.getSessionDuration()
+        sessionWeight = userSession.getSessionDuration()/self.totalTime
         dataWeight = oldTotalTime/self.totalTime
         self.totalEff = dataWeight * self.totalEff + sessionWeight * userSession.getEff()
         self.totalfocus = dataWeight * self.totalfocus + sessionWeight * userSession.getFocus()
@@ -72,6 +72,7 @@ class Userstatistics(db.Model):
             if(hSession.eff > userSession.eff):
                 lowestSessions[highest] = userSession.id
         json.dumps(lowestSessions)
+        db.session.commit()
                     
             
     def updateHighestSessions(self, userSession):
@@ -91,6 +92,7 @@ class Userstatistics(db.Model):
             if(lSession.eff < userSession.eff):
                 highestSessions[lowest] = userSession.id
         json.dumps(highestSessions)
+        db.session.commit()
       
   
     def getLowestTemp(self):
@@ -110,6 +112,106 @@ class Userstatistics(db.Model):
         while(i < len(highestSessions)):
             lSession = Session.query.filter_by(id=highestSessions[i].id).first()
             temp = temp + lSession.temp
+            i = i + 1
+        return temp/(i-1)
+    
+    def getLowestEff(self):
+        lowestSessions = json.loads(self.lowestSessions)
+        i = 0
+        temp = 0
+        while(i < len(lowestSessions)):
+            lSession = Session.query.filter_by(id=lowestSessions[i].id).first()
+            temp = temp + lSession.eff
+            i = i + 1
+        return temp/(i-1)
+    
+    def getHigestEff(self):
+        highestSessions = json.loads(self.highestSessions)
+        i = 0
+        temp = 0
+        while(i < len(highestSessions)):
+            lSession = Session.query.filter_by(id=highestSessions[i].id).first()
+            temp = temp + lSession.eff
+            i = i + 1
+        return temp/(i-1)
+    
+    def getLowestHum(self):
+        lowestSessions = json.loads(self.lowestSessions)
+        i = 0
+        temp = 0
+        while(i < len(lowestSessions)):
+            lSession = Session.query.filter_by(id=lowestSessions[i].id).first()
+            temp = temp + lSession.hum
+            i = i + 1
+        return temp/(i-1)
+    
+    def getHigestHum(self):
+        highestSessions = json.loads(self.highestSessions)
+        i = 0
+        temp = 0
+        while(i < len(highestSessions)):
+            lSession = Session.query.filter_by(id=highestSessions[i].id).first()
+            temp = temp + lSession.hum
+            i = i + 1
+        return temp/(i-1)
+    
+    def getLowestIll(self):
+        lowestSessions = json.loads(self.lowestSessions)
+        i = 0
+        temp = 0
+        while(i < len(lowestSessions)):
+            lSession = Session.query.filter_by(id=lowestSessions[i].id).first()
+            temp = temp + lSession.ill
+            i = i + 1
+        return temp/(i-1)
+    
+    def getHigestIll(self):
+        highestSessions = json.loads(self.highestSessions)
+        i = 0
+        temp = 0
+        while(i < len(highestSessions)):
+            lSession = Session.query.filter_by(id=highestSessions[i].id).first()
+            temp = temp + lSession.ill
+            i = i + 1
+        return temp/(i-1)
+    
+    def getLowestFocus(self):
+        lowestSessions = json.loads(self.lowestSessions)
+        i = 0
+        temp = 0
+        while(i < len(lowestSessions)):
+            lSession = Session.query.filter_by(id=lowestSessions[i].id).first()
+            temp = temp + lSession.focus
+            i = i + 1
+        return temp/(i-1)
+    
+    def getHigestFocus(self):
+        highestSessions = json.loads(self.highestSessions)
+        i = 0
+        temp = 0
+        while(i < len(highestSessions)):
+            lSession = Session.query.filter_by(id=highestSessions[i].id).first()
+            temp = temp + lSession.focus
+            i = i + 1
+        return temp/(i-1)
+    
+    def getLowestSound(self):
+        lowestSessions = json.loads(self.lowestSessions)
+        i = 0
+        temp = 0
+        while(i < len(lowestSessions)):
+            lSession = Session.query.filter_by(id=lowestSessions[i].id).first()
+            temp = temp + lSession.sound
+            i = i + 1
+        return temp/(i-1)
+    
+    def getHigestSound(self):
+        highestSessions = json.loads(self.highestSessions)
+        i = 0
+        temp = 0
+        while(i < len(highestSessions)):
+            lSession = Session.query.filter_by(id=highestSessions[i].id).first()
+            temp = temp + lSession.sound
             i = i + 1
         return temp/(i-1)
     
