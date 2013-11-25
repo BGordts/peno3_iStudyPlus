@@ -10,7 +10,7 @@ from app import db
 
 class Device(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    key = db.Column(db.String(50))
+    key = db.Column(db.String(50), unique=True)
     
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     user = db.relationship('User', backref=db.backref('device', lazy='dynamic'))
@@ -18,6 +18,13 @@ class Device(db.Model):
     def __init__(self, key, user):
         self.key = key
         self.user = user
+        
+    def getUser(self):
+        return self.user
+    
+    @staticmethod
+    def getDeviceByKey(key):
+        return Device.query.filter_by(key = key).first()
     
     def __repr__(self):
         return '<Device %r>' % self.key

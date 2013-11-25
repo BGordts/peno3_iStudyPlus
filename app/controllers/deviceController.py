@@ -8,20 +8,26 @@ from app import db
 
 from app.models.device import Device
 from app.models.user import User
+
+from app.controllers.userController import login_required
    
+'''
+Method to link a pi and its user. Can also be used to change the device
+'''
 @app.route('/device/register', methods = ['GET']) 
+@login_required
 def registerDevice():
-    _log('info', 'device key:' + request.args["kut"])
-    _log('info', 'device key:' + request.args.__repr__())
-    device_key = request.form["devicekey"]
-    
-    _log('info', 'device key: ' + device_key)
-    
-    user_id = session["userID"]
+    device_key = request.args["devicekey"]
+        
+    user = User.getUserByID(session["userID"])
+    device = user.getDevice()
+    if(device):
+        device.key = device_key
+    else:
+        device = Device(device_key, user)
+        db.session.add(device)
     
     #Save the device
-    device = Device(device_key, User.getUserByID(user_id))
-    db.session.add(device)
     db.session.commit()
 
-    return "lol"
+    return "ok"
