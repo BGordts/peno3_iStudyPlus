@@ -154,6 +154,7 @@
 	box-shadow: inset 0 5px 10px -5px #000;
 }
 	.is_sidepanel-list-item {
+	height: 42px;
 	padding: 10px 10px 10px 15px;
 	border-bottom: 1px solid #292929;
 }
@@ -182,6 +183,7 @@
 	background-size: cover;
 	background-position: center;
 	height: 351px;
+	margin-bottom: 44px;
 	overflow-y: auto;
 	overflow-x: hidden;
 	/*box-shadow: inset 0 0 300px #000; /* optim */
@@ -223,77 +225,102 @@
 	margin-left: 8px;
 }
 	.is_user-abstract:before {
-	position: relative;
+	/* position: relative; */
 	width: 100%;
 }
 	.is_user-abstract.affix-top {
-	position: absolute;
+	position: fixed;
 	opacity: 0;
 }
 	.is_user-abstract {
 	position: fixed;
 	left: 0;
-	top: 361px;
-	height: 45px;
+	top: 97px;
+	/* 364 */
+	height: 42px;
 	width: 100%;
 	z-index: 15;
 	background-color: #ccc;
-	border-bottom: 1px solid #333;
-	-webkit-box-sizing: border-box;
+	/* border-bottom: 1px solid #333; */
+	/* -webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
-	box-sizing: border-box;
-	-webkit-transition: opacity 350ms;
-	transition: opacity 350ms;
+	box-sizing: border-box; */
+	-webkit-transition: top 100ms;
+	transition: top 100ms;
 }
 	.is_user-abstract h4 {
-	line-height: inherit;
+	line-height: normal;
 }
 	.is_user-abstract .is_profile-pic-container {
-	width: 35px;
-	height: 35px;
+	width: 32px;
+	height: 32px;
 	padding: 0;
 	margin: 5px;
 }
 	.is_user-abstract.affix {
-	position: fixed;
+	/* position: fixed; */
 	left: 0;
 	top: 55px;
 	opacity: 1;
 }
-	.is_content-actions-wrap {
-	height: auto;
-	min-height: 36px;
-}
 	.is_content-actions {
 	width: 100%;
-	height: inherit;
+	height: 43px;
+	position: absolute;
+	top: 406px;
 	left: 0;
 	z-index: 15;
-	background-color: #fff;
+	background-color: #e7e7e7;
 	margin-right: -15px;
 }
 	.breadcrumb {
+	height: 43px;
+	padding: 0;
 	margin-bottom: 0;
 	left: 0;
 	float: left;
 	border-radius: 0;
-	background-color: #fff;
+	background-color: transparent;
+	overflow: hidden;
 }
-	.affix-top {
-	position: static;
+	.breadcrumb li {
+	padding: 0 5px;
+	vertical-align: top;
 }
-	.affix-bottom {
-	position: static;
+	.breadcrumb i {
+	padding: 0 5px;
+	float: left;
+	height: 43px;
+}
+	.breadcrumb li:last-child span {
+	cursor: default !important;
+}
+	.breadcrumb span {
+	height: inherit;
+	float: left;
+	line-height: 43px;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+	.breadcrumb [class^=fi-] {
+	font-size: 25px;
 }
 	.is_content-actions.affix {
 	position: fixed;
-	top: 100px;
+	top: 97px;
+	border-bottom: 1px solid #000;
+	-webkit-box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+	box-shadow: 0 2px 4px rgba(0,0,0,0.15);
 }
 	.is_content-actions .btn-group {
 	float: right;
+	-webkit-transition: margin-right 350ms;
+	transition: margin-right 350ms;
 }
 	.is_content-actions .btn-group .btn {
-	height: 38px;
+	height: 42px;
 }
 	.panel-group {
 	-webkit-box-shadow: 0 !important;
@@ -396,6 +423,9 @@
 	margin-left: -235px;
 	/*margin-right: 265px;*/
 	}
+}
+	.is_follow-sidepanel-style .is_content-actions .btn-group {
+	margin-right: 250px;
 }
 	.is_transitioning {
 	-webkit-transition: 350ms;
@@ -504,16 +534,56 @@
 	-webkit-box-shadow: inset 1px 1px 0 rgba(0, 0, 0, .14);
 	box-shadow: inset 1px 1px 0 rgba(0, 0, 0, .14);
 }
-	.axis path,
-.axis line {
-	fill: none;
-	stroke: black;
-	shape-rendering: crispEdges;
+	.btn-file {
+	position: relative;
+	overflow: hidden;
 }
-	.axis path {
-	fill: none;
-	stroke: none;
+	.btn-file input[type=file] {
+	position: absolute;
+	top: 0;
+	right: 0;
+	min-width: 100%;
+	min-height: 100%;
+	font-size: 999px;
+	text-align: right;
+	filter: alpha(opacity=0);
+	opacity: 0;
+	background: red;
+	cursor: inherit;
+	display: block;
 }
-	.bar {
-	fill: steelblue;
+	.panel-heading {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	border: solid #f5f5f5;
+	border-width: 0 50px;
+}
+	.btn-group-vertical {
+	position: absolute;
+	top: 0;
+	z-index: 1;
+	width: 40px;
+	height: 100%;
+	background-color: #333;
+}
+	.btn-group-vertical.menu-left {
+	left: 0;
+}
+	.btn-group-vertical.menu-right {
+	right: -1px;
+}
+	.fi-future,
+.fi-history {
+	margin: -1px -8px;
+}
+	.panel-heading .btn-group-vertical:first-child .btn {
+	height: 33.33%;
+}
+	.panel-heading .btn-group-vertical .btn-info:not(:hover):not(.active),
+.panel-heading .btn-group-vertical .btn-success:not(:hover):not(.active),
+.panel-heading .btn-group-vertical .btn-warning:not(:hover):not(.active),
+.panel-heading .btn-group-vertical .btn-danger:not(:hover):not(.active) {
+	background-color: #333;
+	border: none;
 }

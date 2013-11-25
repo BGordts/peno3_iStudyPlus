@@ -1,15 +1,15 @@
 body {
 	padding-top: 55px;
-	padding-bottom: 40px;
 }
 	h2 {
 	margin-bottom: 20px;
 	text-align: center;
 }
-	video,
+	img,
+video,
 canvas {
 	max-width: 100%;
-	max-height: 398px;
+	max-height: 256px;
 	display: block;
 	margin: 0 auto;
 }
