@@ -33,6 +33,11 @@ def logout_required(test):
 @app.route("/")
 def hello():
     return render_template('index.html')
+@app.route("/course")
+def add_course():
+    user = User.query.filter_by(id=session['userID']).first()
+    user.addCourse("analyse")
+    return "ok"
 
 @app.route('/home')
 def home():
@@ -62,6 +67,7 @@ def isValidLogin( username, password):
     return True
 
 from app.controllers.sessionController import endSession_required
+
 @app.route('/user/logout')
 @endSession_required
 def logout():

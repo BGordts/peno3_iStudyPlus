@@ -22,9 +22,12 @@ from app.controllers.userController import *
 from app.controllers.sessionController import *
 from app.controllers.sensorDataController import *
 from app.controllers.deviceController import *
+from app.controllers.coursController import *
+
 
 from app.models.user import User
 from app.models.session import Session
+from app.models.userStatitics import Userstatistics
 
 UPLOAD_FOLDER = '/static/images/profilePics'
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])

@@ -504,3 +504,16 @@
 	-webkit-box-shadow: inset 1px 1px 0 rgba(0, 0, 0, .14);
 	box-shadow: inset 1px 1px 0 rgba(0, 0, 0, .14);
 }
+	.axis path,
+.axis line {
+	fill: none;
+	stroke: black;
+	shape-rendering: crispEdges;
+}
+	.axis path {
+	fill: none;
+	stroke: none;
+}
+	.bar {
+	fill: steelblue;
+}
