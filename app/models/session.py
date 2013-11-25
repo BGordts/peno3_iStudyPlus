@@ -8,7 +8,7 @@ import json
 from app import app
 from app import db
 from sqlalchemy.dialects.sqlite.base import DATE
-
+from app.models.sensordata import Sensordata
 class Session(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(80))
@@ -20,12 +20,12 @@ class Session(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     user = db.relationship('User', backref=db.backref('sessions', lazy='dynamic'))
 
-    sessionEff = db.Column(db.Integer)
+    sessionEff = db.Column(db.Float)
     sessionTemp = db.Column(db.Float)
-    sessionIll = db.Column(db.Integer )
-    sessionSound = db.Column(db.Integer)
-    sessionFocus = db.Column(db.Integer)
-    sessionHum = db.Column(db.Integer)
+    sessionIll = db.Column(db.Float )
+    sessionSound = db.Column(db.Float)
+    sessionFocus = db.Column(db.Float)
+    sessionHum = db.Column(db.Float)
     
     def __init__(self, title, user, feedback_score = -1):
         self.title = title
@@ -34,6 +34,12 @@ class Session(db.Model):
         self.start_date = None
         self.end_date = None
         self.feedback_score = feedback_score
+        self.sessionEff = 0
+        self.sessionTemp = 0
+        self.sessionIll = 0
+        self.sessionSound = 0
+        self.sessionFocus = 0
+        self.sessionHum = 0
         
     def start(self):
         if(self.start_date == None):
@@ -56,20 +62,58 @@ class Session(db.Model):
             db.session.delete(self)
         db.session.commit()
     
+    def commitSession(self):
+        self.calcSessionTemp()
+        self.calcSessionHum()
+        self.calcSessionSound()
+        self.calcSessionIll()
+        self.calcSessionFocus()
+        self.calcSessionEff()
+           
     def calcSessionEff(self):
-        tempdata = SensorData.query.filter_by(session_id = self.id and sensor_type = temperature).all()
-        
-        
+        self.sessionEff = (self.sessionFocus + self.feedbackScore)/2
+        db.session.commit()
+  
     def calcSessionHum(self):
-        pass
+        tempdata = Sensordata.query.filter_by(session_id=self.id, sensor_type="humidity").all()
+        avHum = 0
+        for hum in tempdata:
+            avHum = avHum + hum
+        self.sessionHum = avHum/(len(tempdata))
+        db.session.commit()
+        
     def calcSessionTemp(self):
-        pass
+        tempdata = Sensordata.query.filter_by(session_id=self.id, sensor_type="temperature").all()
+        avTemp = 0
+        for temp in tempdata:
+            avTemp = avTemp + temp
+        self.sessionTemp = avTemp/(len(tempdata))
+        db.session.commit()
+        
     def calcSessionSound(self):
-        pass
+        tempdata = Sensordata.query.filter_by(session_id=self.id, sensor_type="sound").all()
+        avSound = 0
+        for sound in tempdata:
+            avSound = avSound + sound
+        self.sessionSound = avSound/(len(tempdata))
+        db.session.commit()
+
     def calcSessionIll(self):
-        pass
+        tempdata = Sensordata.query.filter_by(session_id=self.id, sensor_type="illumination").all()
+        avIll = 0
+        for ill in tempdata:
+            avIll = avIll + ill
+        self.sessionIll = avIll/(len(tempdata))
+        db.session.commit()
+        
     def calcSessionFocus(self):
-        pass
+        tempdata = Sensordata.query.filter_by(session_id=self.id, sensor_type="focus").all()
+        avFocus = 0
+        for focus in tempdata:
+            if(focus == True):
+                avFocus = avFocus + 1
+        self.sessionTemp = avFocus/(len(tempdata))
+        db.session.commit()
     
     def getSessionDuration(self):
         deltaTime = self.end_date - self.start_date

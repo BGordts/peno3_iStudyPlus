@@ -78,5 +78,12 @@ def postFeedback():
     sessionID = request.form['sessionID']
     Session.query.filter_by(id=session['sessionID']).first().setFeedback()
     return render_template('pages/dashboard.html')
-    
 
+@app.route('/session/commit', methods = ['GET' , 'POST'])    
+@login_required
+@endSession_required
+def commitSession():
+    "calc and save's the session avarge's"
+    sessionID = request.form['sessionID']
+    Session.query.filter_by(id=session['sessionID']).first().commitSession()
+    return render_template('pages/dashboard.html')

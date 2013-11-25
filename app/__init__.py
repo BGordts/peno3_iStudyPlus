@@ -41,5 +41,3 @@ def createTestData():
     db.session.add(admin)
     db.session.add(guest)
     db.session.commit()
-    
-createTestData()

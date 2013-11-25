@@ -12,14 +12,14 @@ class Userstatistics(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id') , unique =True)
     user = db.relationship('User', backref=db.backref('userStatistics', lazy='dynamic'))
     
-    totalTime = db.Column(db.Integer)
+    totalTime = db.Column(db.Float)
     
-    totalEff = db.Column(db.Integer)
-    totalTempAv = db.Column(db.Integer)
-    totalIllum = db.Column(db.Integer )
-    totalSound = db.Column(db.Integer)
-    totalfocus = db.Column(db.Integer)
-    totalHumAv = db.Column(db.Integer)
+    totalEff = db.Column(db.Float)
+    totalTempAv = db.Column(db.Float)
+    totalIllum = db.Column(db.Float )
+    totalSound = db.Column(db.Float)
+    totalfocus = db.Column(db.Float)
+    totalHumAv = db.Column(db.Float)
     
     lowestSessions = db.Column(db.String)
     highestSessions = db.Column(db.String)
