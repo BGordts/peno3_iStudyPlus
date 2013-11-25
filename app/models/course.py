@@ -22,6 +22,8 @@ class Course(db.Model):
         for course in Course.query.all():
             courses.append(course.course)
         return courses
+    
+    "blebleboris"
         
         
     
