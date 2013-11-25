@@ -15,11 +15,18 @@ class Session(db.Model):
     feedback_score = db.Column(db.Integer)
     start_date = db.Column(db.DateTime)
     end_date = db.Column(db.DateTime)
-    pauzes = db.Column(db.String(500))
+    pauzes = db.Column(db.String)
     
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     user = db.relationship('User', backref=db.backref('sessions', lazy='dynamic'))
 
+    sessionEff = db.Column(db.Integer)
+    sessionTemp = db.Column(db.Float)
+    sessionIll = db.Column(db.Integer )
+    sessionSound = db.Column(db.Integer)
+    sessionFocus = db.Column(db.Integer)
+    sessionHum = db.Column(db.Integer)
+    
     def __init__(self, title, user, feedback_score = -1):
         self.title = title
         self.user = user
@@ -48,7 +55,27 @@ class Session(db.Model):
         else:
             db.session.delete(self)
         db.session.commit()
+    
+    def calcSessionEff(self):
+        tempdata = SensorData.query.filter_by(session_id = self.id and sensor_type = temperature).all()
         
+        
+    def calcSessionHum(self):
+        pass
+    def calcSessionTemp(self):
+        pass
+    def calcSessionSound(self):
+        pass
+    def calcSessionIll(self):
+        pass
+    def calcSessionFocus(self):
+        pass
+    
+    def getSessionDuration(self):
+        deltaTime = self.end_date - self.start_date
+        duration = deltaTime.total_seconds()
+        return duration
+    
     def setFeedback(self, score):
         self.feedback_score = score
         db.session.commit()

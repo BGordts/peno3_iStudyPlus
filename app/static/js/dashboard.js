@@ -112,6 +112,7 @@ d3.custom.barChart = function module() {
                 svg = d3.select(this)
                     .append('svg')
                     .classed('chart', true);
+
                 var container = svg.append('g').classed('container-group', true);
                 container.append('g').classed('chart-group', true);
                 container.append('g').classed('x-axis-group axis', true);
