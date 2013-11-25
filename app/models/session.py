@@ -15,7 +15,7 @@ class Session(db.Model):
     feedback_score = db.Column(db.Integer)
     start_date = db.Column(db.DateTime)
     end_date = db.Column(db.DateTime)
-    pauzes = db.Column(db.String(500))
+    pauzes = db.Column(db.String)
     
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     user = db.relationship('User', backref=db.backref('sessions', lazy='dynamic'))
@@ -48,7 +48,12 @@ class Session(db.Model):
         else:
             db.session.delete(self)
         db.session.commit()
-        
+    
+    def getSessionDuration(self):
+        deltaTime = self.end_date - self.start_date
+        duration = deltaTime.total_seconds()
+        return duration
+    
     def setFeedback(self, score):
         self.feedback_score = score
         db.session.commit()
