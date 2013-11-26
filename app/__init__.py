@@ -23,21 +23,16 @@ from app.controllers.sessionController import *
 from app.controllers.sensorDataController import *
 from app.controllers.deviceController import *
 from app.controllers.coursController import *
-
+from app.controllers.testController import *
 
 from app.models.user import User
 from app.models.session import Session
-from app.models.userStatitics import Userstatistics
+from app.models.userStatitics import Userstatistic
 
 UPLOAD_FOLDER = '/static/images/profilePics'
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-def createTestData():
-    db.drop_all()
-    db.create_all()
-    admin = User('admin@example.com', 'admin', 'admin', 'admin')
-    guest = User('b@a.be', 'kaka', 'pipi', 'kaka')
-    db.session.add(admin)
-    db.session.add(guest)
-    db.session.commit()
+    
+    
+    

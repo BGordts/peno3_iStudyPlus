@@ -6,11 +6,8 @@ from app import db
 from app.models.session import Session
 import json
 
-class Userstatistics(db.Model):
+class Userstatistic(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id') , unique =True)
-    user = db.relationship('User', backref=db.backref('userStatistics', lazy='dynamic'))
     
     totalTime = db.Column(db.Float)
     
@@ -24,8 +21,7 @@ class Userstatistics(db.Model):
     lowestSessions = db.Column(db.String)
     highestSessions = db.Column(db.String)
     
-    def __init__(self, user):
-        self.user = user
+    def __init__(self):
         self.totalTime = 0
         self.totalEff = -1
         self.totalTempAv = -1
@@ -47,51 +43,51 @@ class Userstatistics(db.Model):
         self.totalTime = oldTotalTime + userSession.getSessionDuration()
         sessionWeight = userSession.getSessionDuration()/self.totalTime
         dataWeight = oldTotalTime/self.totalTime
-        self.totalEff = dataWeight * self.totalEff + sessionWeight * userSession.getEff()
-        self.totalfocus = dataWeight * self.totalfocus + sessionWeight * userSession.getFocus()
-        self.totalHumAv = dataWeight * self.totalHumAv + sessionWeight * userSession.getHum()
-        self.totalIllum = dataWeight * self.totalIllum + sessionWeight * userSession.getIll()
-        self.totalSound = dataWeight * self.totalSound + sessionWeight * userSession.getSound()
-        self.totalTempAv = dataWeight * self.totalTempAv + sessionWeight * userSession.getTemp()
+        self.totalEff = dataWeight * self.totalEff + sessionWeight * userSession.sessionEff
+        self.totalfocus = dataWeight * self.totalfocus + sessionWeight * userSession.sessionFocus
+        self.totalHumAv = dataWeight * self.totalHumAv + sessionWeight * userSession.sessionHum
+        self.totalIllum = dataWeight * self.totalIllum + sessionWeight * userSession.sessionIll
+        self.totalSound = dataWeight * self.totalSound + sessionWeight * userSession.sessionSound
+        self.totalTempAv = dataWeight * self.totalTempAv + sessionWeight * userSession.sessionTemp
         db.session.commit()
     
     def updateLowestSessions(self, userSession):
         lowestSessions = json.loads(self.lowestSessions)
         if(len(lowestSessions) < 5):
-            lowestSessions.extends(userSession.id)
+            lowestSessions.append(userSession.id)
         else:
             highest = 0
             i = 1
             while i <= 5:
                 hSession = Session.query.filter_by(id=lowestSessions[highest].id).first()
                 iSession = Session.query.filter_by(id=lowestSessions[i].id).first()
-                if(iSession.eff > hSession.eff ):
+                if(iSession.sessionEff > hSession.sessionEff ):
                     highest = i
                 i = i + 1
             hSession = Session.query.filter_by(id=lowestSessions[highest].id).first()
-            if(hSession.eff > userSession.eff):
+            if(hSession.sessionEff > userSession.sessionEff):
                 lowestSessions[highest] = userSession.id
-        json.dumps(lowestSessions)
+        self.lowestSessions = json.dumps(lowestSessions)
         db.session.commit()
                     
             
     def updateHighestSessions(self, userSession):
         highestSessions = json.loads(self.highestSessions)
-        if(len(lowestSessions) < 5):
-            lowestSessions.extends(userSession.id)
+        if(len(highestSessions) < 5):
+            highestSessions.append(userSession.id)
         else:
             lowest = 0
             i = 1
             while i <= 5:
                 lSession = Session.query.filter_by(id=highestSessions[lowest].id).first()
-                iSession = Session.query.filter_by(id=lowestSessions[i].id).first()
-                if(iSession.eff < lSession.eff ):
+                iSession = Session.query.filter_by(id=highestSessions[i].id).first()
+                if(iSession.sessionEff < lSession.sessionEff ):
                     lowest = i
                 i = i + 1
             lSession = Session.query.filter_by(id=highestSessions[lowest].id).first()
-            if(lSession.eff < userSession.eff):
+            if(lSession.sessionEff < userSession.sessionEff):
                 highestSessions[lowest] = userSession.id
-        json.dumps(highestSessions)
+        self.highestSessions = json.dumps(highestSessions)
         db.session.commit()
       
   
@@ -101,7 +97,7 @@ class Userstatistics(db.Model):
         temp = 0
         while(i < len(lowestSessions)):
             lSession = Session.query.filter_by(id=lowestSessions[i].id).first()
-            temp = temp + lSession.temp
+            temp = temp + lSession.sessionTemp
             i = i + 1
         return temp/(i-1)
     
@@ -111,7 +107,7 @@ class Userstatistics(db.Model):
         temp = 0
         while(i < len(highestSessions)):
             lSession = Session.query.filter_by(id=highestSessions[i].id).first()
-            temp = temp + lSession.temp
+            temp = temp + lSession.sessionTemp
             i = i + 1
         return temp/(i-1)
     
@@ -121,7 +117,7 @@ class Userstatistics(db.Model):
         temp = 0
         while(i < len(lowestSessions)):
             lSession = Session.query.filter_by(id=lowestSessions[i].id).first()
-            temp = temp + lSession.eff
+            temp = temp + lSession.sessionEff
             i = i + 1
         return temp/(i-1)
     
@@ -131,7 +127,7 @@ class Userstatistics(db.Model):
         temp = 0
         while(i < len(highestSessions)):
             lSession = Session.query.filter_by(id=highestSessions[i].id).first()
-            temp = temp + lSession.eff
+            temp = temp + lSession.sessionEff
             i = i + 1
         return temp/(i-1)
     
@@ -141,7 +137,7 @@ class Userstatistics(db.Model):
         temp = 0
         while(i < len(lowestSessions)):
             lSession = Session.query.filter_by(id=lowestSessions[i].id).first()
-            temp = temp + lSession.hum
+            temp = temp + lSession.sessionHum
             i = i + 1
         return temp/(i-1)
     
@@ -151,7 +147,7 @@ class Userstatistics(db.Model):
         temp = 0
         while(i < len(highestSessions)):
             lSession = Session.query.filter_by(id=highestSessions[i].id).first()
-            temp = temp + lSession.hum
+            temp = temp + lSession.sessionHum
             i = i + 1
         return temp/(i-1)
     
@@ -161,7 +157,7 @@ class Userstatistics(db.Model):
         temp = 0
         while(i < len(lowestSessions)):
             lSession = Session.query.filter_by(id=lowestSessions[i].id).first()
-            temp = temp + lSession.ill
+            temp = temp + lSession.sessionIll
             i = i + 1
         return temp/(i-1)
     
@@ -171,7 +167,7 @@ class Userstatistics(db.Model):
         temp = 0
         while(i < len(highestSessions)):
             lSession = Session.query.filter_by(id=highestSessions[i].id).first()
-            temp = temp + lSession.ill
+            temp = temp + lSession.sessionIll
             i = i + 1
         return temp/(i-1)
     
@@ -181,7 +177,7 @@ class Userstatistics(db.Model):
         temp = 0
         while(i < len(lowestSessions)):
             lSession = Session.query.filter_by(id=lowestSessions[i].id).first()
-            temp = temp + lSession.focus
+            temp = temp + lSession.sessionFocus
             i = i + 1
         return temp/(i-1)
     
@@ -191,7 +187,7 @@ class Userstatistics(db.Model):
         temp = 0
         while(i < len(highestSessions)):
             lSession = Session.query.filter_by(id=highestSessions[i].id).first()
-            temp = temp + lSession.focus
+            temp = temp + lSession.sessionFocus
             i = i + 1
         return temp/(i-1)
     
@@ -201,7 +197,7 @@ class Userstatistics(db.Model):
         temp = 0
         while(i < len(lowestSessions)):
             lSession = Session.query.filter_by(id=lowestSessions[i].id).first()
-            temp = temp + lSession.sound
+            temp = temp + lSession.sessionSound
             i = i + 1
         return temp/(i-1)
     
@@ -211,8 +207,9 @@ class Userstatistics(db.Model):
         temp = 0
         while(i < len(highestSessions)):
             lSession = Session.query.filter_by(id=highestSessions[i].id).first()
-            temp = temp + lSession.sound
+            temp = temp + lSession.sessionSound
             i = i + 1
         return temp/(i-1)
     
+ 
     

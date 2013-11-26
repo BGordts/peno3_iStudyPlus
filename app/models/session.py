@@ -1,6 +1,9 @@
+from __future__ import division
 from flask import *
 from flask.ext.sqlalchemy import SQLAlchemy 
 from werkzeug._internal import _log
+
+
 import time
 from datetime import datetime
 import json
@@ -9,6 +12,8 @@ from app import app
 from app import db
 from sqlalchemy.dialects.sqlite.base import DATE
 from app.models.sensordata import Sensordata
+from app.models.userStatitics import Userstatistic
+
 class Session(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(80))
@@ -69,16 +74,17 @@ class Session(db.Model):
         self.calcSessionIll()
         self.calcSessionFocus()
         self.calcSessionEff()
+        self.user.updateStatistics(self)
            
     def calcSessionEff(self):
-        self.sessionEff = (self.sessionFocus + self.feedbackScore)/2
+        self.sessionEff = (self.sessionFocus + self.feedback_score)/2
         db.session.commit()
   
     def calcSessionHum(self):
         tempdata = Sensordata.query.filter_by(session_id=self.id, sensor_type="humidity").all()
         avHum = 0
         for hum in tempdata:
-            avHum = avHum + hum
+            avHum = avHum + hum.value
         self.sessionHum = avHum/(len(tempdata))
         db.session.commit()
         
@@ -86,7 +92,7 @@ class Session(db.Model):
         tempdata = Sensordata.query.filter_by(session_id=self.id, sensor_type="temperature").all()
         avTemp = 0
         for temp in tempdata:
-            avTemp = avTemp + temp
+            avTemp = avTemp + temp.value
         self.sessionTemp = avTemp/(len(tempdata))
         db.session.commit()
         
@@ -94,7 +100,7 @@ class Session(db.Model):
         tempdata = Sensordata.query.filter_by(session_id=self.id, sensor_type="sound").all()
         avSound = 0
         for sound in tempdata:
-            avSound = avSound + sound
+            avSound = avSound + sound.value
         self.sessionSound = avSound/(len(tempdata))
         db.session.commit()
 
@@ -102,7 +108,7 @@ class Session(db.Model):
         tempdata = Sensordata.query.filter_by(session_id=self.id, sensor_type="illumination").all()
         avIll = 0
         for ill in tempdata:
-            avIll = avIll + ill
+            avIll = avIll + ill.value
         self.sessionIll = avIll/(len(tempdata))
         db.session.commit()
         
@@ -110,9 +116,9 @@ class Session(db.Model):
         tempdata = Sensordata.query.filter_by(session_id=self.id, sensor_type="focus").all()
         avFocus = 0
         for focus in tempdata:
-            if(focus == True):
+            if(focus.value == 1):
                 avFocus = avFocus + 1
-        self.sessionTemp = avFocus/(len(tempdata))
+        self.sessionFocus = avFocus/(len(tempdata))
         db.session.commit()
     
     def getSessionDuration(self):
