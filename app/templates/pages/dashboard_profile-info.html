@@ -1,0 +1,484 @@
+{% extends "pages/navigation.html" %} {% block content %}
+<script type="text/ng-template" id="dashboard_course-list.tpl">
+	<div class="panel panel-default">
+	<!--start panel heading-->
+	<div class="row panel-heading">
+		<!--start panel-heading content-->
+		<!--start view mode-->
+		<div data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+			<div class="col-md-8 pull-left row">
+				<h2 class="panel-title">Collapsible Group Item #1</h2>
+				<span class="label label-default">Studie</span>
+				<div class="row">
+					<div class="col-sm-4 input-group" id='datepicker'>dd/mm/jjjj</div>
+					<div class="col-sm-4 input-group" id="starttimepicker">hh:mm pm</div>
+					<div class="col-sm-4 input-group" id="endtimepicker">hh:mm pm</div>
+				</div>
+			</div>
+			<div class="pull-right">
+				<div class="pull-right">
+					<div class="is_square-80">feedback gebruiker</div>
+				</div>
+				<div class="pull-right">
+					<div class="is_square-80">efficiëntiescore</div>
+				</div>
+			</div>
+			<div class="clearfix xs-visible"></div>
+		</div>
+		<!--end view mode-->
+		<div class="clearfix xs-visible"></div>
+	</div>
+	<!--end panel heading-->
+	<!--start panel body-->
+	<div id="collapseOne" class="panel-collapse collapse in">
+		<div class="panel-body">
+			<div class="row">
+				<div class="col-md-6 is_no-padding">
+					<div class="col-sm-6">light
+						<div>lamp svg</div>
+						<div class="is_row-square">
+							<div class="pull-left">
+								<div class="is_square-40">best</div>
+							</div>
+							<div class="pull-left">
+								<div class="is_square-40">worst</div>
+							</div>
+						</div>
+						<div class="clearfix xs-visible"></div>
+						<div class="is_row-square is_compare">
+							<div class="pull-left">
+								<div class="is_square-40">best</div>
+							</div>
+							<div class="pull-left">
+								<div class="is_square-40">worst</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-6">sound
+						<div>speaker svg</div>
+						<div class="is_row-square">
+							<div class="pull-left">
+								<div class="is_square-40">best</div>
+							</div>
+							<div class="pull-left">
+								<div class="is_square-40">worst</div>
+							</div>
+						</div>
+						<div class="clearfix xs-visible"></div>
+						<div class="is_row-square is_compare">
+							<div class="pull-left">
+								<div class="is_square-40">best</div>
+							</div>
+							<div class="pull-left">
+								<div class="is_square-40">worst</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6 is_no-padding">
+					<div class="col-sm-6">temperature
+						<div>thermometer svg</div>
+						<div class="is_row-square">
+							<div class="pull-left">
+								<div class="is_square-40">best</div>
+							</div>
+							<div class="pull-left">
+								<div class="is_square-40">worst</div>
+							</div>
+						</div>
+						<div class="clearfix xs-visible"></div>
+						<div class="is_row-square is_compare">
+							<div class="pull-left">
+								<div class="is_square-40">best</div>
+							</div>
+							<div class="pull-left">
+								<div class="is_square-40">worst</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-6">humidity
+						<div>water drop svg</div>
+						<div class="is_row-square">
+							<div class="pull-left">
+								<div class="is_square-40">best</div>
+							</div>
+							<div class="pull-left">
+								<div class="is_square-40">worst</div>
+							</div>
+						</div>
+						<div class="clearfix xs-visible"></div>
+						<div class="is_row-square is_compare">
+							<div class="pull-left">
+								<div class="is_square-40">best</div>
+							</div>
+							<div class="pull-left">
+								<div class="is_square-40">worst</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--end sensor data-->
+			<div class="row">
+				<div class="col-sm-12">Cameragegevens</div>
+				<div class="col-sm-6">efficiëntie%
+					<div class="is_row-square">
+						<div class="pull-left">
+							<div class="is_square-40">best</div>
+						</div>
+						<div class="pull-left">
+							<div class="is_square-40">worst</div>
+						</div>
+					</div>
+					<div class="clearfix xs-visible"></div>
+					<div class="is_row-square is_compare">
+						<div class="pull-left">
+							<div class="is_square-40">best</div>
+						</div>
+						<div class="pull-left">
+							<div class="is_square-40">worst</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-6">pauze%
+					<div class="is_row-square">
+						<div class="pull-left">
+							<div class="is_square-40">best</div>
+						</div>
+						<div class="pull-left">
+							<div class="is_square-40">worst</div>
+						</div>
+					</div>
+					<div class="clearfix xs-visible"></div>
+					<div class="is_row-square is_compare">
+						<div class="pull-left">
+							<div class="is_square-40">best</div>
+						</div>
+						<div class="pull-left">
+							<div class="is_square-40">worst</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--end camera stats-->
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="pull-left">
+						<h2>Title</h2>
+					</div>
+					<div class="pull-right">select x-axis</div>
+					<div class="clearfix xs-visible"></div>
+					<div>graph met 2 lijnen
+						<div ng-controller="mainCtrl">
+							<chart-form></chart-form>
+							<bar-chart height="options.height" data="data" hovered="hovered(args)"></bar-chart>
+							<!--<bar-chart height="300" data="data" hovered="hovered(args)></bar-chart>-->
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--variable graph-->
+		</div>
+		<!--panelbody-->
+	</div>
+</div>
+</script>
+<script type="text/ng-template" id="dashboard_session-list.tpl">
+	<div class="panel panel-default">
+	<!--start panel heading-->
+	<div class="row panel-heading" ng-class="{edit : panelState=='edit'}" ng-switch="panelState">
+		<!--start left menu-->
+		<div class="btn-group-vertical menu-left">
+			<label class="btn btn-info" ng-class="{active : sessionType=='future'}">
+				<input type="radio" ng-model="sessionType" value="future">
+				<span class="fi-future"></span>
+			</label>
+			<label class="btn btn-success" ng-class="{active : sessionType=='live'}">
+				<input type="radio" ng-model="sessionType" value="live">
+				<span class="glyphicon glyphicon-play"></span>
+			</label>
+			<label class="btn btn-warning" ng-class="{active : sessionType=='past'}">
+				<input type="radio" ng-model="sessionType" value="past">
+				<span class="fi-history"></span>
+			</label>
+		</div>
+		<!--end left menu-->
+		<!--start panel-heading content-->
+		<!--start view mode-->
+		<div ng-switch-when="view" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+			<div class="col-md-8 pull-left row">
+				<h2 class="panel-title">Collapsible Group Item #1</h2>
+				<span class="label label-default">Studie</span>
+				<div class="row">
+					<div class="col-sm-4 input-group" id='datepicker'>dd/mm/jjjj</div>
+					<div class="col-sm-4 input-group" id="starttimepicker">hh:mm pm</div>
+					<div class="col-sm-4 input-group" id="endtimepicker">hh:mm pm</div>
+				</div>
+			</div>
+			<div class="pull-right">
+				<div class="pull-right">
+					<div class="is_square-80">feedback gebruiker</div>
+				</div>
+				<div class="pull-right">
+					<div class="is_square-80">efficiëntiescore</div>
+				</div>
+			</div>
+			<div class="clearfix xs-visible"></div>
+		</div>
+		<!--end view mode-->
+		<!--start edit mode-->
+		<div ng-switch-when="edit" ng-model="activityType">
+			<div class="col-md-8 pull-left row">
+				<textarea class="form-control" rows="1" placeholder="Beschrijving"></textarea>
+				<div class="btn-group">
+					<label class="btn btn-primary" ng-class="{active : activityType=='class'}">
+						<input type="radio" ng-model="activityType" value="class">Les</label>
+					<label class="btn btn-primary" ng-class="{active : activityType=='study'}">
+						<input type="radio" ng-model="activityType" value="study">Studie</label>
+				</div>
+				<div class="row">
+					<div class="col-sm-4 input-group" id='datepicker'>
+						<input type='text' class="form-control" data-format="DD/MM/YYYY" placeholder="dd/mm/jjjj" />
+						<span class="input-group-addon">
+							<span class="glyphicon glyphicon-calendar"></span>
+						</span>
+					</div>
+					<div class="col-sm-4 input-group" id="starttimepicker">
+						<input type='text' class="form-control" placeholder="hh:mm" />
+						<span class="input-group-addon">
+							<span class="glyphicon glyphicon-time"></span>
+						</span>
+					</div>
+					<div class="col-sm-4 input-group" id="endtimepicker">
+						<input type='text' class="form-control" placeholder="hh:mm" />
+						<span class="input-group-addon">
+							<span class="glyphicon glyphicon-time"></span>
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class="pull-right">
+				<div class="pull-right">
+					<div class="is_square-80">
+						<textarea class="form-control" rows="3" placeholder="Feedback gebruiker"></textarea>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--end edit mode-->
+		<button type="button" class="btn is_edit-btn" ng-click="panelState='edit'">
+			<span class="glyphicon glyphicon-pencil"></span>
+		</button>
+		<!--start right menu-->
+		<div class="btn-group-vertical menu-right">
+			<button type="button" class="btn btn-default" ng-click="panelState='view'">
+				<span class="glyphicon glyphicon-ok"></span>
+			</button>
+			<button type="button" class="btn btn-default">
+				<span class="glyphicon glyphicon-remove"></span>
+			</button>
+			<button type="button" class="btn btn-default">
+				<span class="glyphicon glyphicon-trash"></span>
+			</button>
+		</div>
+		<!--end right menu-->
+		<div class="clearfix xs-visible"></div>
+	</div>
+	<!--end panel heading-->
+	<!--start panel body-->
+	<div id="collapseOne" class="panel-collapse collapse in">
+		<div class="panel-body">
+			<div class="row">
+				<div class="col-md-6 is_no-padding">
+					<div class="col-sm-6">light
+						<div>lamp svg</div>
+						<div class="is_row-square">
+							<div class="pull-left">
+								<div class="is_square-40">best</div>
+							</div>
+							<div class="pull-left">
+								<div class="is_square-40">worst</div>
+							</div>
+						</div>
+						<div class="clearfix xs-visible"></div>
+					</div>
+					<div class="col-sm-6">sound
+						<div>speaker svg</div>
+						<div class="is_row-square">
+							<div class="pull-left">
+								<div class="is_square-40">best</div>
+							</div>
+							<div class="pull-left">
+								<div class="is_square-40">worst</div>
+							</div>
+						</div>
+						<div class="clearfix xs-visible"></div>
+					</div>
+				</div>
+				<div class="col-md-6 is_no-padding">
+					<div class="col-sm-6">temperature
+						<div>thermometer svg</div>
+						<div class="is_row-square">
+							<div class="pull-left">
+								<div class="is_square-40">best</div>
+							</div>
+							<div class="pull-left">
+								<div class="is_square-40">worst</div>
+							</div>
+						</div>
+						<div class="clearfix xs-visible"></div>
+					</div>
+					<div class="col-sm-6">humidity
+						<div>water drop svg</div>
+						<div class="is_row-square">
+							<div class="pull-left">
+								<div class="is_square-40">best</div>
+							</div>
+							<div class="pull-left">
+								<div class="is_square-40">worst</div>
+							</div>
+						</div>
+						<div class="clearfix xs-visible"></div>
+					</div>
+				</div>
+			</div>
+			<!--end sensor data-->
+			<div class="row">
+				<div class="col-sm-12">Cameragegevens</div>
+				<div class="col-sm-6">efficiëntie%
+					<div class="is_row-square">
+						<div class="pull-left">
+							<div class="is_square-40">best</div>
+						</div>
+						<div class="pull-left">
+							<div class="is_square-40">worst</div>
+						</div>
+					</div>
+					<div class="clearfix xs-visible"></div>
+				</div>
+				<div class="col-sm-6">pauze%
+					<div class="is_row-square">
+						<div class="pull-left">
+							<div class="is_square-40">best</div>
+						</div>
+						<div class="pull-left">
+							<div class="is_square-40">worst</div>
+						</div>
+					</div>
+					<div class="clearfix xs-visible"></div>
+				</div>
+			</div>
+			<!--end camera stats-->
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="pull-left">
+						<h2>Title</h2>
+					</div>
+					<div class="pull-right">select x-axis</div>
+					<div class="clearfix xs-visible"></div>
+					<div>graph met 2 lijnen
+						<div ng-controller="mainCtrl">
+							<chart-form></chart-form>
+							<bar-chart height="options.height" data="data" hovered="hovered(args)"></bar-chart>
+							<!--<bar-chart height="300" data="data" hovered="hovered(args)></bar-chart>-->
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--variable graph-->
+		</div>
+		<!--panelbody-->
+	</div>
+	<!--end panel-body-wrap-->
+</div>
+</script>
+<div class="row">
+	<div class="is_content is_follow-navbar is_follow-sidepanel is_follow-sidepanel-style">
+		<div class="col-xs-12 is_header" style="background-image: url({{url_for('static', filename='header_img2.jpg')}})">
+			<div class="col-sm-6 is_profile-info">
+				<div class="is_info-background">
+					<div class="is_profile-pic-container">
+						<img class="img-rounded img-responsive" src="https://graph.facebook.com/jacobspelle/picture?width=200&height=200"></img>
+					</div>
+					<div class="is_info">
+						<h2>First name Last name</h2>
+						<a href="#">University</a>
+						<br>Study
+						<span class="badge">phase</span>
+						<br>Study
+						<span class="badge">phase</span>
+						<br>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-6"></div>
+		</div>
+		<div class="is_user-abstract is_follow-navbar affix-top" data-spy="affix" data-offset-top="309">
+			<div class="is_profile-pic-container">
+				<img class="img-rounded img-responsive" src="https://graph.facebook.com/jacobspelle/picture?width=200&height=200"></img>
+			</div>
+			<h4>First name Last name</h4>
+		</div>
+		<div class="is_content-actions is_follow-navbar" data-spy="affix" data-offset-top="309">
+			<ol class="breadcrumb">
+				<li>
+					<a href="#">
+						<i class="fi-home large"></i>
+						<span class="hidden-xs">Dashboard</span>
+					</a>
+				</li>
+				<li>
+					<a>
+						<i class="fi-book large"></i>
+						<span>Vak</span>
+					</a>
+				</li>
+			</ol>
+			<div class="btn-group">
+				<button type="button" class="btn">Action</button>
+				<button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
+					<span class="caret"></span>
+					<span class="sr-only">Toggle Dropdown</span>
+				</button>
+				<ul class="dropdown-menu pull-right" role="menu">
+					<li>
+						<a href="#">Action</a>
+					</li>
+					<li>
+						<a href="#">Another action</a>
+					</li>
+					<li>
+						<a href="#">Something else here</a>
+					</li>
+					<li class="divider"></li>
+					<li>
+						<a href="#">Separated link</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="container" style="max-width:100%">
+			<div class="panel-group" id="accordion">
+				<coursepanel ng-repeat="item in courselist"></coursepanel>
+				<sessionpanel ng-repeat="item in sessionlist"></sessionpanel>
+			</div>
+		</div>
+		<div class="is_footer">
+			<div class="container" style="max-width:100%">
+				<img src="{{url_for('static', filename='footer-top.svg')}}"></img>
+			</div>
+			<div class="container is_no-padding" style="max-width:100%">
+				<div class="col-sm-6 is_no-padding">
+					<div class="col-xs-6">logo</div>
+					<div class="col-xs-6">sociaal</div>
+				</div>
+				<div class="col-sm-6 is_no-padding">
+					<div class="col-xs-6">over</div>
+					<div class="col-xs-6">contact</div>
+				</div>
+				<div class="clearfix xs-visible"></div>
+				<div class="is_legal">Copyright 2013 - iStudy+</div>
+			</div>
+		</div>
+	</div>
+</div>{% endblock %}

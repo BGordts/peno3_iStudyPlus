@@ -1,0 +1,51 @@
+{% extends "pages/navigation.html" %} {% block content %}
+<div class="container">
+	<div class="col-md-4">
+		<form method="POST" action="/user/settings" class="form-signin">
+			<h2 class="form-signin-heading">Uw accountgegevens</h2>
+			<input type="Username" class="form-control" placeholder="First name" name="name" required>
+			<input type="Username" class="form-control" placeholder="Last Name" name="lastname" required>
+			<!-- <select type="Education" class="form-control" placeholder="Institution" required>
+                <option>Institution</option>
+                <option>KULeuven</option>
+                <option>lol</option>
+                <option>lol2</option> --></select>
+			<select type="text" class="form-control" placeholder="opleiding" required>
+				<option>Opleiding</option>
+				<option>Burgerlijk Ingenieur</option>
+			</select>
+			<input type="email" class="form-control" placeholder="Email address" name="email" required>
+			<input type="password" class="form-control" placeholder="Password" name="pass1" required>
+			<input type="password" class="form-control" placeholder="Confirm password" name="pass2" required>
+
+			<button class="btn btn-lg btn-primary btn-block" type="submit">Change Accountsettings</button>
+		</form>
+	</div>
+	<div class="col-md-4">
+		<h2>Verander uw profielfoto</h2>
+		<div class="profile">
+			<div class="profile-avatar-wrap">
+				<img src="{{url_for('static', filename='256.jpg')}}" id="profile-avatar" alt="Image for Profile">
+			</div>
+			<span class="btn btn-default btn-file">Browse
+				<input type="file" id="uploader">
+			</span>
+		</div>
+		<p>Sleep een afbeelding naar deze pagina, of selcecteer een bestand.</p>
+	</div>
+	<div class="col-md-4">
+		<div id="container">
+			<h2>Koppel een iStudy+device</h2>
+			<div>
+				<video id="sourcevid">
+					<p>This application requires an HTML5
+						<code>&lt;video&gt;</code>capable browser…</p>
+				</video>
+			</div>
+			<div id="out"></div>
+		</div>
+		<!-- Uses https://github.com/LazarSoft/jsqrcode LazarSoft's jsQRcode implementation -->
+		<script src="{{url_for('static', filename='js/lib/qr.min.js')}}"></script>
+		<script src="{{url_for('static', filename='js/script.js')}}"></script>
+	</div>
+</div>{% endblock %}

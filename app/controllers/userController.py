@@ -41,7 +41,7 @@ def add_course():
 
 @app.route('/home')
 def home():
-    return render_template('pages/dashboard.html')
+    return render_template('pages/dashboard_profile-info.html')
 
 @app.route('/welcome')
 @login_required
@@ -121,7 +121,7 @@ def changeProfilPic():
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
-           
+
 @app.route('/user/settings' , methods = ['GET','POST'])
 @login_required
 def changeUserinfo():
@@ -150,7 +150,7 @@ def changeUserinfo():
             errors = errors + {"password" : error}
     if not((errors and True) or False):
         user.changeSetting(self , email , name , surname , password)
-    return render_template('pages/changeUserInfo.html' , errors = errors)
+    return render_template('pages/settings_page.html' , errors = errors)
 
 def searchUser(Username):
     user = User.query.filter_by()
