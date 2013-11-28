@@ -48,6 +48,10 @@ def home():
 def welcome():
     return render_template('pages/dashboard.html')
 
+@app.route('/home2')
+def welcome2():
+    return render_template('pages/dashboard.html')
+
 @app.route('/user/login' , methods=['GET','POST'])
 @logout_required
 def login():
@@ -125,33 +129,37 @@ def allowed_file(filename):
 @app.route('/user/settings' , methods = ['GET','POST'])
 @login_required
 def changeUserinfo():
-    user = User.query.filter_by(id=session['userID']).first()
-    errors = {}
-    email = request.form['email']
-    name = request.form['name']
-    lastname = request.form['lastname']
-    oldPass = request.form['oldPass']
-    pass1 = request.form['pass1']
-    pass2 = request.form['pass2']
-    if(email == None):
-        email = user.email
-    if(name == None):
-        name = user.surname
-    if(lastName == None):
-        lastName = user.name
-    if(oldPass == None):
-        pass1 = user.password
-        pass2 = user.password
-    if not(user.password == oldPass):
-        error = 'The old password you entered did not match'
-        errors = errors + {"password" : error}
-    if not isValidPass(pass1,pass2):
-            error = 'The passwords you entered did not match'
+    if request.method == 'POST':
+        user = User.query.filter_by(id=session['userID']).first()
+        errors = {}
+        email = request.form['email']
+        name = request.form['name']
+        lastname = request.form['lastname']
+        oldPass = request.form['oldPass']
+        pass1 = request.form['pass1']
+        pass2 = request.form['pass2']
+        if(email == None):
+            email = user.email
+        if(name == None):
+            name = user.surname
+        if(lastName == None):
+            lastName = user.name
+        if(oldPass == None):
+            pass1 = user.password
+            pass2 = user.password
+        if not(user.password == oldPass):
+            error = 'The old password you entered did not match'
             errors = errors + {"password" : error}
-    if not((errors and True) or False):
-        user.changeSetting(self , email , name , surname , password)
-    return render_template('pages/settings_page.html' , errors = errors)
-
+        if not isValidPass(pass1,pass2):
+                error = 'The passwords you entered did not match'
+                errors = errors + {"password" : error}
+        if not((errors and True) or False):
+            user.changeSetting(self , email , name , surname , password)
+            
+        return render_template('pages/settings_page.html' , errors = errors)
+    else:
+        return render_template('pages/settings_page.html')
+    
 def searchUser(Username):
     user = User.query.filter_by()
     

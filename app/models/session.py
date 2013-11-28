@@ -3,7 +3,6 @@ from flask import *
 from flask.ext.sqlalchemy import SQLAlchemy 
 from werkzeug._internal import _log
 
-
 import time
 from datetime import datetime
 import json
@@ -32,10 +31,6 @@ class Session(db.Model):
     sessionSound = db.Column(db.Float)
     sessionFocus = db.Column(db.Float)
     sessionHum = db.Column(db.Float)
-    sessionIll = db.Column(db.Integer)
-    sessionSound = db.Column(db.Integer)
-    sessionFocus = db.Column(db.Integer)
-    sessionHum = db.Column(db.Integer)
     
     def __init__(self, title, user, feedback_score = -1):
         self.title = title
@@ -106,6 +101,19 @@ class Session(db.Model):
         self.calcSessionFocus()
         self.calcSessionEff()
         self.user.updateStatistics(self)
+        
+    def outputSensorData(self, sensor):
+        sensorData = Sensordata.query.filter_by(session=self).filter_by(sensor_type=sensor).all()
+        
+        _log("info", "sensordata: " + sensorData[0].__str__())
+        returnList = []
+        
+        for i in range(0,len(sensorData)):
+            returnList.append(sensorData[i].output())       
+        
+        _log("info", "sensordata: " + returnList.__repr__())
+        
+        return returnList
            
     def calcSessionEff(self):
         self.sessionEff = (self.sessionFocus + self.feedback_score)/2
