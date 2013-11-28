@@ -167,12 +167,18 @@
 					<div class="pull-right">select x-axis</div>
 					<div class="clearfix xs-visible"></div>
 					<div>graph met 2 lijnen
-						<div ng-controller="mainCtrl">
-							<chart-form></chart-form>
-							<bar-chart height="options.height" data="data" hovered="hovered(args)"></bar-chart>
-							<!--<bar-chart height="300" data="data" hovered="hovered(args)></bar-chart>-->
-						</div>
-					</div>
+                        <div>
+                            <select>
+                                <option ng-model="graphOptions" value="option1">option1
+                                </option>
+                                <option ng-model="graphOptions" value="option2">option2
+                                </option>
+                                <option ng-model="graphOptions" value="option3">option3
+                                </option>
+                            </select>
+                            <dynamic-graph height="options.height" data="chartdata" hovered="hovered(args)"></dynamic-graph>
+                            <!--<bar-chart height="300" data="data" hovered="hovered(args)></bar-chart>-->
+                        </div>
 				</div>
 			</div>
 			<!--variable graph-->

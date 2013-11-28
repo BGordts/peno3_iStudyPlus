@@ -5,23 +5,173 @@
 'use strict';
 
 //alert('boe');
-angular.module('app', []).config(function($interpolateProvider){
-        $interpolateProvider.startSymbol('[[').endSymbol(']]');
-    }
-).
+angular.module('app', []).config(function ($interpolateProvider) {
+    $interpolateProvider.startSymbol('[[').endSymbol(']]');
+}).
 
 controller('appCtrl', function ($scope) {
-	//alert('boe');
-	console.log('boe');
-	$scope.panelState = "view";
-	$scope.sessionType = "live";
-	$scope.activityType ="study";
-	$scope.courselist = [[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]];
-	$scope.sessionlist = [[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]];
-	/*alert('zever');*/
-	$scope.name = "You";
-	$scope.commonStudents = [{"name":"ik"},{"name":"jij"},{"name":"hij"},{"name":"of zij"},{"name":"jeroen"},{"name":"ik"},{"name":"jij"},{"name":"hij"},{"name":"of zij"},{"name":"jeroen"},{"name":"ik"},{"name":"jij"},{"name":"hij"},{"name":"of zij"},{"name":"jeroen"},{"name":"ik"},{"name":"jij"},{"name":"hij"},{"name":"of zij"},{"name":"jeroen"},{"name":"ik"},{"name":"jij"},{"name":"hij"},{"name":"of zij"},{"name":"jeroen"},{"name":"ik"},{"name":"jij"},{"name":"hij"},{"name":"of zij"},{"name":"jeroen"},{"name":"ik"},{"name":"jij"},{"name":"hij"},{"name":"of zij"},{"name":"jeroen"},{"name":"ik"},{"name":"jij"},{"name":"hij"},{"name":"of zij"},{"name":"jeroen"},{"name":"ik"},{"name":"jij"},{"name":"hij"},{"name":"of zij"},{"name":"jeroen"},{"name":"ik"},{"name":"jij"},{"name":"hij"},{"name":"of zij"},{"name":"jeroen"},{"name":"ik"},{"name":"jij"},{"name":"hij"},{"name":"of zij"},{"name":"jeroen"},{"name":"ik"},{"name":"jij"},{"name":"hij"},{"name":"of zij"},{"name":"jeroen"},{"name":"ik"},{"name":"jij"},{"name":"hij"},{"name":"of zij"},{"name":"jeroen"},{"name":"ik"},{"name":"jij"},{"name":"hij"},{"name":"of zij"},{"name":"jeroen"},{"name":"ik"},{"name":"jij"},{"name":"hij"},{"name":"of zij"},{"name":"jeroen"}]
-})/*.
+    //alert('boe');
+    console.log('boe');
+    $scope.panelState = "view";
+    $scope.sessionType = "live";
+    $scope.activityType = "study";
+    $scope.courselist = [{'data': [1,2,3,4]}, [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], []];
+    $scope.sessionlist = [{data: [1,2,3,4]}, [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], []];
+    /*alert('zever');*/
+    $scope.name = "You";
+    $scope.commonStudents = [{
+        "name": "ik"
+    }, {
+        "name": "jij"
+    }, {
+        "name": "hij"
+    }, {
+        "name": "of zij"
+    }, {
+        "name": "jeroen"
+    }, {
+        "name": "ik"
+    }, {
+        "name": "jij"
+    }, {
+        "name": "hij"
+    }, {
+        "name": "of zij"
+    }, {
+        "name": "jeroen"
+    }, {
+        "name": "ik"
+    }, {
+        "name": "jij"
+    }, {
+        "name": "hij"
+    }, {
+        "name": "of zij"
+    }, {
+        "name": "jeroen"
+    }, {
+        "name": "ik"
+    }, {
+        "name": "jij"
+    }, {
+        "name": "hij"
+    }, {
+        "name": "of zij"
+    }, {
+        "name": "jeroen"
+    }, {
+        "name": "ik"
+    }, {
+        "name": "jij"
+    }, {
+        "name": "hij"
+    }, {
+        "name": "of zij"
+    }, {
+        "name": "jeroen"
+    }, {
+        "name": "ik"
+    }, {
+        "name": "jij"
+    }, {
+        "name": "hij"
+    }, {
+        "name": "of zij"
+    }, {
+        "name": "jeroen"
+    }, {
+        "name": "ik"
+    }, {
+        "name": "jij"
+    }, {
+        "name": "hij"
+    }, {
+        "name": "of zij"
+    }, {
+        "name": "jeroen"
+    }, {
+        "name": "ik"
+    }, {
+        "name": "jij"
+    }, {
+        "name": "hij"
+    }, {
+        "name": "of zij"
+    }, {
+        "name": "jeroen"
+    }, {
+        "name": "ik"
+    }, {
+        "name": "jij"
+    }, {
+        "name": "hij"
+    }, {
+        "name": "of zij"
+    }, {
+        "name": "jeroen"
+    }, {
+        "name": "ik"
+    }, {
+        "name": "jij"
+    }, {
+        "name": "hij"
+    }, {
+        "name": "of zij"
+    }, {
+        "name": "jeroen"
+    }, {
+        "name": "ik"
+    }, {
+        "name": "jij"
+    }, {
+        "name": "hij"
+    }, {
+        "name": "of zij"
+    }, {
+        "name": "jeroen"
+    }, {
+        "name": "ik"
+    }, {
+        "name": "jij"
+    }, {
+        "name": "hij"
+    }, {
+        "name": "of zij"
+    }, {
+        "name": "jeroen"
+    }, {
+        "name": "ik"
+    }, {
+        "name": "jij"
+    }, {
+        "name": "hij"
+    }, {
+        "name": "of zij"
+    }, {
+        "name": "jeroen"
+    }, {
+        "name": "ik"
+    }, {
+        "name": "jij"
+    }, {
+        "name": "hij"
+    }, {
+        "name": "of zij"
+    }, {
+        "name": "jeroen"
+    }, {
+        "name": "ik"
+    }, {
+        "name": "jij"
+    }, {
+        "name": "hij"
+    }, {
+        "name": "of zij"
+    }, {
+        "name": "jeroen"
+    }]
+})
+/*.
 
 directive('dashboardPanel', function ($scope) {
 	return {
@@ -31,88 +181,113 @@ directive('dashboardPanel', function ($scope) {
 	}
 })*/
 
-.directive("coursepanel", function() {
-	return {
-		restrict: 'EA',
-		replace: true,
-		templateUrl: "dashboard_course-list.tpl",
-		link: function() {
+.directive("coursepanel", function () {
+    return {
+        restrict: 'EA',
+        replace: true,
+        templateUrl: "dashboard_course-list.tpl",
+        link: function () {
 
-		},
-		controller:
-	}
+            },
+        controller: function ($scope) {
+            $scope.chartdata = $scope.item.data;
+            console.log($scope.chartdata)
+        },
+    }
 })
 
-.directive("sessionpanel", function() {
-	return {
-		restrict: 'EA',
-		replace: true,
-		templateUrl: "dashboard_session-list.tpl",
-		link: function() {
+.directive("sessionpanel", function () {
+    return {
+        restrict: 'EA',
+        replace: true,
+        templateUrl: "dashboard_session-list.tpl",
+        link: function () {
 
-		},
-		controller:
-	}
+        },
+        controller: function ($scope) {
+            $scope.chartdata = $scope.item.data;
+            console.log($scope.chartdata)
+        }
+    }
 })
 
-.controller('mainCtrl', function AppCtrl ($scope) {
-            $scope.options = {width: 500, height: 300, 'bar': 'aaa'};
-            $scope.data = [1, 2, 3, 4];
-            $scope.hovered = function(d){
-                $scope.barValue = d;
-                $scope.$apply();
-            };
-            $scope.barValue = 'None';
-        })
-        .directive('barChart', function(){
-            var chart = d3.custom.barChart();
-            return {
-                restrict: 'E',
-                replace: true,
-                template: '<div class="chart"></div>',
-                scope:{
-                    height: '=height',
-                    data: '=data',
-                    hovered: '&hovered'
-                },
-                link: function(scope, element, attrs) {
-                    var chartEl = d3.select(element[0]);
-                    chart.on('customHover', function(d, i){
-                        scope.hovered({args:d});
+/*.controller('mainCtrl', function AppCtrl($scope) {
+    $scope.options = {
+        width: 500,
+        height: 300,
+        'bar': 'aaa'
+    };
+    $scope.data = [1, 2, 3, 4];
+    console.log(data)
+    $scope.hovered = function (d) {
+        $scope.barValue = d;
+        $scope.$apply();
+    };
+    $scope.barValue = 'None'; 
+}) */
+    .directive('dynamicGraph', function () {
+        var chart = d3.custom.barChart();
+        return {
+            restrict: 'E',
+            replace: true,
+            template: '<div class="chart"></div>',
+            scope: {
+                height: '=height',
+                data: '=',
+                hovered: '&hovered'
+            },
+            link: function (scope, element, attrs) {
+              /*  console.log(attrs.data) */
+                var chartEl = d3.select(element[0]);
+                chart.on('customHover', function (d, i) {
+                    scope.hovered({
+                        args: d
                     });
+                });
+chartEl.datum([1,2,3,4]).call(chart)
+                scope.$watch(attrs.data, function (newVal, oldVal) {
+                    chartEl.datum(newVal).call(chart);
+                });
 
-                    scope.$watch('data', function (newVal, oldVal) {
-                        chartEl.datum(newVal).call(chart);
+                scope.$watch('height', function (d, i) {
+                    chartEl.call(chart.height(scope.height));
+                })
+            }
+        }
+    })
+/*    .directive('chartForm', function () {
+        return {
+            restrict: 'E',
+            replace: true,
+            controller: function AppCtrl($scope) {
+                $scope.update = function (d, i) {
+                    $scope.data = randomData();
+                };
+
+                function randomData() {
+                    return d3.range(~~(Math.random() * 50) + 1).map(function (d, i) {
+                        return~~ (Math.random() * 1000);
                     });
-
-                    scope.$watch('height', function(d, i){
-                        chartEl.call(chart.height(scope.height));
-                    })
                 }
-            }
-        })
-        .directive('chartForm', function(){
-            return {
-                restrict: 'E',
-                replace: true,
-                controller: function AppCtrl ($scope) {
-                    $scope.update = function(d, i){ $scope.data = randomData(); };
-                    function randomData(){
-                        return d3.range(~~(Math.random()*50)+1).map(function(d, i){return ~~(Math.random()*1000);});
-                    }
-                },
-                template: '<div class="form">' +
-                        'Height: {{options.height}}<br />' +
-                        '<input type="range" ng-model="options.height" min="100" max="800"/>' +
-                        '<br /><button ng-click="update()">Update Data</button>' +
-                        '<br />Hovered bar data: {{barValue}}</div>'
-            }
-        });
+            },
+            template: '<div class="form">' +
+                'Height: {{options.height}}<br />' +
+                '<input type="range" ng-model="options.height" min="100" max="800"/>' +
+                '<br /><button ng-click="update()">Update Data</button>' +
+                '<br />Hovered bar data: {{barValue}}</div>'
+        }
+    });*/
+              
 
-       d3.custom = {};
+d3.custom = {};
 
 d3.custom.barChart = function module() {
-    var margin = {top: 20, right: 20, bottom: 40, left: 40},
+    var margin = {
+        top: 20,
+        right: 20,
+        bottom: 40,
+        left: 40
+    },
         width = 500,
         height = 500,
         gap = 0,
@@ -120,18 +295,24 @@ d3.custom.barChart = function module() {
     var svg, duration = 500;
 
     var dispatch = d3.dispatch('customHover');
+
     function exports(_selection) {
-        _selection.each(function(_data) {
+        _selection.each(function (_data) {
+            
 
             var chartW = width - margin.left - margin.right,
                 chartH = height - margin.top - margin.bottom;
 
             var x1 = d3.scale.ordinal()
-                .domain(_data.map(function(d, i){ return i; }))
+                .domain(_data.map(function (d, i) {
+                    return i;
+                }))
                 .rangeRoundBands([0, chartW], .1);
 
             var y1 = d3.scale.linear()
-                .domain([0, d3.max(_data, function(d, i){ return d; })])
+                .domain([0, d3.max(_data, function (d, i) {
+                    return d;
+                })])
                 .range([chartH, 0]);
 
             var xAxis = d3.svg.axis()
@@ -144,7 +325,7 @@ d3.custom.barChart = function module() {
 
             var barW = chartW / _data.length;
 
-            if(!svg) {
+            if (!svg) {
                 svg = d3.select(this)
                     .append('svg')
                     .classed('chart', true);
@@ -155,15 +336,22 @@ d3.custom.barChart = function module() {
                 container.append('g').classed('y-axis-group axis', true);
             }
 
-            svg.transition().duration(duration).attr({width: width, height: height})
+            svg.transition().duration(duration).attr({
+                width: width,
+                height: height
+            })
             svg.select('.container-group')
-                .attr({transform: 'translate(' + margin.left + ',' + margin.top + ')'});
+                .attr({
+                    transform: 'translate(' + margin.left + ',' + margin.top + ')'
+                });
 
             svg.select('.x-axis-group.axis')
                 .transition()
                 .duration(duration)
                 .ease(ease)
-                .attr({transform: 'translate(0,' + (chartH) + ')'})
+                .attr({
+                    transform: 'translate(0,' + (chartH) + ')'
+                })
                 .call(xAxis);
 
             svg.select('.y-axis-group.axis')
@@ -179,10 +367,15 @@ d3.custom.barChart = function module() {
                 .data(_data);
             bars.enter().append('rect')
                 .classed('bar', true)
-                .attr({x: chartW,
+                .attr({
+                    x: chartW,
                     width: barW,
-                    y: function(d, i) { return y1(d); },
-                    height: function(d, i) { return chartH - y1(d); }
+                    y: function (d, i) {
+                        return y1(d);
+                    },
+                    height: function (d, i) {
+                        return chartH - y1(d);
+                    }
                 })
                 .on('mouseover', dispatch.customHover);
             bars.transition()
@@ -190,33 +383,41 @@ d3.custom.barChart = function module() {
                 .ease(ease)
                 .attr({
                     width: barW,
-                    x: function(d, i) { return x1(i) + gapSize/2; },
-                    y: function(d, i) { return y1(d); },
-                    height: function(d, i) { return chartH - y1(d); }
+                    x: function (d, i) {
+                        return x1(i) + gapSize / 2;
+                    },
+                    y: function (d, i) {
+                        return y1(d);
+                    },
+                    height: function (d, i) {
+                        return chartH - y1(d);
+                    }
                 });
-            bars.exit().transition().style({opacity: 0}).remove();
+            bars.exit().transition().style({
+                opacity: 0
+            }).remove();
 
             duration = 500;
 
         });
     }
-    exports.width = function(_x) {
+    exports.width = function (_x) {
         if (!arguments.length) return width;
         width = parseInt(_x);
         return this;
     };
-    exports.height = function(_x) {
+    exports.height = function (_x) {
         if (!arguments.length) return height;
         height = parseInt(_x);
         duration = 0;
         return this;
     };
-    exports.gap = function(_x) {
+    exports.gap = function (_x) {
         if (!arguments.length) return gap;
         gap = _x;
         return this;
     };
-    exports.ease = function(_x) {
+    exports.ease = function (_x) {
         if (!arguments.length) return ease;
         ease = _x;
         return this;
