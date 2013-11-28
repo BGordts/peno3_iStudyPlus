@@ -150,7 +150,7 @@ def changeUserinfo():
             errors = errors + {"password" : error}
     if not((errors and True) or False):
         user.changeSetting(self , email , name , surname , password)
-    return render_template('pages/changeUserInfo.html' , errors = errors)
+    return render_template('pages/settings_page.html' , errors = errors)
 
 def searchUser(Username):
     user = User.query.filter_by()

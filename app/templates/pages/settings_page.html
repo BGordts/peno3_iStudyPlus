@@ -1,7 +1,7 @@
-{% extends "pages/site_navigation.html" %} {% block site_content %}
+{% extends "pages/navigation.html" %} {% block content %}
 <div class="container">
 	<div class="col-md-4">
-		<form method="POST" action="/user/register" class="form-signin">
+		<form method="POST" action="/user/settings" class="form-signin">
 			<h2 class="form-signin-heading">Uw accountgegevens</h2>
 			<input type="Username" class="form-control" placeholder="First name" name="name" required>
 			<input type="Username" class="form-control" placeholder="Last Name" name="lastname" required>
