@@ -20,7 +20,8 @@ class Session(db.Model):
     feedback_score = db.Column(db.Integer)
     start_date = db.Column(db.DateTime)
     end_date = db.Column(db.DateTime)
-    pauzes = db.Column(db.String)
+    pauses = db.Column(db.String)
+    paused = db.Column(db.Boolean, default=False) #Is the running session paused?
     
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     user = db.relationship('User', backref=db.backref('sessions', lazy='dynamic'))
@@ -31,11 +32,16 @@ class Session(db.Model):
     sessionSound = db.Column(db.Float)
     sessionFocus = db.Column(db.Float)
     sessionHum = db.Column(db.Float)
+    sessionIll = db.Column(db.Integer)
+    sessionSound = db.Column(db.Integer)
+    sessionFocus = db.Column(db.Integer)
+    sessionHum = db.Column(db.Integer)
     
     def __init__(self, title, user, feedback_score = -1):
         self.title = title
         self.user = user
-        self.pauzes = json.dumps([])
+        self.pauses = json.dumps([])
+        #self.paused = False
         self.start_date = None
         self.end_date = None
         self.feedback_score = feedback_score
@@ -46,18 +52,43 @@ class Session(db.Model):
         self.sessionFocus = 0
         self.sessionHum = 0
         
+    '''
+    Start the timer of the session
+    '''
     def start(self):
-        if(self.start_date == None):
-            self.start_date = datetime.utcnow()
-        else:
-            self.endPauze()
+        self.start_date = datetime.utcnow()
+
         db.session.commit()
+        
+    '''
+    Start the timer of a pauze
+    '''
+    def startPause(self):
+        self.paused = True
+        db.session.commit()
+        
+        session['isPauzed'] = time.time()
             
-    def endPauze(self):
-        pauze = json.loads(self.pauzes)
+    '''
+    End the timer of a puaze and store the puazeduration in the database
+    '''
+    def endPause(self):
+        self.paused = False
+        
+        pauze = json.loads(self.pauses)
         pauze.append( (session['isPauzed'],time.time()) )
-        self.pauzes = json.dumps(pauze)  
+        self.pauses = json.dumps(pauze)  
+        
+        db.session.commit()
+        
+        session['isPauzed'] = None
+        
+    def isPaused(self):        
+        return self.paused
                  
+    '''
+    End the timer of the session
+    '''
     def end(self):
         if(not session['isPauzed'] == None):
             self.endPauze()
@@ -87,6 +118,7 @@ class Session(db.Model):
             avHum = avHum + hum.value
         self.sessionHum = avHum/(len(tempdata))
         db.session.commit()
+        tempdata = SensorData.query.filter_by(session_id == self.id and sensor_type == temperature).all()
         
     def calcSessionTemp(self):
         tempdata = Sensordata.query.filter_by(session_id=self.id, sensor_type="temperature").all()

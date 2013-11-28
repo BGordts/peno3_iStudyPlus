@@ -23,7 +23,7 @@ def postSensorData():
     sensor_type = request.args["sensortype"]
     value = request.args["value"]
     #Date in miliseconds
-    dateInMilis = request.args["date"]
+    dateInMilis = float(request.args["date"])
     
     device = Device.getDeviceByKey(device_key)
     _log('info', "device: " + device.__repr__())
@@ -37,11 +37,15 @@ def postSensorData():
     
     #Check whether the user has a running session
     if session:
-        sensorData = SensorData(sensor_type, session, value, date)
-    
-        db.session.add(sensorData)
-        db.session.commit()
-    #If the user has no running session, just do nothing
+        if not session.isPaused():            
+            sensorData = Sensordata(sensor_type, session, value, date)
         
-    return ""
-    
+            db.session.add(sensorData)
+            db.session.commit()
+            
+            return "Sensordata saved"
+        else:
+            return "Session is paused"
+    else:
+        return "There is no running session at the moment"
+    #If the user has no running session, just do nothing

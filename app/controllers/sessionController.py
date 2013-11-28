@@ -52,15 +52,37 @@ def create():
 @login_required
 def startSession():
     Session.query.filter_by(id=session['sessionID']).first().start()
-    session['isPauzed'] = None
     return "sessie gestart"
 
-@app.route('/session/pauze')
+@app.route('/session/pause')
 @session_required
 @login_required
-def pauzeSession():
-    session['isPauzed'] = time.time()
+def pauseSession():
+    u = User.query.get(session['userID'])
+    _log("info", u.__str__())
+    s = u.getRunningSession()
+    s.startPause()
+    
     return "gepauzeerd"
+
+@app.route('/session/resume')
+@session_required
+@login_required
+def resumeSession():
+    s = User.query.get(session['userID']).getRunningSession()
+    s.endPause()
+    
+    return "resume"
+
+@app.route('/session/isPaused')
+def isPauzed():
+    u = User.query.get(session['userID'])
+    s = u.getRunningSession()
+    
+    if s:
+        return s.isPaused().__repr__()
+    else:
+        return "No running sessions" 
 
 @app.route('/session/end')
 @session_required
