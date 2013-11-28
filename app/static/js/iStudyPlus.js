@@ -10,14 +10,15 @@ var initialise = function () {
 	element.hover(function(){element.addClass(hoverClass)}, function(){element.removeClass(hoverClass)})
 	.scroll(function(){scrollOffsetF(element, offsetClass)});
 
-};
-
-var startHover = function (element, hoverClass, offsetClass) {
-	element.addClass(hoverClass);
-};
-
-var endHover = function (element, hoverClass, offsetClass) {
-	element.removeClass(hoverClass);
+	$('#datepicker').datetimepicker({
+                    pickTime: false
+                });
+                $('#starttimepicker').datetimepicker({
+                    pickDate: false
+                });
+                $('#endtimepicker').datetimepicker({
+                    pickDate: false
+                });
 };
 
 

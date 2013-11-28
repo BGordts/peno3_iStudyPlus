@@ -297,7 +297,9 @@
 .fi-x:before,
 .fi-yen:before,
 .fi-zoom-in:before,
-.fi-zoom-out:before {
+.fi-zoom-out:before,
+.fi-future:before,
+.fi-history:before {
   font-family: "foundation-icons";
   font-style: normal;
   font-weight: normal;
@@ -592,3 +594,5 @@
 .fi-yen:before { content: "\f218"; }
 .fi-zoom-in:before { content: "\f219"; }
 .fi-zoom-out:before { content: "\f21a"; }
+.fi-future:before { content: url(svgs/fi-future.svg); }
+.fi-history:before { content: url(svgs/fi-history.svg); }

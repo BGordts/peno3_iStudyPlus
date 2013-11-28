@@ -7,6 +7,7 @@
 		<!-- Bootstrap -->
 		<link href="{{ url_for('static', filename='css/lib/bootstrap/css/bootstrap.css')}}" rel="stylesheet" media="screen">
 		<link href="{{ url_for('static', filename='css/iStudyPlus_style.css')}}" rel="stylesheet" media="screen">
+		<link href="{{ url_for('static', filename='css/lib/bootstrap-datetimepicker.css')}}" rel="stylesheet" media="screen">
 		<!--foundation-icons.css and foundation-icons.[eot/ttf/svg/woff]-->
 		<link href="{{ url_for('static', filename='foundation-icons/foundation-icons.css')}}" rel="stylesheet" media="screen">
 		<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900' rel='stylesheet' type='text/css'>
@@ -45,9 +46,13 @@
 		<!-- Include all compiled plugins (below), or include individual files as needed -->
 		<script src="{{url_for('static', filename='js/lib/bootstrap/js/bootstrap.js')}}"></script>
 		<script src="{{url_for('static', filename='js/lib/angularjs/angular.js')}}"></script>
+		<script src="{{url_for('static', filename='js/avatar.js')}}"></script>
+		<script src="{{url_for('static', filename='js/resample.js')}}"></script>
+		<script src="{{url_for('static', filename='js/lib/moment.min.js')}}"></script>
+		<script src="{{url_for('static', filename='js/lib/bootstrap-datetimepicker.min.js')}}"></script>
 		<script src="{{url_for('static', filename='js/lib/d3/d3.v3.min.js')}}"></script>
 		<script src="{{url_for('static', filename='js/iStudyPlus.js')}}"></script>
-		<script src="{{url_for('static', filename='js/probeersel.js')}}"></script>
+		<script src="{{url_for('static', filename='js/dashboard.js')}}"></script>
 	</body>
 
 </html>

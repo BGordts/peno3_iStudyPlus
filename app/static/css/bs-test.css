@@ -2064,8 +2064,8 @@ fieldset[disabled] .btn-primary.active {
 }
 	.btn-warning {
 	color: #ffffff;
-	background-color: #f0ad4e;
-	border-color: #eea236;
+	background-color: #333;
+	/* border-color: #eea236; */
 }
 	.btn-warning:hover,
 .btn-warning:focus,
@@ -2101,8 +2101,8 @@ fieldset[disabled] .btn-warning.active {
 }
 	.btn-danger {
 	color: #ffffff;
-	background-color: #d9534f;
-	border-color: #d43f3a;
+	background-color: #333;
+	/* border-color: #d43f3a; */
 }
 	.btn-danger:hover,
 .btn-danger:focus,
@@ -2138,8 +2138,8 @@ fieldset[disabled] .btn-danger.active {
 }
 	.btn-success {
 	color: #ffffff;
-	background-color: #5cb85c;
-	border-color: #4cae4c;
+	background-color: #333;
+	/* border-color: #4cae4c; */
 }
 	.btn-success:hover,
 .btn-success:focus,
@@ -2175,8 +2175,8 @@ fieldset[disabled] .btn-success.active {
 }
 	.btn-info {
 	color: #ffffff;
-	background-color: #5bc0de;
-	border-color: #46b8da;
+	background-color: #333;
+	/* border-color: #46b8da; */
 }
 	.btn-info:hover,
 .btn-info:focus,
@@ -3226,9 +3226,9 @@ input[type="button"].btn-block {
 .btn-group-vertical > .btn + .btn-group,
 .btn-group-vertical > .btn-group + .btn,
 .btn-group-vertical > .btn-group + .btn-group {
-	/* "original": margin-top: -1px; */
-	border-top-width: 0;
+	/* margin-top: -1px; */
 	margin-left: 0;
+	border-top-width: 0;
 }
 	.btn-group-vertical > .btn:not(:first-child):not(:last-child) {
 	border-radius: 0;
@@ -4854,7 +4854,10 @@ a.list-group-item.active:focus .list-group-item-text {
 	.panel-group .panel {
 	margin-bottom: 0;
 	overflow: hidden;
-	position: relative	/* "original": 	border-radius: 4px; */
+	/* iStudy+
+	border-radius: 4px;
+	*/
+	position: relative;
 }
 	.panel-group .panel + .panel {
 	margin-top: 5px;

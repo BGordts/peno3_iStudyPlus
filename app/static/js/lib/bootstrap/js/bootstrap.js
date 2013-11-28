@@ -653,14 +653,14 @@ if (typeof jQuery === "undefined") { throw new Error("Bootstrap requires jQuery"
 
   $(document).on('click.bs.collapse.data-api', '[data-toggle=collapse]', function (e) {
     var $this   = $(this), href
-    
-    
+
+
     //* iStudy+ *//
     //*
     var followers = $this.attr('data-followers')
     var $followers = $(followers)
     var followClass = $this.attr('data-follow-class')
-        
+
     if (!$followers.hasClass('is_transitioning')) {
         //alert('boe')
         $followers.toggleClass(followClass)
@@ -670,13 +670,13 @@ if (typeof jQuery === "undefined") { throw new Error("Bootstrap requires jQuery"
     } else {
         return
     }
-    
+
     if ($this.attr('data-is-target')) {
         var is_target = $this.attr('data-is-target')
             || e.preventDefault()
             || (href = $this.attr('href')) && href.replace(/.*(?=#[^\s]+$)/, '') //strip for ie7
         var $is_target = $(is_target)
-        $is_target.toggleClass('is_off')        
+        $is_target.toggleClass('is_off')
     } else {
         var target  = $this.attr('data-target')
             || e.preventDefault()
@@ -692,7 +692,7 @@ if (typeof jQuery === "undefined") { throw new Error("Bootstrap requires jQuery"
         }
         $target.collapse(option)
     }
-    
+
     //*
     //* ------ *//
   })
