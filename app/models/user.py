@@ -51,17 +51,23 @@ class User(db.Model):
     def getUserByID(ID):
         return User.query.filter_by(id = ID).first()
     
-    def getRunningSession(self):
+    '''
+    def getRunningSessionOld(self):
         if session['sessionID']:
             if session['isPauzed']:
                 return Session.getSessionByID(session['sessionID'])
         return None
+    '''
     
-    def getRunningsession2(self):
+    def getRunningSession(self):
         session = Session.query.filter_by(user=self).order_by(Session.start_date.desc()).first()
         
-        if(session.end_date):
-            return session
+        # If the end_date is set, the session is ended and there is no currently running session
+        if session:
+            if(session.end_date):
+                return None
+            else:
+                return session
         else:
             return None
         

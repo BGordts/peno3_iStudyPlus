@@ -154,3 +154,9 @@ def changeUserinfo():
 
 def searchUser(Username):
     user = User.query.filter_by()
+    
+@app.route('/user/rs' , methods = ['GET','POST'])
+def getRunningSession():
+    s = User.query.get(session['userID']).getRunningsession2()
+    _log("info", s.__str__())
+    return "lol"
