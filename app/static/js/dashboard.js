@@ -238,14 +238,16 @@ directive('dashboardPanel', function ($scope) {
             },
             link: function (scope, element, attrs) {
               /*  console.log(attrs.data) */
+                var array = JSON.parse("[" + attrs.data + "]")
                 var chartEl = d3.select(element[0]);
                 chart.on('customHover', function (d, i) {
                     scope.hovered({
                         args: d
                     });
                 });
-chartEl.datum([1,2,3,4]).call(chart)
-                scope.$watch(attrs.data, function (newVal, oldVal) {
+/* chartEl.datum([1,2,3,4]).call(chart) */
+                scope.$watch(array, function (newVal, oldVal) {
+                    
                     chartEl.datum(newVal).call(chart);
                 });
 
