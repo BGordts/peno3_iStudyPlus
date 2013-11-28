@@ -12,7 +12,7 @@ from app import app
 from app import db
 from sqlalchemy.dialects.sqlite.base import DATE
 from app.models.sensordata import Sensordata
-from app.models.userStatitics import Userstatistic
+from app.models.statistics import Statistic
 
 class Session(db.Model):
     id = db.Column(db.Integer, primary_key=True)

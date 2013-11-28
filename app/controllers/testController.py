@@ -7,7 +7,8 @@ from app import db
 from app.models.user import User
 from app.models.session import Session
 from app.models.sensordata import Sensordata
-from app.models.userStatitics import Userstatistic
+from app.models.statistics import Statistic
+from app.models.course import *
 
 from datetime import datetime
 import time
@@ -49,6 +50,18 @@ def createTestSessions():
         i = i+1
     endCreateTestData(session1)
     return "ok"
+
+@app.route('/test/addCourses')
+def addCourses():
+    make_courses()
+    i = 1
+    while i < len(Course.getAllCourses()):
+        course = Course.query.filter_by(id=i).first()
+        for u in [1,2,3,4]:
+            user =  User.query.filter_by(id=u).first()
+            course.addUserToCourse(user)
+        i = i + 1
+    return "elke user volgt elk vak"
 
 def endCreateTestData(userSession):
     userSession.end()
