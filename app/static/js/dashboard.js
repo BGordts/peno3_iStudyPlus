@@ -13,12 +13,47 @@ angular.module('app', []).config(function($interpolateProvider){
 controller('appCtrl', function ($scope) {
 	//alert('boe');
 	console.log('boe');
-	$scope.list = [[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]];
+	$scope.panelState = "view";
+	$scope.sessionType = "live";
+	$scope.activityType ="study";
+	$scope.courselist = [[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]];
+	$scope.sessionlist = [[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]];
 	/*alert('zever');*/
 	$scope.name = "You";
 	$scope.commonStudents = [{"name":"ik"},{"name":"jij"},{"name":"hij"},{"name":"of zij"},{"name":"jeroen"},{"name":"ik"},{"name":"jij"},{"name":"hij"},{"name":"of zij"},{"name":"jeroen"},{"name":"ik"},{"name":"jij"},{"name":"hij"},{"name":"of zij"},{"name":"jeroen"},{"name":"ik"},{"name":"jij"},{"name":"hij"},{"name":"of zij"},{"name":"jeroen"},{"name":"ik"},{"name":"jij"},{"name":"hij"},{"name":"of zij"},{"name":"jeroen"},{"name":"ik"},{"name":"jij"},{"name":"hij"},{"name":"of zij"},{"name":"jeroen"},{"name":"ik"},{"name":"jij"},{"name":"hij"},{"name":"of zij"},{"name":"jeroen"},{"name":"ik"},{"name":"jij"},{"name":"hij"},{"name":"of zij"},{"name":"jeroen"},{"name":"ik"},{"name":"jij"},{"name":"hij"},{"name":"of zij"},{"name":"jeroen"},{"name":"ik"},{"name":"jij"},{"name":"hij"},{"name":"of zij"},{"name":"jeroen"},{"name":"ik"},{"name":"jij"},{"name":"hij"},{"name":"of zij"},{"name":"jeroen"},{"name":"ik"},{"name":"jij"},{"name":"hij"},{"name":"of zij"},{"name":"jeroen"},{"name":"ik"},{"name":"jij"},{"name":"hij"},{"name":"of zij"},{"name":"jeroen"},{"name":"ik"},{"name":"jij"},{"name":"hij"},{"name":"of zij"},{"name":"jeroen"},{"name":"ik"},{"name":"jij"},{"name":"hij"},{"name":"of zij"},{"name":"jeroen"}]
+})/*.
+
+directive('dashboardPanel', function ($scope) {
+	return {
+		restrict: "EA",
+		replace: true,
+		template:
+	}
+})*/
+
+.directive("coursepanel", function() {
+	return {
+		restrict: 'EA',
+		replace: true,
+		templateUrl: "dashboard_course-list.tpl",
+		link: function() {
+
+		},
+		controller:
+	}
 })
 
+.directive("sessionpanel", function() {
+	return {
+		restrict: 'EA',
+		replace: true,
+		templateUrl: "dashboard_session-list.tpl",
+		link: function() {
+
+		},
+		controller:
+	}
+})
 
 .controller('mainCtrl', function AppCtrl ($scope) {
             $scope.options = {width: 500, height: 300, 'bar': 'aaa'};

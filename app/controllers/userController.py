@@ -41,7 +41,7 @@ def add_course():
 
 @app.route('/home')
 def home():
-    return render_template('pages/dashboard.html')
+    return render_template('pages/dashboard_profile-info.html')
 
 @app.route('/welcome')
 @login_required
@@ -121,7 +121,7 @@ def changeProfilPic():
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
-           
+
 @app.route('/user/settings' , methods = ['GET','POST'])
 @login_required
 def changeUserinfo():

@@ -2311,7 +2311,7 @@ input[type="button"].btn-block {
 	-moz-osx-font-smoothing: grayscale;
 }
 	.glyphicon:empty {
-	width: 1em;
+	/* "original": width: 1em; */
 }
 	.glyphicon-asterisk:before {
 	content: "\2a";
@@ -4330,8 +4330,8 @@ textarea.input-group-sm > .input-group-btn > .btn {
 	color: #ffffff;
 	text-align: center;
 	white-space: nowrap;
-	vertical-align: baseline;
-	border-radius: .25em;
+	/* "original": vertical-align: baseline */
+	border-radius: 0; /* "original": .25em; */
 }
 	.label[href]:hover,
 .label[href]:focus {
@@ -4877,7 +4877,7 @@ a.list-group-item.active:focus .list-group-item-text {
 	.panel-default > .panel-heading {
 	color: #333333;
 	background-color: #f5f5f5;
-	border-color: #dddddd;
+	/* "original": border-color: #dddddd; */
 }
 	.panel-default > .panel-heading + .panel-collapse .panel-body {
 	border-top-color: #dddddd;
