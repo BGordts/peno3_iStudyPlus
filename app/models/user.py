@@ -25,7 +25,7 @@ class User(db.Model):
     userStastic_id = db.Column(db.Integer, db.ForeignKey('userstatistic.id'))
     userstatistic = db.relationship('Userstatistic', backref=db.backref('users', lazy='dynamic'))
     
-    courses = db.relationship('Course', secondary=users_courses,backref=db.backref('courses', lazy='dynamic'))
+    courses = db.relationship('Course', secondary=users_courses,backref=db.backref('users', lazy='dynamic'))
     
     def __init__(self, email, name, surname, password, profilePic = None):
         self.email = email
@@ -40,6 +40,8 @@ class User(db.Model):
           
     def addCourse(self , course):
         self.courses.append(Course(course))
+        
+        db.session.commit()
     
     def updateStatistics(self,userSession):
         self.userstatistic.updateUserStatistics(userSession)   
@@ -73,8 +75,9 @@ class User(db.Model):
     def getRunningSession(self):
         session = Session.query.filter_by(user=self).order_by(Session.start_date.desc()).first()
         
-        # If the end_date is set, the session is ended and there is no currently running session
-        if session:
+        # See if there is a session and the session is already started
+        if session and session.start_date:
+            # If the end_date is set, the session is ended and there is no currently running session
             if(session.end_date):
                 return None
             else:

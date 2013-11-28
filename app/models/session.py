@@ -20,8 +20,8 @@ class Session(db.Model):
     feedback_score = db.Column(db.Integer)
     start_date = db.Column(db.DateTime)
     end_date = db.Column(db.DateTime)
-    pauzes = db.Column(db.String)
-    puazed = db.Column(db.Boolean) #Is the running session pauzed?
+    pauses = db.Column(db.String)
+    paused = db.Column(db.Boolean, default=False) #Is the running session paused?
     
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     user = db.relationship('User', backref=db.backref('sessions', lazy='dynamic'))
@@ -40,8 +40,8 @@ class Session(db.Model):
     def __init__(self, title, user, feedback_score = -1):
         self.title = title
         self.user = user
-        self.pauzes = json.dumps([])
-        self.pauzed = False
+        self.pauses = json.dumps([])
+        #self.paused = False
         self.start_date = None
         self.end_date = None
         self.feedback_score = feedback_score
@@ -63,8 +63,8 @@ class Session(db.Model):
     '''
     Start the timer of a pauze
     '''
-    def startPauze(self):
-        self.pauzed = True
+    def startPause(self):
+        self.paused = True
         db.session.commit()
         
         session['isPauzed'] = time.time()
@@ -72,19 +72,19 @@ class Session(db.Model):
     '''
     End the timer of a puaze and store the puazeduration in the database
     '''
-    def endPauze(self):
-        self.pauzed = False
+    def endPause(self):
+        self.paused = False
         
-        pauze = json.loads(self.pauzes)
+        pauze = json.loads(self.pauses)
         pauze.append( (session['isPauzed'],time.time()) )
-        self.pauzes = json.dumps(pauze)  
+        self.pauses = json.dumps(pauze)  
         
         db.session.commit()
         
         session['isPauzed'] = None
         
-    def isPauzed(self):
-        return self.pauzed
+    def isPaused(self):        
+        return self.paused
                  
     '''
     End the timer of the session
