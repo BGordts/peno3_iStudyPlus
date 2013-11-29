@@ -5,7 +5,7 @@ from functools import wraps
 from app import app
 from app import db
 from app.models.user import User
-from app.models.session import Session
+from app.models.course import Course
 from werkzeug._internal import _log
 from werkzeug import secure_filename
 
@@ -34,11 +34,6 @@ def logout_required(test):
 @app.route("/")
 def hello():
     return render_template('index.html')
-@app.route("/course")
-def add_course():
-    user = User.query.filter_by(id=session['userID']).first()
-    user.addCourse("analyse")
-    return "ok"
 
 @app.route('/home')
 def home():
@@ -157,11 +152,32 @@ def changeUserinfo():
     else:
         return render_template('pages/settings_page.html')
     
-def searchUser(Username):
-    user = User.query.filter_by()
+@app.route('/user/searchUser' , methods = ['POST' , 'GET'])
+def searchUser():
+    keyWord = request.form['keyWord']
+    users = None
+    if(keyWord.containts('@')):
+        users = User.query.filter_by(email=keyWord)
+    else:
+        users = User.query.filter_by(surname=keyWord)
+        if(users == None):
+            users = User.query.filter_by(name=keyWord)
+    return users
+
+@app.route('/user/getCoStudents')
+def getCoStudents():
+    coStudents = []
+    user = User.query.filter_by(id=session['userID']).first()
+    for course in user.getUserCourses():
+        for student in course.getAllUsers():
+            if not(student in coStudents):
+                coStudents.append(student)
+    return coStudents
+
+
+
+
+
+
+
     
-@app.route('/user/rs' , methods = ['GET','POST'])
-def getRunningSession():
-    s = User.query.get(session['userID']).getRunningsession2()
-    _log("info", s.__str__())
-    return "lol"

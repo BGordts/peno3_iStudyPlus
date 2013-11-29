@@ -6,7 +6,7 @@ from app import db
 from app.models.session import Session
 import json
 
-class Userstatistic(db.Model):
+class Statistic(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     
     totalTime = db.Column(db.Float)
