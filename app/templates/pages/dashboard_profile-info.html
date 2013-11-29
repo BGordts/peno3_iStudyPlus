@@ -171,15 +171,18 @@
 					<div>graph met 2 lijnen
                         <div>
                         <div>
-                            <select>
+                            <!--<select>
                                 <option ng-model="graphOptions" value="option1">option1
                                 </option>
                                 <option ng-model="graphOptions" value="option2">option2
                                 </option>
                                 <option ng-model="graphOptions" value="option3">option3
                                 </option>
-                            </select>
-                            <dynamic-graph height="options.height" data="chartdata" hovered="hovered(args)"></dynamic-graph>
+                            </select>-->
+
+							<select ng-model="selectedItem" ng-options="item as item.name for item in items"></select>
+
+                            <dynamic-graph chartdata="chartdata"></dynamic-graph>
                             <!--<bar-chart height="300" data="data" hovered="hovered(args)></bar-chart>-->
                         </div>
 					</div>
@@ -397,7 +400,7 @@
                                 <option ng-model="graphOptions" value="option3">option3
                                 </option>
                             </select>
-                            <dynamic-graph height="options.height" data="chartdata" hovered="hovered(args)"></dynamic-graph>
+                            <dynamic-graph chartdata="chartdata"></dynamic-graph>
                             <!--<bar-chart height="300" data="data" hovered="hovered(args)></bar-chart>-->
                         </div>
                     </div>

@@ -5,6 +5,7 @@ from functools import wraps
 from app import app
 from app import db
 from app.models.user import User
+from app.models.session import Session
 from werkzeug._internal import _log
 from werkzeug import secure_filename
 
@@ -46,10 +47,6 @@ def home():
 @app.route('/welcome')
 @login_required
 def welcome():
-    return render_template('pages/dashboard.html')
-
-@app.route('/home2')
-def welcome2():
     return render_template('pages/dashboard.html')
 
 @app.route('/user/login' , methods=['GET','POST'])

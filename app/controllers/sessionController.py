@@ -132,4 +132,4 @@ Looks at all the sessions and returns the conbination of sensor average for a se
 def getEfficiencyForSensor():
     sensor_type = request.args["sensor_type"]
     
-    Session.query.filter_by(session=self).filter_by(sensor_type=sensor).all()
+    Session.query.filter_by(sensor_type=sensor).all()
