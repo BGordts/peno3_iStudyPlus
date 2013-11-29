@@ -21,7 +21,7 @@ class User(db.Model):
     userStastic_id = db.Column(db.Integer, db.ForeignKey('statistic.id'))
     statistic = db.relationship('Statistic', backref=db.backref('users', lazy='dynamic'))
     
-    courses = db.relationship('Course', secondary=users_courses,backref=db.backref('users', lazy='dynamic'))
+    #courses = db.relationship('Course', secondary=users_courses,backref=db.backref('users', lazy='dynamic'))
     
     def __init__(self, email, name, surname, password, profilePic = None):
         self.email = email
