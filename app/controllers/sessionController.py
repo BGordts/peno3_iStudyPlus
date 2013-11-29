@@ -10,7 +10,9 @@ from app import app
 from app import db
 
 from app.models.user import User
-from app.models.session import Session
+from app.models.session import UserSession
+from app.models.course import Course
+
 from app.controllers.userController import login_required
 
 def session_required(test):
@@ -33,14 +35,15 @@ def endSession_required(test):
             return redirect(url_for('home'))
     return wrap
 
-@app.route('/session/create')
+@app.route('/session/create' , methods = ['POST' , 'GET'])
 @endSession_required
 @login_required
 def create():
     user = User.getUserFromSession()
     #sessionName = request.form['sessionName']
     sessionName = "test"
-    session1 = Session(sessionName, user)    
+    course = Course.querry.filter_by(id=request.form['course_ID'])
+    session1 = UserSession(sessionName, user, course )    
     db.session.add(session1)
     db.session.commit()  
     session['sessionID'] = session1.id
@@ -51,7 +54,7 @@ def create():
 @session_required
 @login_required
 def startSession():
-    Session.query.filter_by(id=session['sessionID']).first().start()
+    UserSession.query.filter_by(id=session['sessionID']).first().start()
     return "sessie gestart"
 
 @app.route('/session/pause')
@@ -89,7 +92,7 @@ def isPauzed():
 @login_required
 def endSession():
     sessionID = session['sessionID']
-    Session.query.filter_by(id=session['sessionID']).first().end()
+    UserSession.query.filter_by(id=session['sessionID']).first().end()
     session.pop('sessionID',None)
     session.pop('isPauzed',None)
     return json.dumps(sessionID)
@@ -98,7 +101,7 @@ def endSession():
 @login_required
 def postFeedback():
     sessionID = request.form['sessionID']
-    Session.query.filter_by(id=session['sessionID']).first().setFeedback()
+    UserSession.query.filter_by(id=session['sessionID']).first().setFeedback()
     return render_template('pages/dashboard.html')
 
 @app.route('/session/commit', methods = ['GET' , 'POST'])    
@@ -107,5 +110,5 @@ def postFeedback():
 def commitSession():
     "calc and save's the session avarge's"
     sessionID = request.form['sessionID']
-    Session.query.filter_by(id=session['sessionID']).first().commitSession()
+    UserSession.query.filter_by(id=session['sessionID']).first().commitSession()
     return render_template('pages/dashboard.html')

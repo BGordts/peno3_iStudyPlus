@@ -11,10 +11,14 @@ import json
 from app import app
 from app import db
 from sqlalchemy.dialects.sqlite.base import DATE
-from app.models.sensordata import Sensordata
-from app.models.statistics import Statistic
 
-class Session(db.Model):
+from app.models.statistics import Statistic
+from app.models.course import Course
+from app.models.user import User
+from app.models.sensordata import Sensordata
+
+class UserSession(db.Model):
+    __tablename__ = 'usersessions'
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(80))
     feedback_score = db.Column(db.Integer)
@@ -22,6 +26,9 @@ class Session(db.Model):
     end_date = db.Column(db.DateTime)
     pauses = db.Column(db.String)
     paused = db.Column(db.Boolean, default=False) #Is the running session paused?
+    
+    course_id = db.Column(db.Integer, db.ForeignKey('course.id'))
+    course = db.relationship('Course', backref=db.backref('sessions', lazy='dynamic'))
     
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     user = db.relationship('User', backref=db.backref('sessions', lazy='dynamic'))
@@ -37,14 +44,15 @@ class Session(db.Model):
     sessionFocus = db.Column(db.Integer)
     sessionHum = db.Column(db.Integer)
     
-    def __init__(self, title, user, feedback_score = -1):
+    def __init__(self, user, course , title):
         self.title = title
         self.user = user
+        self.course = course
         self.pauses = json.dumps([])
         #self.paused = False
         self.start_date = None
         self.end_date = None
-        self.feedback_score = feedback_score
+        self.feedback_score = -1
         self.sessionEff = 0
         self.sessionTemp = 0
         self.sessionIll = 0
@@ -106,6 +114,7 @@ class Session(db.Model):
         self.calcSessionFocus()
         self.calcSessionEff()
         self.user.updateStatistics(self)
+        self.course.getCourseStatistic().updateUserStatistics(self)
            
     def calcSessionEff(self):
         self.sessionEff = (self.sessionFocus + self.feedback_score)/2
@@ -118,7 +127,6 @@ class Session(db.Model):
             avHum = avHum + hum.value
         self.sessionHum = avHum/(len(tempdata))
         db.session.commit()
-        tempdata = SensorData.query.filter_by(session_id == self.id and sensor_type == temperature).all()
         
     def calcSessionTemp(self):
         tempdata = Sensordata.query.filter_by(session_id=self.id, sensor_type="temperature").all()
@@ -167,4 +175,4 @@ class Session(db.Model):
         return Session.query.filter_by(id = sessionID).first()
         
     def __repr__(self):
-        return '<Session %r>' % self.title
+        return '<UserSession %r>' % self.title

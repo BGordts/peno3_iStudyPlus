@@ -4,8 +4,10 @@ from userController import login_required
 
 from app import app
 from app import db
+
 from app.models.course import Course
 from app.models.user import User
+
 from werkzeug._internal import _log
 from werkzeug import secure_filename
 

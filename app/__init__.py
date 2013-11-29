@@ -26,8 +26,9 @@ from app.controllers.coursController import *
 from app.controllers.testController import *
 
 from app.models.user import User
-from app.models.session import Session
+from app.models.session import UserSession
 from app.models.statistics import Statistic
+from app.models.sensordata import Sensordata
 
 UPLOAD_FOLDER = '/static/images/profilePics'
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])

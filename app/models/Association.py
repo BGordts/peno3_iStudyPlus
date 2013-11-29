@@ -2,6 +2,7 @@ from flask import *
 
 from app import app
 from app import db
+
 from app.models.statistics import Statistic
 
 class Courses_Users(db.Model):
@@ -20,3 +21,4 @@ class Courses_Users(db.Model):
         self.course = course
         courseStatistics = Statistic()
         self.courseStatistic = courseStatistics
+        

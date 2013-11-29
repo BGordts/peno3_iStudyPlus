@@ -4,8 +4,9 @@ from functools import wraps
 
 from app import app
 from app import db
+
 from app.models.user import User
-from app.models.course import Course
+
 from werkzeug._internal import _log
 from werkzeug import secure_filename
 
