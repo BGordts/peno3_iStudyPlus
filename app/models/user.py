@@ -4,14 +4,10 @@ from app import app
 from app import db
 
 from app.models.session import Session
-from app.models.course import Course
 from werkzeug._internal import _log
-from app.models.userStatitics import Userstatistic
+from app.models.statistics import Statistic
+from app.models.Association import Courses_Users
 
-users_courses = db.Table('users_courses',
-    db.Column('course_id', db.Integer, db.ForeignKey('course.id')),
-    db.Column('user_id', db.Integer, db.ForeignKey('user.id'))
-)
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -22,8 +18,8 @@ class User(db.Model):
     password = db.Column(db.String(30), unique=False)
     profilePic = db.Column(db.String(300), unique = True)
     
-    userStastic_id = db.Column(db.Integer, db.ForeignKey('userstatistic.id'))
-    userstatistic = db.relationship('Userstatistic', backref=db.backref('users', lazy='dynamic'))
+    userStastic_id = db.Column(db.Integer, db.ForeignKey('statistic.id'))
+    statistic = db.relationship('Statistic', backref=db.backref('users', lazy='dynamic'))
     
     courses = db.relationship('Course', secondary=users_courses,backref=db.backref('users', lazy='dynamic'))
     
@@ -33,18 +29,22 @@ class User(db.Model):
         self.surname = surname
         self.password = password
         self.profilePic = profilePic
-        newUS = Userstatistic()
+        newUS = Statistic()
         db.session.add(newUS)
-        self.userstatistic = newUS
-        self.courses = []
-          
-    def addCourse(self , course):
-        self.courses.append(Course(course))
+        self.statistic = newUS
         
         db.session.commit()
     
+    def getUserCourses(self):
+        userCourses = []
+        for course in Course.query.all():
+            if course.hasAsUser(self):
+                userCourses.append(course)
+        return userCourses
+    
     def updateStatistics(self,userSession):
-        self.userstatistic.updateUserStatistics(userSession)   
+        self.statistic.updateUserStatistics(userSession)   
+    
     @staticmethod
     def getAdminUser():
         return User.query.filter_by(id = 1).first()   
@@ -106,3 +106,5 @@ class User(db.Model):
     
     def __repr__(self):
         return '<User %r>' % self.email
+    
+from app.models.course import Course
