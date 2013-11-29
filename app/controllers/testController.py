@@ -5,10 +5,9 @@ from app import app
 from app import db
 
 from app.models.user import User
-from app.models.session import Session
-from app.models.sensordata import Sensordata
-from app.models.statistics import Statistic
+from app.models.session import UserSession
 from app.models.course import *
+from app.models.sensordata import Sensordata
 
 from datetime import datetime
 import time
@@ -39,7 +38,8 @@ def createTestUsers():
 @app.route('/test/createTestSession1')   
 def createTestSessions():
     admin = User.query.filter_by(email='admin@example.com').first()
-    session1 = Session("analyse", admin)
+    course = Course.query.filter_by(id=1).first()
+    session1 = UserSession(admin, course, "test")
     session1.start()
     session['isPauzed'] = None
     db.session.add(session1)

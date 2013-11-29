@@ -3,11 +3,9 @@ from flask import *
 from app import app
 from app import db
 
-from app.models.session import Session
 from werkzeug._internal import _log
-from app.models.statistics import Statistic
-from app.models.Association import Courses_Users
 
+from app.models.statistics import Statistic
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -20,8 +18,6 @@ class User(db.Model):
     
     userStastic_id = db.Column(db.Integer, db.ForeignKey('statistic.id'))
     statistic = db.relationship('Statistic', backref=db.backref('users', lazy='dynamic'))
-    
-    #courses = db.relationship('Course', secondary=users_courses,backref=db.backref('users', lazy='dynamic'))
     
     def __init__(self, email, name, surname, password, profilePic = None):
         self.email = email
@@ -68,12 +64,12 @@ class User(db.Model):
     def getRunningSessionOld(self):
         if session['sessionID']:
             if session['isPauzed']:
-                return Session.getSessionByID(session['sessionID'])
+                return UserSession.getSessionByID(session['sessionID'])
         return None
     '''
     
     def getRunningSession(self):
-        session = Session.query.filter_by(user=self).order_by(Session.start_date.desc()).first()
+        session = UserSession.query.filter_by(user=self).order_by(UserSession.start_date.desc()).first()
         
         # See if there is a session and the session is already started
         if session and session.start_date:

@@ -3,9 +3,8 @@ from flask import *
 from app import app
 from app import db
 
-from app.models.session import Session
-from app.models.user import User
 from app.models.Association import Courses_Users
+
 
 POSSIBLE_COURSES = ["analyse1" , "analyse2" , "algebra" , "algemene techniche scheikunde" , "mechanica 1" , "wijsbegeerte" ,
                     "toegepaste thermodynamica" , "materiaalkunde" ,"methodiek van de informatica" , "natuurkunde" , "elektrische netwerken"]
@@ -38,7 +37,10 @@ class Course(db.Model):
     def hasAsUser(self,user):
         if(user in self.users):
             return True
-        return False    
+        return False
+    
+    def getCourseStatistic(self):
+        return Courses_Users.query.filter_by(course=self).first().courseStatistic  
         
 def make_courses():
     try:
