@@ -4,8 +4,7 @@ from app import app
 from app import db
 
 from werkzeug._internal import _log
-
-from app.models.statistics import Statistic
+from app.models.statistics import Statistics
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -16,8 +15,8 @@ class User(db.Model):
     password = db.Column(db.String(30), unique=False)
     profilePic = db.Column(db.String(300), unique = True)
     
-    userStastic_id = db.Column(db.Integer, db.ForeignKey('statistic.id'))
-    statistic = db.relationship('Statistic', backref=db.backref('users', lazy='dynamic'))
+    userStastics_id = db.Column(db.Integer, db.ForeignKey('statistics.id'))
+    statistics = db.relationship('Statistics', backref=db.backref('users', lazy='dynamic'))
     
     def __init__(self, email, name, surname, password, profilePic = None):
         self.email = email
@@ -25,9 +24,9 @@ class User(db.Model):
         self.surname = surname
         self.password = password
         self.profilePic = profilePic
-        newUS = Statistic()
+        newUS = Statistics()
         db.session.add(newUS)
-        self.statistic = newUS
+        self.statistics = newUS
         
         db.session.commit()
     
@@ -39,7 +38,7 @@ class User(db.Model):
         return userCourses
     
     def updateStatistics(self,userSession):
-        self.statistic.updateUserStatistics(userSession)   
+        self.statistics.updateUserStatistics(userSession)   
     
     @staticmethod
     def getAdminUser():

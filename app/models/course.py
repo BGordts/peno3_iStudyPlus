@@ -3,9 +3,6 @@ from flask import *
 from app import app
 from app import db
 
-from app.models.Association import Courses_Users
-
-
 POSSIBLE_COURSES = ["analyse1" , "analyse2" , "algebra" , "algemene techniche scheikunde" , "mechanica 1" , "wijsbegeerte" ,
                     "toegepaste thermodynamica" , "materiaalkunde" ,"methodiek van de informatica" , "natuurkunde" , "elektrische netwerken"]
 

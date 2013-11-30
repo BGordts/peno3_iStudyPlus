@@ -8,7 +8,7 @@ from app import app
 from app import db
 
 from app.models.sensordata import Sensordata
-from app.models.session import Session
+from app.models.userSession import UserSession
 from app.models.user import User
 from app.models.device import Device
    

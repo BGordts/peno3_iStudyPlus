@@ -10,10 +10,6 @@ import json
 from app import app
 from app import db
 from sqlalchemy.dialects.sqlite.base import DATE
-
-from app.models.statistics import Statistic
-from app.models.course import Course
-from app.models.user import User
 from app.models.sensordata import Sensordata
 
 class UserSession(db.Model):

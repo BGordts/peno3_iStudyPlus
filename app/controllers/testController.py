@@ -5,7 +5,7 @@ from app import app
 from app import db
 
 from app.models.user import User
-from app.models.session import UserSession
+from app.models.userSession import UserSession
 from app.models.course import *
 from app.models.sensordata import Sensordata
 
@@ -33,11 +33,23 @@ def createTestUsers():
     db.session.add(guest3)
     db.session.commit()
     return "4 test users gemaakt, waaronder 1 admin."
+
+'''
+def createTestSessions():
+    user = User.query.get(session["userID"])
+    
+    for i in range(0, Course.query.count()):
+        course = Course.query.get(i)
+        name = "TestSession" + i
+        
+        session = UserSession(name, user, course)    
+'''
  
 @app.route('/test/createTestSession1')   
 def createTestSessions():
     admin = User.query.filter_by(email='admin@example.com').first()
     course = Course.query.filter_by(id=1).first()
+    
     session1 = UserSession(admin, course, "test")
     session1.start()
     session['isPauzed'] = None
@@ -48,6 +60,17 @@ def createTestSessions():
         generateTestData(session1)
         i = i+1
     endCreateTestData(session1)
+    
+    session2 = UserSession(admin, course, "test2")
+    session2.start()
+    session['isPauzed'] = None
+    db.session.add(session2)
+    db.session.commit()
+    i=0
+    while not(i==2):
+        generateTestData(session2)
+        i = i+1
+    endCreateTestData(session2)
     return "ok"
 
 @app.route('/test/addCourses')

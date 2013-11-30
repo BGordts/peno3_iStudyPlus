@@ -11,7 +11,7 @@ from app import app
 from app import db
 
 from app.models.user import User
-from app.models.session import UserSession
+from app.models.userSession import UserSession
 from app.models.course import Course
 
 from app.models.sensordata import *
@@ -37,14 +37,14 @@ def endSession_required(test):
             return redirect(url_for('home'))
     return wrap
 
-@app.route('/session/create' , methods = ['POST' , 'GET'])
+@app.route('/session/create' , methods = ['GET'])
 @endSession_required
 @login_required
 def create():
     user = User.getUserFromSession()
     #sessionName = request.form['sessionName']
     sessionName = "test"
-    course = Course.querry.filter_by(id=request.form['course_ID'])
+    course = Course.querry.filter_by(id=request.args["sessionID"])
     session1 = UserSession(sessionName, user, course )    
     db.session.add(session1)
     db.session.commit()  
@@ -127,12 +127,3 @@ def getData():
     session = Session.query.get(sessionID)
     
     return json.dumps(session.outputSensorData(sensor_type))
-
-'''
-Looks at all the sessions and returns the conbination of sensor average for a session and the efficiency of that session
-'''
-@app.route('/session/getEfficiencyForSensor', methods = ['GET'])   
-def getEfficiencyForSensor():
-    sensor_type = request.args["sensor_type"]
-    
-    Session.query.filter_by(sensor_type=sensor).all()

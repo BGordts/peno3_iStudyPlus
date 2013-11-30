@@ -1,11 +1,15 @@
 from flask import *
+from werkzeug._internal import _log
 
 from app import app
 from app import db
 
-import json
+#from session import UserSession
 
-class Statistic(db.Model):
+import json
+from app.models.userSession import UserSession
+
+class Statistics(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     
     totalTime = db.Column(db.Float)
@@ -115,126 +119,50 @@ class Statistic(db.Model):
         returnData['lowest_humidity'] = self.getLowestHum()
         
         return returnData      
-      
+    
+    def calculate_average(self, itemList):
+        average = 0
+        
+        for i in itemList:
+            average += i
+            
+        return float(average)/len(itemList)
+    
     def getLowestTemp(self):
-        lowestSessions = json.loads(self.lowestSessions)
-        i = 0
-        temp = 0
-        while(i < len(lowestSessions)):
-            lSession = UserSession.query.filter_by(id=lowestSessions[i].id).first()
-            temp = temp + lSession.sessionTemp
-            i = i + 1
-        return temp/(i-1)
+        return self.calculate_average([UserSession.query.get(x).sessionTemp for x in json.loads(self.lowestSessions)])
     
     def getHigestTemp(self):
-        highestSessions = json.loads(self.highestSessions)
-        i = 0
-        temp = 0
-        while(i < len(highestSessions)):
-            lSession = UserSession.query.filter_by(id=highestSessions[i].id).first()
-            temp = temp + lSession.sessionTemp
-            i = i + 1
-        return temp/(i-1)
+        return self.calculate_average([UserSession.query.get(x).sessionTemp for x in json.loads(self.highestSessions)])
     
     def getLowestEff(self):
-        lowestSessions = json.loads(self.lowestSessions)
-        i = 0
-        temp = 0
-        while(i < len(lowestSessions)):
-            lSession = UserSession.query.filter_by(id=lowestSessions[i].id).first()
-            temp = temp + lSession.sessionEff
-            i = i + 1
-        return temp/(i-1)
+        return self.calculate_average([UserSession.query.get(x).sessionEff for x in json.loads(self.lowestSessions)])
     
     def getHigestEff(self):
-        highestSessions = json.loads(self.highestSessions)
-        i = 0
-        temp = 0
-        while(i < len(highestSessions)):
-            lSession = UserSession.query.filter_by(id=highestSessions[i].id).first()
-            temp = temp + lSession.sessionEff
-            i = i + 1
-        return temp/(i-1)
+        return self.calculate_average([UserSession.query.get(x).sessionEff for x in json.loads(self.highestSessions)])
     
     def getLowestHum(self):
-        lowestSessions = json.loads(self.lowestSessions)
-        i = 0
-        temp = 0
-        while(i < len(lowestSessions)):
-            lSession = UserSession.query.filter_by(id=lowestSessions[i].id).first()
-            temp = temp + lSession.sessionHum
-            i = i + 1
-        return temp/(i-1)
+        return self.calculate_average([UserSession.query.get(x).sessionHum for x in json.loads(self.lowestSessions)])
     
     def getHigestHum(self):
-        highestSessions = json.loads(self.highestSessions)
-        i = 0
-        temp = 0
-        while(i < len(highestSessions)):
-            lSession = UserSession.query.filter_by(id=highestSessions[i].id).first()
-            temp = temp + lSession.sessionHum
-            i = i + 1
-        return temp/(i-1)
+        return self.calculate_average([UserSession.query.get(x).sessionHum for x in json.loads(self.highestSessions)])
     
     def getLowestIll(self):
-        lowestSessions = json.loads(self.lowestSessions)
-        i = 0
-        temp = 0
-        while(i < len(lowestSessions)):
-            lSession = UserSession.query.filter_by(id=lowestSessions[i].id).first()
-            temp = temp + lSession.sessionIll
-            i = i + 1
-        return temp/(i-1)
+        return self.calculate_average([UserSession.query.get(x).sessionIll for x in json.loads(self.lowestSessions)])
     
     def getHigestIll(self):
-        highestSessions = json.loads(self.highestSessions)
-        i = 0
-        temp = 0
-        while(i < len(highestSessions)):
-            lSession = UserSession.query.filter_by(id=highestSessions[i].id).first()
-            temp = temp + lSession.sessionIll
-            i = i + 1
-        return temp/(i-1)
+        return self.calculate_average([UserSession.query.get(x).sessionIll for x in json.loads(self.highestSessions)])
     
     def getLowestFocus(self):
-        lowestSessions = json.loads(self.lowestSessions)
-        i = 0
-        temp = 0
-        while(i < len(lowestSessions)):
-            lSession = UserSession.query.filter_by(id=lowestSessions[i].id).first()
-            temp = temp + lSession.sessionFocus
-            i = i + 1
-        return temp/(i-1)
+        return self.calculate_average([UserSession.query.get(x).sessionFocus for x in json.loads(self.lowestSessions)])
     
     def getHigestFocus(self):
-        highestSessions = json.loads(self.highestSessions)
-        i = 0
-        temp = 0
-        while(i < len(highestSessions)):
-            lSession = UserSession.query.filter_by(id=highestSessions[i].id).first()
-            temp = temp + lSession.sessionFocus
-            i = i + 1
-        return temp/(i-1)
+        return self.calculate_average([UserSession.query.get(x).sessionFocus for x in json.loads(self.highestSessions)])
     
     def getLowestSound(self):
-        lowestSessions = json.loads(self.lowestSessions)
-        i = 0
-        temp = 0
-        while(i < len(lowestSessions)):
-            lSession = UserSession.query.filter_by(id=lowestSessions[i].id).first()
-            temp = temp + lSession.sessionSound
-            i = i + 1
-        return temp/(i-1)
+        return self.calculate_average([UserSession.query.get(x).sessionSound for x in json.loads(self.lowestSessions)])
     
     def getHigestSound(self):
-        highestSessions = json.loads(self.highestSessions)
-        i = 0
-        temp = 0
-        while(i < len(highestSessions)):
-            lSession = UserSession.query.filter_by(id=highestSessions[i].id).first()
-            temp = temp + lSession.sessionSound
-            i = i + 1
-        return temp/(i-1)
+        return self.calculate_average([UserSession.query.get(x).sessionSound for x in json.loads(self.highestSessions)])
     
  
     
