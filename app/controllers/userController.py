@@ -147,18 +147,18 @@ def changeUserinfo():
         error = 'The old password you entered did not match'
         errors = errors + {"password" : error}
     if not isValidPass(pass1,pass2):
+        error = 'The passwords you entered did not match'
+        errors = errors + {"password" : error}
+        if not isValidPass(pass1,pass2):
             error = 'The passwords you entered did not match'
             errors = errors + {"password" : error}
-        if not isValidPass(pass1,pass2):
-                error = 'The passwords you entered did not match'
-                errors = errors + {"password" : error}
         if not((errors and True) or False):
             user.changeSetting(self , email , name , surname , password)
-            
+
         return render_template('pages/settings_page.html' , errors = errors)
     else:
         return render_template('pages/settings_page.html')
-    
+
 @app.route('/user/searchUser' , methods = ['POST' , 'GET'])
 def searchUser():
     keyWord = request.form['keyWord']
@@ -190,4 +190,4 @@ def getUserCourses():
 
 
 
-    
+
