@@ -139,6 +139,9 @@ def changeUserinfo():
     if(oldPass == None):
         pass1 = user.password
         pass2 = user.password
+    if not isValidEmail:
+            error = 'The email-address you entered is already taken'
+            errors =  errors + {"email" : error}
     if not(user.password == oldPass):
         error = 'The old password you entered did not match'
         errors = errors + {"password" : error}
@@ -154,11 +157,11 @@ def searchUser():
     keyWord = request.form['keyWord']
     users = None
     if(keyWord.containts('@')):
-        users = User.query.filter_by(email=keyWord)
+        users = User.query.filter_by(email=keyWord).all()
     else:
-        users = User.query.filter_by(surname=keyWord)
-        if(users == None):
-            users = User.query.filter_by(name=keyWord)
+        users = User.query.filter_by(surname=keyWord).all()
+        if not (users):
+            users = User.query.filter_by(name=keyWord).all()
     return users
 
 @app.route('/user/getCoStudents')
@@ -171,7 +174,10 @@ def getCoStudents():
                 coStudents.append(student)
     return coStudents
 
-
+@app.route('/user/courses' , methods = ['POST' , 'GET'])
+def getUserCourses():
+    user = User.query.filter_by(id=request.form['userID']).first()
+    return user.getUserCourses()
 
 
 
