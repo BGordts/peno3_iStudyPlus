@@ -123,47 +123,52 @@ def allowed_file(filename):
 @app.route('/user/settings' , methods = ['GET','POST'])
 @login_required
 def changeUserinfo():
-    if request.method == 'POST':
-        user = User.query.filter_by(id=session['userID']).first()
-        errors = {}
-        email = request.form['email']
-        name = request.form['name']
-        lastname = request.form['lastname']
-        oldPass = request.form['oldPass']
-        pass1 = request.form['pass1']
-        pass2 = request.form['pass2']
-        if(email == None):
-            email = user.email
-        if(name == None):
-            name = user.surname
-        if(lastName == None):
-            lastName = user.name
-        if(oldPass == None):
-            pass1 = user.password
-            pass2 = user.password
-        if not(user.password == oldPass):
-            error = 'The old password you entered did not match'
-            errors = errors + {"password" : error}
+    user = User.query.filter_by(id=session['userID']).first()
+    errors = {}
+    email = request.form['email']
+    name = request.form['name']
+    lastname = request.form['lastname']
+    oldPass = request.form['oldPass']
+    pass1 = request.form['pass1']
+    pass2 = request.form['pass2']
+    if(email == None):
+        email = user.email
+    if(name == None):
+        name = user.surname
+    if(lastName == None):
+        lastName = user.name
+    if(oldPass == None):
+        pass1 = user.password
+        pass2 = user.password
+    if not isValidEmail:
+            error = 'The email-address you entered is already taken'
+            errors =  errors + {"email" : error}
+    if not(user.password == oldPass):
+        error = 'The old password you entered did not match'
+        errors = errors + {"password" : error}
+    if not isValidPass(pass1,pass2):
+        error = 'The passwords you entered did not match'
+        errors = errors + {"password" : error}
         if not isValidPass(pass1,pass2):
-                error = 'The passwords you entered did not match'
-                errors = errors + {"password" : error}
+            error = 'The passwords you entered did not match'
+            errors = errors + {"password" : error}
         if not((errors and True) or False):
             user.changeSetting(self , email , name , surname , password)
-            
+
         return render_template('pages/settings_page.html' , errors = errors)
     else:
         return render_template('pages/settings_page.html')
-    
+
 @app.route('/user/searchUser' , methods = ['POST' , 'GET'])
 def searchUser():
     keyWord = request.form['keyWord']
     users = None
     if(keyWord.containts('@')):
-        users = User.query.filter_by(email=keyWord)
+        users = User.query.filter_by(email=keyWord).all()
     else:
-        users = User.query.filter_by(surname=keyWord)
-        if(users == None):
-            users = User.query.filter_by(name=keyWord)
+        users = User.query.filter_by(surname=keyWord).all()
+        if not (users):
+            users = User.query.filter_by(name=keyWord).all()
     return users
 
 @app.route('/user/getCoStudents')
@@ -176,10 +181,13 @@ def getCoStudents():
                 coStudents.append(student)
     return coStudents
 
+@app.route('/user/courses' , methods = ['POST' , 'GET'])
+def getUserCourses():
+    user = User.query.filter_by(id=request.form['userID']).first()
+    return user.getUserCourses()
 
 
 
 
 
 
-    
