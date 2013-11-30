@@ -5,6 +5,7 @@ from functools import wraps
 from datetime import datetime
 import time
 from werkzeug._internal import _log
+import json
 
 from app import app
 from app import db
@@ -13,6 +14,7 @@ from app.models.user import User
 from app.models.session import UserSession
 from app.models.course import Course
 
+from app.models.sensordata import *
 from app.controllers.userController import login_required
 
 def session_required(test):
@@ -112,3 +114,25 @@ def commitSession():
     sessionID = request.form['sessionID']
     UserSession.query.filter_by(id=session['sessionID']).first().commitSession()
     return render_template('pages/dashboard.html')
+
+'''
+Get all the sensordata for the spified session and sensor
+'''
+@app.route('/session/getData', methods = ['GET'])    
+@login_required
+def getData():
+    sessionID = request.args["sessionID"]
+    sensor_type = request.args["sensor_type"]
+    
+    session = Session.query.get(sessionID)
+    
+    return json.dumps(session.outputSensorData(sensor_type))
+
+'''
+Looks at all the sessions and returns the conbination of sensor average for a session and the efficiency of that session
+'''
+@app.route('/session/getEfficiencyForSensor', methods = ['GET'])   
+def getEfficiencyForSensor():
+    sensor_type = request.args["sensor_type"]
+    
+    Session.query.filter_by(sensor_type=sensor).all()
