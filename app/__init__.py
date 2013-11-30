@@ -24,6 +24,7 @@ from app.controllers.sensorDataController import *
 from app.controllers.deviceController import *
 from app.controllers.coursController import *
 from app.controllers.testController import *
+from app.controllers.statisticsController import *
 
 from app.models.user import User
 from app.models.session import UserSession
@@ -43,5 +44,5 @@ def createTestData():
     db.session.add(guest)
     db.session.commit()
     
-createTestData()    
+#createTestData()    
     

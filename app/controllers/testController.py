@@ -33,7 +33,6 @@ def createTestUsers():
     db.session.add(guest3)
     db.session.commit()
     return "4 test users gemaakt, waaronder 1 admin."
-
  
 @app.route('/test/createTestSession1')   
 def createTestSessions():

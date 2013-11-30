@@ -39,7 +39,8 @@ def hello():
 
 @app.route('/home')
 def home():
-    return render_template('pages/dashboard_profile-info.html')
+    user = User.query.get(session["userID"])
+    return render_template('pages/dashboard_profile-info.html', user=user)
 
 @app.route('/welcome')
 @login_required

@@ -88,8 +88,34 @@ class Statistic(db.Model):
                 highestSessions[lowest] = userSession.id
         self.highestSessions = json.dumps(highestSessions)
         db.session.commit()
+        
+        
+    '''
+    Makes a map with all the interesting data in this object. Used to render the json in the controllers.
+    '''
+    def outputData(self):
+        returnData = {}
+        
+        returnData['total_time'] = self.totalTime
+        returnData['total_efficiency'] = self.totalEff
+        returnData['total_focus'] = self.totalfocus
+        returnData['total_illumination_average'] = self.totalIllum
+        returnData['total_temperature_average'] = self.totalTempAv
+        returnData['total_sound_average'] = self.totalSound
+        returnData['total_humidity_average'] = self.totalHumAv
+        
+        returnData['highest_illumination'] = self.getHigestIll()
+        returnData['highest_temperature'] = self.getHigestTemp()
+        returnData['highest_sound'] = self.getHigestSound()
+        returnData['highest_humidity'] = self.getHigestHum()
+        
+        returnData['lowest_illumination'] = self.getLowestIll()
+        returnData['lowest_temperature'] = self.getLowestTemp()
+        returnData['lowest_sound'] = self.getLowestSound()
+        returnData['lowest_humidity'] = self.getLowestHum()
+        
+        return returnData      
       
-  
     def getLowestTemp(self):
         lowestSessions = json.loads(self.lowestSessions)
         i = 0
