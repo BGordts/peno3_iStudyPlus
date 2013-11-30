@@ -31,11 +31,18 @@ class Statistic(db.Model):
         self.lowestSessions = json.dumps([])
         self.highestSessions = json.dumps([])        
     
-    def updateUserStatistics(self,userSession):
-        self.updateTotals(userSession)
-        self.updateHighestSessions(userSession)
-        self.updateLowestSessions(userSession)
+    def updateStatistics(self,newSession):
+        self.updateTotals(newSession)
+        self.updateHighestSessions(newSession)
+        self.updateLowestSessions(newSession)
     
+    def addUntrackedSession(self,newSession):
+        oldTotalTime = self.totalTime
+        self.totalTime = oldTotalTime + newSession.getSessionDuration()
+    
+    def deleteUntrackedSession(self, newSession):
+        oldTotalTime = self.totalTime
+        self.totalTime = oldTotalTime - newSession.getSessionDuration()
         
     def updateTotals(self, userSession):
         oldTotalTime = self.totalTime

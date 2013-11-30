@@ -28,7 +28,6 @@ class User(db.Model):
         newUS = Statistic()
         db.session.add(newUS)
         self.statistic = newUS
-        
         db.session.commit()
     
     def getUserCourses(self):
@@ -39,7 +38,7 @@ class User(db.Model):
         return userCourses
     
     def updateStatistics(self,userSession):
-        self.statistic.updateUserStatistics(userSession)   
+        self.statistic.updateStatistics(userSession)   
     
     @staticmethod
     def getAdminUser():

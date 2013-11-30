@@ -42,16 +42,26 @@ def endSession_required(test):
 @login_required
 def create():
     user = User.getUserFromSession()
-    #sessionName = request.form['sessionName']
-    sessionName = "test"
-    course = Course.querry.filter_by(id=request.form['course_ID'])
+    sessionName = request.form['sessionName']
+    course = Course.query.filter_by(id=request.form['course_ID'])
     session1 = UserSession(sessionName, user, course )    
     db.session.add(session1)
     db.session.commit()  
     session['sessionID'] = session1.id
     session['isPauzed'] = None     
     return "sessie aangemaakt"
-  
+
+def createUntrackedSession():
+    user = User.getUserFromSession()
+    sessionName = request.form['sessionName']
+    course = Course.query.filter_by(id=request.form['course_ID'])
+    startTime = request.form['startTime']
+    endTime = request.form['endTime']
+    session1 = UserSession(sessionName, user, course, startTime , endTime )    
+    session1.
+    db.session.add(session1)
+    db.session.commit()
+      
 @app.route('/session/start')
 @session_required
 @login_required

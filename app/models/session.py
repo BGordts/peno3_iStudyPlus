@@ -39,21 +39,29 @@ class UserSession(db.Model):
     sessionFocus = db.Column(db.Float)
     sessionHum = db.Column(db.Float)
     
-    def __init__(self, user, course , title):
+    def __init__(self, user, course , title , feedback_score = -1, start_date =None, end_date=None):
         self.title = title
         self.user = user
         self.course = course
         self.pauses = json.dumps([])
         #self.paused = False
-        self.start_date = None
-        self.end_date = None
-        self.feedback_score = -1
+        self.start_date = start_date
+        self.end_date = end_date
+        self.feedback_score = feedback_score
         self.sessionEff = 0
         self.sessionTemp = 0
         self.sessionIll = 0
         self.sessionSound = 0
         self.sessionFocus = 0
         self.sessionHum = 0
+        if not (end_date== None):
+            pass
+        
+    def deleteUntrackedSession(self):
+        self.user.getS
+        
+        db.session.delete(self)
+        db.session.commit()
         
     '''
     Start the timer of the session
@@ -100,7 +108,7 @@ class UserSession(db.Model):
         else:
             db.session.delete(self)
         db.session.commit()
-    
+
     def commitSession(self):
         self.calcSessionTemp()
         self.calcSessionHum()

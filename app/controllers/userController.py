@@ -149,9 +149,6 @@ def changeUserinfo():
     if not isValidPass(pass1,pass2):
             error = 'The passwords you entered did not match'
             errors = errors + {"password" : error}
-        if not isValidPass(pass1,pass2):
-                error = 'The passwords you entered did not match'
-                errors = errors + {"password" : error}
         if not((errors and True) or False):
             user.changeSetting(self , email , name , surname , password)
             
