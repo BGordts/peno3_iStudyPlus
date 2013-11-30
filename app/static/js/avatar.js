@@ -116,6 +116,7 @@ jQuery.event.props.push('dataTransfer');
 
     storeImage: function(data) {
       s.imageStorage.push(data)
+      console.log(data)
     }
 
   }
