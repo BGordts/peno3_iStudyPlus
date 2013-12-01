@@ -3,9 +3,6 @@ from flask import *
 from app import app
 from app import db
 
-from app.models.Association import Courses_Users
-
-
 POSSIBLE_COURSES = ["analyse1" , "analyse2" , "algebra" , "algemene techniche scheikunde" , "mechanica 1" , "wijsbegeerte" ,
                     "toegepaste thermodynamica" , "materiaalkunde" ,"methodiek van de informatica" , "natuurkunde" , "elektrische netwerken"]
 
@@ -13,35 +10,35 @@ class Course(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     course = db.Column(db.String(500), unique=True)
-    
+
     def __init__(self, course):
         self.course = course
         self.users = []
-    
+
     def getAllUsers(self):
         return self.users
-    
+
     def addUserToCourse(self,user):
         association = Courses_Users(user,self)
         db.session.add(association)
         db.session.commit()
-    
+
     def deleteUser(self,user):
         self.users.remove(user)
         db.session.commit()
-    
+
     @staticmethod
     def getAllCourses():
         return Course.query.all()
-    
+
     def hasAsUser(self,user):
         if(user in self.users):
             return True
         return False
-    
+
     def getCourseStatistic(self):
-        return Courses_Users.query.filter_by(course=self).first().courseStatistic  
-        
+        return Courses_Users.query.filter_by(course=self).first().courseStatistic
+
 def make_courses():
     try:
         for course in POSSIBLE_COURSES:
@@ -51,5 +48,4 @@ def make_courses():
     except Exception:
         pass
 
-make_courses()
-    
+#make_courses()

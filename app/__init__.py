@@ -24,10 +24,11 @@ from app.controllers.sensorDataController import *
 from app.controllers.deviceController import *
 from app.controllers.coursController import *
 from app.controllers.testController import *
+from app.controllers.statisticsController import *
 
 from app.models.user import User
-from app.models.session import UserSession
-from app.models.statistics import Statistic
+from app.models.userSession import UserSession
+from app.models.statistics import Statistics
 from app.models.sensordata import Sensordata
 
 UPLOAD_FOLDER = '/static/images/profilePics'
@@ -43,5 +44,5 @@ def createTestData():
     db.session.add(guest)
     db.session.commit()
     
-createTestData()    
+#createTestData()    
     
