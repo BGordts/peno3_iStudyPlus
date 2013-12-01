@@ -51,7 +51,7 @@ directive('dashboardPanel', function ($scope) {
 		controller: function($scope){
 			$scope.chartdata = $scope.item.data1;
 			console.log($scope.chartdata)
-			
+
 			$scope.items = [
 			                { id: 1, name: 'Foo' },
 			                { id: 2, name: 'Bar' }
@@ -68,7 +68,7 @@ directive('dashboardPanel', function ($scope) {
 		replace: true,
 		templateUrl: "dashboard_session-list.tpl",
 		link: function(scope, element, attrs) {
-			
+
 		},
 		controller: function($scope){
 			$scope.chartdata = $scope.item.data;
@@ -96,7 +96,7 @@ directive('dashboardPanel', function ($scope) {
             chartdata: '=',
         },
         link: function(scope, element, attrs) {
-        	d3.custom = {};        	
+        	d3.custom = {};
         	d3.custom.barChart = function module() {
         	    var margin = {top: 20, right: 20, bottom: 40, left: 40},
         	        width = 500,
@@ -210,10 +210,10 @@ directive('dashboardPanel', function ($scope) {
         	    d3.rebind(exports, dispatch, 'on');
         	    return exports;
         	};
-        	
+
         	var chart = d3.custom.barChart();
             var chartEl = d3.select(element[0]);
-            
+
             scope.$watch('chartdata', function (newVal, oldVal) {
                 chartEl.datum(newVal).call(chart);
                 integer = integer + 1;
