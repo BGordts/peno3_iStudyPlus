@@ -51,7 +51,13 @@ def create():
     session['sessionID'] = session1.id
     session['isPauzed'] = None     
     return "sessie aangemaakt"
-  
+
+def modifieUSession():
+    uSession = "iets dat het sessieId aanvraagt"
+    
+    newSession = UserSession(user, course, title, feedback_score, start_date, end_date)
+    
+
 @app.route('/session/start')
 @session_required
 @login_required
@@ -82,8 +88,7 @@ def resumeSession():
 @app.route('/session/isPaused')
 def isPauzed():
     u = User.query.get(session['userID'])
-    s = u.getRunningSession()
-    
+    s = u.getRunningSession()    
     if s:
         return s.isPaused().__repr__()
     else:
