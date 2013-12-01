@@ -58,4 +58,5 @@ def getEfficiencyForSensor():
     #Sort the dictionary by key
     OrderedDict(sorted(returnMap.items(), key=lambda t: t[0]))
     
+    
     return json.dumps(returnMap)
