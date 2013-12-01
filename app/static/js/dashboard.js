@@ -325,7 +325,7 @@ directive('dashboardPanel', function ($scope) {
                     //scope.chartdata = scope.item.data2;
                 } else {
                     console.log("jmjklm")
-                    scope.chartdata = scope.item.data2;
+                    scope.chartdata = scope.item["data"+ newVal.id];
                 }
             });
         },

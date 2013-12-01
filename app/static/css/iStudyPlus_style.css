@@ -621,3 +621,8 @@
 	.btn > input[type="radio"] {
 	display: none;
 }
+.dot {
+  fill: white;
+  stroke: steelblue;
+  stroke-width: 1.5px;
+}
