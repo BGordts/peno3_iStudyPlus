@@ -9,6 +9,7 @@ from app.models.user import User
 from app.models.userSession import UserSession
 from app.models.course import Course
 from werkzeug._internal import _log
+from app.controllers.baseController import welcome
 
 def login_required(test):
     @wraps(test)
@@ -30,10 +31,6 @@ def logout_required(test):
             return redirect(url_for('home'))
     return wrap
 
-@app.route('/app/<path:path>')
-@app.route('/app')
-def angularRoutes(path=None):
-    return "lololo"
 @app.route('/user/login' , methods=['GET','POST'])
 @logout_required
 def login():
