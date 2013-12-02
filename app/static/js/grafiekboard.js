@@ -349,7 +349,7 @@ directive('dashboardPanel', function ($scope) {
         	                chartH = height - margin.top - margin.bottom;
 
         	            var x1 = d3.scale.linear()
-        	                .domain([0, d3.max(_data, function(d, i){ return d.x; })])
+        	                .domain([d3.min(_data,function(d,i){return d.x}), d3.max(_data, function(d, i){ return d.x; })])
         	                .range([0, chartW]);
 
         	            var y1 = d3.scale.linear()
@@ -418,30 +418,6 @@ directive('dashboardPanel', function ($scope) {
         	                .transition()
 							.attr("d", line);
 
-//        	            var gapSize = x1.rangeBand() / 100 * gap;
-//        	            var barW = x1.rangeBand() - gapSize;
-//        	            var bars = svg.select('.chart-group')
-//        	                .selectAll('.bar')
-//        	                .data(_data);
-//        	            bars.enter().append('rect')
-//        	                .classed('bar', true)
-//        	                .attr({x: chartW,
-//        	                    width: barW,
-//        	                    y: function(d, i) { return y1(d); },
-//        	                    height: function(d, i) { return chartH - y1(d); }
-//        	                })
-//        	                .on('mouseover', dispatch.customHover);
-//        	            bars.transition()
-//        	                .duration(duration)
-//        	                .ease(ease)
-//        	                .attr({
-//        	                    width: barW,
-//        	                    x: function(d, i) { return x1(i) + gapSize/2; },
-//        	                    y: function(d, i) { return y1(d); },
-//        	                    height: function(d, i) { return chartH - y1(d); }
-//        	                });
-//        	            bars.exit().transition().style({opacity: 0}).remove();
-
         	            duration = 500;
 
         	        });
@@ -484,7 +460,7 @@ directive('dashboardPanel', function ($scope) {
 })
 
 //d3.custom = {};
-.directive('static-graph', function () {
+.directive('staticGraph', function () {
     var integer = 0;
     return {
         restrict: 'E',
@@ -657,5 +633,3 @@ directive('dashboardPanel', function ($scope) {
         }
     }
 })
-
-//d3.custom = {};

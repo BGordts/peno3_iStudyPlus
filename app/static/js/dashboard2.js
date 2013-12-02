@@ -15,293 +15,342 @@ controller('appCtrl', function ($scope) {
     $scope.panelState = "view";
     $scope.sessionType = "live";
     $scope.activityType = "study";
-    $scope.courselist = [{
+    $scope.courselistcompare = [{
         "data1": [
             {
                 x: 0.2,
-                y: 0.6
-            },
+                y: 0.2
+  },
             {
                 x: 0.3,
-                y: 0.6
-            },
+                y: 0.2
+  },
             {
                 x: 0.4,
-                y: 0.6
-            },
+                y: 0.2
+  },
     ],
         "data2": [
             {
                 x: 0.2,
                 y: 0.3
-            },
+  },
             {
                 x: 0.3,
                 y: 0.10
-            },
+  },
             {
                 x: 0.4,
                 y: 0.12
-            },
+  },
     ]
-    }, {
+ }, {
         "data1": [
             {
                 x: 0.2,
                 y: 0.2
-            },
+  },
             {
                 x: 0.3,
                 y: 0.4
-            },
+  },
             {
                 x: 0.4,
                 y: 0.8
-            },
+  },
     ],
         "data2": [
             {
                 x: 0.2,
                 y: 0.5
-            },
+  },
             {
                 x: 0.3,
                 y: 0.9
-            },
+  },
             {
-                x: 0.4,
-                y: 0.12
-            },
+                x: 4,
+                y: 12
+  },
     ]
-    }, {
+ }, {
         "data1": [
             {
                 x: 0.2,
                 y: 0.2
-            },
+  },
             {
                 x: 0.3,
                 y: 0.6
-            },
+  },
             {
                 x: 0.4,
                 y: 0.6
-            },
+  },
     ],
         "data2": [
             {
                 x: 0.2,
                 y: 0.5
-            },
+  },
             {
                 x: 0.3,
                 y: 0.10
-            },
+  },
             {
                 x: 0.4,
                 y: 0.12
-            },
+  },
     ]
-    }];
+ }];
+    $scope.courselist = [{
+        "data1": [
+            {
+                x: 0.2,
+                y: 0.5
+  },
+            {
+                x: 0.3,
+                y: 0.4
+  },
+            {
+                x: 0.4,
+                y: 0.1
+  },
+    ],
+        "data2": [
+            {
+                x: 0.2,
+                y: 0.5
+  },
+            {
+                x: 0.3,
+                y: 0.6
+  },
+            {
+                x: 0.4,
+                y: 0.8
+  },
+    ]
+ }, {
+        "data1": [
+            {
+                x: 0.2,
+                y: 0.2
+  },
+            {
+                x: 0.3,
+                y: 0.4
+  },
+            {
+                x: 0.4,
+                y: 0.8
+  },
+    ],
+        "data2": [
+            {
+                x: 0.2,
+                y: 0.5
+  },
+            {
+                x: 0.3,
+                y: 0.9
+  },
+            {
+                x: 4,
+                y: 12
+  },
+    ]
+ }, {
+        "data1": [
+            {
+                x: 0.2,
+                y: 0.2
+  },
+            {
+                x: 0.3,
+                y: 0.6
+  },
+            {
+                x: 0.4,
+                y: 0.6
+  },
+    ],
+        "data2": [
+            {
+                x: 0.2,
+                y: 0.5
+  },
+            {
+                x: 0.3,
+                y: 0.10
+  },
+            {
+                x: 0.4,
+                y: 0.12
+  },
+    ]
+ }];
     $scope.sessionlist = [{
-        "data": [
-            {
-                x: 0.2,
-                y: 0.5
-            },
-            {
-                x: 0.3,
-                y: 0.10
-            },
-            {
-                x: 0.4,
-                y: 0.12
-            },
-    ]
-    }, {
-        "data": [
-            {
-                x: 0.2,
-                y: 0.5
-            },
-            {
-                x: 0.3,
-                y: 0.10
-            },
-            {
-                x: 0.4,
-                y: 0.12
-            },
-    ]
-    }, {
-        "data": [
-            {
-                x: 0.2,
-                y: 0.5
-            },
-            {
-                x: 0.3,
-                y: 0.10
-            },
-            {
-                x: 0.4,
-                y: 0.12
-            },
-    ]
-    }];
+        "data": [1, 2, 3, 4]
+ }, {
+        "data": [2, 2, 2, 2]
+ }, {
+        "data": [5, 200, 3, 4]
+ }];
     /*alert('zever');*/
     $scope.name = "You";
     $scope.commonStudents = [{
         "name": "ik"
-    }, {
+ }, {
         "name": "jij"
-    }, {
+ }, {
         "name": "hij"
-    }, {
+ }, {
         "name": "of zij"
-    }, {
+ }, {
         "name": "jeroen"
-    }, {
+ }, {
         "name": "ik"
-    }, {
+ }, {
         "name": "jij"
-    }, {
+ }, {
         "name": "hij"
-    }, {
+ }, {
         "name": "of zij"
-    }, {
+ }, {
         "name": "jeroen"
-    }, {
+ }, {
         "name": "ik"
-    }, {
+ }, {
         "name": "jij"
-    }, {
+ }, {
         "name": "hij"
-    }, {
+ }, {
         "name": "of zij"
-    }, {
+ }, {
         "name": "jeroen"
-    }, {
+ }, {
         "name": "ik"
-    }, {
+ }, {
         "name": "jij"
-    }, {
+ }, {
         "name": "hij"
-    }, {
+ }, {
         "name": "of zij"
-    }, {
+ }, {
         "name": "jeroen"
-    }, {
+ }, {
         "name": "ik"
-    }, {
+ }, {
         "name": "jij"
-    }, {
+ }, {
         "name": "hij"
-    }, {
+ }, {
         "name": "of zij"
-    }, {
+ }, {
         "name": "jeroen"
-    }, {
+ }, {
         "name": "ik"
-    }, {
+ }, {
         "name": "jij"
-    }, {
+ }, {
         "name": "hij"
-    }, {
+ }, {
         "name": "of zij"
-    }, {
+ }, {
         "name": "jeroen"
-    }, {
+ }, {
         "name": "ik"
-    }, {
+ }, {
         "name": "jij"
-    }, {
+ }, {
         "name": "hij"
-    }, {
+ }, {
         "name": "of zij"
-    }, {
+ }, {
         "name": "jeroen"
-    }, {
+ }, {
         "name": "ik"
-    }, {
+ }, {
         "name": "jij"
-    }, {
+ }, {
         "name": "hij"
-    }, {
+ }, {
         "name": "of zij"
-    }, {
+ }, {
         "name": "jeroen"
-    }, {
+ }, {
         "name": "ik"
-    }, {
+ }, {
         "name": "jij"
-    }, {
+ }, {
         "name": "hij"
-    }, {
+ }, {
         "name": "of zij"
-    }, {
+ }, {
         "name": "jeroen"
-    }, {
+ }, {
         "name": "ik"
-    }, {
+ }, {
         "name": "jij"
-    }, {
+ }, {
         "name": "hij"
-    }, {
+ }, {
         "name": "of zij"
-    }, {
+ }, {
         "name": "jeroen"
-    }, {
+ }, {
         "name": "ik"
-    }, {
+ }, {
         "name": "jij"
-    }, {
+ }, {
         "name": "hij"
-    }, {
+ }, {
         "name": "of zij"
-    }, {
+ }, {
         "name": "jeroen"
-    }, {
+ }, {
         "name": "ik"
-    }, {
+ }, {
         "name": "jij"
-    }, {
+ }, {
         "name": "hij"
-    }, {
+ }, {
         "name": "of zij"
-    }, {
+ }, {
         "name": "jeroen"
-    }, {
+ }, {
         "name": "ik"
-    }, {
+ }, {
         "name": "jij"
-    }, {
+ }, {
         "name": "hij"
-    }, {
+ }, {
         "name": "of zij"
-    }, {
+ }, {
         "name": "jeroen"
-    }, {
+ }, {
         "name": "ik"
-    }, {
+ }, {
         "name": "jij"
-    }, {
+ }, {
         "name": "hij"
-    }, {
+ }, {
         "name": "of zij"
-    }, {
+ }, {
         "name": "jeroen"
-    }, {
+ }, {
         "name": "ik"
-    }, {
+ }, {
         "name": "jij"
-    }, {
+ }, {
         "name": "hij"
-    }, {
+ }, {
         "name": "of zij"
-    }, {
+ }, {
         "name": "jeroen"
-    }]
+ }]
 })
 /*.
 
@@ -325,23 +374,36 @@ directive('dashboardPanel', function ($scope) {
                     //scope.chartdata = scope.item.data2;
                 } else {
                     console.log("jmjklm")
-                    scope.chartdata = scope.item["data" + newVal.id];
+                    scope.chartdata1 = scope.item["data" + newVal.id];
+                    scope.chartdata2 = scope.courselistcompare[scope.$index]["data" + newVal.id];
+                    console.log(scope.chartdata2)
+                    console.log(scope.chartdata1)
+                    scope.chartdata = {
+                        "profile": scope.chartdata1,
+                        "compare": scope.chartdata2
+                    }
                 }
             });
         },
         controller: function ($scope) {
-            $scope.chartdata = $scope.item.data1;
-            console.log($scope.chartdata)
+            $scope.chartdata1 = $scope.item.data1;
+            $scope.chartdata2 = $scope.courselistcompare[$scope.$index].data1;
+            $scope.chartdata = {
+                "profile": $scope.chartdata1,
+                "compare": $scope.chartdata2
+            };
+            //  console.log($scope.chartdata2)
+            //		console.log($scope.chartdata1)
 
             $scope.items = [
                 {
                     id: 1,
                     name: 'Foo'
-                },
+   },
                 {
                     id: 2,
                     name: 'Bar'
-                }
+   }
                ];
 
             $scope.selectedItem = null;
@@ -358,8 +420,8 @@ directive('dashboardPanel', function ($scope) {
 
         },
         controller: function ($scope) {
-            $scope.chartdata = $scope.item.data;
-            console.log($scope.chartdata)
+            $scope.chartdata = $scope.item;
+            //console.log($scope.chartdata)
         }
     }
 })
@@ -401,39 +463,32 @@ directive('dashboardPanel', function ($scope) {
 
                 function exports(_selection) {
                     _selection.each(function (_data) {
+                        console.log("steven")
+                        console.log(_data.profile)
 
                         var chartW = width - margin.left - margin.right,
                             chartH = height - margin.top - margin.bottom;
-                        var x = d3.scale.linear()
-                            .domain([0, d3.max(_data, function (d) {
-                                return (d.x);
-                            })])
-                            .range([0, chartW]);
-
-                        var y = d3.scale.linear()
-                            .domain([0, d3.max(_data, function (d) {
-                                return (d.y);
-                            })])
-                            .range([chartH, 0]);
 
                         var x1 = d3.scale.linear()
-                            .domain([0, d3.max(_data, function (d) {
-                                return (d.x);
+                            .domain([d3.min(_data.profile, function (d, i) {
+                                return d.x
+                            }), d3.max(_data.profile, function (d, i) {
+                                return d.x;
                             })])
                             .range([0, chartW]);
 
                         var y1 = d3.scale.linear()
-                            .domain([0, d3.max(_data, function (d) {
-                                return (d.y);
+                            .domain([0, d3.max(_data.profile, function (d, i) {
+                                return d.y;
                             })])
                             .range([chartH, 0]);
 
                         var xAxis = d3.svg.axis()
-                            .scale(x)
+                            .scale(x1)
                             .orient('bottom');
 
                         var yAxis = d3.svg.axis()
-                            .scale(y)
+                            .scale(y1)
                             .orient('left');
 
                         var line = d3.svg.line()
@@ -441,12 +496,14 @@ directive('dashboardPanel', function ($scope) {
                                 return d.y != null;
                             })
                             .x(function (d) {
-                                return x(d.x);
+                                return x1(d.x);
                             })
                             .y(function (d) {
-                                return y(d.y);
-                            });
+                                return y1(d.y);
+                            })
+                            .interpolate("bundle");
 
+                        //var barW = chartW / _data.length;
 
                         if (!svg) {
                             svg = d3.select(this)
@@ -457,11 +514,29 @@ directive('dashboardPanel', function ($scope) {
                             container.append('g').classed('chart-group', true);
                             container.append('g').classed('x-axis-group axis', true);
                             container.append('g').classed('y-axis-group axis', true);
+
+                            var path1 = svg.select('.chart-group')
+                                .append("path")
+                                .data([_data.profile])
+                                .attr("class", "line profile")
+                                .attr("d", line);
+
+                            var path2 = svg.select('.chart-group')
+                                .append("path")
+                                .data([_data.compare])
+                                .attr("class", "line compare")
+                                .attr("d", line);
+
                         }
 
-                        svg.transition().duration(duration).attr({width: width,height: height})
+                        svg.transition().duration(duration).attr({
+                            width: width,
+                            height: height
+                        })
                         svg.select('.container-group')
-                        .attr({transform: 'translate(' + margin.left + ',' + margin.top + ')'});
+                            .attr({
+                                transform: 'translate(' + margin.left + ',' + margin.top + ')'
+                            });
 
                         svg.select('.x-axis-group.axis')
                             .transition()
@@ -477,36 +552,42 @@ directive('dashboardPanel', function ($scope) {
                             .duration(duration)
                             .ease(ease)
                             .call(yAxis);
-                       svg.append("path")
-                            .attr("class", "line")
-                            .attr("d", line); 
 
-                        /*                        var bars = svg.select('.chart-group')
-                            .selectAll('.bar')
-                            .data(_data);
+                        svg.select('.chart-group')
+                            .selectAll('.line.profile')
+                            .data([_data.profile])
+                            .transition()
+                            .attr("d", line);
 
-                        bars.enter().append('rect')
-                            .classed('bar', true)
-                            .attr("class", "dot")
-                            .attr("cx", line.x())
-                            .attr("cy", line.x())
-                            .attr("r", 3.5)
-                            .on('mouseover', dispatch.customHover); */
-                        var bars = svg.select('.chart-group')
-                            .selectAll('.bar')
-                            .data(_data);
-                        bars.enter().append("circle")
-                            .classed('bar', true)
-                            .attr("class", "dot")
-                            .attr("cx", line.x())
-                            .attr("cy", line.y())
-                            .attr("r", 3.5)
-                            .on('mouseover', dispatch.customHover);
-                        bars.transition()
-                            .duration(duration)
-                            .ease(ease);
-                        bars.exit().transition().style({opacity: 0}).remove();
-                        bars.exit().transition().selectAll('cirlce').remove();
+                        svg.select('.chart-group')
+                            .selectAll('.line.compare')
+                            .data([_data.compare])
+                            .transition()
+                            .attr("d", line);
+
+                        //        	            var gapSize = x1.rangeBand() / 100 * gap;
+                        //        	            var barW = x1.rangeBand() - gapSize;
+                        //        	            var bars = svg.select('.chart-group')
+                        //        	                .selectAll('.bar')
+                        //        	                .data(_data);
+                        //        	            bars.enter().append('rect')
+                        //        	                .classed('bar', true)
+                        //        	                .attr({x: chartW,
+                        //        	                    width: barW,
+                        //        	                    y: function(d, i) { return y1(d); },
+                        //        	                    height: function(d, i) { return chartH - y1(d); }
+                        //        	                })
+                        //        	                .on('mouseover', dispatch.customHover);
+                        //        	            bars.transition()
+                        //        	                .duration(duration)
+                        //        	                .ease(ease)
+                        //        	                .attr({
+                        //        	                    width: barW,
+                        //        	                    x: function(d, i) { return x1(i) + gapSize/2; },
+                        //        	                    y: function(d, i) { return y1(d); },
+                        //        	                    height: function(d, i) { return chartH - y1(d); }
+                        //        	                });
+                        //        	            bars.exit().transition().style({opacity: 0}).remove();
 
                         duration = 500;
 
@@ -548,3 +629,5 @@ directive('dashboardPanel', function ($scope) {
         }
     }
 })
+
+//d3.custom = {};

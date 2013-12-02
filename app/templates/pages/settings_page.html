@@ -1,8 +1,8 @@
 {% extends "pages/navigation.html" %} {% block content %}
 <div class="container">
-	<form method="POST" action="/user/settings" class="form-signin">
-		<div class="col-md-4">
-			<h2 class="form-signin-heading">Uw accountgegevens</h2>
+	<div class="col-md-4">
+		<form method="POST" action="/user/settings" class="form-signin">
+			<h2 class="form-signin-heading"> Verander uw accountgegevens</h2>
 			<input type="Username" class="form-control" placeholder="First name" name="name" required>
 			<input type="Username" class="form-control" placeholder="Last Name" name="lastname" required>
 			<!-- <select type="Education" class="form-control" placeholder="Institution" required>
@@ -17,43 +17,35 @@
 			<input type="email" class="form-control" placeholder="Email address" name="email" required>
 			<input type="password" class="form-control" placeholder="Password" name="pass1" required>
 			<input type="password" class="form-control" placeholder="Confirm password" name="pass2" required>
+
 			<button class="btn btn-lg btn-primary btn-block" type="submit">Change Accountsettings</button>
-		</div>
-		<div class="col-md-4">
-			<h2>Verander uw profielfoto</h2>
-			<div class="profile">
-				<div class="profile-avatar-wrap">
-					<img src="{{url_for('static', filename='256.jpg')}}" id="profile-avatar" alt="Image for Profile">
-				</div>
-				<span class="btn btn-default btn-file">Browse
-					<input type="file" id="uploader">
-				</span>
-				<span class="hidden">
-					<input type="text" name="profile-img_small" id="profile-img_small">
-				</span>
-				<span class="hidden">
-					<input type="text" name="profile-img_large" id="profile-img_large">
-				</span>
+		</form>
+	</div>
+	<div class="col-md-4">
+		<h2>Verander uw profielfoto</h2>
+		<div class="profile">
+			<div class="profile-avatar-wrap">
+				<img src="{{url_for('static', filename='256.jpg')}}" id="profile-avatar" alt="Image for Profile">
 			</div>
-			<p>Sleep een afbeelding naar deze pagina, of selcecteer een bestand.</p>
+			<span class="btn btn-default btn-file">Browse
+				<input type="file" id="uploader">
+			</span>
 		</div>
-		<div class="col-md-4">
-			<div id="container">
-				<h2>Koppel een iStudy+device</h2>
-				<div>
-					<video id="sourcevid">
-						<p>This application requires an HTML5
-							<code>&lt;video&gt;</code>capable browser…</p>
-						<span class="">
-							<input type="text" name="device-id" id="device-id">
-						</span>
-					</video>
-				</div>
-				<div id="out"></div>
+		<p>Sleep een afbeelding naar deze pagina, of selcecteer een bestand.</p>
+	</div>
+	<div class="col-md-4">
+		<div id="container">
+			<h2>Wilt u een nieuwe QR-code? scan hier een nieuwe code</h2>
+			<div>
+				<video id="sourcevid">
+					<p>This application requires an HTML5
+						<code>&lt;video&gt;</code>capable browser…</p>
+				</video>
 			</div>
-			<!-- Uses https://github.com/LazarSoft/jsqrcode LazarSoft's jsQRcode implementation -->
-			<script src="{{url_for('static', filename='js/lib/qr.min.js')}}"></script>
-			<script src="{{url_for('static', filename='js/script.js')}}"></script>
+			<div id="out"></div>
 		</div>
-	</form>
+		<!-- Uses https://github.com/LazarSoft/jsqrcode LazarSoft's jsQRcode implementation -->
+		<script src="{{url_for('static', filename='js/lib/qr.min.js')}}"></script>
+		<script src="{{url_for('static', filename='js/script.js')}}"></script>
+	</div>
 </div>{% endblock %}
