@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 
 def calculate_average(itemList):
         average = 0
@@ -12,7 +12,7 @@ def calculate_average(itemList):
             return float(average)/len(itemList)
         
 def unix_time(dt):
-    epoch = datetime.datetime.utcfromtimestamp(0)
+    epoch = datetime.utcfromtimestamp(0)
     delta = dt - epoch
     return delta.total_seconds()
 
