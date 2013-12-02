@@ -83,14 +83,16 @@ def register():
         lastname = request.form['lastname']
         pass1 = request.form['pass1']
         pass2 = request.form['pass2']
+        pic_small = request.form['profile-img_small']
+        pic_big = request.form['profile-img_large']
         if not isValidPass(pass1,pass2):
             error = 'The passwords you entered did not match'
-            errors = errors + {"password" : error}
-        if not isValidEmail:
+            errors.update({"password" : error})
+        elif not isValidEmail(email):
             error = 'The email-address you entered is already taken'
-            errors =  errors + {"email" : error}
+            errors.update({"email" : error})
         else:
-            user = User(email, lastname, name, pass1)
+            user = User(email, lastname, name, pass1 , pic_small , pic_big)
             db.session.add(user)
             db.session.commit()
             return redirect(url_for('login'))
@@ -104,22 +106,6 @@ def isValidEmail(email):
 
 def isValidPass(pass1 , pass2):
     return pass1 == pass2
-
-@app.route('/user/newProfilePic' , methods = ['GET' , 'POST'])
-@login_required
-def changeProfilPic():
-    if request.method == 'POST':
-        pic = request.files['pic']
-        if pic and allowed_file(pic.filename):
-            filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-            User.query.filter_by(id=session['userID']).first().setProfilePic(path)
-            return redirect(url_for('uploaded_file', filename=filename))
-
-def allowed_file(filename):
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
 
 @app.route('/user/settings' , methods = ['GET','POST'])
 @login_required

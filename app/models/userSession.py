@@ -19,6 +19,7 @@ class UserSession(db.Model):
     feedback_score = db.Column(db.Integer)
     start_date = db.Column(db.DateTime)
     end_date = db.Column(db.DateTime)
+    
     pauses = db.Column(db.String)
     paused = db.Column(db.Boolean, default=False) #Is the running session paused?
     
@@ -51,6 +52,7 @@ class UserSession(db.Model):
         self.sessionFocus = 0
         self.sessionHum = 0
         if not (end_date== None):
+            "nog in orde te brengen voor de untracked sessions, die moeten ineens worden opgeslagen"
             pass
         
     def deleteUntrackedSession(self):
