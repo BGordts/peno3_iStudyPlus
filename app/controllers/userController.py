@@ -30,25 +30,6 @@ def logout_required(test):
             return redirect(url_for('home'))
     return wrap
 
-@app.route("/")
-def hello():
-    return render_template('index.html')
-
-@app.route('/home')
-def home():
-    user = User.query.get(session["userID"])
-    return render_template('pages/dashboard_profile-info.html', user=user)
-
-@app.route('/welcome')
-@login_required
-def welcome():
-    return render_template('pages/dashboard.html')
-
-@app.route('/settings')
-@login_required
-def settingsView():
-    return render_template('pages/settings_page.html')
-
 @app.route('/user/login' , methods=['GET','POST'])
 @logout_required
 def login():
@@ -87,13 +68,14 @@ def register():
         pass2 = request.form['pass2']
         pic_small = request.form['profile-img_small']
         pic_big = request.form['profile-img_large']
+        deviceID = request.form['device']
         if not isValidPass(pass1,pass2):
             error = 'The passwords you entered did not match'
             error.update({"password":error})
-        elif not isValidEmail(email):
+        if not isValidEmail(email):
             error = 'The email-address you entered is already taken'
             error.update({"email":error})
-        else:
+        if not error:
             user = User(email, lastname, name, pass1 , pic_small , pic_big)
             db.session.add(user)
             db.session.commit()
@@ -109,41 +91,39 @@ def isValidEmail(email):
 def isValidPass(pass1 , pass2):
     return pass1 == pass2
 
-@app.route('/user/settings' , methods = ['GET','POST'])
+@app.route('/settings' , methods = ['GET','POST'])
 @login_required
 def changeUserinfo():
-    user = User.query.get(request.form['userID'])
-    errors = {}
-    email = request.form['email']
-    name = request.form['name']
-    lastname = request.form['lastname']
-    oldPass = request.form['oldPass']
-    pass1 = request.form['pass1']
-    pass2 = request.form['pass2']
-    deviceID = request.form['device-id']
-    pic_small = request.form['profile-img_small']
-    pic_big = request.form['profile-img_large']
-    if(email == None):
-        email = user.email
-    if(name == None):
-        name = user.surname
-    if(lastName == None):
-        lastName = user.name
-    if(oldPass == None):
-        pass1 = user.password
-        pass2 = user.password
-    if not isValidEmail:
-            error = 'The email-address you entered is already taken'
-    if not(user.password == oldPass):
-        error = 'The old password you entered did not match'
-    if not isValidPass(pass1,pass2):
-        error = 'The passwords you entered did not match'
+    if request.method == 'POST':
+        user = User.query.get(request.form['userID'])
+        errors = {}
+        email = request.form['email']
+        name = request.form['name']
+        lastname = request.form['lastname']
+        oldPass = request.form['oldPass']
+        pass1 = request.form['pass1']
+        pass2 = request.form['pass2']
+        deviceID = request.form['device-id']
+        pic_small = request.form['profile-img_small']
+        pic_big = request.form['profile-img_large']
+        if(email == None):
+            email = user.email
+        if(name == None):
+            name = user.surname
+        if(lastName == None):
+            lastName = user.name
+        if(oldPass == None):
+            pass1 = user.password
+            pass2 = user.password
+        if not isValidEmail:
+                error = 'The email-address you entered is already taken'
+        if not(user.password == oldPass):
+            error = 'The old password you entered did not match'
         if not isValidPass(pass1,pass2):
             error = 'The passwords you entered did not match'
             errors = errors + {"password" : error}
         if not((errors and True) or False):
-            user.changeSetting(self , email , name , surname , password)
-
+            user.changeSetting( email , lastname , name , pass1)    
         return render_template('pages/settings_page.html' , errors = errors)
     else:
         return render_template('pages/settings_page.html')
@@ -158,18 +138,10 @@ def getCoStudents():
                 coStudents.append(student)
     return coStudents
 
-@app.route('/user/courses' , methods = ['POST' , 'GET'])
+@app.route('/user/courses')
 def getUserCourses():
-    user = User.query.get(request.form['userID'])
+    user = User.query.get(request.args['userID'])
     return user.getUserCourses()
-
-
-
-
-
-
-    return user.getUserCourses()
-
 
 
 

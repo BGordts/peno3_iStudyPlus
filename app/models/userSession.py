@@ -13,6 +13,7 @@ from sqlalchemy.dialects.sqlite.base import DATE
 from app.models.sensordata import Sensordata
 
 from app.utils.utils import *
+from app.models.courseUsers import Courses_Users
 
 class UserSession(db.Model):
     __tablename__ = 'usersessions'
@@ -58,10 +59,14 @@ class UserSession(db.Model):
         self.sessionFocus = 0
         self.sessionHum = 0
         if not (end_date== None):
-            user.statistics.updateStatistics(self)
+            user.statistics.addUntrackedSession(self)
+            CUStatistic = Courses_Users.query.filter_by(course=self.course).first().courseStatistics
+            CUStatistic.addUntrackedSession(self)
 
     def deleteUntrackedSession(self):
-        self.user.statistics
+        self.user.statistics.deleteUntrackedSession(self)
+        CUStatistic = Courses_Users.query.filter_by(course=self.course).first().courseStatistics
+        CUStatistic.deleteUntrackedSession(self)
         db.session.delete(self)
         db.session.commit()
         
@@ -119,6 +124,8 @@ class UserSession(db.Model):
         self.calcSessionFocus()
         self.calcSessionEff()
         self.user.updateStatistics(self)
+        CUStatistic = Courses_Users.query.filter_by(course=self.course).first().courseStatistics
+        CUStatistic.updateStatistics(self)
         db.session.commit()
         
     def outputSensorData(self, sensor):

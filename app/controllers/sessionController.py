@@ -2,11 +2,12 @@ from flask import *
 from flask.ext.sqlalchemy import SQLAlchemy
 
 from functools import wraps
-from datetime import datetime
+import datetime
 import time
 from werkzeug._internal import _log
 import json
 
+import time
 from app import app
 from app import db
 
@@ -37,10 +38,10 @@ def endSession_required(test):
             return redirect(url_for('home'))
     return wrap
 
-@app.route('/session/create' , methods = ['GET'])
+@app.route('/session/createTracked' , methods = ['GET'])
 @endSession_required
 @login_required
-def create():
+def createTracked():
     sessionName = request.args["sessionName"]
     courseID = request.args["courseID"]
     
@@ -62,13 +63,15 @@ def create():
 def createUntracked():
     description = request.args["sessionName"]
     courseID = request.args["courseID"]
+    course=Course.query.get(courseID)
     feedback_text = request.args["feedback"]
-    start_date = datetime
-    end_date =  datetime
+    start_date = request.args["start_time"]
+    end_date = request.args["start_time"]
     user = User.getUserFromSession()
-    usession = Session(user, course , description, feedback_text, start_date, end_date)
+    usession = UserSession(user, course , description, feedback_text, start_date, end_date)
     db.session.add(usession)
     db.session.commit()
+    return "ok"
     
 @app.route('/session/modifieSession' , methods = ['POST' , 'GET'])
 @login_required
@@ -93,7 +96,13 @@ def modifieUSession():
     newSession.id = oldId
     db.session.add(newSession)
     db.session.commit()
-    
+
+@app.route('/session/modifieSession' , methods = ['POST' , 'GET'])
+@login_required
+@endSession_required
+def deleteUSession():
+    uSession = Session.query.get(request.args['sessionID'])
+    uSession.deleteUntrackedSession()       
 
 @app.route('/session/start')
 @session_required

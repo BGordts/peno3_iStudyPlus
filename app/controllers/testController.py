@@ -86,7 +86,7 @@ def addCourses():
 def createUntrackedSession():
     description = "test untracked session"
     courseID = 1
-    course = Course.query.get(1)
+    course = Course.query.get(7)
     feedback_text = "hopelijk is dit inorde"
     start_date = datetime(2000,1,1,0,00,00)
     end_date =  datetime(2000,1,1,12,00,00)
@@ -119,7 +119,14 @@ def modifieUntrackedSession():
     db.session.add(newSession)
     db.session.commit()
     return "ok"
-    
+
+@app.route('/test/deleteUntracked')
+def deleteUntracked():
+    id = request.args['id']
+    s = UserSession.query.get(id)
+    s.deleteUntrackedSession()
+    return "untracked deleted"
+        
 def endCreateTestData(userSession):
     userSession.end()
     userSession.setFeedback(random.random())

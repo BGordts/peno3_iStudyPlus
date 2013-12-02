@@ -7,7 +7,6 @@ from app import db
 #from session import UserSession
 
 import json
-from app.models.userSession import UserSession
 from app.utils.utils import *
 
 class Statistics(db.Model):
@@ -27,12 +26,12 @@ class Statistics(db.Model):
     
     def __init__(self):
         self.totalTime = 0
-        self.totalEff = -1
-        self.totalTempAv = -1
-        self.totalIllum = -1
-        self.totalSound= -1
-        self.totalfocus= -1
-        self.totalHumAv = -1
+        self.totalEff = 0
+        self.totalTempAv = 0
+        self.totalIllum = 0
+        self.totalSound= 0
+        self.totalfocus= 0
+        self.totalHumAv = 0
         self.lowestSessions = json.dumps([])
         self.highestSessions = json.dumps([])        
     
