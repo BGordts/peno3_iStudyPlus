@@ -15,7 +15,9 @@ from app.models.sensordata import Sensordata
 class UserSession(db.Model):
     __tablename__ = 'usersessions'
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(80))
+    
+    description = db.Column(db.String(250))
+    feedback_text = db.Column(db.String(160))
     feedback_score = db.Column(db.Integer)
     start_date = db.Column(db.DateTime)
     end_date = db.Column(db.DateTime)
@@ -36,8 +38,9 @@ class UserSession(db.Model):
     sessionFocus = db.Column(db.Float)
     sessionHum = db.Column(db.Float)
     
-    def __init__(self, user, course , title , feedback_score = -1, start_date =None, end_date=None):
-        self.title = title
+    def __init__(self, user, course , description , feedback_score = -1, start_date =None, end_date=None):
+        self.description = description
+        self.feedback_text = None
         self.user = user
         self.course = course
         self.pauses = json.dumps([])
@@ -57,7 +60,6 @@ class UserSession(db.Model):
         
     def deleteUntrackedSession(self):
         self.user.getS
-        
         db.session.delete(self)
         db.session.commit()
         
@@ -65,8 +67,7 @@ class UserSession(db.Model):
     Start the timer of the session
     '''
     def start(self):
-        self.start_date = datetime.utcnow()
-
+        self.start_date = datetime.now()
         db.session.commit()
         
     '''
@@ -102,7 +103,7 @@ class UserSession(db.Model):
         if(not session['isPauzed'] == None):
             self.endPauze()
         if not self.start_date == None:
-            self.end_date = datetime.utcnow()
+            self.end_date = datetime.now()
         else:
             db.session.delete(self)
         db.session.commit()
@@ -118,15 +119,9 @@ class UserSession(db.Model):
         
     def outputSensorData(self, sensor):
         sensorData = Sensordata.query.filter_by(session=self).filter_by(sensor_type=sensor).all()
-        
-        _log("info", "sensordata: " + sensorData[0].__str__())
         returnList = []
-        
         for i in range(0,len(sensorData)):
-            returnList.append(sensorData[i].output())       
-        
-        _log("info", "sensordata: " + returnList.__repr__())
-        
+            returnList.append(sensorData[i].output())
         return returnList
            
     def calcSessionEff(self):

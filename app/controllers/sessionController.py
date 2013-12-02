@@ -121,6 +121,9 @@ def endSession():
     session.pop('isPauzed',None)
     return json.dumps(sessionID)
 
+'''
+Adds the feedback in the userSession
+'''
 @app.route('/session/postFeedback' , methods = ['GET' , 'POST'])
 @login_required
 def postFeedback():
@@ -128,11 +131,13 @@ def postFeedback():
     UserSession.query.filter_by(id=session['sessionID']).first().setFeedback()
     return render_template('pages/dashboard.html')
 
+'''
+Commits userSession by calculating avarges and update the statistics.
+'''
 @app.route('/session/commit', methods = ['GET' , 'POST'])    
 @login_required
 @endSession_required
 def commitSession():
-    "calc and save's the session avarge's"
     sessionID = request.form['sessionID']
     UserSession.query.filter_by(id=session['sessionID']).first().commitSession()
     return render_template('pages/dashboard.html')

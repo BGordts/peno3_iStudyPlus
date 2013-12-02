@@ -4,6 +4,7 @@ from app import app
 from app import db
 
 from app.models.courseUsers import Courses_Users
+from aifc import Error
 
 POSSIBLE_COURSES = ["analyse1" , "analyse2" , "algebra" , "algemene techniche scheikunde" , "mechanica 1" , "wijsbegeerte" ,
                     "toegepaste thermodynamica" , "materiaalkunde" ,"methodiek van de informatica" , "natuurkunde" , "elektrische netwerken"]
@@ -47,7 +48,5 @@ def make_courses():
             nCourse = Course(course)
             db.session.add(nCourse)
         db.session.commit()
-    except Exception:
+    except Error:
         pass
-
-#make_courses()
