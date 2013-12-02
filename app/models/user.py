@@ -41,7 +41,7 @@ class User(db.Model):
         return userCourses
     
     def updateStatistics(self,userSession):
-        self.statistics.updateUserStatistics(userSession)   
+        self.statistics.updateStatistics(userSession)   
     
     @staticmethod
     def getAdminUser():

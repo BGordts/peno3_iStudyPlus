@@ -82,6 +82,44 @@ def addCourses():
         i = i + 1
     return "elke user volgt elk vak"
 
+@app.route('/test/untrackedSession')
+def createUntrackedSession():
+    description = "test untracked session"
+    courseID = 1
+    course = Course.query.get(1)
+    feedback_text = "hopelijk is dit inorde"
+    start_date = datetime(2000,1,1,0,00,00)
+    end_date =  datetime(2000,1,1,12,00,00)
+    user = User.getUserFromSession()
+    usession = UserSession(user, course , description, feedback_text, start_date, end_date)
+    db.session.add(usession)
+    db.session.commit()
+    return "ok"
+
+@app.route('/test/modifieSession')
+def modifieUntrackedSession():
+    uSession = UserSession.query.get(1)
+    oldId = uSession.id
+    newDescription = uSession.description
+    newFeedBack_score = uSession.feedback_score
+    newStart_date = uSession.start_date
+    newEnd_date = uSession.end_date
+    if not(newDescription == "is deze aangepast?"):
+        newDescription = "is deze aangepast?"
+    if not(newFeedBack_score == "nieuweFeedback"):
+        newFeedBack_score = "nieuweFeedback"
+    if not(newStart_date == newStart_date):
+        newStart_date = newStart_date
+    if not(newEnd_date == newEnd_date):
+        newEnd_date = newEnd_date
+    newSession = UserSession(uSession.user, uSession.course, newDescription, newFeedBack_score, newStart_date, newEnd_date)
+    db.session.delete(uSession)
+    db.session.commit()
+    newSession.id = oldId
+    db.session.add(newSession)
+    db.session.commit()
+    return "ok"
+    
 def endCreateTestData(userSession):
     userSession.end()
     userSession.setFeedback(random.random())
