@@ -30,6 +30,10 @@ def logout_required(test):
             return redirect(url_for('home'))
     return wrap
 
+@app.route('/app/<path:path>')
+@app.route('/app')
+def angularRoutes(path=None):
+    return "lololo"
 @app.route('/user/login' , methods=['GET','POST'])
 @logout_required
 def login():
@@ -141,9 +145,3 @@ def getCoStudents():
 @app.route('/user/courses')
 def getUserCourses():
     user = User.query.get(request.args['userID'])
-    return user.getUserCourses()
-
-
-
-
-

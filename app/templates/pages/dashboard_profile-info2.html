@@ -7,20 +7,14 @@
 		<!--start view mode-->
 		<div data-toggle="collapse" data-parent="#accordion" href="[['#course' + $index]]">
 			<div class="col-md-8 pull-left row">
-				<h2 class="panel-title">Collapsible Group Item #1</h2>
-				<span class="label label-default">Studie</span>
-				<div class="row">
-					<div class="col-sm-4 input-group" id='datepicker'>dd/mm/jjjj</div>
-					<div class="col-sm-4 input-group" id="starttimepicker">hh:mm pm</div>
-					<div class="col-sm-4 input-group" id="endtimepicker">hh:mm pm</div>
-				</div>
+				<h1 class="panel-title">[[title]]</h1>
 			</div>
 			<div class="pull-right">
 				<div class="pull-right">
-					<div class="is_square-80">feedback gebruiker</div>
+					<div class="is_square-80">[[hoursStudied]]</div>
 				</div>
 				<div class="pull-right">
-					<div class="is_square-80">efficiëntiescore</div>
+					<div class="is_square-80">[[efficiencyScore]]</div>
 				</div>
 			</div>
 			<div class="clearfix xs-visible"></div>
@@ -480,8 +474,10 @@
 		</div>
 		<div class="container" style="max-width:100%">
 			<div class="panel-group" id="accordion">
-				<coursepanel ng-repeat="item in courselist"></coursepanel>
-				<sessionpanel ng-repeat="item in sessionlist"></sessionpanel>
+				<dashboardpanel></dashboardpanel>
+				
+<!-- 				<coursepanel ng-repeat="item in courselist"></coursepanel> -->
+<!-- 				<sessionpanel ng-repeat="item in sessionlist"></sessionpanel> -->
 			</div>
 		</div>
 		<div class="is_footer">

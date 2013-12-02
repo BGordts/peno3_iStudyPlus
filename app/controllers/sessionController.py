@@ -6,6 +6,7 @@ import datetime
 import time
 from werkzeug._internal import _log
 import json
+from app.utils.utils import *
 
 import time
 from app import app
@@ -186,3 +187,34 @@ def getData():
     session = Session.query.get(sessionID)
     
     return json.dumps(session.outputSensorData(sensor_type))
+
+'''
+Returns all the sessions created by this user
+'''
+@app.route('/session/getAllSessions', methods = ['GET'])    
+@login_required
+def getAllSessions():
+    user = User.getUserFromSession()
+    
+    _log("info", user.sessions.all().__str__())
+    
+    #Move to UserSesssion
+    returnList = []
+    for lolol in user.sessions.all():
+        returnSession = {}
+        returnSession['description'] = lolol.description
+        returnSession['feedback_text'] = lolol.feedback_text
+        returnSession['feedback_score'] = lolol.feedback_score
+        returnSession['start_date'] = unix_time_millis(lolol.start_date)
+        returnSession['end_date'] = unix_time_millis(lolol.end_date)
+        returnSession['course_id'] = lolol.course_id
+        returnSession['sessionEff'] = lolol.sessionEff
+        returnSession['sessionTemp'] = lolol.sessionTemp
+        returnSession['sessionIll'] = lolol.sessionIll
+        returnSession['sessionSound'] = lolol.sessionSound
+        returnSession['sessionFocus'] = lolol.sessionFocus
+        returnSession['sessionHum'] = lolol.sessionHum    
+        
+        returnList.append(returnSession)
+    
+    return json.dumps(returnList)
