@@ -140,3 +140,15 @@ def getData():
     session = Session.query.get(sessionID)
     
     return json.dumps(session.outputSensorData(sensor_type))
+
+'''
+Returns all the sessions created by this user
+'''
+@app.route('/session/getAllSessions', methods = ['GET'])    
+@login_required
+def getSessions():
+    user = User.getUserFromSession()
+    
+    _log("info", user.sessions)
+    
+    return "lolo"
