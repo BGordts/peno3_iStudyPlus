@@ -57,6 +57,10 @@ def logout():
     session.pop('userID',None)
     return redirect(url_for('login'))
 
+@app.route('/tracking')
+def tracking():
+    return render_template('pages/tracking_page.html')
+
 @app.route('/user/register' , methods = ['GET','POST'])
 @logout_required
 def register():
