@@ -41,7 +41,7 @@ class UserSession(db.Model):
     sessionFocus = db.Column(db.Float)
     sessionHum = db.Column(db.Float)
     
-    def __init__(self, user, course , description , feedback_text = None, feedback_score = 0, start_date =None, end_date=None):
+    def __init__(self, user, course , description , feedback_text = None, start_date =None, end_date=None):
         self.description = description
         self.feedback_text = feedback_text
         self.user = user
@@ -50,7 +50,7 @@ class UserSession(db.Model):
         #self.paused = False
         self.start_date = start_date
         self.end_date = end_date
-        self.feedback_score = feedback_score
+        self.feedback_score = 0
         self.sessionEff = 0
         self.sessionTemp = 0
         self.sessionIll = 0
@@ -58,7 +58,7 @@ class UserSession(db.Model):
         self.sessionFocus = 0
         self.sessionHum = 0
         if not (end_date== None):
-            pass
+            user.statistics.updateStatistics(self)
 
     def deleteUntrackedSession(self):
         self.user.statistics

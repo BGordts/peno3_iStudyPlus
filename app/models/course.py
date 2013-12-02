@@ -6,6 +6,7 @@ from app.models.courseUsers import Courses_Users
 
 from app.models.courseUsers import Courses_Users
 from aifc import Error
+from sqlalchemy.exc import IntegrityError
 
 POSSIBLE_COURSES = ["analyse1" , "analyse2" , "algebra" , "algemene techniche scheikunde" , "mechanica 1" , "wijsbegeerte" ,
                     "toegepaste thermodynamica" , "materiaalkunde" ,"methodiek van de informatica" , "natuurkunde" , "elektrische netwerken"]
@@ -13,7 +14,7 @@ POSSIBLE_COURSES = ["analyse1" , "analyse2" , "algebra" , "algemene techniche sc
 class Course(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
-    course = db.Column(db.String(500), unique=False)
+    course = db.Column(db.String(500), unique=True)
 
     def __init__(self, course):
         self.course = course
@@ -49,5 +50,5 @@ def make_courses():
             nCourse = Course(course)
             db.session.add(nCourse)
         db.session.commit()
-    except Error:
+    except IntegrityError:
         pass

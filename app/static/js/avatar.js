@@ -73,10 +73,14 @@ jQuery.event.props.push('dataTransfer');
 
         Avatar.resizeImage(file, 256, function(data) {
           Avatar.placeImage(data);
-          Avatar.storeImage(data)
+          //Avatar.storeImage(data);
+          $("#profile-img_large").val(data);
+          //console.log($("#profile-img_large").val())
         });
         Avatar.resizeImage(file, 40, function(data) {
-          Avatar.storeImage(data)
+          //Avatar.storeImage(data);
+          $("#profile-img_small").val(data);
+          //console.log($("#profile-img_small").val())
         });
 
 

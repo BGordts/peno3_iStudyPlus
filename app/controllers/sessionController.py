@@ -57,25 +57,41 @@ def create():
     session['isPauzed'] = None     
     return "sessie aangemaakt"
 
+@app.route('/session/createUntracked' , methods = ['GET'])
+@endSession_required
+@login_required
+def createUntracked():
+    description = request.args["sessionName"]
+    courseID = request.args["courseID"]
+    feedback_text = request.args["feedback"]
+    start_date = datetime
+    end_date =  datetime
+    user = User.getUserFromSession()
+    usession = Session(user, course , description, feedback_text, start_date, end_date)
+    db.session.add(usession)
+    db.session.commit()
+    
 @app.route('/session/modifieSession' , methods = ['POST' , 'GET'])
 @login_required
 @endSession_required
 def modifieUSession():
-    uSession = Session.query.get(request.form['sessionID'])
-    newDescription = uSession.title
+    uSession = Session.query.get(request.args['sessionID'])
+    newDescription = uSession.description
     newFeedBack_score = uSession.feedback_score
     newStart_date = uSession.start_date
     newEnd_date = uSession.end_date
-    if not(newDescription == request.form['description']):
-        newDescription = request.form['description']
-    if not(newFeedBack_score == request.form['feedback']):
-        newFeedBack_score = request.form['feedback']
-    if not(newStart_date == request.form['startDate']):
-        newStart_date = request.form['startDate']
-    if not(newEnd_date == request.form['endDate']):
-        newEnd_date = request.form['endDate']
+    if not(newDescription == request.args['description']):
+        newDescription = request.args['description']
+    if not(newFeedBack_score == request.args['feedback']):
+        newFeedBack_score = request.args['feedback']
+    if not(newStart_date == request.args['startDate']):
+        newStart_date = request.args['startDate']
+    if not(newEnd_date == request.args['endDate']):
+        newEnd_date = request.args['endDate']
     newSession = UserSession(uSession.user, uSession.course, newDescription, newFeedBack_score, newStart_date, newEnd_date)
     db.session.delete(uSession)
+    db.session.commit()
+    newSession.id = oldId
     db.session.add(newSession)
     db.session.commit()
     

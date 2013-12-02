@@ -19,7 +19,7 @@
         <!--end left menu-->
         <!--start panel-heading content-->
         <!--start view mode-->
-        <div ng-switch-when="view" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+        <div ng-switch-when="view" data-toggle="collapse" data-parent="#accordion" href="[['#session' + $index]]">
             <div class="col-md-8 pull-left row">
                 <h2 class="panel-title">Collapsible Group Item #1</h2>
                 <span class="label label-default">Studie</span>
@@ -51,19 +51,19 @@
                         <input type="radio" ng-model="activityType" value="study">Studie</label>
                 </div>
                 <div class="row">
-                    <div class="col-sm-4 input-group" id='datepicker'>
+                    <div class="col-sm-4 input-group datepicker" id='datepicker'>
                         <input type='text' class="form-control" data-format="DD/MM/YYYY" placeholder="dd/mm/jjjj" />
                         <span class="input-group-addon">
                             <span class="glyphicon glyphicon-calendar"></span>
                         </span>
                     </div>
-                    <div class="col-sm-4 input-group" id="starttimepicker">
+                    <div class="col-sm-4 input-group starttimepicker" id="starttimepicker">
                         <input type='text' class="form-control" placeholder="hh:mm" />
                         <span class="input-group-addon">
                             <span class="glyphicon glyphicon-time"></span>
                         </span>
                     </div>
-                    <div class="col-sm-4 input-group" id="endtimepicker">
+                    <div class="col-sm-4 input-group endtimepicker" id="endtimepicker">
                         <input type='text' class="form-control" placeholder="hh:mm" />
                         <span class="input-group-addon">
                             <span class="glyphicon glyphicon-time"></span>
@@ -100,7 +100,7 @@
     </div>
     <!--end panel heading-->
     <!--start panel body-->
-    <div id="collapseOne" class="panel-collapse collapse in">
+    <div id="[['session' + $index]]" class="panel-collapse collapse">
         <div class="panel-body">
             <div class="row">
                 <div class="col-md-6 is_no-padding">
@@ -192,6 +192,7 @@
                     <div class="clearfix xs-visible"></div>
                     <div>graph met 2 lijnen
                         <div>
+                        <div>
                             <select>
                                 <option ng-model="graphOptions" value="option1">option1
                                 </option>
@@ -200,7 +201,7 @@
                                 <option ng-model="graphOptions" value="option3">option3
                                 </option>
                             </select>
-                            <dynamic-graph height="options.height" data="[[chartdata]]" hovered="hovered(args)"></dynamic-graph>
+                            <dynamic-graph chartdata="chartdata"></dynamic-graph>
                             <!--<bar-chart height="300" data="data" hovered="hovered(args)></bar-chart>-->
                         </div>
                     </div>
@@ -212,4 +213,3 @@
     </div>
     <!--end panel-body-wrap-->
 </div>
-<!--end panel-->
