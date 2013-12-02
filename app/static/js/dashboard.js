@@ -5,17 +5,117 @@
 'use strict';
 
 //alert('boe');
-angular.module('app', ['iStudyPlusBindonce']).config(function($interpolateProvider, $routeProvider){
+angular.module('app', ['ngRoute']).config(function($interpolateProvider, $locationProvider, $routeProvider){
         $interpolateProvider.startSymbol('[[').endSymbol(']]');
+        $locationProvider.html5Mode(true);
         $routeProvider
-        	.when("/app/:user/:appviewstate",
+        	.when("/app/:user/:appviewstate", /* /:user/:appviewstate */
 				  {
-				  	templateUrl: "panels.tpl"
-				  })
+				  	templateUrl: "panels.tpl",
+				  	//template: "<div>hello world</div>",
+				  	controller: "viewCtrl"
+				  });
     }
 ).
 
+controller('viewCtrl', function ($scope, $routeParams) {
+	console.log('rhoeteParamiëters');
+	console.log($routeParams.appviewstate);
+	$scope.appViewState = $routeParams.appviewstate;
+
+	$scope.courselist = [{
+		"data1": [
+            {
+			x: 0.2,
+			y: 0.6
+		},
+            {
+			x: 0.2,
+			y: 0.6
+		},
+            {
+			x: 0.2,
+			y: 0.6
+		},
+    ],
+		"data2": [
+            {
+			x: 0.2,
+			y: 0.3
+		},
+            {
+			x: 0.3,
+			y: 0.10
+		},
+            {
+			x: 0.4,
+			y: 0.12
+		},
+    ]
+	}, {
+		"data1": [
+            {
+			x: 0.2,
+			y: 0.2
+		},
+            {
+			x: 0.3,
+			y: 0.4
+		},
+            {
+			x: 0.4,
+			y: 0.8
+		},
+    ],
+		"data2": [
+            {
+			x: 0.2,
+			y: 0.5
+		},
+            {
+			x: 0.3,
+			y: 0.9
+		},
+            {
+			x: 4,
+			y: 12
+		},
+    ]
+	}, {
+		"data1": [
+            {
+			x: 0.2,
+			y: 0.2
+		},
+            {
+			x: 0.3,
+			y: 0.6
+		},
+            {
+			x: 0.4,
+			y: 0.6
+		},
+    ],
+		"data2": [
+            {
+			x: 0.2,
+			y: 0.5
+		},
+            {
+			x: 0.3,
+			y: 0.10
+		},
+            {
+			x: 0.4,
+			y: 0.12
+		},
+    ]
+	}];
+}).
+
 controller('appCtrl', function ($scope, $routeParams) {
+	console.log('rhoeteParams');
+	console.log($routeParams.appviewstate);
 
 	$scope.appViewState = $routeParams.appviewstate;
 
@@ -134,11 +234,11 @@ directive('dashboardPanel', function ($scope) {
 			scope.$watch('selectedItem', function (newVal, oldVal) {
 				if(typeof nevVal === "undefined" && newVal == null){
 					console.log("hey fa" + newVal + " " + oldVal);
-					//scope.chartdata = scope.item.data2;
+					//scope.chartdata = scope.course.data2;
 				}
 				else{
 					console.log("jmjklm");
-					//scope.chartdata = scope.item["data" + newVal.id];
+					//scope.chartdata = scope.course["data" + newVal.id];
 
 					scope.getDataFormServer(newVal.id);
 				}
@@ -149,7 +249,7 @@ directive('dashboardPanel', function ($scope) {
 			$scope.sessionType = "live";
 			$scope.activityType ="study";
 
-			$scope.chartdata = $scope.item.data1;
+			$scope.chartdata = $scope.course.data1;
 
 			$scope.items = [
 			                { id: 'temperature', name: 'Temperatuur' },
@@ -190,11 +290,11 @@ directive('dashboardPanel', function ($scope) {
 			scope.$watch('selectedItem', function (newVal, oldVal) {
 				if(typeof nevVal === "undefined" && newVal == null){
 					console.log("hey fa" + newVal + " " + oldVal);
-					//scope.chartdata = scope.item.data2;
+					//scope.chartdata = scope.session.data2;
 				}
 				else{
 					console.log("jmjklm")
-					scope.chartdata = scope.item["data" + newVal.id];
+					scope.chartdata = scope.session["data" + newVal.id];
 				}
             });
 		},
@@ -203,7 +303,7 @@ directive('dashboardPanel', function ($scope) {
 			$scope.sessionType = "live";
 			$scope.activityType ="study";
 
-			$scope.chartdata = $scope.item.data1;
+			$scope.chartdata = $scope.session.data1;
 			console.log($scope.chartdata)
 
 			$scope.items = [
