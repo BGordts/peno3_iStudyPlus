@@ -12,6 +12,8 @@ from app import db
 from sqlalchemy.dialects.sqlite.base import DATE
 from app.models.sensordata import Sensordata
 
+from app.utils.utils import *
+
 class UserSession(db.Model):
     __tablename__ = 'usersessions'
     id = db.Column(db.Integer, primary_key=True)
@@ -98,6 +100,7 @@ class UserSession(db.Model):
         db.session.commit()
     
     def commitSession(self):
+        _log("info", "commiting")
         self.calcSessionTemp()
         self.calcSessionHum()
         self.calcSessionSound()
@@ -125,43 +128,31 @@ class UserSession(db.Model):
   
     def calcSessionHum(self):
         tempdata = Sensordata.query.filter_by(session_id=self.id, sensor_type="humidity").all()
-        avHum = 0
-        for hum in tempdata:
-            avHum = avHum + hum.value
-        self.sessionHum = avHum/(len(tempdata))
+        _log("info", "tempdata: " + tempdata.__str__())
+        self.sessionHum = calculate_average([x.value for x in tempdata])
+        _log("info", "sessionHUM: " + self.sessionHum.__str__())
         db.session.commit()
         
     def calcSessionTemp(self):
         tempdata = Sensordata.query.filter_by(session_id=self.id, sensor_type="temperature").all()
-        avTemp = 0
-        for temp in tempdata:
-            avTemp = avTemp + temp.value
-        self.sessionTemp = avTemp/(len(tempdata))
+        _log("info", "tempdata: " + tempdata.__str__())
+        self.sessionTemp = calculate_average([x.value for x in tempdata])
+        _log("info", "sessionTEMP: " + self.sessionTemp.__str__())
         db.session.commit()
         
     def calcSessionSound(self):
         tempdata = Sensordata.query.filter_by(session_id=self.id, sensor_type="sound").all()
-        avSound = 0
-        for sound in tempdata:
-            avSound = avSound + sound.value
-        self.sessionSound = avSound/(len(tempdata))
+        self.sessionSound = calculate_average([x.value for x in tempdata])
         db.session.commit()
 
     def calcSessionIll(self):
         tempdata = Sensordata.query.filter_by(session_id=self.id, sensor_type="illumination").all()
-        avIll = 0
-        for ill in tempdata:
-            avIll = avIll + ill.value
-        self.sessionIll = avIll/(len(tempdata))
+        self.sessionIll = calculate_average([x.value for x in tempdata])
         db.session.commit()
         
     def calcSessionFocus(self):
         tempdata = Sensordata.query.filter_by(session_id=self.id, sensor_type="focus").all()
-        avFocus = 0
-        for focus in tempdata:
-            if(focus.value == 1):
-                avFocus = avFocus + 1
-        self.sessionFocus = avFocus/(len(tempdata))
+        self.sessionFocus = calculate_average([x.value for x in tempdata])
         db.session.commit()
     
     def getSessionDuration(self):

@@ -34,16 +34,13 @@ def createTestUsers():
     db.session.commit()
     return "4 test users gemaakt, waaronder 1 admin."
 
-'''
-def createTestSessions():
-    user = User.query.get(session["userID"])
+@app.route('/test/recreateAll')
+def recreateAll():
+    clearDataBase()
+    createTestUsers()
+    addCourses()
     
-    for i in range(0, Course.query.count()):
-        course = Course.query.get(i)
-        name = "TestSession" + i
-        
-        session = UserSession(name, user, course)    
-'''
+    return "done"
  
 @app.route('/test/createTestSession1')   
 def createTestSessions():

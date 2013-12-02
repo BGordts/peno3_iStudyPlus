@@ -1,6 +1,7 @@
 import urllib2
 import urllib
 import time
+import random
 
 #HOST
 HOST = "http://localhost:5000"
@@ -14,7 +15,7 @@ DEVICE_KEY = "umoeder"
 SENSOR_LIGHT = "light"
 SENSOR_TEMPERATURE = "temperature"
 SENSOR_HUMIDITY = "humidity"
-SENSOR_CAMERA = "camera"
+SENSOR_FOCUS = "focus"
 
 def postSensorData(sensor, value):
     now = time.time()
@@ -23,8 +24,11 @@ def postSensorData(sensor, value):
     response = urllib2.urlopen(HOST + '/sensorData/postSensorData?' + urllib.urlencode(getRequestParameters))
     html = response.read()
     print html
-    
-postSensorData(SENSOR_HUMIDITY, "666")
+
+for i in range(0,5):
+    postSensorData(SENSOR_FOCUS, random.randint(0,1))
+    postSensorData(SENSOR_HUMIDITY, random.randint(200,800))
+
 
 '''
 conn = httplib.HTTPConnection("http://localhost:5000")

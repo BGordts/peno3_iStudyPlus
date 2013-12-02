@@ -30,6 +30,9 @@ from app.models.user import User
 from app.models.userSession import UserSession
 from app.models.statistics import Statistics
 from app.models.sensordata import Sensordata
+from app.models.course import Course
+from app.models.courseUsers import Courses_Users
+from app.models.device import Device
 
 UPLOAD_FOLDER = '/static/images/profilePics'
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])

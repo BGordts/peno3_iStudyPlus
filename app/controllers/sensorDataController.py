@@ -26,26 +26,31 @@ def postSensorData():
     dateInMilis = float(request.args["date"])
     
     device = Device.getDeviceByKey(device_key)
-    _log('info', "device: " + device.__repr__())
-    user = Device.getDeviceByKey(device_key).getUser()
-    _log('info', "user: " + user.__repr__())
-    session = user.getRunningSession()
-    _log('info', "session: " + session.__repr__())
     
-    date = datetime.datetime.fromtimestamp(dateInMilis/1000.0)
-    _log('info', "date: " + date.__repr__())
-    
-    #Check whether the user has a running session
-    if session:
-        if not session.isPaused():            
-            sensorData = Sensordata(sensor_type, session, value, date)
+    #Check if there is a device found
+    if device:
+        _log('info', "device: " + device.__repr__())
+        user = Device.getDeviceByKey(device_key).getUser()
+        _log('info', "user: " + user.__repr__())
+        userSession = user.getRunningSession()
+        _log('info', "userSession: " + userSession.__repr__())
         
-            db.session.add(sensorData)
-            db.session.commit()
+        date = datetime.datetime.fromtimestamp(dateInMilis/1000.0)
+        _log('info', "date: " + date.__repr__())
+        
+        #Check whether the user has a running session
+        if userSession:
+            if not userSession.isPaused():            
+                sensorData = Sensordata(sensor_type, userSession, int(value), date)
             
-            return "Sensordata saved"
+                db.session.add(sensorData)
+                db.session.commit()
+                
+                return "Sensordata saved"
+            else:
+                return "Session is paused"
         else:
-            return "Session is paused"
+            return "There is no running session at the moment"
     else:
-        return "There is no running session at the moment"
-    #If the user has no running session, just do nothing
+        return "There is no device registered with key " + device_key
+    

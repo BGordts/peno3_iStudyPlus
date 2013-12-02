@@ -2,6 +2,7 @@ from flask import *
 
 from app import app
 from app import db
+from app.models.statistics import Statistics
 
 class Courses_Users(db.Model):
     __tablename__ = 'Courses_Users'

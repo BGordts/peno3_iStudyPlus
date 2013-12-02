@@ -23,11 +23,11 @@ controller('appCtrl', function ($scope) {
 			y: 0.6
 		},
             {
-			x: 0.3,
+			x: 0.2,
 			y: 0.6
 		},
             {
-			x: 0.4,
+			x: 0.2,
 			y: 0.6
 		},
     ],
@@ -130,21 +130,49 @@ directive('dashboardPanel', function ($scope) {
 					//scope.chartdata = scope.item.data2;
 				}
 				else{
-					console.log("jmjklm")
-					scope.chartdata = scope.item["data" + newVal.id];
+					console.log("jmjklm");
+					//scope.chartdata = scope.item["data" + newVal.id];
+					
+					scope.getDataFormServer(newVal.id);
 				}
             });
 		},
-		controller: function($scope){
+		controller: function($scope, $http){
 			$scope.chartdata = $scope.item.data1;
-			console.log($scope.chartdata)
 
 			$scope.items = [
-			                { id: 1, name: 'Foo' },
-			                { id: 2, name: 'Bar' }
+			                { id: 'temperature', name: 'Temperatuur' },
+			                { id: 'illumination', name: 'Licht' },
+			                { id: 'sound', name: 'Geluid' },
+			                { id: 'humidity', name: 'Luchtvochtigheid' },
+			                { id: 'focus', name: 'Focus' },
 			            ];
 
 			$scope.selectedItem = null;
+			
+			$scope.getDataFormServer = function(sensortype){
+            	$http({method: 'GET', url: '/statistics/getEfficiencyForSensor', params: {'userID':1, 'sensor_type':sensortype}})
+            	  .success(function(data, status, headers, config) {
+            		  var linePointArray = new Array();
+            		  
+            		  for(var nextDataPoint in data){
+            			  linePointArray.push({x: parseFloat(nextDataPoint), y:parseFloat(data[nextDataPoint])})
+            		  }
+            		  
+            		  var lineData = {"data":linePointArray}
+            		  
+            		  console.log("chartdata");
+            		  console.log($scope.chartdata);
+            		  $scope.chartdata = linePointArray;
+            		  
+            		  console.log("lol da werkt");
+            		  console.log(lineData);
+            	  })
+            	  .error(function(data, status, headers, config) {
+	            	    console.log("shit");
+	            	    console.log(data);
+            	  });
+            }
 		}
 	}
 })

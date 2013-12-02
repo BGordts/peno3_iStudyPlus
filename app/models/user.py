@@ -5,6 +5,7 @@ from app import db
 
 from werkzeug._internal import _log
 from app.models.statistics import Statistics
+from app.models.userSession import UserSession
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -68,15 +69,15 @@ class User(db.Model):
     '''
     
     def getRunningSession(self):
-        session = UserSession.query.filter_by(user=self).order_by(UserSession.start_date.desc()).first()
+        userSession = UserSession.query.filter_by(user=self).order_by(UserSession.start_date.desc()).first()
         
         # See if there is a session and the session is already started
-        if session and session.start_date:
+        if userSession and userSession.start_date:
             # If the end_date is set, the session is ended and there is no currently running session
-            if(session.end_date):
+            if(userSession.end_date):
                 return None
             else:
-                return session
+                return userSession
         else:
             return None
         
