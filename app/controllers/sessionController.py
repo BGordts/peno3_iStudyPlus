@@ -170,6 +170,22 @@ Returns all the sessions created by this user
 def getSessions():
     user = User.getUserFromSession()
     
-    _log("info", user.sessions)
+    _log("info", user.sessions.all().__str__())
     
-    return "lolo"
+    #Move to UserSesssion
+    returnList = {}
+    for lolol in user.sessions.all():
+        returnList['description'] = lolol.description
+        returnList['feedback_text'] = lolol.feedback_text
+        returnList['feedback_score'] = lolol.feedback_score
+        returnList['start_date'] = lolol.start_date
+        returnList['end_date'] = lolol.end_date
+        returnList['course_id'] = lolol.course_id
+        returnList['sessionEff'] = lolol.sessionEff
+        returnList['sessionTemp'] = lolol.sessionTemp
+        returnList['sessionIll'] = lolol.sessionIll
+        returnList['sessionSound'] = lolol.sessionSound
+        returnList['sessionFocus'] = lolol.sessionFocus
+        returnList['sessionHum'] = lolol.sessionHum    
+    
+    return json.dumps(returnList)

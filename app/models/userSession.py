@@ -173,5 +173,5 @@ class UserSession(db.Model):
     def getSessionByID(sessionID):
         return Session.query.filter_by(id = sessionID).first()
         
-    def __repr__(self):
-        return '<UserSession %r>' % self.title
+#    def __repr__(self):
+#        return '<UserSession %r>' % self.title
