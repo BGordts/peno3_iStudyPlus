@@ -60,9 +60,9 @@
 		</div>
 		<div class="is_sidepanel-student-list-wrap is_follow-navbar">
 			<div class="is_sidepanel-student-list">
-				<div class="is_sidepanel-list-item" ng-repeat="student in commonStudents | filter:searchEntry" ng-cloak>
+				<div class="is_sidepanel-list-item" ng-repeat="student in commonStudents | filter:searchEntry" ng-cloak ng-click="navigate(student.id)">
 					<div class="is_profile-pic-container">
-						<img class="img-rounded img-responsive" src="https://graph.facebook.com/jacobspelle/picture?width=40&height=40"></img>
+						<img class="img-rounded img-responsive" src="[[]]"></img>
 					</div>
 					<h4>[[student.name]]</h4>
 				</div>

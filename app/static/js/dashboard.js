@@ -5,17 +5,17 @@
 'use strict';
 
 //alert('boe');
-angular.module('app', []).config(function($interpolateProvider){
+angular.module('app', ['iStudyPlusBindonce']).config(function($interpolateProvider){
         $interpolateProvider.startSymbol('[[').endSymbol(']]');
     }
 ).
 
 controller('appCtrl', function ($scope) {
-	//alert('boe');
-	console.log('boe');
-	$scope.panelState = "view";
-	$scope.sessionType = "live";
-	$scope.activityType ="study";
+
+
+//	$scope.panelState = "view";
+//	$scope.sessionType = "live";
+//	$scope.activityType ="study";
 	$scope.courselist = [{
 		"data1": [
             {
@@ -132,12 +132,16 @@ directive('dashboardPanel', function ($scope) {
 				else{
 					console.log("jmjklm");
 					//scope.chartdata = scope.item["data" + newVal.id];
-					
+
 					scope.getDataFormServer(newVal.id);
 				}
             });
 		},
 		controller: function($scope, $http){
+			$scope.panelState = "view";
+			$scope.sessionType = "live";
+			$scope.activityType ="study";
+
 			$scope.chartdata = $scope.item.data1;
 
 			$scope.items = [
@@ -149,12 +153,12 @@ directive('dashboardPanel', function ($scope) {
 			            ];
 
 			$scope.selectedItem = null;
-			
+
 			$scope.getDataFormServer = function(sensortype){
             	$http({method: 'GET', url: '/statistics/getEfficiencyForSensor', params: {'userID':1, 'sensor_type':sensortype}})
             	  .success(function(data, status, headers, config) {
             		  var linePointArray = new Array();
-            		  
+
             		  for(var nextDataPoint in data){
             			  linePointArray.push({x: parseFloat(nextDataPoint), y:parseFloat(data[nextDataPoint])})
             		  }
@@ -176,11 +180,31 @@ directive('dashboardPanel', function ($scope) {
 		replace: true,
 		templateUrl: "dashboard_session-list.tpl",
 		link: function(scope, element, attrs) {
-
+			scope.$watch('selectedItem', function (newVal, oldVal) {
+				if(typeof nevVal === "undefined" && newVal == null){
+					console.log("hey fa" + newVal + " " + oldVal);
+					//scope.chartdata = scope.item.data2;
+				}
+				else{
+					console.log("jmjklm")
+					scope.chartdata = scope.item["data" + newVal.id];
+				}
+            });
 		},
 		controller: function($scope){
-			$scope.chartdata = $scope.item.data;
+			$scope.panelState = "view";
+			$scope.sessionType = "live";
+			$scope.activityType ="study";
+
+			$scope.chartdata = $scope.item.data1;
 			console.log($scope.chartdata)
+
+			$scope.items = [
+			                { id: 1, name: 'Foo' },
+			                { id: 2, name: 'Bar' }
+			            ];
+
+			$scope.selectedItem = null;
 		}
 	}
 })
