@@ -41,11 +41,15 @@ def endSession_required(test):
 @endSession_required
 @login_required
 def create():
+    sessionName = request.args["sessionName"]
+    courseID = request.args["courseID"]
+    
     user = User.getUserFromSession()
+    
     #sessionName = request.form['sessionName']
-    sessionName = "test"
-    course = Course.querry.filter_by(id=request.args["sessionID"])
-    session1 = UserSession(sessionName, user, course )    
+    course = Course.query.get(courseID)
+    _log('info', 'lecourse: ' +  course.__str__())
+    session1 = UserSession(user, course, sessionName)    
     db.session.add(session1)
     db.session.commit()  
     session['sessionID'] = session1.id
@@ -117,29 +121,32 @@ def isPauzed():
 def endSession():
     sessionID = session['sessionID']
     UserSession.query.filter_by(id=session['sessionID']).first().end()
-    session.pop('sessionID',None)
+    
+    sessionID = session.pop('sessionID',None)
     session.pop('isPauzed',None)
+    
     return json.dumps(sessionID)
 
-'''
-Adds the feedback in the userSession
-'''
-@app.route('/session/postFeedback' , methods = ['GET' , 'POST'])
+@app.route('/session/postFeedback' , methods = ['GET'])
 @login_required
 def postFeedback():
-    sessionID = request.form['sessionID']
-    UserSession.query.filter_by(id=session['sessionID']).first().setFeedback()
+    _log("info", "input= " + request.args['sessionID'])
+    _log("info", "input= " + request.args['feedback'])
+    sessionID = request.args['sessionID']
+    feedback = request.args['feedback']
+    
+    UserSession.query.get(sessionID).setFeedback(feedback)
     return render_template('pages/dashboard.html')
 
-'''
-Commits userSession by calculating avarges and update the statistics.
-'''
-@app.route('/session/commit', methods = ['GET' , 'POST'])    
+@app.route('/session/commit', methods = ['GET'])    
 @login_required
 @endSession_required
 def commitSession():
-    sessionID = request.form['sessionID']
-    UserSession.query.filter_by(id=session['sessionID']).first().commitSession()
+    
+    #sessionID = request.form['sessionID']
+    userSession = UserSession.query.get(request.args['sessionID'])
+    _log("info", "mr usersessio: " + userSession.__str__())
+    userSession.commitSession()
     return render_template('pages/dashboard.html')
 
 '''

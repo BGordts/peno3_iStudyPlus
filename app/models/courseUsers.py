@@ -2,6 +2,7 @@ from flask import *
 
 from app import app
 from app import db
+from app.models.statistics import Statistics
 
 from app.models.statistics import Statistics
 

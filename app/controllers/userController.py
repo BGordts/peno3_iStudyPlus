@@ -172,3 +172,10 @@ def getUserCourses():
 
 
 
+    return user.getUserCourses()
+
+
+
+
+
+

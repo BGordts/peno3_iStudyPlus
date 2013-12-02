@@ -8,6 +8,7 @@ from app import db
 
 import json
 from app.models.userSession import UserSession
+from app.utils.utils import *
 
 class Statistics(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -125,51 +126,43 @@ class Statistics(db.Model):
         returnData['lowest_sound'] = self.getLowestSound()
         returnData['lowest_humidity'] = self.getLowestHum()
         
-        return returnData      
-    
-    def calculate_average(self, itemList):
-        average = 0
-        
-        for i in itemList:
-            average += i
-            
-        return float(average)/len(itemList)
+        return returnData              
     
     def getLowestTemp(self):
-        return self.calculate_average([UserSession.query.get(x).sessionTemp for x in json.loads(self.lowestSessions)])
+        return calculate_average([UserSession.query.get(x).sessionTemp for x in json.loads(self.lowestSessions)])
     
     def getHigestTemp(self):
-        return self.calculate_average([UserSession.query.get(x).sessionTemp for x in json.loads(self.highestSessions)])
+        return calculate_average([UserSession.query.get(x).sessionTemp for x in json.loads(self.highestSessions)])
     
     def getLowestEff(self):
-        return self.calculate_average([UserSession.query.get(x).sessionEff for x in json.loads(self.lowestSessions)])
+        return calculate_average([UserSession.query.get(x).sessionEff for x in json.loads(self.lowestSessions)])
     
     def getHigestEff(self):
-        return self.calculate_average([UserSession.query.get(x).sessionEff for x in json.loads(self.highestSessions)])
+        return calculate_average([UserSession.query.get(x).sessionEff for x in json.loads(self.highestSessions)])
     
     def getLowestHum(self):
-        return self.calculate_average([UserSession.query.get(x).sessionHum for x in json.loads(self.lowestSessions)])
+        return calculate_average([UserSession.query.get(x).sessionHum for x in json.loads(self.lowestSessions)])
     
     def getHigestHum(self):
-        return self.calculate_average([UserSession.query.get(x).sessionHum for x in json.loads(self.highestSessions)])
+        return calculate_average([UserSession.query.get(x).sessionHum for x in json.loads(self.highestSessions)])
     
     def getLowestIll(self):
-        return self.calculate_average([UserSession.query.get(x).sessionIll for x in json.loads(self.lowestSessions)])
+        return calculate_average([UserSession.query.get(x).sessionIll for x in json.loads(self.lowestSessions)])
     
     def getHigestIll(self):
-        return self.calculate_average([UserSession.query.get(x).sessionIll for x in json.loads(self.highestSessions)])
+        return calculate_average([UserSession.query.get(x).sessionIll for x in json.loads(self.highestSessions)])
     
     def getLowestFocus(self):
-        return self.calculate_average([UserSession.query.get(x).sessionFocus for x in json.loads(self.lowestSessions)])
+        return calculate_average([UserSession.query.get(x).sessionFocus for x in json.loads(self.lowestSessions)])
     
     def getHigestFocus(self):
-        return self.calculate_average([UserSession.query.get(x).sessionFocus for x in json.loads(self.highestSessions)])
+        return calculate_average([UserSession.query.get(x).sessionFocus for x in json.loads(self.highestSessions)])
     
     def getLowestSound(self):
-        return self.calculate_average([UserSession.query.get(x).sessionSound for x in json.loads(self.lowestSessions)])
+        return calculate_average([UserSession.query.get(x).sessionSound for x in json.loads(self.lowestSessions)])
     
     def getHigestSound(self):
-        return self.calculate_average([UserSession.query.get(x).sessionSound for x in json.loads(self.highestSessions)])
+        return calculate_average([UserSession.query.get(x).sessionSound for x in json.loads(self.highestSessions)])
     
  
     
