@@ -89,16 +89,15 @@ directive('dashboardPanel', function ($scope) {
 				}
             });
 			
-//			//Get the data to fill in
-//			serverConnectionService.getEfficiencyForSensor(1, function(data){
-//				scope.efficiencyScore = total_efficiency;
-//			});	
+			//Get the data to fill in
+			serverConnectionService.getUserInfo(1, function(data){
+				console.log(data);
+				
+				for (var attrname in data) { scope[attrname] = data[attrname]; }
+			});	
 		},
 		controller: function($scope, $http){
 			$scope.title = "Overzicht"
-
-			$scope.efficiencyScore = -1;
-			$scope.hoursStudied = -1;
 			
 			$scope.chartdata = {x:0, y:0};
 

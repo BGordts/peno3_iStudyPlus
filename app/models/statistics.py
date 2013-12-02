@@ -8,6 +8,7 @@ from app import db
 
 import json
 from app.utils.utils import *
+from app.models.userSession import UserSession
 
 class Statistics(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -118,11 +119,13 @@ class Statistics(db.Model):
         returnData['highest_temperature'] = self.getHigestTemp()
         returnData['highest_sound'] = self.getHigestSound()
         returnData['highest_humidity'] = self.getHigestHum()
+        returnData['highest_focus'] = self.getHigestFocus()
         
         returnData['lowest_illumination'] = self.getLowestIll()
         returnData['lowest_temperature'] = self.getLowestTemp()
         returnData['lowest_sound'] = self.getLowestSound()
         returnData['lowest_humidity'] = self.getLowestHum()
+        returnData['lowest_focus'] = self.getLowestFocus()
         
         return returnData              
     
