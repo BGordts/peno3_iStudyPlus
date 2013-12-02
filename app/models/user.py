@@ -6,6 +6,7 @@ from app import db
 from werkzeug._internal import _log
 from app.models.statistics import Statistics
 from app.models.userSession import UserSession
+from app.models.device import Device
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -15,19 +16,18 @@ class User(db.Model):
     surname = db.Column(db.String(80), unique=False)
     password = db.Column(db.String(30), unique=False)
     
-    picBig = db.Column(db.String(5000))
-    picSmall = db.Column(db.String(1000))
+    picBig = db.Column(db.String(150000))
+    picSmall = db.Column(db.String(5000))
     
     userStastics_id = db.Column(db.Integer, db.ForeignKey('statistics.id'))
     statistics = db.relationship('Statistics', backref=db.backref('users', lazy='dynamic'))
-    
-    
     
     def __init__(self, email, name, surname, password, deviceID=None, profilePic_small = None , profilePic_big = None):
         self.email = email
         self.name = name
         self.surname = surname
         self.password = password
+        Device.registerDevice(deviceID, self)
         newUS = Statistics()
         db.session.add(newUS)
         self.statistics = newUS

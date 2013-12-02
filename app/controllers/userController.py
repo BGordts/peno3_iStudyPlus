@@ -73,21 +73,21 @@ def register():
         pass2 = request.form['pass2']
         pic_small = request.form['profile-img_small']
         pic_big = request.form['profile-img_large']
-        deviceID = request.form['device']
+        deviceID = request.form['device-id']
         if not isValidPass(pass1,pass2):
             error = 'The passwords you entered did not match'
             error.update({"password":error})
         if not isValidEmail(email):
             error = 'The email-address you entered is already taken'
             error.update({"email":error})
-        if not error:
+        if not((errors and True) or False):
             user = User(email, lastname, name, pass1 , pic_small , pic_big)
             db.session.add(user)
             db.session.commit()
             return redirect(url_for('login'))
     return render_template('pages/register.html' , errors = errors)
 
-def isValidEmail(email):
+def isValidEmail(username):
     user = User.query.filter_by(email=username).first()
     if user == None:
         return True
