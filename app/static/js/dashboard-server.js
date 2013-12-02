@@ -36,7 +36,7 @@ directive('dashboardPanel', function ($scope) {
  */
 .service('serverConnectionService', function($http) {
 	this.URL_EFFICIENCY_FOR_SENSOR = '/statistics/getEfficiencyForSensor';
-	this.URL_GENERAL_USER_STATISTICS = 'getGeneralUserStatistics';
+	this.URL_GENERAL_USER_STATISTICS = '/statistics/getGeneralUserStatistics';
 	
 	// Basic method: call the server with the specified url, parameters and callback
 	this.requestData = function(path, parameters, callback){
@@ -66,8 +66,8 @@ directive('dashboardPanel', function ($scope) {
 	this.getUserInfo = function(userid, callback){
 		this.requestData(this.URL_GENERAL_USER_STATISTICS, {'userID':userid}, function(data){
 			callback(data);
+		})
 	}
-	
 })
 
 .directive("dashboardpanel", function(serverConnectionService) {
@@ -89,12 +89,10 @@ directive('dashboardPanel', function ($scope) {
 				}
             });
 			
-			//Get the data to fill in
-			serverConnectionService.getEfficiencyForSensor(1, function(data){
-				scope.efficiencyScore = total_efficiency;
-			})
-		}
-			
+//			//Get the data to fill in
+//			serverConnectionService.getEfficiencyForSensor(1, function(data){
+//				scope.efficiencyScore = total_efficiency;
+//			});	
 		},
 		controller: function($scope, $http){
 			$scope.title = "Overzicht"
