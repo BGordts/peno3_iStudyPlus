@@ -13,10 +13,6 @@ canvas {
 	display: block;
 	margin: 0 auto;
 }
-	.form-signin {
-	max-width: 330px;
-	margin: 0 auto;
-}
 	.form-signin .checkbox {
 	font-weight: normal;
 	margin-bottom: 10px;
