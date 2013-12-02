@@ -52,3 +52,4 @@ def make_courses():
         db.session.commit()
     except IntegrityError:
         pass
+make_courses()
