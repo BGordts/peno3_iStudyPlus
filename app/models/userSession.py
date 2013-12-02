@@ -4,7 +4,7 @@ from flask.ext.sqlalchemy import SQLAlchemy
 from werkzeug._internal import _log
 
 import time
-from datetime import datetime
+import datetime
 import json
 
 from app import app
