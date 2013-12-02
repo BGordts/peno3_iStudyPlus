@@ -158,15 +158,8 @@ directive('dashboardPanel', function ($scope) {
             		  for(var nextDataPoint in data){
             			  linePointArray.push({x: parseFloat(nextDataPoint), y:parseFloat(data[nextDataPoint])})
             		  }
-            		  
-            		  var lineData = {"data":linePointArray}
-            		  
-            		  console.log("chartdata");
-            		  console.log($scope.chartdata);
-            		  $scope.chartdata = linePointArray;
-            		  
-            		  console.log("lol da werkt");
-            		  console.log(lineData);
+
+            		  $scope.chartdata = linePointArray
             	  })
             	  .error(function(data, status, headers, config) {
 	            	    console.log("shit");
@@ -227,7 +220,7 @@ directive('dashboardPanel', function ($scope) {
         	            var chartW = width - margin.left - margin.right,
         	                chartH = height - margin.top - margin.bottom;
 
-        	            var x1 = d3.scale.ordinal()
+        	            var x1 = d3.scale.linear()
         	                .domain([0, d3.max(_data, function(d, i){ return d.x; })])
         	                .range([0, chartW]);
 

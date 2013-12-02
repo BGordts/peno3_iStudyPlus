@@ -4,7 +4,7 @@ import time
 import random
 
 #HOST
-HOST = "http://localhost:5000"
+HOST = "http://54.200.177.96"
 #Local: http://localhost:5000
 #Remote: http://54.200.177.96
 
