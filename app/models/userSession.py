@@ -21,6 +21,7 @@ class UserSession(db.Model):
     description = db.Column(db.String(250))
     feedback_text = db.Column(db.String(160))
     feedback_score = db.Column(db.Integer)
+    
     start_date = db.Column(db.DateTime)
     end_date = db.Column(db.DateTime)
     
@@ -40,9 +41,9 @@ class UserSession(db.Model):
     sessionFocus = db.Column(db.Float)
     sessionHum = db.Column(db.Float)
     
-    def __init__(self, user, course , description , feedback_score = -1, start_date =None, end_date=None):
+    def __init__(self, user, course , description , feedback_text = None, feedback_score = 0, start_date =None, end_date=None):
         self.description = description
-        self.feedback_text = None
+        self.feedback_text = feedback_text
         self.user = user
         self.course = course
         self.pauses = json.dumps([])
@@ -57,11 +58,10 @@ class UserSession(db.Model):
         self.sessionFocus = 0
         self.sessionHum = 0
         if not (end_date== None):
-            "nog in orde te brengen voor de untracked sessions, die moeten ineens worden opgeslagen"
             pass
-        
+
     def deleteUntrackedSession(self):
-        self.user.getS
+        self.user.statistics
         db.session.delete(self)
         db.session.commit()
         
@@ -119,6 +119,7 @@ class UserSession(db.Model):
         self.calcSessionFocus()
         self.calcSessionEff()
         self.user.updateStatistics(self)
+        db.session.commit()
         
     def outputSensorData(self, sensor):
         sensorData = Sensordata.query.filter_by(session=self).filter_by(sensor_type=sensor).all()
@@ -129,37 +130,25 @@ class UserSession(db.Model):
            
     def calcSessionEff(self):
         self.sessionEff = (self.sessionFocus + self.feedback_score)/2
-        db.session.commit()
-  
     def calcSessionHum(self):
         tempdata = Sensordata.query.filter_by(session_id=self.id, sensor_type="humidity").all()
-        _log("info", "tempdata: " + tempdata.__str__())
         self.sessionHum = calculate_average([x.value for x in tempdata])
-        _log("info", "sessionHUM: " + self.sessionHum.__str__())
-        db.session.commit()
-        
     def calcSessionTemp(self):
         tempdata = Sensordata.query.filter_by(session_id=self.id, sensor_type="temperature").all()
-        _log("info", "tempdata: " + tempdata.__str__())
-        self.sessionTemp = calculate_average([x.value for x in tempdata])
-        _log("info", "sessionTEMP: " + self.sessionTemp.__str__())
-        db.session.commit()
-        
+        self.sessionTemp = calculate_average([x.value for x in tempdata])    
     def calcSessionSound(self):
         tempdata = Sensordata.query.filter_by(session_id=self.id, sensor_type="sound").all()
         self.sessionSound = calculate_average([x.value for x in tempdata])
-        db.session.commit()
-
     def calcSessionIll(self):
         tempdata = Sensordata.query.filter_by(session_id=self.id, sensor_type="illumination").all()
-        self.sessionIll = calculate_average([x.value for x in tempdata])
-        db.session.commit()
-        
+        self.sessionIll = calculate_average([x.value for x in tempdata])      
     def calcSessionFocus(self):
         tempdata = Sensordata.query.filter_by(session_id=self.id, sensor_type="focus").all()
         self.sessionFocus = calculate_average([x.value for x in tempdata])
-        db.session.commit()
     
+    '''
+    geeft de totale duur van de sessie in seconden
+    '''
     def getSessionDuration(self):
         deltaTime = self.end_date - self.start_date
         duration = deltaTime.total_seconds()
