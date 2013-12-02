@@ -485,19 +485,16 @@
 		</div>
 		<div class="container" style="max-width:100%">
 			<div class="panel-group" id="accordion">
-<<<<<<< HEAD:app/templates/pages/dashboard_profile-info2.html
 				<dashboardpanel></dashboardpanel>
 				
 <!-- 				<coursepanel ng-repeat="item in courselist"></coursepanel> -->
 <!-- 				<sessionpanel ng-repeat="item in sessionlist"></sessionpanel> -->
-=======
 				<ng-view></ng-view>
 				<div ng-switch="appViewState">
 					<dashboardpanel ng-switch-when="dashboard"></dashboardpanel>
 					<coursepanel ng-switch-when="courses" ng-repeat="item in courselist"></coursepanel>
 					<sessionpanel ng-switch-when="sessions" ng-repeat="item in sessionlist"></sessionpanel>
 				</div>
->>>>>>> $route + ng-view:app/templates/pages/dashboard_profile-info.html
 			</div>
 		</div>
 		<div class="is_footer">
