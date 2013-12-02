@@ -10,6 +10,7 @@ from app.models.userSession import UserSession
 from app.models.course import Course
 from werkzeug._internal import _log
 from app.controllers.baseController import welcome
+from app.models.courseUsers import Courses_Users
 
 def login_required(test):
     @wraps(test)
@@ -133,15 +134,18 @@ def changeUserinfo():
     else:
         return render_template('pages/settings_page.html')
 
-@app.route('/user/getCoStudents')
+@app.route('/user/getCoStudents', methods = ['GET'])
 def getCoStudents():
+    user = User.getUserFromSession()
+    
     coStudents = []
-    user = User.query.get(request.form['userID'])
-    for course in user.getUserCourses():
-        for student in course.getAllUsers():
-            if not(student in coStudents):
-                coStudents.append(student)
-    return coStudents
+    for courseUser1 in user.courses_Users:
+        courseUsers = Courses_Users.query.filter_by(course = courseUser1.course).all()
+        for nextCourseUser in courseUsers:
+            if not(nextCourseUser.user in coStudents):
+                coStudents.append(nextCourseUser.user)
+    _log("info", "co students: " + coStudents.__str__())
+    return json.dumps([cu.output() for cu in coStudents])
 
 @app.route('/user/courses')
 def getUserCourses():

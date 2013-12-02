@@ -11,8 +11,6 @@ angular.module('app', []).config(function($interpolateProvider){
 ).
 
 controller('appCtrl', function ($scope) {
-	//alert('boe');
-	console.log('boe');
 	$scope.panelState = "view";
 	$scope.sessionType = "live";
 	$scope.activityType ="study";
@@ -20,6 +18,8 @@ controller('appCtrl', function ($scope) {
 	/*alert('zever');*/
 	$scope.name = "You";
 	$scope.commonStudents = [{"name":"ik"},{"name":"jij"},{"name":"hij"},{"name":"of zij"},{"name":"jeroen"},{"name":"ik"},{"name":"jij"},{"name":"hij"},{"name":"of zij"},{"name":"jeroen"},{"name":"ik"},{"name":"jij"},{"name":"hij"},{"name":"of zij"},{"name":"jeroen"},{"name":"ik"},{"name":"jij"},{"name":"hij"},{"name":"of zij"},{"name":"jeroen"},{"name":"ik"},{"name":"jij"},{"name":"hij"},{"name":"of zij"},{"name":"jeroen"},{"name":"ik"},{"name":"jij"},{"name":"hij"},{"name":"of zij"},{"name":"jeroen"},{"name":"ik"},{"name":"jij"},{"name":"hij"},{"name":"of zij"},{"name":"jeroen"},{"name":"ik"},{"name":"jij"},{"name":"hij"},{"name":"of zij"},{"name":"jeroen"},{"name":"ik"},{"name":"jij"},{"name":"hij"},{"name":"of zij"},{"name":"jeroen"},{"name":"ik"},{"name":"jij"},{"name":"hij"},{"name":"of zij"},{"name":"jeroen"},{"name":"ik"},{"name":"jij"},{"name":"hij"},{"name":"of zij"},{"name":"jeroen"},{"name":"ik"},{"name":"jij"},{"name":"hij"},{"name":"of zij"},{"name":"jeroen"},{"name":"ik"},{"name":"jij"},{"name":"hij"},{"name":"of zij"},{"name":"jeroen"},{"name":"ik"},{"name":"jij"},{"name":"hij"},{"name":"of zij"},{"name":"jeroen"},{"name":"ik"},{"name":"jij"},{"name":"hij"},{"name":"of zij"},{"name":"jeroen"}]
+
+	
 })/*.
 
 directive('dashboardPanel', function ($scope) {
@@ -64,6 +64,13 @@ directive('dashboardPanel', function ($scope) {
 	
 	// Get the general information of the user
 	this.getUserInfo = function(userid, callback){
+		this.requestData(this.URL_GENERAL_USER_STATISTICS, {'userID':userid}, function(data){
+			callback(data);
+		})
+	}
+	
+	// Get the costudents
+	this.getCoStudents = function(userid, callback){
 		this.requestData(this.URL_GENERAL_USER_STATISTICS, {'userID':userid}, function(data){
 			callback(data);
 		})

@@ -99,7 +99,13 @@ class User(db.Model):
             self.password = password
         db.session.commit()
     
-    def __repr__(self):
-        return '<User %r>' % self.email
+    def output(self):
+        returndict = {}
+        
+        returndict["userID"] = self.id
+        returndict["name"] = self.name
+        returndict["surname"] = self.surname
+        
+        return returndict
     
 from app.models.course import Course
