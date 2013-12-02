@@ -43,6 +43,10 @@ def home():
 @login_required
 def welcome():
     return render_template('pages/dashboard.html')
+@app.route('/settings')
+@login_required
+def settingsView():
+    return render_template('pages/settings_page.html')
 
 @app.route('/settings')
 @login_required
