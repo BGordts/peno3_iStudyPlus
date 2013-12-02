@@ -22,6 +22,15 @@ class Device(db.Model):
     def getUser(self):
         return self.user
     
+#     def registerDevice(self, device_key, user):
+#     device = user.getDevice()
+#     if(device):
+#         device.key = device_key
+#     else:
+#         device = Device(device_key, user)
+#         db.session.add(device)
+#         db.session.commit()    
+   
     @staticmethod
     def getDeviceByKey(key):
         return Device.query.filter_by(key = key).first()

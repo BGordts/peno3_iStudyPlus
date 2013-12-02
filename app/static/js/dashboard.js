@@ -5,12 +5,19 @@
 'use strict';
 
 //alert('boe');
-angular.module('app', ['iStudyPlusBindonce']).config(function($interpolateProvider){
+angular.module('app', ['iStudyPlusBindonce']).config(function($interpolateProvider, $routeProvider){
         $interpolateProvider.startSymbol('[[').endSymbol(']]');
+        $routeProvider
+        	.when("/app/:user/:appviewstate",
+				  {
+				  	templateUrl: "panels.tpl"
+				  })
     }
 ).
 
-controller('appCtrl', function ($scope) {
+controller('appCtrl', function ($scope, $routeParams) {
+
+	$scope.appViewState = $routeParams.appviewstate;
 
 
 //	$scope.panelState = "view";
