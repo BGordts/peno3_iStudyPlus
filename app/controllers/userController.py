@@ -9,9 +9,6 @@ from app.models.user import User
 from app.models.userSession import UserSession
 from app.models.course import Course
 from werkzeug._internal import _log
-from werkzeug import secure_filename
-
-import os
 
 def login_required(test):
     @wraps(test)
@@ -46,6 +43,11 @@ def home():
 @login_required
 def welcome():
     return render_template('pages/dashboard.html')
+@app.route('/settings')
+@login_required
+def settingsView():
+    return render_template('pages/settings_page.html')
+
 @app.route('/settings')
 @login_required
 def settingsView():
@@ -87,14 +89,16 @@ def register():
         lastname = request.form['lastname']
         pass1 = request.form['pass1']
         pass2 = request.form['pass2']
+        pic_small = request.form['profile-img_small']
+        pic_big = request.form['profile-img_large']
         if not isValidPass(pass1,pass2):
             error = 'The passwords you entered did not match'
-            errors = errors + {"password" : error}
-        if not isValidEmail:
+            error.update({"password":error})
+        elif not isValidEmail(email):
             error = 'The email-address you entered is already taken'
-            errors =  errors + {"email" : error}
+            error.update({"email":error})
         else:
-            user = User(email, lastname, name, pass1)
+            user = User(email, lastname, name, pass1 , pic_small , pic_big)
             db.session.add(user)
             db.session.commit()
             return redirect(url_for('login'))
@@ -109,26 +113,10 @@ def isValidEmail(email):
 def isValidPass(pass1 , pass2):
     return pass1 == pass2
 
-@app.route('/user/newProfilePic' , methods = ['GET' , 'POST'])
-@login_required
-def changeProfilPic():
-    if request.method == 'POST':
-        pic = request.files['pic']
-        if pic and allowed_file(pic.filename):
-            filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-            User.query.filter_by(id=session['userID']).first().setProfilePic(path)
-            return redirect(url_for('uploaded_file', filename=filename))
-
-def allowed_file(filename):
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
-
 @app.route('/user/settings' , methods = ['GET','POST'])
 @login_required
 def changeUserinfo():
-    user = User.query.filter_by(id=session['userID']).first()
+    user = User.query.get(request.form['userID'])
     errors = {}
     email = request.form['email']
     name = request.form['name']
@@ -136,6 +124,9 @@ def changeUserinfo():
     oldPass = request.form['oldPass']
     pass1 = request.form['pass1']
     pass2 = request.form['pass2']
+    deviceID = request.form['device-id']
+    pic_small = request.form['profile-img_small']
+    pic_big = request.form['profile-img_large']
     if(email == None):
         email = user.email
     if(name == None):
@@ -147,13 +138,10 @@ def changeUserinfo():
         pass2 = user.password
     if not isValidEmail:
             error = 'The email-address you entered is already taken'
-            errors =  errors + {"email" : error}
     if not(user.password == oldPass):
         error = 'The old password you entered did not match'
-        errors = errors + {"password" : error}
     if not isValidPass(pass1,pass2):
         error = 'The passwords you entered did not match'
-        errors = errors + {"password" : error}
         if not isValidPass(pass1,pass2):
             error = 'The passwords you entered did not match'
             errors = errors + {"password" : error}
@@ -164,22 +152,10 @@ def changeUserinfo():
     else:
         return render_template('pages/settings_page.html')
 
-@app.route('/user/searchUser' , methods = ['POST' , 'GET'])
-def searchUser():
-    keyWord = request.form['keyWord']
-    users = None
-    if(keyWord.containts('@')):
-        users = User.query.filter_by(email=keyWord).all()
-    else:
-        users = User.query.filter_by(surname=keyWord).all()
-        if not (users):
-            users = User.query.filter_by(name=keyWord).all()
-    return users
-
 @app.route('/user/getCoStudents')
 def getCoStudents():
     coStudents = []
-    user = User.query.filter_by(id=session['userID']).first()
+    user = User.query.get(request.form['userID'])
     for course in user.getUserCourses():
         for student in course.getAllUsers():
             if not(student in coStudents):
@@ -188,7 +164,14 @@ def getCoStudents():
 
 @app.route('/user/courses' , methods = ['POST' , 'GET'])
 def getUserCourses():
-    user = User.query.filter_by(id=request.form['userID']).first()
+    user = User.query.get(request.form['userID'])
+    return user.getUserCourses()
+
+
+
+
+
+
     return user.getUserCourses()
 
 

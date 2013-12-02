@@ -55,7 +55,30 @@ def create():
     session['sessionID'] = session1.id
     session['isPauzed'] = None     
     return "sessie aangemaakt"
-  
+
+@app.route('/session/modifieSession' , methods = ['POST' , 'GET'])
+@login_required
+@endSession_required
+def modifieUSession():
+    uSession = Session.query.get(request.form['sessionID'])
+    newDescription = uSession.title
+    newFeedBack_score = uSession.feedback_score
+    newStart_date = uSession.start_date
+    newEnd_date = uSession.end_date
+    if not(newDescription == request.form['description']):
+        newDescription = request.form['description']
+    if not(newFeedBack_score == request.form['feedback']):
+        newFeedBack_score = request.form['feedback']
+    if not(newStart_date == request.form['startDate']):
+        newStart_date = request.form['startDate']
+    if not(newEnd_date == request.form['endDate']):
+        newEnd_date = request.form['endDate']
+    newSession = UserSession(uSession.user, uSession.course, newDescription, newFeedBack_score, newStart_date, newEnd_date)
+    db.session.delete(uSession)
+    db.session.add(newSession)
+    db.session.commit()
+    
+
 @app.route('/session/start')
 @session_required
 @login_required
@@ -86,8 +109,7 @@ def resumeSession():
 @app.route('/session/isPaused')
 def isPauzed():
     u = User.query.get(session['userID'])
-    s = u.getRunningSession()
-    
+    s = u.getRunningSession()    
     if s:
         return s.isPaused().__repr__()
     else:
@@ -120,7 +142,6 @@ def postFeedback():
 @login_required
 @endSession_required
 def commitSession():
-    "calc and save's the session avarge's"
     
     #sessionID = request.form['sessionID']
     userSession = UserSession.query.get(request.args['sessionID'])

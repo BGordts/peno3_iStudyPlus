@@ -14,21 +14,23 @@ class User(db.Model):
     name = db.Column(db.String(80), unique=False)
     surname = db.Column(db.String(80), unique=False)
     password = db.Column(db.String(30), unique=False)
-    profilePic = db.Column(db.String(300), unique = True)
+    
+    picBig = db.Column(db.String(5000))
+    picSmall = db.Column(db.String(1000))
     
     userStastics_id = db.Column(db.Integer, db.ForeignKey('statistics.id'))
     statistics = db.relationship('Statistics', backref=db.backref('users', lazy='dynamic'))
     
-    def __init__(self, email, name, surname, password, profilePic = None):
+    def __init__(self, email, name, surname, password, profilePic_small = None , profilePic_big = None):
         self.email = email
         self.name = name
         self.surname = surname
         self.password = password
-        self.profilePic = profilePic
         newUS = Statistics()
         db.session.add(newUS)
         self.statistics = newUS
-        
+        self.picBig = profilePic_big
+        self.picSmall = profilePic_small     
         db.session.commit()
     
     def getUserCourses(self):
@@ -80,8 +82,7 @@ class User(db.Model):
                 return userSession
         else:
             return None
-        
-    
+
     def getDevice(self):
         return self.device.first()
     
@@ -95,10 +96,6 @@ class User(db.Model):
         if not (password == self.password):
             self.password = password
         db.session.commit()
-    
-    def getUsers(self):
-        "enkel users met dezelfde vakken als de huidige gebruiker."
-        pass
     
     def __repr__(self):
         return '<User %r>' % self.email
