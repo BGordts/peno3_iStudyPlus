@@ -2,6 +2,7 @@ from werkzeug._internal import _log
 
 from app import app
 from app import db
+from app.utils.utils import *
 import datetime
 
 SENSOR_LIGHT = "light"
@@ -28,17 +29,9 @@ class Sensordata(db.Model):
         self.date = date      
         
     def output(self):
-        timeInMilis = self.unix_time_millis(self.date)
+        timeInMilis = unix_time_millis(self.date)
         
         return  {"sensor_type": self.sensor_type, "value": self.value, "date": timeInMilis, "session_id": self.session_id}
-    
-    def unix_time(self, dt):
-        epoch = datetime.datetime.utcfromtimestamp(0)
-        delta = dt - epoch
-        return delta.total_seconds()
-
-    def unix_time_millis(self, dt):
-        return self.unix_time(dt) * 1000.0
 
     def __repr__(self):
         return '<Sensordata %r>' % self.sensor_type

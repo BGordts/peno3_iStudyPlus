@@ -30,6 +30,11 @@ def logout_required(test):
             return redirect(url_for('home'))
     return wrap
 
+@app.route('/app/<path:path>')
+@app.route('/app')
+def angularRoutes(path=None):
+    return "lololo"
+
 @app.route("/")
 def hello():
     return render_template('index.html')
@@ -37,7 +42,7 @@ def hello():
 @app.route('/home')
 def home():
     user = User.query.get(session["userID"])
-    return render_template('pages/dashboard_profile-info.html', user=user)
+    return render_template('pages/dashboard_profile-info2.html', user=user)
 
 @app.route('/welcome')
 @login_required
@@ -162,16 +167,3 @@ def getCoStudents():
 def getUserCourses():
     user = User.query.get(request.form['userID'])
     return user.getUserCourses()
-
-
-
-
-
-
-    return user.getUserCourses()
-
-
-
-
-
-

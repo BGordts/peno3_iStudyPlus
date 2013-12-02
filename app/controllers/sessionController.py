@@ -6,6 +6,7 @@ from datetime import datetime
 import time
 from werkzeug._internal import _log
 import json
+from app.utils.utils import *
 
 from app import app
 from app import db
@@ -167,25 +168,28 @@ Returns all the sessions created by this user
 '''
 @app.route('/session/getAllSessions', methods = ['GET'])    
 @login_required
-def getSessions():
+def getAllSessions():
     user = User.getUserFromSession()
     
     _log("info", user.sessions.all().__str__())
     
     #Move to UserSesssion
-    returnList = {}
+    returnList = []
     for lolol in user.sessions.all():
-        returnList['description'] = lolol.description
-        returnList['feedback_text'] = lolol.feedback_text
-        returnList['feedback_score'] = lolol.feedback_score
-        returnList['start_date'] = lolol.start_date
-        returnList['end_date'] = lolol.end_date
-        returnList['course_id'] = lolol.course_id
-        returnList['sessionEff'] = lolol.sessionEff
-        returnList['sessionTemp'] = lolol.sessionTemp
-        returnList['sessionIll'] = lolol.sessionIll
-        returnList['sessionSound'] = lolol.sessionSound
-        returnList['sessionFocus'] = lolol.sessionFocus
-        returnList['sessionHum'] = lolol.sessionHum    
+        returnSession = {}
+        returnSession['description'] = lolol.description
+        returnSession['feedback_text'] = lolol.feedback_text
+        returnSession['feedback_score'] = lolol.feedback_score
+        returnSession['start_date'] = unix_time_millis(lolol.start_date)
+        returnSession['end_date'] = unix_time_millis(lolol.end_date)
+        returnSession['course_id'] = lolol.course_id
+        returnSession['sessionEff'] = lolol.sessionEff
+        returnSession['sessionTemp'] = lolol.sessionTemp
+        returnSession['sessionIll'] = lolol.sessionIll
+        returnSession['sessionSound'] = lolol.sessionSound
+        returnSession['sessionFocus'] = lolol.sessionFocus
+        returnSession['sessionHum'] = lolol.sessionHum    
+        
+        returnList.append(returnSession)
     
     return json.dumps(returnList)
