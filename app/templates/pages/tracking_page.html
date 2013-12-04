@@ -1,133 +1,23 @@
 
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="shortcut icon" href="../../docs-assets/ico/favicon.png">
+{% extends "pages/navigation_top.html" %} {% block site_content %}
 
-    <title>Theme Template for Bootstrap</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="../../dist/css/bootstrap.css" rel="stylesheet">
-    <!-- Bootstrap theme -->
-    <link href="../../dist/css/bootstrap-theme.min.css" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="theme.css" rel="stylesheet">
-
-    <!-- Just for debugging purposes. Don't actually copy this line! -->
-    <!--[if lt IE 9]><script src="../../docs-assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-    <![endif]-->
-  </head>
-
-  <body>
-
-    <!-- Fixed navbar -->
-    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">Bootstrap theme</a>
-        </div>
-        <div class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
-                <li class="divider"></li>
-                <li class="dropdown-header">Nav header</li>
-                <li><a href="#">Separated link</a></li>
-                <li><a href="#">One more separated link</a></li>
-              </ul>
-            </li>
-          </ul>
-        </div><!--/.nav-collapse -->
-      </div>
-    </div>
-
-    <div class="container theme-showcase">
-
-      <!-- Main jumbotron for a primary marketing message or call to action -->
-      <div class="jumbotron">
-        <h1>Hello, world!</h1>
-        <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
-        <p><a href="#" class="btn btn-primary btn-lg" role="button">Learn more &raquo;</a></p>
-      </div>
+    <div class="container">
 
 
 
       <div class="page-header">
-        <h1>Buttons</h1>
+        <h1>Veel plezier met je sessie</h1>
       </div>
       <p>
-        <button type="button" class="btn btn-lg btn-default">Default</button>
-        <button type="button" class="btn btn-lg btn-primary">Primary</button>
-        <button type="button" class="btn btn-lg btn-success">Success</button>
-        <button type="button" class="btn btn-lg btn-info">Info</button>
-        <button type="button" class="btn btn-lg btn-warning">Warning</button>
-        <button type="button" class="btn btn-lg btn-danger">Danger</button>
-        <button type="button" class="btn btn-lg btn-link">Link</button>
-      </p>
-      <p>
-        <button type="button" class="btn btn-default">Default</button>
-        <button type="button" class="btn btn-primary">Primary</button>
-        <button type="button" class="btn btn-success">Success</button>
-        <button type="button" class="btn btn-info">Info</button>
-        <button type="button" class="btn btn-warning">Warning</button>
-        <button type="button" class="btn btn-danger">Danger</button>
-        <button type="button" class="btn btn-link">Link</button>
-      </p>
-      <p>
-        <button type="button" class="btn btn-sm btn-default">Default</button>
-        <button type="button" class="btn btn-sm btn-primary">Primary</button>
-        <button type="button" class="btn btn-sm btn-success">Success</button>
-        <button type="button" class="btn btn-sm btn-info">Info</button>
-        <button type="button" class="btn btn-sm btn-warning">Warning</button>
-        <button type="button" class="btn btn-sm btn-danger">Danger</button>
-        <button type="button" class="btn btn-sm btn-link">Link</button>
-      </p>
-      <p>
-        <button type="button" class="btn btn-xs btn-default">Default</button>
-        <button type="button" class="btn btn-xs btn-primary">Primary</button>
-        <button type="button" class="btn btn-xs btn-success">Success</button>
-        <button type="button" class="btn btn-xs btn-info">Info</button>
-        <button type="button" class="btn btn-xs btn-warning">Warning</button>
-        <button type="button" class="btn btn-xs btn-danger">Danger</button>
-        <button type="button" class="btn btn-xs btn-link">Link</button>
+        <button type="button" class="btn btn-lg btn-success">Pauze</button>
+          
+        <button type="button" class="btn btn-lg btn-warning"> Beëindigen</button>
+        <button type="button" class="btn btn-lg btn-danger">Pauze</button>
       </p>
 
 
 
-      <div class="page-header">
-        <h1>Thumbnails</h1>
-      </div>
-      <img data-src="holder.js/200x200" class="img-thumbnail" alt="A generic square placeholder image with a white border around it, making it resemble a photograph taken with an old instant camera">
 
-
-
-      <div class="page-header">
-        <h1>Dropdown menus</h1>
-      </div>
       <div class="dropdown theme-dropdown clearfix">
         <a id="dropdownMenu1" href="#" role="button" class="sr-only dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
         <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
@@ -138,79 +28,60 @@
           <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a></li>
         </ul>
       </div>
+<!-- SVG SOURCE -->
+    <svg height="30%" width="30%" style="position:absolute;margin-left: -100%;">
+<g id="clock-icon">
+  <style>
+  svg, #container{
+        height: 40%;
+        width: 40%;
+    }
+  </style>
+  <rect id="minute-hand" transform="rotate(0 16 17)" x="15.386" y="6.464" width="1.227" height="11.439"/>
+  
+<rect id="hour-hand" transform="rotate(0 16 17)" x="15.386" y="10.291" width="1.227" height="7.626"/>
+  
+  <rect id="second-hand" transform="rotate(0 16 17)" x="15.88" y="7.46" fill="#EF4767" width="0.24" height="9.83"/>
 
+  
+<path d="M15.879,2.531c-8.14,0-14.739,6.599-14.739,14.739c0,8.14,6.599,14.739,14.739,14.739s14.739-6.6,14.739-14.739
+	C30.618,9.13,24.02,2.531,15.879,2.531z M15.879,30.852c-7.511,0-13.6-6.089-13.6-13.6c0-7.511,6.089-13.601,13.6-13.601	c7.511,0,13.6,6.089,13.6,13.601C29.479,24.763,23.391,30.852,15.879,30.852z"/>
+<rect class="hide" x="24.794" y="28.95" transform="matrix(0.7071 0.7071 -0.7071 0.7071 28.9921 -10.8671)"  width="5.639" height="1.226"/>
+<rect class="hide" x="1.076" y="28.866" transform="matrix(-0.7071 0.7071 -0.7071 -0.7071 27.6973 47.4864)" width="5.876" height="1.227"/>
+<path  class="hide" d="M9.946,1.291c-1.044-0.812-2.353-1.3-3.778-1.3C2.761-0.009,0,2.752,0,6.158c0,1.425,0.488,2.733,1.3,3.778
+	l0.524-0.524l0.002,0.002l7.859-7.859L9.684,1.553L9.946,1.291z M6.167,1.198c0.634,0,1.233,0.132,1.79,0.35L1.558,7.948
+	c-0.218-0.557-0.35-1.156-0.35-1.79C1.208,3.418,3.428,1.198,6.167,1.198z"/>
+<path class="hide" d="M30.7,9.936C31.512,8.892,32,7.583,32,6.158c0-3.406-2.762-6.167-6.168-6.167
+	c-1.425,0-2.733,0.488-3.777,1.3l0.524,0.524l-0.002,0.002l7.858,7.859l0.002-0.002L30.7,9.936z M30.793,6.158
+	c0,0.634-0.133,1.233-0.352,1.79l-6.398-6.399c0.557-0.218,1.156-0.35,1.789-0.35C28.572,1.198,30.793,3.418,30.793,6.158z"/>
+    
+<script type="text/javascript">
+var setTime = function(){
+  var date = new Date(),
+  MINUTE = 60, HOUR   = 60*MINUTE,
+  seconds = date.getSeconds(),
+  minutes = (date.getMinutes()*MINUTE) + seconds,
+  hours = (date.getHours()*HOUR)+minutes;
+
+    document.getElementById('second-hand').setAttribute('transform', 'rotate('+360*(seconds/MINUTE)+',16,17)');
+    document.getElementById('minute-hand').setAttribute('transform', 'rotate('+360*(minutes/HOUR)+',16,17)');
+    document.getElementById('hour-hand').setAttribute('transform', 'rotate('+360*(hours/(12*HOUR))+',16,17)');
+  }
+setTime();
+var interval = setInterval(setTime,1000);
+</script>
+</g>    
+      
+</svg>
+<!-- SVG SOURCE ends-->
+
+<svg class="icon is-x10" viewBox="0 0 32 32">
+    <use xlink:href="#clock-icon"></use>
+</svg>
 
 
 
       <div class="page-header">
-        <h1>Navbars</h1>
-      </div>
-
-      <div class="navbar navbar-default">
-        <div class="container">
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#">Project name</a>
-          </div>
-          <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-              <li class="active"><a href="#">Home</a></li>
-              <li><a href="#about">About</a></li>
-              <li><a href="#contact">Contact</a></li>
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
-                <ul class="dropdown-menu">
-                  <li><a href="#">Action</a></li>
-                  <li><a href="#">Another action</a></li>
-                  <li><a href="#">Something else here</a></li>
-                  <li class="divider"></li>
-                  <li class="dropdown-header">Nav header</li>
-                  <li><a href="#">Separated link</a></li>
-                  <li><a href="#">One more separated link</a></li>
-                </ul>
-              </li>
-            </ul>
-          </div><!--/.nav-collapse -->
-        </div>
-      </div>
-
-      <div class="navbar navbar-inverse">
-        <div class="container">
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#">Project name</a>
-          </div>
-          <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-              <li class="active"><a href="#">Home</a></li>
-              <li><a href="#about">About</a></li>
-              <li><a href="#contact">Contact</a></li>
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
-                <ul class="dropdown-menu">
-                  <li><a href="#">Action</a></li>
-                  <li><a href="#">Another action</a></li>
-                  <li><a href="#">Something else here</a></li>
-                  <li class="divider"></li>
-                  <li class="dropdown-header">Nav header</li>
-                  <li><a href="#">Separated link</a></li>
-                  <li><a href="#">One more separated link</a></li>
-                </ul>
-              </li>
-            </ul>
-          </div><!--/.nav-collapse -->
-        </div>
-      </div>
 
 
 
@@ -258,128 +129,5 @@
 
 
 
-      <div class="page-header">
-        <h1>List groups</h1>
-      </div>
-      <div class="row">
-        <div class="col-sm-4">
-          <ul class="list-group">
-            <li class="list-group-item">Cras justo odio</li>
-            <li class="list-group-item">Dapibus ac facilisis in</li>
-            <li class="list-group-item">Morbi leo risus</li>
-            <li class="list-group-item">Porta ac consectetur ac</li>
-            <li class="list-group-item">Vestibulum at eros</li>
-          </ul>
-        </div><!-- /.col-sm-4 -->
-        <div class="col-sm-4">
-          <div class="list-group">
-            <a href="#" class="list-group-item active">
-              Cras justo odio
-            </a>
-            <a href="#" class="list-group-item">Dapibus ac facilisis in</a>
-            <a href="#" class="list-group-item">Morbi leo risus</a>
-            <a href="#" class="list-group-item">Porta ac consectetur ac</a>
-            <a href="#" class="list-group-item">Vestibulum at eros</a>
-          </div>
-        </div><!-- /.col-sm-4 -->
-        <div class="col-sm-4">
-          <div class="list-group">
-            <a href="#" class="list-group-item active">
-              <h4 class="list-group-item-heading">List group item heading</h4>
-              <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-            </a>
-            <a href="#" class="list-group-item">
-              <h4 class="list-group-item-heading">List group item heading</h4>
-              <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-            </a>
-            <a href="#" class="list-group-item">
-              <h4 class="list-group-item-heading">List group item heading</h4>
-              <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-            </a>
-          </div>
-        </div><!-- /.col-sm-4 -->
-      </div>
-
-
-
-      <div class="page-header">
-        <h1>Panels</h1>
-      </div>
-      <div class="row">
-        <div class="col-sm-4">
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h3 class="panel-title">Panel title</h3>
-            </div>
-            <div class="panel-body">
-              Panel content
-            </div>
-          </div>
-          <div class="panel panel-primary">
-            <div class="panel-heading">
-              <h3 class="panel-title">Panel title</h3>
-            </div>
-            <div class="panel-body">
-              Panel content
-            </div>
-          </div>
-        </div><!-- /.col-sm-4 -->
-        <div class="col-sm-4">
-          <div class="panel panel-success">
-            <div class="panel-heading">
-              <h3 class="panel-title">Panel title</h3>
-            </div>
-            <div class="panel-body">
-              Panel content
-            </div>
-          </div>
-          <div class="panel panel-info">
-            <div class="panel-heading">
-              <h3 class="panel-title">Panel title</h3>
-            </div>
-            <div class="panel-body">
-              Panel content
-            </div>
-          </div>
-        </div><!-- /.col-sm-4 -->
-        <div class="col-sm-4">
-          <div class="panel panel-warning">
-            <div class="panel-heading">
-              <h3 class="panel-title">Panel title</h3>
-            </div>
-            <div class="panel-body">
-              Panel content
-            </div>
-          </div>
-          <div class="panel panel-danger">
-            <div class="panel-heading">
-              <h3 class="panel-title">Panel title</h3>
-            </div>
-            <div class="panel-body">
-              Panel content
-            </div>
-          </div>
-        </div><!-- /.col-sm-4 -->
-      </div>
-
-
-
-      <div class="page-header">
-        <h1>Wells</h1>
-      </div>
-      <div class="well">
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sed diam eget risus varius blandit sit amet non magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Cras mattis consectetur purus sit amet fermentum. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Aenean lacinia bibendum nulla sed consectetur.</p>
-      </div>
-
-
     </div> <!-- /container -->
-
-
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-    <script src="css/bootstrap.min.js"></script>
-    <script src="/js/holder.js"></script>
-  </body>
-</html>
+{% endblock %}
