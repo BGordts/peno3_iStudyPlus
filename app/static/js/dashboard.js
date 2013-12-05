@@ -9,10 +9,15 @@ angular.module('app', ['ngRoute', 'ngTouch']).config(function ($interpolateProvi
 	$interpolateProvider.startSymbol('[[').endSymbol(']]');
 	$locationProvider.html5Mode(true);
 	$routeProvider.when("/app/:user/:appviewstate", /* /:user/:appviewstate */ {
-		templateUrl: "panels.tpl",
-		//template: "<div>hello world</div>",
-		controller: "viewCtrl"
-	});
+			templateUrl: "panels.tpl",
+			//template: "<div>hello world</div>",
+			controller: "viewCtrl"
+		})
+		.when("/app/:user/:appviewstate", /* /:user/:appviewstate */ {
+			templateUrl: "panels.tpl",
+			//template: "<div>hello world</div>",
+			controller: "viewCtrl"
+		});
 }).
 
 controller('viewCtrl', function ($scope, $routeParams) {
@@ -125,7 +130,8 @@ controller('appCtrl', function ($scope) {
 			$scope.appviewstate = data.appviewstate;
 		}
 	}
-
+	console.log("searchfilter")
+	//console.log($scope.$location.search()[0]);
 
 	//	$scope.panelState = "view";
 	//	$scope.sessionType = "live";
@@ -389,7 +395,7 @@ directive('dashboardPanel', function ($scope) {
 	}
 })*/
 
-.directive("coursepanel", function () {
+.directive("coursepanel", function ($location) {
 	return {
 		restrict: 'EA',
 		replace: true,
@@ -488,7 +494,8 @@ directive('dashboardPanel', function ($scope) {
 		controller: function ($scope) {
 			$scope.panelState = "view";
 			$scope.sessionType = "live";
-			$scope.data = {headerdata: {activityType: "study"}};
+			$scope.data = {headerdata: {activityType: "class", sessionID: "5"}}; //Boris
+			$scope.course = "analyse";
 			$scope.tracked = false;
 
 			$scope.chartdata = $scope.session.data1;
@@ -506,6 +513,27 @@ directive('dashboardPanel', function ($scope) {
 			            ];
 
 			$scope.selectedItem = null;
+
+			console.log("djkfqm dfjkqlm dfjkqlmds fjkqlmd fjkqlm dat: ");
+			console.log($scope.data.headerdata.sessionID);
+
+
+			$scope.savethis = "saveedit" + $scope.data.headerdata.sessionID;
+			$scope.saveid = "emitsave" + $scope.data.headerdata.sessionID;
+
+			console.log($scope.savethis);
+			$scope.save = function() {
+            	console.log("save");
+            	$scope.$broadcast($scope.savethis);
+            	$scope.panelState='view';
+            };
+            $scope.$on($scope.saveid, function(event, data) {console.log("remit"); console.log(data); $scope.data.headerdata = data})
+            $scope.cancel = function() {
+				$scope.panelState='view';
+            };
+            $scope.delete = function() {
+				//Boris
+            };
 		}
 	}
 })
@@ -519,10 +547,23 @@ directive('dashboardPanel', function ($scope) {
 		},
 		templateUrl: "sessionEdit.tpl",
 		link: function (scope, element, attrs) {
-
+			scope.editeddata = angular.copy(scope.editdata);
 		},
 		controller: function ($scope) {
+//			document.getElementById().datetimepicker({
+//                    pickTime: false
+//                });
+//            document.getElementById().datetimepicker({
+//                    pickDate: false
+//                });
+//            document.getElementById().datetimepicker({
+//                    pickDate: false
+//                });
 
+			$scope.broadcastid = "saveedit" + $scope.editdata.sessionID;
+			$scope.emitid = "emitsave" + $scope.editdata.sessionID;
+			console.log("console");
+           	$scope.$on($scope.broadcastid, function(event) {$scope.$emit($scope.emitid, $scope.editeddata)}); //$scope.editdata = angular.copy($scope.editeddata);
 		}
 	}
 })
