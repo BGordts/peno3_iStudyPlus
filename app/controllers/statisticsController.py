@@ -60,12 +60,29 @@ Looks at all the sessions and returns the conbination of sensor average for a se
 '''
 @app.route('/statistics/getEfficiencyForSensor', methods = ['GET'])   
 def getEfficiencyForSensor():
-    userID = request.args["userID"]
+    userID1 = request.args["userID1"]
+    userID2 = request.args["userID2"]    
+    courseID = request.args["courseID"]    
     sensor_type = request.args["sensor_type"]
     
+    returnMap = {}
+    
+    if userID2 == int(-1):
+        returnMap = {'1': helper(userID1, sensor_type, courseID), '2': {}}
+    else:
+        returnMap = {'1': helper(userID1, sensor_type, courseID), '2': helper(userID2, sensor_type, courseID)}
+    
+    return json.dumps(returnMap)
+
+def helper(userID, sensor_type, courseID):        
     user = User.query.get(userID)
     
-    sessions = UserSession.query.filter_by(user = user).all()
+    sessions = []
+    
+    if int(courseID) == -1:
+        sessions = UserSession.query.filter_by(user = user).all()
+    else:
+        sessions = UserSession.query.filter_by(course_id = courseID).filter_by(user = user).all()
     
     returnMap = {}
     
@@ -91,5 +108,4 @@ def getEfficiencyForSensor():
     #Sort the dictionary by key
     OrderedDict(sorted(returnMap.items(), key=lambda t: t[0]))
     
-    
-    return json.dumps(returnMap)
+    return returnMap
