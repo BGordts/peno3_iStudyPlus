@@ -413,9 +413,15 @@
 </script>
 <script type="text/ng-template" id="panels.tpl">
 	<div ng-switch="appViewState">
-		<dashboardpanel ng-switch-when="dashboard"></dashboardpanel>
-		<coursepanel ng-switch-when="courses" ng-repeat="item in courselist"></coursepanel>
-		<sessionpanel ng-switch-when="sessions" ng-repeat="item in sessionlist"></sessionpanel>
+		<div class="panel-group" id="accordion" ng-switch-when="dashboard">
+			<dashboardpanel></dashboardpanel>
+		</div>
+		<div class="panel-group" id="accordion" ng-switch-when="courses">
+			<coursepanel ng-repeat="course in courselist"></coursepanel>
+		</div>
+		<div class="panel-group" id="accordion" ng-switch-when="sessions">
+			<sessionpanel ng-repeat="session in sessionlist"></sessionpanel>
+		</div>
 	</div>
 </script>
 <div class="row">
@@ -427,7 +433,7 @@
 						<img class="img-rounded img-responsive" src="https://graph.facebook.com/jacobspelle/picture?width=200&height=200"></img>
 					</div>
 					<div class="is_info">
-						<h2>{{user.name}} {{user.surname}}</h2>
+						<h2>[[user.name]] [[user.surname]]</h2>
 						<a href="#">University</a>
 						<br>Study
 						<span class="badge">phase</span>
@@ -484,12 +490,7 @@
 			</div>
 		</div>
 		<div class="container" style="max-width:100%">
-			<div class="panel-group" id="accordion">
-				<dashboardpanel></dashboardpanel>
-				
-<!-- 				<coursepanel ng-repeat="item in courselist"></coursepanel> -->
-<!-- 				<sessionpanel ng-repeat="item in sessionlist"></sessionpanel> -->
-			</div>
+			<ng-view></ng-view>
 		</div>
 		<div class="is_footer">
 			<div class="container" style="max-width:100%">

@@ -19,4 +19,4 @@ def welcome():
 @app.route('/app/<path:path>')
 @app.route('/app')
 def angularRoutes(path=None):
-    return render_template('pages/dashboard.html')
+    return render_template('pages/dashboard_profile-info.html')

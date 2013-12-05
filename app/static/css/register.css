@@ -1,7 +1,4 @@
-body {
-	padding-top: 55px;
-}
-	h2 {
+h2 {
 	margin-bottom: 20px;
 	text-align: center;
 }
@@ -11,6 +8,10 @@ canvas {
 	max-width: 100%;
 	max-height: 256px;
 	display: block;
+	margin: 0 auto;
+}
+	.form-signin {
+	max-width: 330px;
 	margin: 0 auto;
 }
 	.form-signin .checkbox {
