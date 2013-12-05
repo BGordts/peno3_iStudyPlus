@@ -123,7 +123,7 @@ class UserSession(db.Model):
         self.calcSessionFocus()
         self.calcSessionEff()
         self.user.updateStatistics(self)
-        CUStatistic = Courses_Users.query.filter_by(course=self.course).first().courseStatistics
+        CUStatistic = Courses_Users.query.filter_by(course=self.course,user=self.user).first().courseStatistics
         CUStatistic.updateStatistics(self)
         db.session.commit()
         

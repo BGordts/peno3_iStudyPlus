@@ -24,7 +24,7 @@ def clearDataBase():
 
 @app.route('/test/createTestUsers')
 def createTestUsers():
-    admin = User('admin@example.com', 'admin', 'admin', 'admin' , "1e Bach Burgerlijk Ingenieur")
+    admin = User('admin@example.com', 'admin', 'admin', 'admin' , "1e Bach Burgerlijk Ingenieur", "adminDev")
     i = 0;
     data = admin.email +'\n'
     while i < 20:
@@ -40,44 +40,48 @@ def createTestUsers():
 def recreateAll():
     clearDataBase()
     createTestUsers()
-    addCourses()
-    
-    return "done"
+    return createTestSessions()
  
 @app.route('/test/createRandomTestSessions')   
 def createTestSessions():
     x = 0
     data = ""
-    while x < 50:
+    while x < 5:
         userID = random.randint(1,21)
         user = User.query.get(userID)
         courseID = random.randint(1,11)
         course = Course.query.get(courseID)
         userSession = UserSession(user, course, "Ik ben aan het studeren, dus ik ben een goede student!")
-        userSession.start()
+        randomStart = random.randint(1386264114,1416264114)
+        userSession.start_date = datetime.fromtimestamp(randomStart)
+        randomEnd = randomStart + random.randint(900,14400)
+        userSession.end_date = datetime.fromtimestamp(randomEnd)
         db.session.add(userSession)
         db.session.commit()
         i = 0
-        j = random.randint(1,100)
-        datafreq = random.uniform(0.0,0.1)
-        while not(i==j):
-            generateTestData(userSession,datafreq)
-            i = i+1
-        userSession.end()
+        while (i < (randomEnd-randomStart)):
+            pauze = random.randint(0,50)
+            if(pauze == 1):
+                pauze = json.loads(userSession.pauses)
+                pauzeTime=random.uniform(0,userSession.getSessionDuration()/5)
+                pauze.append( (i,i+pauzeTime) )
+                userSession.pauses = json.dumps(pauze)
+            generateTestData(userSession,i)
+            i = i+3
         userSession.setFeedback(random.random())
         userSession.commitSession()
-        data = data + user.email.__str__() + " heeft een tracked session gedaan voor het vak: " + course.course + ". de data is met een freq " + datafreq.__str__() + " gegenereert en dit is " + j.__str__() + " keer gebeurt. totale studietijd: " + userSession.getSessionDuration().__str__() + " seconden."
+        data = data + user.email.__str__() + " heeft een tracked session gedaan voor het vak: " + course.course + ". totale studietijd: " + userSession.getSessionDuration().__str__() + " seconden."
         data = data + "\n"
         x = x+1
     return data
 
-def generateTestData(usersession,datafreq):
-    time.sleep(datafreq)
-    db.session.add(Sensordata("temperature", usersession, random.randint(10,30), datetime.utcnow()))
-    db.session.add(Sensordata("humidity", usersession, random.randint(0,100), datetime.utcnow()))
-    db.session.add(Sensordata("sound", usersession, random.randint(40,80), datetime.utcnow()))
-    db.session.add(Sensordata("illumination", usersession, random.randint(200,900), datetime.utcnow()))
-    db.session.add(Sensordata("focus", usersession, bool(random.getrandbits(1)), datetime.utcnow()))
+def generateTestData(usersession,timestamp):
+    t = datetime.fromtimestamp(timestamp)
+    db.session.add(Sensordata("temperature", usersession, random.randint(10,30), t))
+    db.session.add(Sensordata("humidity", usersession, random.randint(0,100), t))
+    db.session.add(Sensordata("sound", usersession, random.randint(40,80), t))
+    db.session.add(Sensordata("illumination", usersession, random.randint(200,900), t))
+    db.session.add(Sensordata("focus", usersession, bool(random.getrandbits(1)), t))
     db.session.commit()
 
 @app.route('/test/untrackedSession')
