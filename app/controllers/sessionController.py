@@ -200,21 +200,7 @@ def getAllSessions():
     
     #Move to UserSesssion
     returnList = []
-    for lolol in user.sessions.all():
-        returnSession = {}
-        returnSession['description'] = lolol.description
-        returnSession['feedback_text'] = lolol.feedback_text
-        returnSession['feedback_score'] = lolol.feedback_score
-        returnSession['start_date'] = unix_time_millis(lolol.start_date)
-        returnSession['end_date'] = unix_time_millis(lolol.end_date)
-        returnSession['course_id'] = lolol.course_id
-        returnSession['sessionEff'] = lolol.sessionEff
-        returnSession['sessionTemp'] = lolol.sessionTemp
-        returnSession['sessionIll'] = lolol.sessionIll
-        returnSession['sessionSound'] = lolol.sessionSound
-        returnSession['sessionFocus'] = lolol.sessionFocus
-        returnSession['sessionHum'] = lolol.sessionHum    
-        
-        returnList.append(returnSession)
+    for nextSession in user.sessions.all():        
+        returnList.append({"id":nextSession.id, "data":nextSession.outputSession()})
     
     return json.dumps(returnList)

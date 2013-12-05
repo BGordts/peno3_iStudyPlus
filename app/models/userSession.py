@@ -129,11 +129,28 @@ class UserSession(db.Model):
         db.session.commit()
         
     def outputSensorData(self, sensor):
-        sensorData = Sensordata.query.filter_by(session=self).filter_by(sensor_type=sensor).all()
+        sensorData = Sensordata.query.filter_by(userSession=self).filter_by(sensor_type=sensor).all()
         returnList = []
         for i in range(0,len(sensorData)):
             returnList.append(sensorData[i].output())
         return returnList
+    
+    def outputSession(self):
+        returnSession = {}
+        returnSession['description'] = self.description
+        returnSession['feedback_text'] = self.feedback_text
+        returnSession['feedback_score'] = self.feedback_score
+        returnSession['start_date'] = unix_time_millis(self.start_date)
+        returnSession['end_date'] = unix_time_millis(self.end_date)
+        returnSession['course_id'] = self.course_id
+        returnSession['sessionEff'] = self.sessionEff
+        returnSession['sessionTemp'] = self.sessionTemp
+        returnSession['sessionIll'] = self.sessionIll
+        returnSession['sessionSound'] = self.sessionSound
+        returnSession['sessionFocus'] = self.sessionFocus
+        returnSession['sessionHum'] = self.sessionHum
+        
+        return returnSession
            
     def calcSessionEff(self):
         self.sessionEff = (self.sessionFocus + self.feedback_score)/2

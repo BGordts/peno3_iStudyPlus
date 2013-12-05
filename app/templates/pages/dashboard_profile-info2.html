@@ -1,5 +1,5 @@
 {% extends "pages/navigation.html" %} {% block content %}
-<script type="text/ng-template" id="dashboard_course-list.tpl">
+<script type="text/ng-template" id="dashboard_overview.tpl">
 <div class="panel panel-default">
 	<!--start panel heading-->
 	<div class="row panel-heading">
@@ -11,10 +11,10 @@
 			</div>
 			<div class="pull-right">
 				<div class="pull-right">
-					<div class="is_square-80">[[total_time]]</div>
+					<div class="is_square-80">[[user1.total_time]]</div>
 				</div>
 				<div class="pull-right">
-					<div class="is_square-80">[[total_efficiency]]</div>
+					<div class="is_square-80">[[user1.total_efficiency]]</div>
 				</div>
 			</div>
 			<div class="clearfix xs-visible"></div>
@@ -32,19 +32,19 @@
 						<div>lamp svg</div>
 						<div class="is_row-square">
 							<div class="pull-left">
-								<div class="is_square-40">[[highest_illumination]]</div>
+								<div class="is_square-40">[[user1.highest_illumination]]</div>
 							</div>
 							<div class="pull-left">
-								<div class="is_square-40">[[lowest_illumination]]</div>
+								<div class="is_square-40">[[user1.lowest_illumination]]</div>
 							</div>
 						</div>
 						<div class="clearfix xs-visible"></div>
-						<div class="is_row-square is_compare">
+						<div class="is_row-square is_compare" ng-if="user2">
 							<div class="pull-left">
-								<div class="is_square-40">best</div>
+								<div class="is_square-40">[[user2.highest_illumination]]</div>
 							</div>
 							<div class="pull-left">
-								<div class="is_square-40">worst</div>
+								<div class="is_square-40">[[user2.lowest_illumination]]</div>
 							</div>
 						</div>
 					</div>
@@ -52,19 +52,19 @@
 						<div>speaker svg</div>
 						<div class="is_row-square">
 							<div class="pull-left">
-								<div class="is_square-40">[[highest_sound]]</div>
+								<div class="is_square-40">[[user1.highest_sound]]</div>
 							</div>
 							<div class="pull-left">
-								<div class="is_square-40">[[lowest_sound]]</div>
+								<div class="is_square-40">[[user1.lowest_sound]]</div>
 							</div>
 						</div>
 						<div class="clearfix xs-visible"></div>
-						<div class="is_row-square is_compare">
+						<div class="is_row-square is_compare" ng-if="user2">
 							<div class="pull-left">
-								<div class="is_square-40">best</div>
+								<div class="is_square-40">[[user2.highest_sound]]</div>
 							</div>
 							<div class="pull-left">
-								<div class="is_square-40">worst</div>
+								<div class="is_square-40">[[user2.lowest_sound]]</div>
 							</div>
 						</div>
 					</div>
@@ -74,19 +74,19 @@
 						<div>thermometer svg</div>
 						<div class="is_row-square">
 							<div class="pull-left">
-								<div class="is_square-40">[[highest_temperature]]</div>
+								<div class="is_square-40">[[user1.highest_temperature]]</div>
 							</div>
 							<div class="pull-left">
-								<div class="is_square-40">[[lowest_temperature]]</div>
+								<div class="is_square-40">[[user1.lowest_temperature]]</div>
 							</div>
 						</div>
 						<div class="clearfix xs-visible"></div>
-						<div class="is_row-square is_compare">
+						<div class="is_row-square is_compare" ng-if="user2">
 							<div class="pull-left">
-								<div class="is_square-40">best</div>
+								<div class="is_square-40">[[user2.highest_temperature]]</div>
 							</div>
 							<div class="pull-left">
-								<div class="is_square-40">worst</div>
+								<div class="is_square-40">[[user2.lowest_temperature]]</div>
 							</div>
 						</div>
 					</div>
@@ -94,19 +94,19 @@
 						<div>water drop svg</div>
 						<div class="is_row-square">
 							<div class="pull-left">
-								<div class="is_square-40">[[highest_humidity]]</div>
+								<div class="is_square-40">[[user1.highest_humidity]]</div>
 							</div>
 							<div class="pull-left">
-								<div class="is_square-40">[[lowest_humidity]]</div>
+								<div class="is_square-40">[[user1.lowest_humidity]]</div>
 							</div>
 						</div>
 						<div class="clearfix xs-visible"></div>
-						<div class="is_row-square is_compare">
+						<div class="is_row-square is_compare" ng-if="user2">
 							<div class="pull-left">
-								<div class="is_square-40">best</div>
+								<div class="is_square-40">[[user2.highest_humidity]]</div>
 							</div>
 							<div class="pull-left">
-								<div class="is_square-40">worst</div>
+								<div class="is_square-40">[[user2.lowest_humidity]]</div>
 							</div>
 						</div>
 					</div>
@@ -118,19 +118,19 @@
 				<div class="col-sm-6">efficiëntie%
 					<div class="is_row-square">
 						<div class="pull-left">
-							<div class="is_square-40">[[highest_focus]]</div>
+							<div class="is_square-40">[[user1.highest_focus]]</div>
 						</div>
 						<div class="pull-left">
-							<div class="is_square-40">[[lowest_focus]]</div>
+							<div class="is_square-40">[[user1.lowest_focus]]</div>
 						</div>
 					</div>
 					<div class="clearfix xs-visible"></div>
-					<div class="is_row-square is_compare">
+					<div class="is_row-square is_compare" ng-if="user2">
 						<div class="pull-left">
-							<div class="is_square-40">best</div>
+							<div class="is_square-40">[[user2.highest_focus]]</div>
 						</div>
 						<div class="pull-left">
-							<div class="is_square-40">worst</div>
+							<div class="is_square-40">[[user2.lowest_focus]]</div>
 						</div>
 					</div>
 				</div>
@@ -144,7 +144,7 @@
 						</div>
 					</div>
 					<div class="clearfix xs-visible"></div>
-					<div class="is_row-square is_compare">
+					<div class="is_row-square is_compare" ng-if="user2">
 						<div class="pull-left">
 							<div class="is_square-40">best</div>
 						</div>
@@ -174,7 +174,198 @@
                                 </option>
                             </select>-->
 
-							<select ng-model="selectedItem" ng-options="item as (item.name + ' ' + item.surname) for item in items"></select>
+							<select ng-model="selectedItem" ng-options="item as item.name for item in items"></select>
+
+                            <dynamic-graph chartdata="chartdata"></dynamic-graph>
+                            <!--<bar-chart height="300" data="data" hovered="hovered(args)></bar-chart>-->
+                        </div>
+					</div>
+				</div>
+			</div>
+			<!--variable graph-->
+		</div>
+		<!--panelbody-->
+	</div>
+	<!--end panel-body-wrap-->
+</div>
+</script>
+
+<script type="text/ng-template" id="dashboard_course-list.tpl">
+<div class="panel panel-default">
+	<!--start panel heading-->
+	<div class="row panel-heading">
+		<!--start panel-heading content-->
+		<!--start view mode-->
+		<div data-toggle="collapse" data-parent="#accordion" href="[['#course' + $index]]">
+			<div class="col-md-8 pull-left row">
+				<h1 class="panel-title">[[title]]</h1>
+			</div>
+			<div class="pull-right">
+				<div class="pull-right">
+					<div class="is_square-80">[[user1.total_time]]</div>
+				</div>
+				<div class="pull-right">
+					<div class="is_square-80">[[user1.total_efficiency]]</div>
+				</div>
+			</div>
+			<div class="clearfix xs-visible"></div>
+		</div>
+		<!--end view mode-->
+		<div class="clearfix xs-visible"></div>
+	</div>
+	<!--end panel heading-->
+	<!--start panel body-->
+	<div id="[['course' + $index]]" class="panel-collapse collapse">
+		<div class="panel-body">
+			<div class="row">
+				<div class="col-md-6 is_no-padding">
+					<div class="col-sm-6">light
+						<div>lamp svg</div>
+						<div class="is_row-square">
+							<div class="pull-left">
+								<div class="is_square-40">[[user1.highest_illumination]]</div>
+							</div>
+							<div class="pull-left">
+								<div class="is_square-40">[[user1.lowest_illumination]]</div>
+							</div>
+						</div>
+						<div class="clearfix xs-visible"></div>
+						<div class="is_row-square is_compare" ng-if="user2">
+							<div class="pull-left">
+								<div class="is_square-40">[[user2.highest_illumination]]</div>
+							</div>
+							<div class="pull-left">
+								<div class="is_square-40">[[user2.lowest_illumination]]</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-6">sound
+						<div>speaker svg</div>
+						<div class="is_row-square">
+							<div class="pull-left">
+								<div class="is_square-40">[[user1.highest_sound]]</div>
+							</div>
+							<div class="pull-left">
+								<div class="is_square-40">[[user1.lowest_sound]]</div>
+							</div>
+						</div>
+						<div class="clearfix xs-visible"></div>
+						<div class="is_row-square is_compare" ng-if="user2">
+							<div class="pull-left">
+								<div class="is_square-40">[[user2.highest_sound]]</div>
+							</div>
+							<div class="pull-left">
+								<div class="is_square-40">[[user2.lowest_sound]]</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6 is_no-padding">
+					<div class="col-sm-6">temperature
+						<div>thermometer svg</div>
+						<div class="is_row-square">
+							<div class="pull-left">
+								<div class="is_square-40">[[user1.highest_temperature]]</div>
+							</div>
+							<div class="pull-left">
+								<div class="is_square-40">[[user1.lowest_temperature]]</div>
+							</div>
+						</div>
+						<div class="clearfix xs-visible"></div>
+						<div class="is_row-square is_compare" ng-if="user2">
+							<div class="pull-left">
+								<div class="is_square-40">[[user2.highest_temperature]]</div>
+							</div>
+							<div class="pull-left">
+								<div class="is_square-40">[[user2.lowest_temperature]]</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-6">humidity
+						<div>water drop svg</div>
+						<div class="is_row-square">
+							<div class="pull-left">
+								<div class="is_square-40">[[user1.highest_humidity]]</div>
+							</div>
+							<div class="pull-left">
+								<div class="is_square-40">[[user1.lowest_humidity]]</div>
+							</div>
+						</div>
+						<div class="clearfix xs-visible"></div>
+						<div class="is_row-square is_compare" ng-if="user2">
+							<div class="pull-left">
+								<div class="is_square-40">[[user2.highest_humidity]]</div>
+							</div>
+							<div class="pull-left">
+								<div class="is_square-40">[[user2.lowest_humidity]]</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--end sensor data-->
+			<div class="row">
+				<div class="col-sm-12">Cameragegevens</div>
+				<div class="col-sm-6">efficiëntie%
+					<div class="is_row-square">
+						<div class="pull-left">
+							<div class="is_square-40">[[user1.highest_focus]]</div>
+						</div>
+						<div class="pull-left">
+							<div class="is_square-40">[[user1.lowest_focus]]</div>
+						</div>
+					</div>
+					<div class="clearfix xs-visible"></div>
+					<div class="is_row-square is_compare" ng-if="user2">
+						<div class="pull-left">
+							<div class="is_square-40">[[user2.highest_focus]]</div>
+						</div>
+						<div class="pull-left">
+							<div class="is_square-40">[[user2.lowest_focus]]</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-6">pauze%
+					<div class="is_row-square">
+						<div class="pull-left">
+							<div class="is_square-40">best</div>
+						</div>
+						<div class="pull-left">
+							<div class="is_square-40">worst</div>
+						</div>
+					</div>
+					<div class="clearfix xs-visible"></div>
+					<div class="is_row-square is_compare" ng-if="user2">
+						<div class="pull-left">
+							<div class="is_square-40">best</div>
+						</div>
+						<div class="pull-left">
+							<div class="is_square-40">worst</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--end camera stats-->
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="pull-left">
+						<h2>Title</h2>
+					</div>
+					<div class="pull-right">select x-axis</div>
+					<div class="clearfix xs-visible"></div>
+					<div>graph met 2 lijnen
+                        <div>
+                        <div>
+                            <!--<select>
+                                <option ng-model="graphOptions" value="option1">option1
+                                </option>
+                                <option ng-model="graphOptions" value="option2">option2
+                                </option>
+                                <option ng-model="graphOptions" value="option3">option3
+                                </option>
+                            </select>-->
+
+							<select ng-model="selectedItem" ng-options="item as item.name for item in items"></select>
 
                             <dynamic-graph chartdata="chartdata"></dynamic-graph>
                             <!--<bar-chart height="300" data="data" hovered="hovered(args)></bar-chart>-->

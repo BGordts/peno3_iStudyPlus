@@ -18,21 +18,16 @@ controller('appCtrl', function ($scope, serverConnectionService) {
 	/*alert('zever');*/
 	$scope.name = "You";
 	$scope.commonStudents = [{"name":"ik"},{"name":"jij"},{"name":"hij"},{"name":"of zij"},{"name":"jeroen"},{"name":"ik"},{"name":"jij"},{"name":"hij"},{"name":"of zij"},{"name":"jeroen"},{"name":"ik"},{"name":"jij"},{"name":"hij"},{"name":"of zij"},{"name":"jeroen"},{"name":"ik"},{"name":"jij"},{"name":"hij"},{"name":"of zij"},{"name":"jeroen"},{"name":"ik"},{"name":"jij"},{"name":"hij"},{"name":"of zij"},{"name":"jeroen"},{"name":"ik"},{"name":"jij"},{"name":"hij"},{"name":"of zij"},{"name":"jeroen"},{"name":"ik"},{"name":"jij"},{"name":"hij"},{"name":"of zij"},{"name":"jeroen"},{"name":"ik"},{"name":"jij"},{"name":"hij"},{"name":"of zij"},{"name":"jeroen"},{"name":"ik"},{"name":"jij"},{"name":"hij"},{"name":"of zij"},{"name":"jeroen"},{"name":"ik"},{"name":"jij"},{"name":"hij"},{"name":"of zij"},{"name":"jeroen"},{"name":"ik"},{"name":"jij"},{"name":"hij"},{"name":"of zij"},{"name":"jeroen"},{"name":"ik"},{"name":"jij"},{"name":"hij"},{"name":"of zij"},{"name":"jeroen"},{"name":"ik"},{"name":"jij"},{"name":"hij"},{"name":"of zij"},{"name":"jeroen"},{"name":"ik"},{"name":"jij"},{"name":"hij"},{"name":"of zij"},{"name":"jeroen"},{"name":"ik"},{"name":"jij"},{"name":"hij"},{"name":"of zij"},{"name":"jeroen"}]
-
+	$scope.courselist = [{"a":"lol"}, {"b": "protput"}];
+	$scope.appViewState = "courses";
 	$scope.init = function(){		
 		serverConnectionService.getCoStudents(function(data){
 			$scope.commonStudents = data;
 		})
+		
+		
 	}
-})/*.
-
-directive('dashboardPanel', function ($scope) {
-	return {
-		restrict: "EA",
-		replace: true,
-		template:
-	}
-})*/
+})
 
 /**
  * A service that provides the connection with the server. Every call with the server
@@ -42,6 +37,7 @@ directive('dashboardPanel', function ($scope) {
 	this.URL_EFFICIENCY_FOR_SENSOR = '/statistics/getEfficiencyForSensor';
 	this.URL_GENERAL_USER_STATISTICS = '/statistics/getGeneralUserStatistics';
 	this.URL_GE_CO_STUDENTS = '/user/getCoStudents';
+	this.URL_GET_DETAILED_COURSES = '/user/getDetailedCourses';
 	
 	// Basic method: call the server with the specified url, parameters and callback
 	this.requestData = function(path, parameters, callback){
@@ -68,8 +64,8 @@ directive('dashboardPanel', function ($scope) {
 	}
 	
 	// Get the general information of the user
-	this.getUserInfo = function(userid, callback){
-		this.requestData(this.URL_GENERAL_USER_STATISTICS, {'userID':userid}, function(data){
+	this.getUserInfo = function(userid1, userid2, callback){
+		this.requestData(this.URL_GENERAL_USER_STATISTICS, {'userID1':userid1, 'userID2':userid2}, function(data){
 			callback(data);
 		})
 	}
@@ -80,15 +76,75 @@ directive('dashboardPanel', function ($scope) {
 			callback(data);
 		})
 	}
+	
+	// Get all the courses
+	this.getCourses = function(userid, callback){
+		this.requestData(this.URL_GET_DETAILED_COURSES, {"userID":userid}, function(data){
+			callback(data);
+		})
+	}
 })
 
-.directive("dashboardpanel", function(serverConnectionService) {
+//.directive("dashboardpanel", function(serverConnectionService) {
+//	return {
+//		restrict: 'EA',
+//		replace: true,
+//		templateUrl: "dashboard_overview.tpl",
+//		link: function(scope, element, attrs) {
+//			//Watches the selector to change the plotted efficiency/sensor
+//			scope.$watch('selectedItem', function (newVal, oldVal) {
+//				if(typeof nevVal === "undefined" && newVal == null){
+//					console.log("hey fa" + newVal + " " + oldVal);
+//				}
+//				else{
+//					//Download the new sensordata
+//					serverConnectionService.getEfficiencyForSensor(newVal.id, function(sensorData){
+//						scope.chartdata = sensorData;
+//					});
+//				}
+//            });
+//			
+//			//Get the data to fill in
+//			serverConnectionService.getUserInfo(1, 2, function(data){
+//				console.log(data);
+//				
+//				scope.user1 = {};
+//				scope.user2 = {};
+//				
+//				for (var attrname in data.user1) { scope.user1[attrname] = data.user1[attrname]; }
+//				
+//				if(data.user2){
+//					for (var attrname in data.user2) { scope.user2[attrname] = data.user2[attrname]; }
+//				}				
+//			});	
+//		},
+//		controller: function($scope, $http){
+//			$scope.title = "Overzicht"
+//			
+//			$scope.chartdata = {x:0, y:0};
+//
+//			$scope.items = [
+//			                { id: 'temperature', name: 'Temperatuur' },
+//			                { id: 'illumination', name: 'Licht' },
+//			                { id: 'sound', name: 'Geluid' },
+//			                { id: 'humidity', name: 'Luchtvochtigheid' },
+//			                { id: 'focus', name: 'Focus' },
+//			            ];
+//
+//			$scope.selectedItem = null;
+//		}
+//	}
+//})
+
+.directive("coursepanel", function(serverConnectionService) {
 	return {
 		restrict: 'EA',
 		replace: true,
 		templateUrl: "dashboard_course-list.tpl",
 		link: function(scope, element, attrs) {
-			//Watches the selector to change the plotted efficiency/sensor
+			console.log(element);
+			console.log(attrs);
+			
 			scope.$watch('selectedItem', function (newVal, oldVal) {
 				if(typeof nevVal === "undefined" && newVal == null){
 					console.log("hey fa" + newVal + " " + oldVal);
@@ -100,15 +156,8 @@ directive('dashboardPanel', function ($scope) {
 					});
 				}
             });
-			
-			//Get the data to fill in
-			serverConnectionService.getUserInfo(1, function(data){
-				console.log(data);
-				
-				for (var attrname in data) { scope[attrname] = data[attrname]; }
-			});	
 		},
-		controller: function($scope, $http){
+		controller: function($scope, $http, serverConnectionService){
 			$scope.title = "Overzicht"
 			
 			$scope.chartdata = {x:0, y:0};
@@ -122,40 +171,13 @@ directive('dashboardPanel', function ($scope) {
 			            ];
 
 			$scope.selectedItem = null;
-		}
-	}
-})
-
-.directive("coursepanel", function(serverConnectionService) {
-	return {
-		restrict: 'EA',
-		replace: true,
-		templateUrl: "dashboard_course-list.tpl",
-		link: function(scope, element, attrs) {
-			scope.$watch('selectedItem', function (newVal, oldVal) {
-				if(typeof nevVal === "undefined" && newVal == null){
-					console.log("hey fa" + newVal + " " + oldVal);
-				}
-				else{
-					//Download the new sensordata
-					serverConnectionService.getEfficiencyForSensor(newVal.id, function(sensorData){
-						scope.chartdata = sensorData;
-					});
-				}
-            });
-		},
-		controller: function($scope, $http){
-			$scope.chartdata = $scope.item.data1;
-
-			$scope.items = [
-			                { id: 'temperature', name: 'Temperatuur' },
-			                { id: 'illumination', name: 'Licht' },
-			                { id: 'sound', name: 'Geluid' },
-			                { id: 'humidity', name: 'Luchtvochtigheid' },
-			                { id: 'focus', name: 'Focus' },
-			            ];
-
-			$scope.selectedItem = null;
+			
+			//Get the courses
+			serverConnectionService.getCourses(1, function(data){
+				console.log("kjkmldfsjql fjkdf qjsd fjqk fjqk fjK FJQSKFJQS FDLMQJKQSJKLM");
+				console.log(data);
+				$scope.courselist = data;
+			});
 		}
 	}
 })

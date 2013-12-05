@@ -3,6 +3,7 @@ from flask.ext.sqlalchemy import SQLAlchemy
 from werkzeug._internal import _log
 
 import datetime
+import json
 
 from app import app
 from app import db
@@ -15,7 +16,6 @@ from app.models.device import Device
 '''
 The pi device sends his recorded sensor data to this url to store it in the database
 '''
-
 @app.route('/sensorData/postSensorData', methods = ['GET']) 
 def postSensorData():
     #What the client sends to us
@@ -53,4 +53,21 @@ def postSensorData():
             return "There is no running session at the moment"
     else:
         return "There is no device registered with key " + device_key
+    
+@app.route('/sensorData/getSensordataForSession', methods = ['GET']) 
+def getSensordataForSession():
+    sessionID = request.args["sessionID"]
+    
+    session = UserSession.query.get(sessionID)
+    
+    returndict = {}
+    
+    returndict["illumination"] = session.outputSensorData("illumination")
+    returndict["temperature"] = session.outputSensorData("temperature")
+    returndict["humidity"] = session.outputSensorData("humidity")
+    returndict["sound"] = session.outputSensorData("sound")
+    returndict["focus"] = session.outputSensorData("focus")
+    
+    return json.dumps(returndict)
+    
     

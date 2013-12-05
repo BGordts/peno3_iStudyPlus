@@ -12,6 +12,11 @@ def home():
     user = User.query.get(session["userID"])
     return render_template('pages/dashboard_profile-info2.html', user=user)
 
+@app.route('/vakken')
+def dbord():
+    user = User.query.get(session["userID"])
+    return render_template('pages/coursesview.html', user=user)
+
 @app.route('/welcome')
 def welcome():
     return render_template('pages/dashboard.html')

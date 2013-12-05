@@ -149,4 +149,26 @@ def getCoStudents():
 
 @app.route('/user/courses')
 def getUserCourses():
-    user = User.query.get(request.args['userID'])
+    userID = request.args['userID']
+    
+    returndict = {}
+    
+    userCourses = Courses_Users.query.filter_by(user_id=userID).all()
+    
+    for nextUserCourse in userCourses:
+        returndict[nextUserCourse.course_id] = {"name":nextUserCourse.course.course}   
+    
+    return json.dumps(returndict)
+
+@app.route('/user/getDetailedCourses')
+def getDetailedUserCourses():
+    userID = request.args['userID']
+    
+    returndict = []
+    
+    userCourses = Courses_Users.query.filter_by(user_id=userID).all()
+    
+    for nextUserCourse in userCourses:
+        returndict.append({"id":nextUserCourse.course_id, "name":nextUserCourse.course.course, "statistics":nextUserCourse.courseStatistics.outputData()})
+    
+    return json.dumps(returndict)
