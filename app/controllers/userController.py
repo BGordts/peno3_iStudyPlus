@@ -173,3 +173,13 @@ def getDetailedUserCourses():
         returndict.append({"id":nextUserCourse.course_id, "name":nextUserCourse.course.course, "statistics":nextUserCourse.courseStatistics.outputData()})
     
     return json.dumps(returndict)
+
+@app.route('/user/getUser')
+def getUser():
+    userID = request.args['userID']
+    
+    return json.dumps(User.query.get(userID).output())
+
+@app.route('/user/getCurrentUser')
+def getCurrentUser():    
+    return json.dumps(User.getUserFromSession().output())

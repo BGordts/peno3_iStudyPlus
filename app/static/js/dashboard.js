@@ -21,105 +21,22 @@ controller('viewCtrl', function ($scope, $routeParams) {
 	$scope.$emit('routeChange', $routeParams);
 	$scope.appViewState = $routeParams.appviewstate;
 
-	$scope.courselist = [{
-		"data1": [
-            {
-			x: 0.2,
-			y: 0.6
-		},
-            {
-			x: 0.2,
-			y: 0.6
-		},
-            {
-			x: 0.2,
-			y: 0.6
-		}
-    ],
-		"data2": [
-            {
-			x: 0.2,
-			y: 0.3
-		},
-            {
-			x: 0.3,
-			y: 0.10
-		},
-            {
-			x: 0.4,
-			y: 0.12
-		}
-    ]
-	}, {
-		"data1": [
-            {
-			x: 0.2,
-			y: 0.2
-		},
-            {
-			x: 0.3,
-			y: 0.4
-		},
-            {
-			x: 0.4,
-			y: 0.8
-		}
-    ],
-		"data2": [
-            {
-			x: 0.2,
-			y: 0.5
-		},
-            {
-			x: 0.3,
-			y: 0.9
-		},
-            {
-			x: 4,
-			y: 12
-		}
-    ]
-	}, {
-		"data1": [
-            {
-			x: 0.2,
-			y: 0.2
-		},
-            {
-			x: 0.3,
-			y: 0.6
-		},
-            {
-			x: 0.4,
-			y: 0.6
-		}
-    ],
-		"data2": [
-            {
-			x: 0.2,
-			y: 0.5
-		},
-            {
-			x: 0.3,
-			y: 0.10
-		},
-            {
-			x: 0.4,
-			y: 0.12
-		}
-    ]
-	}];
+	$scope.courselist = [{"a": "b"}];
 }).
 
 controller('appCtrl', function ($scope, serverConnectionService) {
 	console.log('rhoeteParams');
-	$scope.viewedProfile = {user: ""};
+	$scope.loggedInProfile = {};
+	$scope.viewedProfile = {};
 
 	$scope.$on('routeChange', function(event, data) {appRouteChange(event, data);});
 	var appRouteChange = function (event, data) {
 		if (data.user != $scope.viewedProfile.user || $scope.viewedProfile.user == undefined) {
+			serverConnectionService.getUser(data.user, function(serverData){
+				$scope.viewedProfile = serverData;
+			});
 			//$scope.viewedProfile = loadProfileData(data.user); //Boris
-			$scope.viewedProfile.user = data.user;
+			//$scope.viewedProfile.user = data.user;
 		}
 		if (data.appviewstate != $scope.appviewstate || $scope.appviewstate == undefined) {
 			$scope.appviewstate = data.appviewstate;
@@ -130,94 +47,7 @@ controller('appCtrl', function ($scope, serverConnectionService) {
 	//	$scope.panelState = "view";
 	//	$scope.sessionType = "live";
 	//	$scope.activityType ="study";
-	$scope.courselist = [{
-		"data1": [
-            {
-			x: 0.2,
-			y: 0.6
-		},
-            {
-			x: 0.2,
-			y: 0.6
-		},
-            {
-			x: 0.2,
-			y: 0.6
-		}
-    ],
-		"data2": [
-            {
-			x: 0.2,
-			y: 0.3
-		},
-            {
-			x: 0.3,
-			y: 0.10
-		},
-            {
-			x: 0.4,
-			y: 0.12
-		}
-    ]
-	}, {
-		"data1": [
-            {
-			x: 0.2,
-			y: 0.2
-		},
-            {
-			x: 0.3,
-			y: 0.4
-		},
-            {
-			x: 0.4,
-			y: 0.8
-		}
-    ],
-		"data2": [
-            {
-			x: 0.2,
-			y: 0.5
-		},
-            {
-			x: 0.3,
-			y: 0.9
-		},
-            {
-			x: 4,
-			y: 12
-		}
-    ]
-	}, {
-		"data1": [
-            {
-			x: 0.2,
-			y: 0.2
-		},
-            {
-			x: 0.3,
-			y: 0.6
-		},
-            {
-			x: 0.4,
-			y: 0.6
-		},
-    ],
-		"data2": [
-            {
-			x: 0.2,
-			y: 0.5
-		},
-            {
-			x: 0.3,
-			y: 0.10
-		},
-            {
-			x: 0.4,
-			y: 0.12
-		}
-    ]
-	}];
+	$scope.courselist = [{"a": "b"}];
 	$scope.sessionlist = [{
 		"data": [1, 2, 3, 4]
 	}, {
@@ -229,148 +59,6 @@ controller('appCtrl', function ($scope, serverConnectionService) {
 	$scope.name = "You";
 	$scope.commonStudents = [{
 		"name": "ik"
-	}, {
-		"name": "jij"
-	}, {
-		"name": "hij"
-	}, {
-		"name": "of zij"
-	}, {
-		"name": "jeroen"
-	}, {
-		"name": "ik"
-	}, {
-		"name": "jij"
-	}, {
-		"name": "hij"
-	}, {
-		"name": "of zij"
-	}, {
-		"name": "jeroen"
-	}, {
-		"name": "ik"
-	}, {
-		"name": "jij"
-	}, {
-		"name": "hij"
-	}, {
-		"name": "of zij"
-	}, {
-		"name": "jeroen"
-	}, {
-		"name": "ik"
-	}, {
-		"name": "jij"
-	}, {
-		"name": "hij"
-	}, {
-		"name": "of zij"
-	}, {
-		"name": "jeroen"
-	}, {
-		"name": "ik"
-	}, {
-		"name": "jij"
-	}, {
-		"name": "hij"
-	}, {
-		"name": "of zij"
-	}, {
-		"name": "jeroen"
-	}, {
-		"name": "ik"
-	}, {
-		"name": "jij"
-	}, {
-		"name": "hij"
-	}, {
-		"name": "of zij"
-	}, {
-		"name": "jeroen"
-	}, {
-		"name": "ik"
-	}, {
-		"name": "jij"
-	}, {
-		"name": "hij"
-	}, {
-		"name": "of zij"
-	}, {
-		"name": "jeroen"
-	}, {
-		"name": "ik"
-	}, {
-		"name": "jij"
-	}, {
-		"name": "hij"
-	}, {
-		"name": "of zij"
-	}, {
-		"name": "jeroen"
-	}, {
-		"name": "ik"
-	}, {
-		"name": "jij"
-	}, {
-		"name": "hij"
-	}, {
-		"name": "of zij"
-	}, {
-		"name": "jeroen"
-	}, {
-		"name": "ik"
-	}, {
-		"name": "jij"
-	}, {
-		"name": "hij"
-	}, {
-		"name": "of zij"
-	}, {
-		"name": "jeroen"
-	}, {
-		"name": "ik"
-	}, {
-		"name": "jij"
-	}, {
-		"name": "hij"
-	}, {
-		"name": "of zij"
-	}, {
-		"name": "jeroen"
-	}, {
-		"name": "ik"
-	}, {
-		"name": "jij"
-	}, {
-		"name": "hij"
-	}, {
-		"name": "of zij"
-	}, {
-		"name": "jeroen"
-	}, {
-		"name": "ik"
-	}, {
-		"name": "jij"
-	}, {
-		"name": "hij"
-	}, {
-		"name": "of zij"
-	}, {
-		"name": "jeroen"
-	}, {
-		"name": "ik"
-	}, {
-		"name": "jij"
-	}, {
-		"name": "hij"
-	}, {
-		"name": "of zij"
-	}, {
-		"name": "jeroen"
-	}, {
-		"name": "ik"
-	}, {
-		"name": "jij"
 	}, {
 		"name": "hij"
 	}, {
@@ -384,7 +72,18 @@ controller('appCtrl', function ($scope, serverConnectionService) {
 			console.log("kaka");
 			$scope.commonStudents = data;
 		})
+		
+		serverConnectionService.getCurrentUser(function(data){
+			$scope.loggedInProfile = data;
+		})
 	}
+})
+
+.controller('coursecontroller', function ($scope, serverConnectionService ) {
+	//Get the courses
+	serverConnectionService.getCourses(1, function(data){
+		$scope.courselist = data;
+	});
 })
 
 /**
@@ -396,6 +95,8 @@ controller('appCtrl', function ($scope, serverConnectionService) {
 	this.URL_GENERAL_USER_STATISTICS = '/statistics/getGeneralUserStatistics';
 	this.URL_GE_CO_STUDENTS = '/user/getCoStudents';
 	this.URL_GET_DETAILED_COURSES = '/user/getDetailedCourses';
+	this.URL_GET_USER = '/user/getUser';
+	this.URL_GET_CURRENT_USER = '/user/getCurrentUser';
 	
 	// Basic method: call the server with the specified url, parameters and callback
 	this.requestData = function(path, parameters, callback){
@@ -409,8 +110,8 @@ controller('appCtrl', function ($scope, serverConnectionService) {
 	}
 	
 	// Get the efficiency for the specified sensor value
-	this.getEfficiencyForSensor = function(sensortype, callback){
-		this.requestData(this.URL_EFFICIENCY_FOR_SENSOR, {'userID':1, 'sensor_type':sensortype}, function(data){
+	this.getEfficiencyForSensor = function(userID, sensortype, callback){
+		this.requestData(this.URL_EFFICIENCY_FOR_SENSOR, {'userID':userID, 'sensor_type':sensortype}, function(data){
 			// Make a nice dictionary with x and y coordinates
 			var linePointArray = new Array();
 			for(var nextDataPoint in data){
@@ -423,6 +124,7 @@ controller('appCtrl', function ($scope, serverConnectionService) {
 	
 	// Get the general information of the user
 	this.getUserInfo = function(userid1, userid2, callback){
+		console.log(userid1 + " jkdfmqskflm " + userid2);
 		this.requestData(this.URL_GENERAL_USER_STATISTICS, {'userID1':userid1, 'userID2':userid2}, function(data){
 			callback(data);
 		})
@@ -441,6 +143,20 @@ controller('appCtrl', function ($scope, serverConnectionService) {
 			callback(data);
 		})
 	}
+	
+	// Get a user
+	this.getUser = function(userid, callback){
+		this.requestData(this.URL_GET_USER, {"userID":userid}, function(data){
+			callback(data);
+		})
+	}
+	
+	// Get the current user
+	this.getCurrentUser = function(callback){
+		this.requestData(this.URL_GET_CURRENT_USER, {}, function(data){
+			callback(data);
+		})
+	}
 })
 
 .directive("dashboardpanel", function(serverConnectionService) {
@@ -456,25 +172,42 @@ controller('appCtrl', function ($scope, serverConnectionService) {
 				}
 				else{
 					//Download the new sensordata
-					serverConnectionService.getEfficiencyForSensor(newVal.id, function(sensorData){
+					serverConnectionService.getEfficiencyForSensor(scope.viewedProfile.userID, newVal.id, function(sensorData){
 						scope.chartdata = sensorData;
 					});
 				}
             });
 			
-			//Get the data to fill in
-			serverConnectionService.getUserInfo(1, 2, function(data){
-				console.log(data);
-				
-				scope.user1 = {};
-				scope.user2 = {};
-				
-				for (var attrname in data.user1) { scope.user1[attrname] = data.user1[attrname]; }
-				
-				if(data.user2){
-					for (var attrname in data.user2) { scope.user2[attrname] = data.user2[attrname]; }
-				}				
-			});	
+			scope.$watch('viewedProfile', function (newVal, oldVal) {
+				//Voeg nog een exta if toe om te zien of het gegeven object neit leeg is :)
+				if(typeof nevVal === "undefined" && newVal == null){
+					console.log("hey fa" + newVal + " " + oldVal);
+				}
+				else{
+					console.log("reetkever:");
+					console.log(newVal);
+					console.log(oldVal);
+					console.log("le user");
+					console.log(scope.viewedProfile.userID + " " + parseInt(scope.viewedProfile.userID));
+					console.log(scope.loggedInProfile.userID + " " + parseInt(scope.loggedInProfile.userID));
+					
+					//Get the data to fill in
+					serverConnectionService.getUserInfo(parseInt(scope.viewedProfile.userID), parseInt(scope.loggedInProfile.userID), function(data){
+						console.log(data);
+						
+						scope.user1 = {};
+						scope.user2 = {};
+						
+						for (var attrname in data.user1) { scope.user1[attrname] = data.user1[attrname]; }
+						
+						if(data.user2){
+							for (var attrname in data.user2) { scope.user2[attrname] = data.user2[attrname]; }
+						}				
+					});	
+				}
+            });
+			
+			
 		},
 		controller: function($scope, $http){
 			$scope.title = "Overzicht"
@@ -509,26 +242,33 @@ controller('appCtrl', function ($scope, serverConnectionService) {
 				}
 				else{
 					//Download the new sensordata
-					serverConnectionService.getEfficiencyForSensor(newVal.id, function(sensorData){
+					serverConnectionService.getEfficiencyForSensor(scope.viewedProfile.userID, newVal.id, function(sensorData){
 						scope.chartdata = sensorData;
 					});
 				}
             });
 			
-			scope.$watch('courselist', function (newVal, oldVal) {
-				if(typeof nevVal === "undefined" && newVal == null){
-					console.log("hey fa" + newVal + " " + oldVal);
-				}
-				else{
-					//Download the new sensordata
-					serverConnectionService.getEfficiencyForSensor(newVal.id, function(sensorData){
-						scope.chartdata = sensorData;
-					});
-				}
-            });
+//			scope.$watch('courselist', function (newVal, oldVal) {
+//				if(typeof nevVal === "undefined" && newVal == null){
+//					console.log("hey fa" + newVal + " " + oldVal);
+//				}
+//				else{
+//					//Download the new sensordata
+//					serverConnectionService.getEfficiencyForSensor(newVal.id, function(sensorData){
+//						scope.chartdata = sensorData;
+//					});
+//				}
+//            });
 		},
-		controller: function($scope, $http, serverConnectionService){
-			$scope.title = "Overzicht"
+		controller: function($scope, $http, serverConnectionService){		
+			console.log($scope.course);
+			
+			$scope.title = $scope.course.name
+			
+			$scope.user1 = $scope.course.statistics;
+			
+			$scope.user2 = $scope.course.statistics;
+			//for (var attrname in $scope.course.statistics) { $scope.user1[attrname] = $scope.course.statistics[attrname]; }
 			
 			$scope.chartdata = {x:0, y:0};
 
@@ -542,12 +282,7 @@ controller('appCtrl', function ($scope, serverConnectionService) {
 
 			$scope.selectedItem = null;
 			
-			//Get the courses
-			serverConnectionService.getCourses(1, function(data){
-				console.log("kjkmldfsjql fjkdf qjsd fjqk fjqk fjK FJQSKFJQS FDLMQJKQSJKLM");
-				console.log(data);
-				$scope.courselist = data;
-			});
+			console.log("hihihi");
 		}
 	}
 })
