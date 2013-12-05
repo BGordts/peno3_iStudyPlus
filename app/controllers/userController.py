@@ -57,7 +57,9 @@ def logout():
     session.pop('userID',None)
     return redirect(url_for('login'))
 
-@app.route('/tracking')
+
+@app.route('/user/tracking')
+@login_required
 def tracking():
     return render_template('pages/tracking_page.html')
 
@@ -97,7 +99,8 @@ def isValidEmail(username):
 def isValidPass(pass1 , pass2):
     return pass1 == pass2
 
-@app.route('/settings' , methods = ['GET','POST'])
+
+@app.route('/user/settings' , methods = ['GET','POST'])
 @login_required
 def changeUserinfo():
     if request.method == 'POST':
