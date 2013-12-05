@@ -57,7 +57,8 @@ def logout():
     session.pop('userID',None)
     return redirect(url_for('login'))
 
-@app.route('/tracking')
+@app.route('/user/tracking')
+@login_required
 def tracking():
     return render_template('pages/tracking_page.html')
 
@@ -96,7 +97,7 @@ def isValidEmail(username):
 def isValidPass(pass1 , pass2):
     return pass1 == pass2
 
-@app.route('/settings' , methods = ['GET','POST'])
+@app.route('/user/settings' , methods = ['GET','POST'])
 @login_required
 def changeUserinfo():
     if request.method == 'POST':
@@ -128,7 +129,7 @@ def changeUserinfo():
             error = 'The passwords you entered did not match'
             errors = errors + {"password" : error}
         if not((errors and True) or False):
-            user.changeSetting( email , lastname , name , pass1)    
+            user.changeSetting( email , lastname , name , pass1)
         return render_template('pages/settings_page.html' , errors = errors)
     else:
         return render_template('pages/settings_page.html')

@@ -157,6 +157,9 @@
 	height: 42px;
 	overflow: hidden;
 	border-bottom: 1px solid #292929;
+	display: block;
+	color: #ccc;
+	text-decoration: none;
 }
 	/*  ///////  */
 	/*  CONTENT  */
@@ -322,6 +325,14 @@
 }
 	.is_content-actions .btn-group .btn {
 	height: 42px;
+	border: none;
+	padding: 12px;
+}
+	.is_content-actions .btn-group .btn:not(.active):not(:hover) {
+	background-color: #ff8417;
+}
+	.is_content-actions .btn-group .btn {
+	background-color: #e66c00;
 }
 	.panel-group {
 	-webkit-box-shadow: 0 !important;
@@ -361,6 +372,10 @@
 	float: left;
 	padding: 7px 15px;
 	margin: 7px -15px;
+	display: none;
+}
+	.compare .is_compare {
+	display: block;
 }
 	.is_no-padding {
 	padding: 0;
@@ -642,4 +657,7 @@
 	fill: white;
 	stroke: steelblue;
 	stroke-width: 1.5px;
+}
+	.btn > input[type="checkbox"] {
+	display: none;
 }
