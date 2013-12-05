@@ -4,10 +4,10 @@
 		<div class="navbar-collapse bs-navbar-collapse collapse is_navbar-btns" role="navigation">
 			<ul class="nav navbar-nav is_border-overlay-mobile">
 				<li class="active">
-					<a href="../tracking">Sessie starten</a>
+					<a href="/user/tracking">Sessie aanmaken</a>
 				</li>
 				<li>
-					<a href="../javascript">Instellingen</a>
+					<a href="/user/settings">Instellingen</a>
 				</li>
 				<li>
 					<a href="/user/logout">Afmelden</a>
@@ -60,12 +60,12 @@
 		</div>
 		<div class="is_sidepanel-student-list-wrap is_follow-navbar">
 			<div class="is_sidepanel-student-list">
-				<div class="is_sidepanel-list-item" ng-repeat="student in commonStudents | filter:searchEntry" ng-cloak ng-click="navigate(student.id)">
+				<a class="is_sidepanel-list-item" ng-repeat="student in commonStudents | filter:searchEntry" ng-cloak ng-href="/app/[[student.name]]/[[appviewstate]]">
 					<div class="is_profile-pic-container">
 						<img class="img-rounded img-responsive" src=""></img>
 					</div>
-					<h4>[[student.name]] [[student.surname]]</h4>
-				</div>
+					<h4>[[student.name]]</h4>
+				</a>
 			</div>
 		</div>
 	</div>

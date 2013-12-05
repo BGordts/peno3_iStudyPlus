@@ -215,9 +215,9 @@
         <div ng-switch-when="view" data-toggle="collapse" data-parent="#accordion" href="[['#session' + $index]]">
             <div class="col-md-8 pull-left row">
                 <h2 class="panel-title">Collapsible Group Item #1</h2>
-                <span class="label label-default">Studie</span>
+                <span class="label label-default">[[data.headerdata.activityType]]</span>
                 <div class="row">
-                    <div class="col-sm-4 input-group" id='datepicker'>dd/mm/jjjj</div>
+                    <div class="col-sm-4 input-group" id="datepicker"'">dd/mm/jjjj</div>
                     <div class="col-sm-4 input-group" id="starttimepicker">hh:mm pm</div>
                     <div class="col-sm-4 input-group" id="endtimepicker">hh:mm pm</div>
                 </div>
@@ -226,7 +226,7 @@
                 <div class="pull-right">
                     <div class="is_square-80">feedback gebruiker</div>
                 </div>
-                <div class="pull-right">
+                <div class="pull-right" ng-if="tracked">
                     <div class="is_square-80">efficiëntiescore</div>
                 </div>
             </div>
@@ -234,54 +234,17 @@
         </div>
         <!--end view mode-->
         <!--start edit mode-->
-        <div ng-switch-when="edit" ng-model="activityType">
-            <div class="col-md-8 pull-left row">
-                <textarea class="form-control" rows="1" placeholder="Beschrijving"></textarea>
-                <div class="btn-group">
-                    <label class="btn btn-primary" ng-class="{active : activityType=='class'}">
-                        <input type="radio" ng-model="activityType" value="class">Les</label>
-                    <label class="btn btn-primary" ng-class="{active : activityType=='study'}">
-                        <input type="radio" ng-model="activityType" value="study">Studie</label>
-                </div>
-                <div class="row">
-                    <div class="col-sm-4 input-group" id='datepicker'>
-                        <input type='text' class="form-control" data-format="DD/MM/YYYY" placeholder="dd/mm/jjjj" />
-                        <span class="input-group-addon">
-                            <span class="glyphicon glyphicon-calendar"></span>
-                        </span>
-                    </div>
-                    <div class="col-sm-4 input-group" id="starttimepicker">
-                        <input type='text' class="form-control" placeholder="hh:mm" />
-                        <span class="input-group-addon">
-                            <span class="glyphicon glyphicon-time"></span>
-                        </span>
-                    </div>
-                    <div class="col-sm-4 input-group" id="endtimepicker">
-                        <input type='text' class="form-control" placeholder="hh:mm" />
-                        <span class="input-group-addon">
-                            <span class="glyphicon glyphicon-time"></span>
-                        </span>
-                    </div>
-                </div>
-            </div>
-            <div class="pull-right">
-                <div class="pull-right">
-                    <div class="is_square-80">
-                        <textarea class="form-control" rows="3" placeholder="Feedback gebruiker"></textarea>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <session-edit ng-switch-when="edit" editdata="data.headerdata"></session-edit>
         <!--end edit mode-->
         <button type="button" class="btn is_edit-btn" ng-click="panelState='edit'">
             <span class="glyphicon glyphicon-pencil"></span>
         </button>
         <!--start right menu-->
         <div class="btn-group-vertical menu-right">
-            <button type="button" class="btn btn-default" ng-click="panelState='view'">
+            <button type="button" class="btn btn-default" ng-click="panelState='view'" ng-disabled="sessionType == 'live'">
                 <span class="glyphicon glyphicon-ok"></span>
             </button>
-            <button type="button" class="btn btn-default">
+            <button type="button" class="btn btn-default" ng-disabled="sessionType == 'live'">
                 <span class="glyphicon glyphicon-remove"></span>
             </button>
             <button type="button" class="btn btn-default">
@@ -293,7 +256,7 @@
     </div>
     <!--end panel heading-->
     <!--start panel body-->
-    <div id="[['session' + $index]]" class="panel-collapse collapse">
+    <div id="[['session' + $index]]" class="panel-collapse collapse" ng-if="tracked">
         <div class="panel-body">
             <div class="row">
                 <div class="col-md-6 is_no-padding">
@@ -411,6 +374,52 @@
     <!--end panel-body-wrap-->
 </div>
 </script>
+<script type="text/ng-template" id="sessionEdit.tpl">
+	<div>
+		<div class="col-md-8 pull-left row">
+                <textarea class="form-control" rows="1" placeholder="Beschrijving"></textarea>
+                <div class="btn-group">
+                    <label class="btn btn-primary" ng-class="{active : editdata.activityType=='class'}">
+                        <input type="radio" ng-model="editdata.activityType" value="class">Les</label>
+                    <label class="btn btn-primary" ng-class="{active : editdata.activityType=='study'}">
+                        <input type="radio" ng-model="editdata.activityType" value="study">Studie</label>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4 input-group" id='datepicker'>
+                        <input type='text' class="form-control" data-format="DD/MM/YYYY" placeholder="dd/mm/jjjj" ng-disabled="sessionType == 'live'"/>
+                        <span class="input-group-btn">
+							<button type="button" class="btn btn-default" ng-disabled="sessionType == 'live'">
+								<span class="glyphicon glyphicon-calendar"></span>
+							</button>
+                    	</span>
+                    </div>
+                    <div class="col-sm-4 input-group" id="starttimepicker">
+                        <input type='text' class="form-control" placeholder="hh:mm" ng-disabled="sessionType == 'live'"/>
+                        <span class="input-group-btn">
+							<button type="button" class="btn btn-default" ng-disabled="sessionType == 'live'">
+								<span class="glyphicon glyphicon-time"></span>
+							</button>
+                    	</span>
+                    </div>
+                    <div class="col-sm-4 input-group" id="endtimepicker">
+                        <input type='text' class="form-control" placeholder="hh:mm" ng-disabled="sessionType == 'live'"/>
+                        <span class="input-group-btn">
+							<button type="button" class="btn btn-default" ng-disabled="sessionType == 'live'">
+								<span class="glyphicon glyphicon-time"></span>
+							</button>
+                    	</span>
+                    </div>
+                </div>
+            </div>
+            <div class="pull-right">
+                <div class="pull-right">
+                    <div class="is_square-80">
+                        <textarea class="form-control" rows="3" placeholder="Feedback gebruiker" ng-disabled="sessionType == 'live'"></textarea>
+                    </div>
+                </div>
+            </div>
+	</div>
+</script>
 <script type="text/ng-template" id="panels.tpl">
 	<div ng-switch="appViewState">
 		<div class="panel-group" id="accordion" ng-switch-when="dashboard">
@@ -467,31 +476,18 @@
 				</li>
 			</ol>
 			<div class="btn-group">
-				<button type="button" class="btn">Action</button>
-				<button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
-					<span class="caret"></span>
-					<span class="sr-only">Toggle Dropdown</span>
-				</button>
-				<ul class="dropdown-menu pull-right" role="menu">
-					<li>
-						<a href="#">Action</a>
-					</li>
-					<li>
-						<a href="#">Another action</a>
-					</li>
-					<li>
-						<a href="#">Something else here</a>
-					</li>
-					<li class="divider"></li>
-					<li>
-						<a href="#">Separated link</a>
-					</li>
-				</ul>
+  				<label class="btn btn-primary" ng-class="{active : compareToggle==true}">
+    				<input type="checkbox" ng-model="compareToggle">Vergelijken
+  				</label>
 			</div>
 		</div>
-		<div class="container" style="max-width:100%">
+		<div class="container" ng-class="{compare: compareToggle}" style="max-width:100%">
 			<ng-view></ng-view>
 		</div>
+<!--
+		<a href="https://twitter.com/share" class="twitter-share-button" data-text="Look how good i can study!" data-count="none" data-hashtags="iStudyPlus">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+-->
 		<div class="is_footer">
 			<div class="container" style="max-width:100%">
 				<img src="{{url_for('static', filename='footer-top.svg')}}"></img>
