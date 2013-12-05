@@ -15,6 +15,7 @@ class User(db.Model):
     name = db.Column(db.String(80), unique=False)
     surname = db.Column(db.String(80), unique=False)
     password = db.Column(db.String(30), unique=False)
+    study = db.Column(db.String(30))
     
     picBig = db.Column(db.String(150000))
     picSmall = db.Column(db.String(5000))
@@ -22,11 +23,13 @@ class User(db.Model):
     userStastics_id = db.Column(db.Integer, db.ForeignKey('statistics.id'))
     statistics = db.relationship('Statistics', backref=db.backref('users', lazy='dynamic'))
     
-    def __init__(self, email, name, surname, password, deviceID=None, profilePic_small = None , profilePic_big = None):
+    def __init__(self, email, name, surname, password, study, deviceID=None, profilePic_small = None , profilePic_big = None ):
         self.email = email
         self.name = name
         self.surname = surname
         self.password = password
+        self.study = study
+        Course.addUserCoursesStudy(self, study)
         Device.registerDevice(deviceID, self)
         newUS = Statistics()
         db.session.add(newUS)
@@ -88,7 +91,7 @@ class User(db.Model):
     def getDevice(self):
         return self.device.first()
     
-    def changeSetting(self , email , name , surname , password):
+    def changeSetting(self , email , name , surname , password,study,deviceID,pic_small,pic_big):
         if not (email == self.email):
             self.email = email
         if not (name == self.name):
@@ -97,6 +100,16 @@ class User(db.Model):
             self.surname = surname
         if not (password == self.password):
             self.password = password
+        if not (study == self.study):
+            self.study = study
+            Course.changeStudy(self,study)
+        device = Device.query.get(deviceID)
+        if not (device == self.device and device == None):
+            Device.registerDevice(deviceID, self)
+        if not (pic_small == self.picSmall):
+            self.picSmall = pic_small
+        if not (pic_big == self.picBig):
+            self.picBig = pic_big
         db.session.commit()
     
     def __repr__(self):

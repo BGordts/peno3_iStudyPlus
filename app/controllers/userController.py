@@ -73,7 +73,8 @@ def register():
         pass2 = request.form['pass2']
         pic_small = request.form['profile-img_small']
         pic_big = request.form['profile-img_large']
-        deviceID = request.form['device-id']
+        deviceID = request.form['deviceID']
+        study = request.form['study']
         if not isValidPass(pass1,pass2):
             error = 'The passwords you entered did not match'
             error.update({"password":error})
@@ -81,7 +82,7 @@ def register():
             error = 'The email-address you entered is already taken'
             error.update({"email":error})
         if not((errors and True) or False):
-            user = User(email, lastname, name, pass1 , pic_small , pic_big)
+            user = User(email, lastname, name, pass1 , study, deviceID, pic_small , pic_big)
             db.session.add(user)
             db.session.commit()
             return redirect(url_for('login'))
@@ -108,7 +109,8 @@ def changeUserinfo():
         oldPass = request.form['oldPass']
         pass1 = request.form['pass1']
         pass2 = request.form['pass2']
-        deviceID = request.form['device-id']
+        deviceID = request.form['deviceID']
+        study = request.form['study']
         pic_small = request.form['profile-img_small']
         pic_big = request.form['profile-img_large']
         if(email == None):
@@ -120,6 +122,11 @@ def changeUserinfo():
         if(oldPass == None):
             pass1 = user.password
             pass2 = user.password
+        if(deviceID == None):
+            deviceID = user.device
+        if(pic_small == None):
+            pic_small = user.picSmall
+            pic_big = user.picBig
         if not isValidEmail:
                 error = 'The email-address you entered is already taken'
         if not(user.password == oldPass):
@@ -128,7 +135,7 @@ def changeUserinfo():
             error = 'The passwords you entered did not match'
             errors = errors + {"password" : error}
         if not((errors and True) or False):
-            user.changeSetting( email , lastname , name , pass1)    
+            user.changeSetting( email , lastname , name , pass1,study,deviceID,pic_small,pic_big)    
         return render_template('pages/settings_page.html' , errors = errors)
     else:
         return render_template('pages/settings_page.html')

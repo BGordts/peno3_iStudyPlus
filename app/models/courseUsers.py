@@ -17,6 +17,7 @@ class Courses_Users(db.Model):
     def __init__(self,user,course):
         self.user = user
         self.course = course
+        from app.models.statistics import Statistics
         courseStatistics = Statistics()
         self.courseStatistics = courseStatistics
         

@@ -33,3 +33,6 @@ from app.models.sensordata import Sensordata
 from app.models.course import Course
 from app.models.courseUsers import Courses_Users
 from app.models.device import Device
+
+from app.models.course import make_courses
+make_courses()

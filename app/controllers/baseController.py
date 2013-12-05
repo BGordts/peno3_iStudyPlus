@@ -7,14 +7,21 @@ from app import db
 
 from app.models.user import User
 
-@app.route('/home')
-def home():
-    user = User.query.get(session["userID"])
-    return render_template('pages/dashboard_profile-info2.html', user=user)
-
-@app.route('/welcome')
+@app.route('/')
 def welcome():
-    return render_template('pages/dashboard.html')
+    try:
+        user = User.query.get(session["userID"])
+        return render_template('pages/dashboard_profile-info2.html', user=user)
+    except KeyError:
+        return render_template('index.html')
+    
+@app.route('/home') 
+def home():
+    try:
+        user = User.query.get(session["userID"])
+        return render_template('pages/dashboard_profile-info2.html', user=user)
+    except KeyError:
+        return redirect(url_for('login'))
 
 @app.route('/app/<path:path>')
 @app.route('/app')
