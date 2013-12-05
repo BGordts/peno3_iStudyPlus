@@ -156,6 +156,18 @@ controller('appCtrl', function ($scope, serverConnectionService) {
 					});
 				}
             });
+			
+			scope.$watch('courselist', function (newVal, oldVal) {
+				if(typeof nevVal === "undefined" && newVal == null){
+					console.log("hey fa" + newVal + " " + oldVal);
+				}
+				else{
+					//Download the new sensordata
+					serverConnectionService.getEfficiencyForSensor(newVal.id, function(sensorData){
+						scope.chartdata = sensorData;
+					});
+				}
+            });
 		},
 		controller: function($scope, $http, serverConnectionService){
 			$scope.title = "Overzicht"
