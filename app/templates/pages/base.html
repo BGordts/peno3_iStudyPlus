@@ -37,7 +37,7 @@
 	    <meta name="msapplication-square150x150logo" content="{{url_for('static', filename='favicons/mstile-150x150.png')}}" />
 	    <meta name="msapplication-square310x310logo" content="{{url_for('static', filename='favicons/mstile-310x310.png')}}" />
 	</head>
-	<body ng-app="app"  ng-controller="appCtrl">
+	<body ng-app="app"  ng-controller="appCtrl" ng-init="init()">
 
 		{% block navigation %}{% endblock %}
 

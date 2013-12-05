@@ -10,7 +10,7 @@ angular.module('app', []).config(function($interpolateProvider){
     }
 ).
 
-controller('appCtrl', function ($scope) {
+controller('appCtrl', function ($scope, serverConnectionService) {
 	$scope.panelState = "view";
 	$scope.sessionType = "live";
 	$scope.activityType ="study";
@@ -19,7 +19,11 @@ controller('appCtrl', function ($scope) {
 	$scope.name = "You";
 	$scope.commonStudents = [{"name":"ik"},{"name":"jij"},{"name":"hij"},{"name":"of zij"},{"name":"jeroen"},{"name":"ik"},{"name":"jij"},{"name":"hij"},{"name":"of zij"},{"name":"jeroen"},{"name":"ik"},{"name":"jij"},{"name":"hij"},{"name":"of zij"},{"name":"jeroen"},{"name":"ik"},{"name":"jij"},{"name":"hij"},{"name":"of zij"},{"name":"jeroen"},{"name":"ik"},{"name":"jij"},{"name":"hij"},{"name":"of zij"},{"name":"jeroen"},{"name":"ik"},{"name":"jij"},{"name":"hij"},{"name":"of zij"},{"name":"jeroen"},{"name":"ik"},{"name":"jij"},{"name":"hij"},{"name":"of zij"},{"name":"jeroen"},{"name":"ik"},{"name":"jij"},{"name":"hij"},{"name":"of zij"},{"name":"jeroen"},{"name":"ik"},{"name":"jij"},{"name":"hij"},{"name":"of zij"},{"name":"jeroen"},{"name":"ik"},{"name":"jij"},{"name":"hij"},{"name":"of zij"},{"name":"jeroen"},{"name":"ik"},{"name":"jij"},{"name":"hij"},{"name":"of zij"},{"name":"jeroen"},{"name":"ik"},{"name":"jij"},{"name":"hij"},{"name":"of zij"},{"name":"jeroen"},{"name":"ik"},{"name":"jij"},{"name":"hij"},{"name":"of zij"},{"name":"jeroen"},{"name":"ik"},{"name":"jij"},{"name":"hij"},{"name":"of zij"},{"name":"jeroen"},{"name":"ik"},{"name":"jij"},{"name":"hij"},{"name":"of zij"},{"name":"jeroen"}]
 
-	
+	$scope.init = function(){		
+		serverConnectionService.getCoStudents(function(data){
+			$scope.commonStudents = data;
+		})
+	}
 })/*.
 
 directive('dashboardPanel', function ($scope) {
@@ -37,6 +41,7 @@ directive('dashboardPanel', function ($scope) {
 .service('serverConnectionService', function($http) {
 	this.URL_EFFICIENCY_FOR_SENSOR = '/statistics/getEfficiencyForSensor';
 	this.URL_GENERAL_USER_STATISTICS = '/statistics/getGeneralUserStatistics';
+	this.URL_GE_CO_STUDENTS = '/user/getCoStudents';
 	
 	// Basic method: call the server with the specified url, parameters and callback
 	this.requestData = function(path, parameters, callback){
@@ -70,8 +75,8 @@ directive('dashboardPanel', function ($scope) {
 	}
 	
 	// Get the costudents
-	this.getCoStudents = function(userid, callback){
-		this.requestData(this.URL_GENERAL_USER_STATISTICS, {'userID':userid}, function(data){
+	this.getCoStudents = function(callback){
+		this.requestData(this.URL_GE_CO_STUDENTS, {}, function(data){
 			callback(data);
 		})
 	}

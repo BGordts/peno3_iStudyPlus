@@ -174,7 +174,7 @@
                                 </option>
                             </select>-->
 
-							<select ng-model="selectedItem" ng-options="item as item.name for item in items"></select>
+							<select ng-model="selectedItem" ng-options="item as (item.name + ' ' + item.surname) for item in items"></select>
 
                             <dynamic-graph chartdata="chartdata"></dynamic-graph>
                             <!--<bar-chart height="300" data="data" hovered="hovered(args)></bar-chart>-->
