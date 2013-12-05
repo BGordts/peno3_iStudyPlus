@@ -116,7 +116,6 @@ class UserSession(db.Model):
         db.session.commit()
 
     def commitSession(self):
-        _log("info", "commiting")
         self.calcSessionTemp()
         self.calcSessionHum()
         self.calcSessionSound()

@@ -35,4 +35,5 @@ from app.models.courseUsers import Courses_Users
 from app.models.device import Device
 
 from app.models.course import make_courses
+db.create_all()
 make_courses()

@@ -68,14 +68,14 @@ class Statistics(db.Model):
             lowestSessions.append(userSession.id)
         else:
             highest = 0
-            i = 1
-            while i <= 5:
-                hSession = UserSession.query.filter_by(id=lowestSessions[highest].id).first()
-                iSession = UserSession.query.filter_by(id=lowestSessions[i].id).first()
+            i = 0
+            while i <= 4:
+                hSession = UserSession.query.filter_by(id=lowestSessions[highest]).first()
+                iSession = UserSession.query.filter_by(id=lowestSessions[i]).first()
                 if(iSession.sessionEff > hSession.sessionEff ):
                     highest = i
                 i = i + 1
-            hSession = UserSession.query.filter_by(id=lowestSessions[highest].id).first()
+            hSession = UserSession.query.filter_by(id=lowestSessions[highest]).first()
             if(hSession.sessionEff > userSession.sessionEff):
                 lowestSessions[highest] = userSession.id
         self.lowestSessions = json.dumps(lowestSessions)
@@ -87,14 +87,14 @@ class Statistics(db.Model):
             highestSessions.append(userSession.id)
         else:
             lowest = 0
-            i = 1
-            while i <= 5:
-                lSession = UserSession.query.filter_by(id=highestSessions[lowest].id).first()
-                iSession = UserSession.query.filter_by(id=highestSessions[i].id).first()
+            i = 0
+            while i <= 4:
+                lSession = UserSession.query.filter_by(id=highestSessions[lowest]).first()
+                iSession = UserSession.query.filter_by(id=highestSessions[i]).first()
                 if(iSession.sessionEff < lSession.sessionEff ):
                     lowest = i
                 i = i + 1
-            lSession = UserSession.query.filter_by(id=highestSessions[lowest].id).first()
+            lSession = UserSession.query.filter_by(id=highestSessions[lowest]).first()
             if(lSession.sessionEff < userSession.sessionEff):
                 highestSessions[lowest] = userSession.id
         self.highestSessions = json.dumps(highestSessions)
