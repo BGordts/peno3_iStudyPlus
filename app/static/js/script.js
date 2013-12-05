@@ -20,13 +20,12 @@ var qry = {
 			qry.out.className = 'happy';
 			// only make it a clickable link if it smells like a url
 			var regexp = /(http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
-//			if (regexp.test(qry.found)) {
-//				qry.out.innerHTML = '<span>Links are not allowed</span>';
-//			} else {
-//				//qry.out.innerHTML = qry.found;
-//				document.getElementById('device-id').value = qry.found;
-//			}
-			document.getElementById('deviceID').value = qry.found;
+			if (regexp.test(qry.found)) {
+				qry.out.innerHTML = '<span>Links are not allowed</span>';
+			} else {
+				//qry.out.innerHTML = qry.found;
+				document.getElementById('device-id').value = qry.found;
+			}
 			/* canvas.style.width = video.clientWidth+'px'; // doesn't work with current nesting used */
 			qry.canvas.style.height = qry.video.clientHeight+'px';
 			qry.container.removeChild(qry.video);
