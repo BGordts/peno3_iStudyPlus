@@ -3,8 +3,71 @@
 	<div class="c">
 		<div class="navbar-collapse bs-navbar-collapse collapse is_navbar-btns" role="navigation">
 			<ul class="nav navbar-nav is_border-overlay-mobile">
-				<li class="active">
-					<a href="/user/tracking">Sessie aanmaken</a>
+				<li class="dropdown active open">
+					<a id="createSession-btn" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">Sessie aanmaken
+						<b class="caret"></b>
+					</a>
+					<div class="dropdown-menu pull-right" role="menu" aria-labelledby="createSession-btn">
+						<div>
+							<div class="col-md-8 pull-left row">
+								<textarea class="form-control" rows="1" placeholder="Beschrijving"></textarea>
+								<div class="btn-group">
+									<label class="btn btn-primary" ng-class="{active : editeddata.activityType=='class'}">
+										<input type="radio" ng-model="editeddata.activityType" value="class">Les</label>
+									<label class="btn btn-primary" ng-class="{active : editeddata.activityType=='study'}">
+										<input type="radio" ng-model="editeddata.activityType" value="study">Studie</label>
+								</div>
+								<div class="row">
+									<div class="col-sm-4 input-group" id="datepicker">
+										<input type="text" class="form-control" data-format="DD/MM/YYYY" placeholder="dd/mm/jjjj" ng-disabled="sessionType == 'live'">
+										<span class="input-group-btn">
+											<button type="button" class="btn btn-default" ng-disabled="sessionType == 'live'" id="[[session.id + " datepicker "]]">
+												<span class="glyphicon glyphicon-calendar"></span>
+											</button>
+										</span>
+									</div>
+									<div class="col-sm-4 input-group" id="starttimepicker">
+										<input type="text" class="form-control" placeholder="hh:mm" ng-disabled="sessionType == 'live'">
+										<span class="input-group-btn">
+											<button type="button" class="btn btn-default" ng-disabled="sessionType == 'live'" id="[[session.id + " starttime "]]">
+												<span class="glyphicon glyphicon-time"></span>
+											</button>
+										</span>
+									</div>
+									<div class="col-sm-4 input-group" id="endtimepicker">
+										<input type="text" class="form-control" placeholder="hh:mm" ng-disabled="sessionType == 'live'">
+										<span class="input-group-btn">
+											<button type="button" class="btn btn-default" ng-disabled="sessionType == 'live'" id="[[session.id + " endtime "]]">
+												<span class="glyphicon glyphicon-time"></span>
+											</button>
+										</span>
+									</div>
+								</div>
+							</div>
+							<div class="pull-right">
+								<div class="pull-right">
+									<div class="is_square-80">
+										<textarea class="form-control" rows="3" placeholder="Feedback gebruiker" ng-disabled="sessionType == 'live'"></textarea>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="btn-group-vertical menu-left">
+							<label class="btn btn-info" ng-class="{active : sessionType=='future'}">
+								<input type="radio" ng-model="sessionType" value="future" class="ng-pristine ng-valid" name="04I">
+								<span class="fi-future"></span>
+							</label>
+							<label class="btn btn-success active" ng-class="{active : sessionType=='live'}">
+								<input type="radio" ng-model="sessionType" value="live" class="ng-pristine ng-valid" name="04J">
+								<span class="glyphicon glyphicon-play"></span>
+							</label>
+							<label class="btn btn-warning" ng-class="{active : sessionType=='past'}">
+								<input type="radio" ng-model="sessionType" value="past" class="ng-pristine ng-valid" name="04K">
+								<span class="fi-history"></span>
+							</label>
+						</div>
+					</div>
+					<div class="clearfix xs-visible"></div>
 				</li>
 				<li>
 					<a href="/user/settings">Instellingen</a>

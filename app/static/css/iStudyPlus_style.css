@@ -681,3 +681,19 @@
 	background-color: #ff8417;
 	color: #fff;
 }
+	#createSession-btn {
+	background-color: #ff8417;
+	color: #fff;
+}
+	#createSession-btn .caret {
+	border-top-color: #fff;
+}
+	#createSession-btn + .dropdown-menu {
+	width: 500px;
+	padding: 10px 10px 10px 50px;
+}
+	@media (max-width: 768px) {
+	#createSession-btn + .dropdown-menu {
+	max-width: 100%;
+	}
+}
