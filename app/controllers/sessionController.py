@@ -2,7 +2,7 @@ from flask import *
 from flask.ext.sqlalchemy import SQLAlchemy
 
 from functools import wraps
-import datetime
+from datetime import datetime
 import time
 from werkzeug._internal import _log
 import json
@@ -66,8 +66,8 @@ def createUntracked():
     courseID = request.args["courseID"]
     course=Course.query.get(courseID)
     feedback_text = request.args["feedback"]
-    start_date = request.args["start_time"]
-    end_date = request.args["start_time"]
+    start_date = datetime.fromtimestamp(request.args["start_time"])
+    end_date = datetime.fromtimestamp(request.args["start_time"])
     user = User.getUserFromSession()
     usession = UserSession(user, course , description, feedback_text, start_date, end_date)
     db.session.add(usession)
@@ -87,11 +87,12 @@ def modifieUSession():
         newDescription = request.args['description']
     if not(newFeedBack_score == request.args['feedback']):
         newFeedBack_score = request.args['feedback']
-    if not(newStart_date == request.args['startDate']):
-        newStart_date = request.args['startDate']
-    if not(newEnd_date == request.args['endDate']):
-        newEnd_date = request.args['endDate']
+    if not(newStart_date == datetime.fromtimestamp(request.args['startDate'])):
+        newStart_date = datetime.fromtimestamp(request.args['startDate'])
+    if not(newEnd_date == datetime.fromtimestamp(request.args['endDate'])):
+        newEnd_date = datetime.fromtimestamp(request.args['endDate'])
     newSession = UserSession(uSession.user, uSession.course, newDescription, newFeedBack_score, newStart_date, newEnd_date)
+    oldId =uSession.id
     db.session.delete(uSession)
     db.session.commit()
     newSession.id = oldId
