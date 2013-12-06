@@ -6,17 +6,22 @@
 
 //alert('boe');
 angular.module('app', ['ngRoute', 'ngTouch']).config(function ($interpolateProvider, $locationProvider, $routeProvider) {
-	$interpolateProvider.startSymbol('[[').endSymbol(']]');
-	$locationProvider.html5Mode(true);
-	$routeProvider.when("/app/:user/:appviewstate", /* /:user/:appviewstate */ {
-		templateUrl: "panels.tpl",
-		//template: "<div>hello world</div>",
-		controller: "viewCtrl"
-	});
+    $interpolateProvider.startSymbol('[[').endSymbol(']]');
+    $locationProvider.html5Mode(true);
+    $routeProvider.when("/app/:user/:appviewstate", /* /:user/:appviewstate */ {
+                    templateUrl: "panels.tpl",
+                    //template: "<div>hello world</div>",
+                    controller: "viewCtrl"
+            })
+            .when("/app/:user/:appviewstate", /* /:user/:appviewstate */ {
+                    templateUrl: "panels.tpl",
+                    //template: "<div>hello world</div>",
+                    controller: "viewCtrl"
+            });
 }).
 
 controller('viewCtrl', function ($scope, $routeParams) {
-	console.log('rhoeteParamiÃ«ters');
+	console.log('rhoeteParamiëters');
 	console.log($routeParams.appviewstate);
 	$scope.$emit('routeChange', $routeParams);
 	$scope.appViewState = $routeParams.appviewstate;
@@ -24,7 +29,7 @@ controller('viewCtrl', function ($scope, $routeParams) {
 	$scope.courselist = [{"a": "b"}];
 }).
 
-controller('appCtrl', function ($scope, serverConnectionService) {
+controller('appCtrl', function ($scope, serverConnectionService, $location) {
 	console.log('rhoeteParams');
 	$scope.loggedInProfile = {};
 	$scope.viewedProfile = {};
@@ -136,13 +141,7 @@ controller('appCtrl', function ($scope, serverConnectionService) {
   },
     ]
  }];
-	$scope.sessionlist = [{
-		"data": [1, 2, 3, 4]
-	}, {
-		"data": [2, 2, 2, 2]
-	}, {
-		"data": [5, 200, 3, 4]
-	}];
+	$scope.sessionlist = null;
 	/*alert('zever');*/
 	$scope.name = "You";
 	$scope.commonStudents = [{
@@ -155,6 +154,8 @@ controller('appCtrl', function ($scope, serverConnectionService) {
 		"name": "jeroen"
 	}]
 	
+	$scope.courseFilter = {selected: ($location.search()).course};
+	
 	$scope.init = function(){		
 		serverConnectionService.getCoStudents(function(data){
 			console.log("kaka");
@@ -165,6 +166,26 @@ controller('appCtrl', function ($scope, serverConnectionService) {
 			$scope.loggedInProfile = data;
 		})
 	}
+	
+	$scope.$watch('viewedProfile', function (newVal, oldVal) {		
+		//Voeg nog een exta if toe om te zien of het gegeven object neit leeg is :)
+		if(undefined == newVal || newVal == null || Object.keys(newVal).length == 0){
+			console.log("hey fa" + newVal + " " + oldVal);
+		}
+		else{								
+			serverConnectionService.getCoursesSimple($scope.viewedProfile.userID, function(data){
+				$scope.courselist = data;
+			});
+		}
+    });
+	
+	$scope.courseFilterFunction = function(session){
+		console.log("van de filter: ");
+		console.log(session);
+		console.log(session.sessionData.course_id == $scope.courseFilter.selected);
+		
+		return session.sessionData.course_id == $scope.courseFilter.selected;
+	}
 })
 
 .controller('coursecontroller', function ($scope, serverConnectionService ) {
@@ -172,6 +193,21 @@ controller('appCtrl', function ($scope, serverConnectionService) {
 	serverConnectionService.getCourses(1, function(data){
 		$scope.courselist = data;
 	});
+})
+
+.controller('sessionscontroller', function ($scope, serverConnectionService ) {	
+	$scope.$watch('viewedProfile', function (newVal, oldVal) {		
+		//Voeg nog een exta if toe om te zien of het gegeven object neit leeg is :)
+		if(undefined == newVal || newVal == null || Object.keys(newVal).length == 0){
+			console.log("hey fa" + newVal + " " + oldVal);
+		}
+		else{								
+			//Get the sessions
+			serverConnectionService.getUserSessions($scope.viewedProfile.userID, function(data){
+				$scope.sessionlist = data;
+			});
+		}
+    });
 })
 
 /**
@@ -185,6 +221,8 @@ controller('appCtrl', function ($scope, serverConnectionService) {
 	this.URL_GET_DETAILED_COURSES = '/user/getDetailedCourses';
 	this.URL_GET_USER = '/user/getUser';
 	this.URL_GET_CURRENT_USER = '/user/getCurrentUser';
+	this.URL_GET_ALL_SESSIONS = '/session/getAllSessions';
+	this.URL_GET_COURSES = '/user/courses';
 	
 	// Basic method: call the server with the specified url, parameters and callback
 	this.requestData = function(path, parameters, callback){
@@ -254,6 +292,13 @@ controller('appCtrl', function ($scope, serverConnectionService) {
 		})
 	}
 	
+	// Get all the courses (simple)
+	this.getCoursesSimple = function(userid, callback){
+		this.requestData(this.URL_GET_COURSES, {"userID":userid}, function(data){
+			callback(data);
+		})
+	}
+	
 	// Get a user
 	this.getUser = function(userid, callback){
 		this.requestData(this.URL_GET_USER, {"userID":userid}, function(data){
@@ -264,6 +309,14 @@ controller('appCtrl', function ($scope, serverConnectionService) {
 	// Get the current user
 	this.getCurrentUser = function(callback){
 		this.requestData(this.URL_GET_CURRENT_USER, {}, function(data){
+			callback(data);
+		})
+	}
+	
+	// Get the sessions of the user
+	this.getUserSessions = function(userID, callback){
+		this.requestData(this.URL_GET_ALL_SESSIONS, {'userID': userID}, function(data){
+			console.log("theeee user id: " + userID);
 			callback(data);
 		})
 	}
@@ -401,61 +454,111 @@ controller('appCtrl', function ($scope, serverConnectionService) {
 })
 
 .directive("sessionpanel", function () {
-	return {
-		restrict: 'EA',
-		replace: true,
-		templateUrl: "dashboard_session-list.tpl",
-		link: function (scope, element, attrs) {
-			scope.$watch('selectedItem', function (newVal, oldVal) {
-				if (typeof nevVal === "undefined" && newVal == null) {
-					console.log("hey fa" + newVal + " " + oldVal);
-					//scope.chartdata = scope.session.data2;
-				} else {
-					console.log("jmjklm")
-					scope.chartdata = scope.session["data" + newVal.id];
-				}
-			});
-		},
-		controller: function ($scope) {
-			$scope.panelState = "view";
-			$scope.sessionType = "live";
-			$scope.data = {headerdata: {activityType: "study"}};
-			$scope.tracked = false;
+        return {
+                restrict: 'EA',
+                replace: true,
+                templateUrl: "dashboard_session-list.tpl",
+                link: function (scope, element, attrs) {
+                        scope.$watch('selectedItem', function (newVal, oldVal) {
+                                if (typeof nevVal === "undefined" && newVal == null) {
+                                        console.log("hey fa" + newVal + " " + oldVal);
+                                        //scope.chartdata = scope.session.data2;
+                                } else {
+                                        console.log("jmjklm")
+                                        scope.chartdata = scope.session["data" + newVal.id];
+                                }
+                        });
+                },
+                controller: function ($scope) { 
+                		console.log("searchfilter: ");
+                		console.log($scope.courseFilter);
+                        $scope.panelState = "view";
+                        $scope.sessionType = "live";
+                        $scope.data = {headerdata: {activityType: "class", sessionID: "5"}}; //Boris
+                        $scope.course = "analyse";
+                        $scope.tracked = false;
+                        
+                        $scope.session.formattedStartDate = moment($scope.session.sessionData.start_date).format('DD/MM/YYYY')
+                        $scope.session.formattedStartTime = moment($scope.session.sessionData.start_date).format('HH:mm')
+                        $scope.session.formattedEndTime = moment($scope.session.sessionData.end_date).format('HH:mm')
 
-			$scope.chartdata = $scope.session.data1;
-			console.log($scope.chartdata)
+                        $scope.chartdata = $scope.session.data1;
+                        console.log($scope.chartdata)
 
-			$scope.items = [
-			                {
-				id: 1,
-				name: 'Foo'
-			},
-			                {
-				id: 2,
-				name: 'Bar'
-			}
-			            ];
+                        $scope.items = [
+                                        {
+                                id: 1,
+                                name: 'Foo'
+                        },
+                                        {
+                                id: 2,
+                                name: 'Bar'
+                        }
+                                    ];
 
-			$scope.selectedItem = null;
-		}
-	}
+                        $scope.selectedItem = null;
+
+                        console.log("djkfqm dfjkqlm dfjkqlmds fjkqlmd fjkqlm dat: ");
+                        console.log($scope.data.headerdata.sessionID);
+
+
+                        $scope.savethis = "saveedit" + $scope.data.headerdata.sessionID;
+                        $scope.saveid = "emitsave" + $scope.data.headerdata.sessionID;
+
+                        console.log($scope.savethis);
+                        $scope.save = function() {
+                    console.log("save");
+                    $scope.$broadcast($scope.savethis);
+                    $scope.panelState='view';
+            };
+            $scope.$on($scope.saveid, function(event, data) {console.log("remit"); console.log(data); $scope.data.headerdata = data})
+            $scope.cancel = function() {
+                                $scope.panelState='view';
+            };
+            $scope.delete = function() {
+                                //Boris
+            };
+                }
+        }
 })
 
 .directive('sessionEdit', function() {
-	return {
-		restrict: 'EA',
-		replace: true,
-		scope: {
-			editdata: "="
-		},
-		templateUrl: "sessionEdit.tpl",
-		link: function (scope, element, attrs) {
+        return {
+                restrict: 'EA',
+                replace: true,
+                scope: {
+                		sessiontype: "=",
+                        editdata: "="
+                },
+                templateUrl: "sessionEdit.tpl",
+                link: function (scope, element, attrs) {
+                        scope.editeddata = angular.copy(scope.editdata);
+                        
+                        scope.lol = "kut" + 'endtime';
+                        
+                        scope.$watch(scope.lol, function (newVal, oldVal) {
+                            console.log(" JAAAAAAA ");
+                    });
+                },
+                controller: function ($scope) {
+                	console.log("ddfjkqlmsfjklm" + $scope);
+                	console.log($scope.editdata.sessionID + 'datepicker');
+//                        document.getElementById($scope.editdata.sessionID + 'datepicker').datetimepicker({
+//			                   pickTime: false
+//			                });
+//			            document.getElementById($scope.editdata.sessionID + 'starttime').datetimepicker({
+//			                    pickDate: false
+//			                });
+//			            document.getElementById($scope.editdata.sessionID + 'endtime').datetimepicker({
+//			                    pickDate: false
+//			                });
 
-		},
-		controller: function ($scope) {
-
-		}
-	}
+                        $scope.broadcastid = "saveedit" + $scope.editdata.sessionID;
+                        $scope.emitid = "emitsave" + $scope.editdata.sessionID;
+                        console.log("console");
+                   $scope.$on($scope.broadcastid, function(event) {$scope.$emit($scope.emitid, $scope.editeddata)}); //$scope.editdata = angular.copy($scope.editeddata);
+                }
+        }
 })
 
 //.controller('mainCtrl', function AppCtrl ($scope) {

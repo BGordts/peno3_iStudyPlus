@@ -158,8 +158,13 @@
 	overflow: hidden;
 	border-bottom: 1px solid #292929;
 	display: block;
-	color: #ccc;
 	text-decoration: none;
+}
+	.is_sidepanel-list-item:hover {
+	text-decoration: none;
+}
+	.is_sidepanel-student-list-wrap .is_sidepanel-list-item {
+	color: #ccc;
 }
 	/*  ///////  */
 	/*  CONTENT  */
@@ -660,4 +665,19 @@
 }
 	.btn > input[type="checkbox"] {
 	display: none;
+}
+	.is_session-btn {
+	height: 100%;
+	background-color: #ddd;
+	position: absolute;
+	top: 0;
+	right: 0;
+	border: none;
+	color: #333;
+	-webkit-transition: background-color 150ms, color 150ms;
+	transition: background-color 150ms, color 150ms;
+}
+	.is_session-btn:hover {
+	background-color: #ff8417;
+	color: #fff;
 }

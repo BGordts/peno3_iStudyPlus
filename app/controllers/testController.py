@@ -18,32 +18,65 @@ from werkzeug._internal import _log
 @app.route('/test/clearAllData')
 def clearDataBase():
     db.drop_all()
+    db.create_all()
+    make_courses()
     return "al de data gewist"
 
 @app.route('/test/createTestUsers')
 def createTestUsers():
-    db.create_all()
-    admin = User('admin@example.com', 'admin', 'admin', 'admin')
-    guest1 = User('test1@example.com', 'test1', 'test1', 'test1')
-    guest2 = User('test2@example.com', 'test2', 'test2', 'test2')
-    guest3 = User('test3@example.com', 'test3', 'test3', 'test3')
-    db.session.add(admin)
-    db.session.add(guest1)
-    db.session.add(guest2)
-    db.session.add(guest3)
+    admin = User('admin@example.com', 'admin', 'admin', 'admin' , "1e Bach Burgerlijk Ingenieur", "adminDev")
+    i = 0;
+    data = admin.email +'\n'
+    while i < 20:
+        str = i.__str__()
+        testUser = User('test'+str+'@example.com','voornaam'+str,'achternaam'+str,'passwoord',"1e Bach Burgerlijk Ingenieur",'device'+str)
+        db.session.add(testUser)
+        data = data + testUser.email +'\n'
+        i = i+1
     db.session.commit()
-    return "4 test users gemaakt, waaronder 1 admin."
+    return data
 
 @app.route('/test/recreateAll')
 def recreateAll():
     clearDataBase()
     createTestUsers()
-    addCourses()
-    
-    return "done"
+    return createTestSessions()
  
-@app.route('/test/createTestSession1')   
+@app.route('/test/createRandomTestSessions')   
 def createTestSessions():
+    x = 0
+    data = ""
+    while x < 5:
+        userID = 1
+        user = User.query.get(userID)
+        courseID = 1
+        course = Course.query.get(courseID)
+        userSession = UserSession(user, course, "Ik ben aan het studeren, dus ik ben een goede student!")
+        randomStart = random.randint(1386264114,1416264114)
+        userSession.start_date = datetime.fromtimestamp(randomStart)
+        randomEnd = randomStart + 20
+        userSession.end_date = datetime.fromtimestamp(randomEnd)
+        db.session.add(userSession)
+        db.session.commit()
+        i = 0
+        while (i < (randomEnd-randomStart)):
+            pauze = random.randint(0,50)
+            if(pauze == 1):
+                pauze = json.loads(userSession.pauses)
+                pauzeTime=random.uniform(0,userSession.getSessionDuration()/5)
+                pauze.append( (i,i+pauzeTime) )
+                userSession.pauses = json.dumps(pauze)
+            generateTestData(userSession,i)
+            i = i+3
+        userSession.setFeedback(random.random())
+        userSession.commitSession()
+        data = data + user.email.__str__() + " heeft een tracked session gedaan voor het vak: " + course.course + ". totale studietijd: " + userSession.getSessionDuration().__str__() + " seconden."
+        data = data + "\n"
+        x = x+1
+    return data
+
+@app.route('/test/createTestSession1')   
+def createTestSessions1():
     admin = User.query.filter_by(email='admin@example.com').first()
     course = Course.query.filter_by(id=1).first()
     
@@ -70,17 +103,14 @@ def createTestSessions():
     endCreateTestData(session2)
     return "ok"
 
-@app.route('/test/addCourses')
-def addCourses():
-    make_courses()
-    i = 1
-    while i < len(Course.getAllCourses()):
-        course = Course.query.filter_by(id=i).first()
-        for u in [1,2,3,4]:
-            user =  User.query.filter_by(id=u).first()
-            course.addUserToCourse(user)
-        i = i + 1
-    return "elke user volgt elk vak"
+def generateTestData(usersession,timestamp):
+    t = datetime.fromtimestamp(timestamp)
+    db.session.add(Sensordata("temperature", usersession, random.randint(10,30), t))
+    db.session.add(Sensordata("humidity", usersession, random.randint(0,100), t))
+    db.session.add(Sensordata("sound", usersession, random.randint(40,80), t))
+    db.session.add(Sensordata("illumination", usersession, random.randint(200,900), t))
+    db.session.add(Sensordata("focus", usersession, bool(random.getrandbits(1)), t))
+    db.session.commit()
 
 @app.route('/test/untrackedSession')
 def createUntrackedSession():
@@ -127,18 +157,7 @@ def deleteUntracked():
     s.deleteUntrackedSession()
     return "untracked deleted"
         
-def endCreateTestData(userSession):
-    userSession.end()
-    userSession.setFeedback(random.random())
-    userSession.commitSession()
 
-def generateTestData(usersession):
-    time.sleep(2)
-    db.session.add(Sensordata("temperature", usersession, random.randint(10,30), datetime.utcnow()))
-    db.session.add(Sensordata("humidity", usersession, random.randint(0,100), datetime.utcnow()))
-    db.session.add(Sensordata("sound", usersession, random.randint(40,80), datetime.utcnow()))
-    db.session.add(Sensordata("illumination", usersession, random.randint(200,900), datetime.utcnow()))
-    db.session.add(Sensordata("focus", usersession, bool(random.getrandbits(1)), datetime.utcnow()))
-    db.session.commit()
+
     
     

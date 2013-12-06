@@ -211,6 +211,9 @@
 			<div class="clearfix xs-visible"></div>
 		</div>
 		<!--end view mode-->
+		<a type="button" class="btn is_session-btn" ng-href="/app/[[viewedProfile.userID]]/sessions?[['course=' + course.id]]"> <!--/app/[[viewedProfile.id]]/sessions?-->
+            <span class="glyphicon glyphicon-list"></span>
+        </a>
 		<div class="clearfix xs-visible"></div>
 	</div>
 	<!--end panel heading-->
@@ -383,6 +386,7 @@
 <script type="text/ng-template" id="dashboard_session-list.tpl">
 
 <div class="panel panel-default">
+[[courseFilter.selected]]
     <!--start panel heading-->
     <div class="row panel-heading" ng-class="{edit : panelState=='edit'}" ng-switch="panelState">
         <!--start left menu-->
@@ -405,19 +409,19 @@
         <!--start view mode-->
         <div ng-switch-when="view" data-toggle="collapse" data-parent="#accordion" href="[['#session' + $index]]">
             <div class="col-md-8 pull-left row">
-                <h2 class="panel-title">Collapsible Group Item #1</h2>
+                <h2 class="panel-title">[[session.sessionData.description]]</h2>
                 <span class="label label-default">[[data.headerdata.activityType]]</span>
                 <div class="row">
-                    <div class="col-sm-4 input-group" id="datepicker"'">dd/mm/jjjj</div>
-                    <div class="col-sm-4 input-group" id="starttimepicker">hh:mm pm</div>
-                    <div class="col-sm-4 input-group" id="endtimepicker">hh:mm pm</div>
+                    <div class="col-sm-4 input-group">[[session.formattedStartDate]]</div>
+                    <div class="col-sm-4 input-group" id="[[session.id + "starttime"]]">[[session.formattedStartTime]]</div>
+                    <div class="col-sm-4 input-group" id="[[session.id + "endtime"]]">[[session.formattedEndTime]]</div>
                 </div>
             </div>
             <div class="pull-right">
                 <div class="pull-right">
-                    <div class="is_square-80">feedback gebruiker</div>
+                    <div class="is_square-80">[[session.sessionData.feedback_score]]</div>
                 </div>
-                <div class="pull-right" ng-if="tracked">
+                <div class="pull-right" ng-if="sessionType=='live'">
                     <div class="is_square-80">efficiëntiescore</div>
                 </div>
             </div>
@@ -425,20 +429,20 @@
         </div>
         <!--end view mode-->
         <!--start edit mode-->
-        <session-edit ng-switch-when="edit" editdata="data.headerdata"></session-edit>
+        <session-edit ng-switch-when="edit" sessiontype="sessionType" editdata="data.headerdata"></session-edit>
         <!--end edit mode-->
         <button type="button" class="btn is_edit-btn" ng-click="panelState='edit'">
             <span class="glyphicon glyphicon-pencil"></span>
         </button>
         <!--start right menu-->
         <div class="btn-group-vertical menu-right">
-            <button type="button" class="btn btn-default" ng-click="panelState='view'" ng-disabled="sessionType == 'live'">
+            <button type="button" class="btn btn-default" ng-click="save()" ng-disabled="sessionType == 'live'">
                 <span class="glyphicon glyphicon-ok"></span>
             </button>
-            <button type="button" class="btn btn-default" ng-disabled="sessionType == 'live'">
+            <button type="button" class="btn btn-default" ng-click="cancel()" ng-disabled="sessionType == 'live'">
                 <span class="glyphicon glyphicon-remove"></span>
             </button>
-            <button type="button" class="btn btn-default">
+            <button type="button" class="btn btn-default" ng-click="delete()" >
                 <span class="glyphicon glyphicon-trash"></span>
             </button>
         </div>
@@ -570,32 +574,32 @@
 		<div class="col-md-8 pull-left row">
                 <textarea class="form-control" rows="1" placeholder="Beschrijving"></textarea>
                 <div class="btn-group">
-                    <label class="btn btn-primary" ng-class="{active : editdata.activityType=='class'}">
-                        <input type="radio" ng-model="editdata.activityType" value="class">Les</label>
-                    <label class="btn btn-primary" ng-class="{active : editdata.activityType=='study'}">
-                        <input type="radio" ng-model="editdata.activityType" value="study">Studie</label>
+                    <label class="btn btn-primary" ng-class="{active : editeddata.activityType=='class'}">
+                        <input type="radio" ng-model="editeddata.activityType" value="class">Les</label>
+                    <label class="btn btn-primary" ng-class="{active : editeddata.activityType=='study'}">
+                        <input type="radio" ng-model="editeddata.activityType" value="study">Studie</label>
                 </div>
                 <div class="row">
-                    <div class="col-sm-4 input-group" id='datepicker'>
-                        <input type='text' class="form-control" data-format="DD/MM/YYYY" placeholder="dd/mm/jjjj" ng-disabled="sessionType == 'live'"/>
+                    <div class="col-sm-4 input-group" >
+                        <input type='text' class="form-control" data-format="DD/MM/YYYY" placeholder="DD/MM/YYYY" ng-disabled="sessiontype == 'live'"/>
                         <span class="input-group-btn">
-							<button type="button" class="btn btn-default" ng-disabled="sessionType == 'live'">
+							<button type="button" class="btn btn-default" ng-disabled="sessiontype == 'live'" id="[[editdata.sessionID + "datepicker"]]">
 								<span class="glyphicon glyphicon-calendar"></span>
 							</button>
                     	</span>
                     </div>
-                    <div class="col-sm-4 input-group" id="starttimepicker">
-                        <input type='text' class="form-control" placeholder="hh:mm" ng-disabled="sessionType == 'live'"/>
+                    <div class="col-sm-4 input-group" >
+                        <input type='text' class="form-control" placeholder="hh:mm" ng-disabled="sessiontype == 'live'"/>
                         <span class="input-group-btn">
-							<button type="button" class="btn btn-default" ng-disabled="sessionType == 'live'">
+							<button type="button" class="btn btn-default" ng-disabled="sessiontype == 'live'" id="[[editdata.sessionID + "starttime"]]">
 								<span class="glyphicon glyphicon-time"></span>
 							</button>
                     	</span>
                     </div>
-                    <div class="col-sm-4 input-group" id="endtimepicker">
-                        <input type='text' class="form-control" placeholder="hh:mm" ng-disabled="sessionType == 'live'"/>
+                    <div class="col-sm-4 input-group" >
+                        <input type='text' class="form-control" placeholder="hh:mm" ng-disabled="sessiontype == 'live'"/>
                         <span class="input-group-btn">
-							<button type="button" class="btn btn-default" ng-disabled="sessionType == 'live'">
+							<button type="button" class="btn btn-default" ng-disabled="sessiontype == 'live'" id="[['kut' + 'endtime']]">
 								<span class="glyphicon glyphicon-time"></span>
 							</button>
                     	</span>
@@ -619,8 +623,8 @@
 		<div class="panel-group" id="accordion" ng-switch-when="courses" ng-controller="coursecontroller">
 			<coursepanel ng-repeat="course in courselist"></coursepanel>
 		</div>
-		<div class="panel-group" id="accordion" ng-switch-when="sessions">
-			<sessionpanel ng-repeat="session in sessionlist"></sessionpanel>
+		<div class="panel-group" id="accordion" ng-switch-when="sessions" ng-controller="sessionscontroller">
+			<sessionpanel ng-repeat="session in sessionlist | filter:courseFilterFunction"></sessionpanel> <!-- Boris (session.sessionData.course_id == courseFilter.selected) -->
 		</div>
 	</div>
 </script>
@@ -670,6 +674,7 @@
   				<label class="btn btn-primary" ng-class="{active : compareToggle==true}">
     				<input type="checkbox" ng-model="compareToggle">Vergelijken
   				</label>
+  				<select ng-model="courseFilter.selected" ng-options="course.id as course.name for course in courselist"></select> <!-- Boris -->
 			</div>
 		</div>
 		<div class="container" ng-class="{compare: compareToggle}" style="max-width:100%">

@@ -1,7 +1,7 @@
 {% extends "pages/navigation.html" %} {% block content %}
 <div class="container">
 	<div class="col-md-4">
-		<form method="POST" action="/user/settings" class="form-signin">
+		<form method="POST" action="/settings" class="form-signin">
 			<h2 class="form-signin-heading"> Verander uw accountgegevens</h2>
 			<input type="Username" class="form-control" placeholder="First name" name="name" required>
 			<input type="Username" class="form-control" placeholder="Last Name" name="lastname" required>
@@ -12,7 +12,7 @@
                 <option>lol2</option> --></select>
 			<select type="text" class="form-control" placeholder="opleiding" required>
 				<option>Opleiding</option>
-				<option>Burgerlijk Ingenieur</option>
+				<option>1 bach Burgerlijk Ingenieur</option>
 			</select>
 			<input type="email" class="form-control" placeholder="Email address" name="email" required>
 			<input type="password" class="form-control" placeholder="Password" name="pass1" required>

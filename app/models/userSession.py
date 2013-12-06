@@ -116,7 +116,6 @@ class UserSession(db.Model):
         db.session.commit()
 
     def commitSession(self):
-        _log("info", "commiting")
         self.calcSessionTemp()
         self.calcSessionHum()
         self.calcSessionSound()
@@ -124,7 +123,7 @@ class UserSession(db.Model):
         self.calcSessionFocus()
         self.calcSessionEff()
         self.user.updateStatistics(self)
-        CUStatistic = Courses_Users.query.filter_by(course=self.course).first().courseStatistics
+        CUStatistic = Courses_Users.query.filter_by(course=self.course,user=self.user).first().courseStatistics
         CUStatistic.updateStatistics(self)
         db.session.commit()
         

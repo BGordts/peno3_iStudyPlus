@@ -194,13 +194,15 @@ Returns all the sessions created by this user
 @app.route('/session/getAllSessions', methods = ['GET'])    
 @login_required
 def getAllSessions():
-    user = User.getUserFromSession()
+    userID = request.args["userID"]
+    
+    user = User.query.get(userID);
     
     _log("info", user.sessions.all().__str__())
     
     #Move to UserSesssion
     returnList = []
     for nextSession in user.sessions.all():        
-        returnList.append({"id":nextSession.id, "data":nextSession.outputSession()})
+        returnList.append({"sessionID":nextSession.id, "sessionData":nextSession.outputSession()})
     
     return json.dumps(returnList)
