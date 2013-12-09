@@ -388,27 +388,15 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
 					});
 				}
             });
-			
-//			scope.$watch('courselist', function (newVal, oldVal) {
-//				if(typeof nevVal === "undefined" && newVal == null){
-//					console.log("hey fa" + newVal + " " + oldVal);
-//				}
-//				else{
-//					//Download the new sensordata
-//					serverConnectionService.getEfficiencyForSensor(newVal.id, function(sensorData){
-//						scope.chartdata = sensorData;
-//					});
-//				}
-//            });
 		},
 		controller: function($scope, $http, serverConnectionService){		
-			$scope.chartdata1 = [{x:0, y:0}, {x:1, y:1} ,{x:2, y:2}, {x:3, y:3}];
-            $scope.chartdata2 = [{x:0, y:0}, {x:1, y:5} ,{x:2, y:10}, {x:3, y:20}];
+			$scope.chartdata1 = [];
+            $scope.chartdata2 = [];
             $scope.chartdata = {
                 "profile": $scope.chartdata1,
                 "compare": $scope.chartdata2
             };
-			
+            $scope.isCollapsed = { value: true };
 			$scope.title = $scope.course.name
 			
 			$scope.user1 = $scope.course.statistics;
