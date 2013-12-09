@@ -1,34 +1,33 @@
 {% extends "pages/site_navigation.html" %} {% block site_content %}
 <div id="myCarousel" class="carousel slide">
-	<!-- Indicators -->
-	<ol class="carousel-indicators">
-		<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-		<li data-target="#myCarousel" data-slide-to="1"></li>
-		<li data-target="#myCarousel" data-slide-to="2"></li>
-	</ol>
-	<!-- Wrapper for slides -->
-	<div class="carousel-inner">
-		<div class="item active">
-			<div class="fill" style="background-image:url({{url_for('static', filename='home_img1.png')}});"></div>
-			<div class="carousel-caption">
-				<h1>Modern Business - A Bootstrap 3 Template</h1>
-			</div>
-		</div>
-		<div class="item">
-			<div class="fill" style="background-image:url('http://placehold.it/1900x1080&text=Slide Two');"></div>
-			<div class="carousel-caption">
-				<h1>Ready to Style &amp; Add Content</h1>
-			</div>
-		</div>
-		<div class="item">
-			<div class="fill" style="background-image:url('http://placehold.it/1900x1080&text=Slide Three');"></div>
-			<div class="carousel-caption">
-				<h1>Additional Layout Options at
-					<a href="http://startbootstrap.com">http://startbootstrap.com</a>
-				</h1>
-			</div>
-		</div>
-	</div>
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                <li data-target="#myCarousel" data-slide-to="1"></li>
+                <li data-target="#myCarousel" data-slide-to="2"></li>
+        </ol>
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner">
+                <div class="item active">
+                        <div class="fill" style="background-image:url({{url_for('static', filename='slide_image.jpg')}});"></div>
+                        <div class="carousel-caption">
+                                <h1>altijd &amp; overal</h1>
+                        </div>
+                </div>
+                <div class="item">
+                        <div class="fill" style="background-image:url({{url_for('static', filename='slide_image1.jpg')}});"></div>
+                        <div class="carousel-caption">
+                                <h1> Begin op tijd</h1>
+                        </div>
+                </div>
+                <div class="item">
+                        <div class="fill" style="background-image:url({{url_for('static', filename='slide_image4.jpg')}});"></div>
+                        <div class="carousel-caption">
+                                <h1> Laat geen enkele minuut onbenut
+                                </h1>
+                        </div>
+                </div>
+        </div>
 	<!-- Controls -->
 	<a class="left carousel-control" href="#myCarousel" data-slide="prev">
 		<span class="icon-prev"></span>
@@ -42,22 +41,21 @@
 		<div class="row">
 			<div class="col-lg-4 col-md-4">
 				<h3>
-					<i class="fa fa-check-circle"></i>Bootstrap 3 Built</h3>
-				<p>The 'Modern Business' website template by
-					<a href="http://startbootstrap.com">Start Bootstrap</a>is built with
-					<a href="http://getbootstrap.com">Bootstrap 3</a>. Make sure you're up to date with latest Bootstrap documentation!</p>
+					<i class="fa fa-check-circle"></i>Marktleider in studiehulp!</h3>
+				<p> Koop vandaag nog uw iStudy+ device en zie uw punten 
+					vanaf morgen vanaf morgen de lucht in schieten!</p>
 			</div>
 			<div class="col-lg-4 col-md-4">
 				<h3>
-					<i class="fa fa-pencil"></i>Ready to Style &amp; Edit</h3>
-				<p>You're ready to go with this pre-built page structure, now all you need to do is add your own custom stylings! You can see some free themes over at
-					<a href="http://bootswatch.com">Bootswatch</a>, or come up with your own using
-					<a href="http://getbootstrap.com/customize/">the Bootstrap customizer</a>!</p>
+					<i class="fa fa-pencil"></i> Eenvoudig in gebruik </h3>
+				<p> Dankzij de zeer gebruiksvriendelijke interface
+                    hoeft u geen tijd te verliezen!</p>
 			</div>
 			<div class="col-lg-4 col-md-4">
 				<h3>
-					<i class="fa fa-folder-open"></i>Many Page Options</h3>
-				<p>This template features many common pages that you might see on a business website. Pages include: about, contact, portfolio variations, blog, pricing, FAQ, 404, services, and general multi-purpose pages.</p>
+					<i class="fa fa-folder-open"></i>Uniek design</h3>
+				<p> Dankzij het mooie design wordt studeren
+                    een plezier voor je ogen!</p>
 			</div>
 		</div>
 		<!-- /.row -->
@@ -69,8 +67,8 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-12">
-				<h2>Modern Business: A Clean &amp; Simple Full Website Template by Start Bootstrap</h2>
-				<p>A complete website design featuring various single page templates from Start Bootstraps library of free HTML starter templates.</p>
+				<h2>iStudy+: Designed and built with all the love in the world by 6 Belgian students </h2>
+				<p> </p>
 				<hr>
 			</div>
 		</div>
@@ -84,21 +82,19 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-6 col-md-6 col-sm-6">
-					<img class="img-responsive" src="http://placehold.it/700x450">
+					<img class="img-responsive" src="{{url_for('static', filename='home_img2.png')}}">
 				</div>
 				<div class="col-lg-6 col-md-6 col-sm-6">
-					<h2>Modern Business Features Include:</h2>
+				<h2> heeft alles in huis wat je nodig hebt </h2>
 					<ul>
-						<li>Bootstrap 3 Framework</li>
-						<li>Mobile Responsive Design</li>
-						<li>Predefined File Paths</li>
-						<li>Working PHP Contact Page</li>
-						<li>Minimal Custom CSS Styles</li>
-						<li>Unstyled: Add Your Own Style and Content!</li>
-						<li>Font-Awesome fonts come pre-installed!</li>
-						<li>100%
-							<strong>Free</strong>to Use</li>
-						<li>Open Source: Use for any project, private or commercial!</li>
+						<li>Hou bij hoelang je studeert</li>
+						<li>Vergelijk met je vrienden</li>
+						<li>unieke QR-code</li>
+						<li>zet aan tot studeren</li>
+						<li>gestructureerd studeren</li>
+						<li>berekent hoe efficiënt je studeert </li>
+						<li>straightforward design</li>
+                        <li>dit alles voor maar 30euro!</li>
 					</ul>
 				</div>
 			</div>
@@ -111,22 +107,22 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-6 col-md-6 col-sm-6">
-					<h2>Modern Business Features Include:</h2>
+					<h2> istudy+ werkt op de meest gebruikte browers,smartphones en tablets </h2>
 					<ul>
-						<li>Bootstrap 3 Framework</li>
+					<li>Safari</li>
 						<li>Mobile Responsive Design</li>
-						<li>Predefined File Paths</li>
-						<li>Working PHP Contact Page</li>
-						<li>Minimal Custom CSS Styles</li>
-						<li>Unstyled: Add Your Own Style and Content!</li>
-						<li>Font-Awesome fonts come pre-installed!</li>
+						<li>Chrome</li>
+						<li>Firefox</li>
+						<li>Internet Explorer</li>
+						<li>Iphone </li>
+						<li>Android</li>
 						<li>100%
 							<strong>Free</strong>to Use</li>
-						<li>Open Source: Use for any project, private or commercial!</li>
+						<li>Opera</li>
 					</ul>
 				</div>
 				<div class="col-lg-6 col-md-6 col-sm-6">
-					<img class="img-responsive" src="http://placehold.it/700x450/ffffff/cccccc">
+					<img class="img-responsive" src="{{url_for('static', filename='Web-Browsers.jpg')}}">
 				</div>
 			</div>
 			<!-- /.row -->
@@ -134,32 +130,6 @@
 		<!-- /.container -->
 	</div>
 	<!-- /.section-colored -->
-	<div class="section">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-6 col-md-6 col-sm-6">
-					<img class="img-responsive" src="http://placehold.it/700x450">
-				</div>
-				<div class="col-lg-6 col-md-6 col-sm-6">
-					<h2>Modern Business Features Include:</h2>
-					<ul>
-						<li>Bootstrap 3 Framework</li>
-						<li>Mobile Responsive Design</li>
-						<li>Predefined File Paths</li>
-						<li>Working PHP Contact Page</li>
-						<li>Minimal Custom CSS Styles</li>
-						<li>Unstyled: Add Your Own Style and Content!</li>
-						<li>Font-Awesome fonts come pre-installed!</li>
-						<li>100%
-							<strong>Free</strong>to Use</li>
-						<li>Open Source: Use for any project, private or commercial!</li>
-					</ul>
-				</div>
-			</div>
-			<!-- /.row -->
-		</div>
-		<!-- /.container -->
-	</div>
 	<!-- /.section -->
 	<div class="container">
 		<hr>
