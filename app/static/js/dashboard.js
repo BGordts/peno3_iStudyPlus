@@ -1,27 +1,24 @@
 /*jslint browser: true*/
 /*global angular, $, jQuery*/
 /*global alert, console*/
-
+/* 'ui.bootstrap.tooltip', 'ui.bootstrap.accordion', 'ui.bootstrap.buttons', 'ui.bootstrap.carousel',  */
 'use strict';
 
 //alert('boe');
-angular.module('app', ['ngRoute', 'ngTouch']).config(function ($interpolateProvider, $locationProvider, $routeProvider) {
+angular.module('app', ['ngRoute', 'ngTouch', 'ui.utils', 'ui.bootstrap.transition', 'ui.bootstrap.collapse', 'ui.bootstrap.dropdownToggle', 'ui.bootstrap.position', 'ui.bootstrap.datepicker', 'ui.bootstrap.timepicker', 'ui.bootstrap.rating']).config(function ($interpolateProvider, $locationProvider, $routeProvider) {
     $interpolateProvider.startSymbol('[[').endSymbol(']]');
     $locationProvider.html5Mode(true);
     $routeProvider.when("/app/:user/:appviewstate", /* /:user/:appviewstate */ {
-                    templateUrl: "panels.tpl",
-                    //template: "<div>hello world</div>",
-                    controller: "viewCtrl"
-            })
-            .when("/app/:user/:appviewstate", /* /:user/:appviewstate */ {
-                    templateUrl: "panels.tpl",
-                    //template: "<div>hello world</div>",
-                    controller: "viewCtrl"
-            })
-            //Solution to make not app links work
-//            .when("/user/:action", /* /:user/:appviewstate */ {
-//            		redirectTo: function(skip, url) {window.location.href = url}
-//            });
+	        templateUrl: "panels.tpl",
+	        //template: "<div>hello world</div>",
+	        controller: "viewCtrl"
+	})
+	.when("/user/:page", /* /:user/:appviewstate */ {
+	        redirectTo: function(params) {
+	                alert('/user/' + params.page);
+	                return '/user/' + params.page;
+	        }
+	});
 })
 
 .controller('viewCtrl', function ($scope, $routeParams) {
@@ -34,7 +31,26 @@ angular.module('app', ['ngRoute', 'ngTouch']).config(function ($interpolateProvi
 }).
 
 controller('appCtrl', function ($scope, serverConnectionService, $location) {
-	console.log('rhoeteParams');
+	// Jeroen
+    $scope.rate = 0;
+    $scope.hoveringOver = function(value) {
+        $scope.overStar = value;
+        $scope.percent = 100 * (value / 10);
+      };
+      $scope.leavereating = function() {
+              $scope.percent = $scope.rate * 10;
+      };
+      // Jeroen
+
+    $scope.isCollapsedTopnav = { value: true };
+    $scope.isCollapsedSidepanel = { value: false };
+    $scope.isTransitioningSidepanel = { value: false,
+        func: function() {
+                $scope.isTransitioningSidepanel.value = true;
+                setTimeout(function(){$scope.isTransitioningSidepanel.value = false;}, 350); }
+    };
+
+	
 	$scope.loggedInProfile = {};
 	$scope.viewedProfile = {};
 
@@ -336,7 +352,7 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
                 "profile": $scope.chartdata1,
                 "compare": $scope.chartdata2
             };
-			
+            $scope.isCollapsed = { value: true };
 			$scope.title = "Overzicht"
 			
 			$scope.items = [
@@ -448,6 +464,7 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
 
                         $scope.chartdata = $scope.session.data1;
                         console.log($scope.chartdata)
+                        $scope.isCollapsed = { value: true };
 
                         $scope.items = [
                                         {
@@ -462,26 +479,23 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
 
                         $scope.selectedItem = null;
 
-                        console.log("djkfqm dfjkqlm dfjkqlmds fjkqlmd fjkqlm dat: ");
-                        console.log($scope.data.headerdata.sessionID);
-
 
                         $scope.savethis = "saveedit" + $scope.data.headerdata.sessionID;
                         $scope.saveid = "emitsave" + $scope.data.headerdata.sessionID;
 
                         console.log($scope.savethis);
                         $scope.save = function() {
-                    console.log("save");
-                    $scope.$broadcast($scope.savethis);
-                    $scope.panelState='view';
-            };
-            $scope.$on($scope.saveid, function(event, data) {console.log("remit"); console.log(data); $scope.data.headerdata = data})
-            $scope.cancel = function() {
-                                $scope.panelState='view';
-            };
-            $scope.delete = function() {
-                                //Boris
-            };
+		                    console.log("save");
+		                    $scope.$broadcast($scope.savethis);
+		                    $scope.panelState='view';
+                        };
+			            $scope.$on($scope.saveid, function(event, data) {console.log("remit"); console.log(data); $scope.data.headerdata = data})
+			            $scope.cancel = function() {
+			                                $scope.panelState='view';
+			            };
+			            $scope.delete = function() {
+			                                //Boris
+			            };
                 }
         }
 })
@@ -491,31 +505,68 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
                 restrict: 'EA',
                 replace: true,
                 scope: {
-                		sessiontype: "=",
+                                sessiontype: "=",
                         editdata: "="
                 },
                 templateUrl: "sessionEdit.tpl",
                 link: function (scope, element, attrs) {
                         scope.editeddata = angular.copy(scope.editdata);
-                        
+
                         scope.lol = "kut" + 'endtime';
-                        
+
                         scope.$watch(scope.lol, function (newVal, oldVal) {
                             console.log(" JAAAAAAA ");
                     });
                 },
-                controller: function ($scope) {
-                	console.log("ddfjkqlmsfjklm" + $scope);
-                	console.log($scope.editdata.sessionID + 'datepicker');
-//                        document.getElementById($scope.editdata.sessionID + 'datepicker').datetimepicker({
-//			                   pickTime: false
-//			                });
-//			            document.getElementById($scope.editdata.sessionID + 'starttime').datetimepicker({
-//			                    pickDate: false
-//			                });
-//			            document.getElementById($scope.editdata.sessionID + 'endtime').datetimepicker({
-//			                    pickDate: false
-//			                });
+                controller: function ($scope, $timeout) {
+                        console.log("ddfjkqlmsfjklm" + $scope);
+                        console.log($scope.editdata.sessionID + 'datepicker');
+
+                        // Datepicker
+                        //
+                                         $scope.today = function() {
+                                                $scope.dt = new Date();
+                                         };
+                                         $scope.today();
+
+                                         $scope.showWeeks = true;
+                                         $scope.toggleWeeks = function () {
+                                                 $scope.showWeeks = ! $scope.showWeeks;
+                                         };
+
+                                         $scope.open = function() {
+                                                $timeout(function() {
+                                                  $scope.opened = true;
+                                                });
+                                          };
+
+                                          $scope.dateOptions = {
+                                                'year-format': "'yy'",
+                                                'starting-day': 1
+                                          };
+                                          //
+                                          // end
+
+                      // Timepicker
+                      //
+                      $scope.myStartTime = new Date();
+                      $scope.openST = function() {
+                                                $timeout(function() {
+                                                  $scope.openedST = true;
+                                                });
+                                          };
+                      $scope.myEndTime = new Date();
+                      $scope.openET = function() {
+                                                $timeout(function() {
+                                                  $scope.openedET = true;
+                                                });
+                                          };
+                                          $scope.hstep = 1;
+                                          $scope.mstep = 5;
+                                          $scope.ismeridian = false;
+                                          //
+                                          // end
+
 
                         $scope.broadcastid = "saveedit" + $scope.editdata.sessionID;
                         $scope.emitid = "emitsave" + $scope.editdata.sessionID;
@@ -535,16 +586,16 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
 //            $scope.barValue = 'None';
 //        })
 .directive('dynamicGraph', function () {
-	var integer = 0;
-	return {
-		restrict: 'E',
-		replace: true,
-		template: '<div class="chart"></div>',
-		scope: {
-			chartdata: '=',
-		},
-		link: function (scope, element, attrs) {
-			d3.custom = {};
+        var integer = 0;
+        return {
+                restrict: 'E',
+                replace: true,
+                template: '<div class="chart"></div>',
+                scope: {
+                        chartdata: '=',
+                },
+                link: function (scope, element, attrs) {
+                        d3.custom = {};
             d3.custom.barChart = function module() {
                 var margin = {
                     top: 20,
@@ -664,29 +715,29 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
                             .transition()
                             .attr("d", line);
 
-                        //        	            var gapSize = x1.rangeBand() / 100 * gap;
-                        //        	            var barW = x1.rangeBand() - gapSize;
-                        //        	            var bars = svg.select('.chart-group')
-                        //        	                .selectAll('.bar')
-                        //        	                .data(_data);
-                        //        	            bars.enter().append('rect')
-                        //        	                .classed('bar', true)
-                        //        	                .attr({x: chartW,
-                        //        	                    width: barW,
-                        //        	                    y: function(d, i) { return y1(d); },
-                        //        	                    height: function(d, i) { return chartH - y1(d); }
-                        //        	                })
-                        //        	                .on('mouseover', dispatch.customHover);
-                        //        	            bars.transition()
-                        //        	                .duration(duration)
-                        //        	                .ease(ease)
-                        //        	                .attr({
-                        //        	                    width: barW,
-                        //        	                    x: function(d, i) { return x1(i) + gapSize/2; },
-                        //        	                    y: function(d, i) { return y1(d); },
-                        //        	                    height: function(d, i) { return chartH - y1(d); }
-                        //        	                });
-                        //        	            bars.exit().transition().style({opacity: 0}).remove();
+                        //                            var gapSize = x1.rangeBand() / 100 * gap;
+                        //                            var barW = x1.rangeBand() - gapSize;
+                        //                            var bars = svg.select('.chart-group')
+                        //                                .selectAll('.bar')
+                        //                                .data(_data);
+                        //                            bars.enter().append('rect')
+                        //                                .classed('bar', true)
+                        //                                .attr({x: chartW,
+                        //                                    width: barW,
+                        //                                    y: function(d, i) { return y1(d); },
+                        //                                    height: function(d, i) { return chartH - y1(d); }
+                        //                                })
+                        //                                .on('mouseover', dispatch.customHover);
+                        //                            bars.transition()
+                        //                                .duration(duration)
+                        //                                .ease(ease)
+                        //                                .attr({
+                        //                                    width: barW,
+                        //                                    x: function(d, i) { return x1(i) + gapSize/2; },
+                        //                                    y: function(d, i) { return y1(d); },
+                        //                                    height: function(d, i) { return chartH - y1(d); }
+                        //                                });
+                        //                            bars.exit().transition().style({opacity: 0}).remove();
 
                         duration = 500;
 
@@ -720,13 +771,48 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
             var chart = d3.custom.barChart();
             var chartEl = d3.select(element[0]);
 
-			scope.$watch('chartdata', function (newVal, oldVal) {
-				chartEl.datum(newVal).call(chart);
-				integer = integer + 1;
-				console.log(integer)
-			});
-		}
-	}
+                        scope.$watch('chartdata', function (newVal, oldVal) {
+                                chartEl.datum(newVal).call(chart);
+                                integer = integer + 1;
+                                console.log(integer)
+                        });
+                }
+        }
 })
 
 //d3.custom = {};
+
+
+var DatepickerDemoCtrl = function ($scope, $timeout) {
+  $scope.today = function() {
+    $scope.dt = new Date();
+  };
+  $scope.today();
+
+  $scope.showWeeks = true;
+  $scope.toggleWeeks = function () {
+    $scope.showWeeks = ! $scope.showWeeks;
+  };
+
+  $scope.open = function() {
+    $timeout(function() {
+      $scope.opened = true;
+    });
+  };
+
+  $scope.dateOptions = {
+    'year-format': "'yy'",
+    'starting-day': 1
+  };
+
+};
+
+
+var TimepickerDemoCtrl = function ($scope) {
+  $scope.mytime = new Date();
+
+  $scope.hstep = 1;
+  $scope.mstep = 5;
+
+  $scope.ismeridian = false;
+};

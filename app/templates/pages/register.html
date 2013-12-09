@@ -1,6 +1,6 @@
 {% extends "pages/site_navigation.html" %} {% block site_content %}
 <div class="container">
-	<form method="POST" action="/user/register" class="form-signin">
+	<form method="POST" action="/user/register" class="siteform">
 		<div class="col-md-4">
 			<h2 class="form-signin-heading">Uw accountgegevens</h2>
 			{% if error%}
@@ -47,9 +47,9 @@
 							<!-- <input type="text" name="device-id" id="device-id"> -->
 						</span>
 					</video>
-					<input type="text" name="deviceID" id="deviceID">
 				</div>
 				<div id="out"></div>
+				<input type="text" name="deviceID" id="deviceID" class="form-control">
 			</div>
 			<!-- Uses https://github.com/LazarSoft/jsqrcode LazarSoft's jsQRcode implementation -->
 			<script src="{{url_for('static', filename='js/lib/qr.min.js')}}"></script>

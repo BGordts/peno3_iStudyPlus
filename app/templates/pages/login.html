@@ -1,7 +1,7 @@
 {% extends "pages/site_navigation.html" %}
 {% block site_content %}
 		<div class="container">
-			<form method="POST" action="/user/login" class="form-signin">
+			<form method="POST" action="/user/login" class="siteform">
 				<h2 class="form-signin-heading">Please sign in</h2>
 				{% if error%}
 				<div class="alert alert-danger">{{error}}</div>				

@@ -24,7 +24,7 @@ var qry = {
 				qry.out.innerHTML = '<span>Links are not allowed</span>';
 			} else {
 				//qry.out.innerHTML = qry.found;
-				document.getElementById('device-id').value = qry.found;
+				document.getElementById('deviceID').value = qry.found;
 			}
 			/* canvas.style.width = video.clientWidth+'px'; // doesn't work with current nesting used */
 			qry.canvas.style.height = qry.video.clientHeight+'px';
