@@ -104,8 +104,9 @@ def isValidPass(pass1 , pass2):
 @app.route('/user/settings' , methods = ['GET','POST'])
 @login_required
 def changeUserinfo():
+    user = User.getUserFromSession()
+    
     if request.method == 'POST':
-        user = User.query.get(request.form['userID'])
         errors = {}
         email = request.form['email']
         name = request.form['name']
@@ -142,7 +143,7 @@ def changeUserinfo():
             user.changeSetting( email , lastname , name , pass1,study,deviceID,pic_small,pic_big)    
         return render_template('pages/settings_page.html' , errors = errors)
     else:
-        return render_template('pages/settings_page.html')
+        return render_template('pages/settings_page.html', user = user)
 
 @app.route('/user/getCoStudents', methods = ['GET'])
 def getCoStudents():
@@ -155,7 +156,7 @@ def getCoStudents():
             if not(nextCourseUser.user in coStudents):
                 coStudents.append(nextCourseUser.user)
     _log("info", "co students: " + coStudents.__str__())
-    return json.dumps([cu.output() for cu in coStudents])
+    return json.dumps([cu.outputSmall() for cu in coStudents])
 
 @app.route('/user/courses')
 def getUserCourses():
@@ -187,8 +188,8 @@ def getDetailedUserCourses():
 def getUser():
     userID = request.args['userID']
     
-    return json.dumps(User.query.get(userID).output())
+    return json.dumps(User.query.get(userID).outputLarge())
 
 @app.route('/user/getCurrentUser')
 def getCurrentUser():    
-    return json.dumps(User.getUserFromSession().output())
+    return json.dumps(User.getUserFromSession().outputLarge())

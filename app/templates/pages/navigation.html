@@ -26,7 +26,7 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a href="../" class="navbar-brand is_border-overlay">
+			<a href="/app/[[loggedInProfile.userID]]/dashboard" class="navbar-brand is_border-overlay">
 				<img src="{{url_for('static', filename='is_logo40.png')}}" alt="iStudy+">
 			</a>
 			<button class="navbar-toggle width pull-right is_toggle is_sidepanel-toggle" type="button" data-toggle="collapse" data-is-target=".is_sidepanel-collapse" data-followers=".is_follow-sidepanel" data-follow-class="is_follow-sidepanel-style">
@@ -41,9 +41,9 @@
 		<div class="is_sidepanel-top">
 			<div class="is_sidepanel-list-item">
 				<div class="is_profile-pic-container">
-					<img class="img-rounded img-responsive" src="https://graph.facebook.com/jacobspelle/picture?width=40&height=40"></img>
+					<img class="img-rounded img-responsive" src="[[loggedInProfile.pic_small]]"></img>
 				</div>
-				<h4>First name Last name</h4>
+				<a href="/app/[[loggedInProfile.userID]]/dashboard"> <h4>[[loggedInProfile.name]] [[loggedInProfile.surname]]</h4></a>
 			</div>
 			<div class="is_sidepanel-list-item">
 				<div class="is_profile-pic-container">
@@ -62,9 +62,9 @@
 			<div class="is_sidepanel-student-list">
 				<a class="is_sidepanel-list-item" ng-repeat="student in commonStudents | filter:searchEntry" ng-cloak ng-href="/app/[[student.userID]]/[[appviewstate]]">
 					<div class="is_profile-pic-container">
-						<img class="img-rounded img-responsive" src=""></img>
+						<img class="img-rounded img-responsive" src="[[student.pic_small]]"></img>
 					</div>
-					<h4>[[student.name]]</h4>
+					<h4>[[student.name]] [[student.surname]]</h4>
 				</a>
 			</div>
 		</div>

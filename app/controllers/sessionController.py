@@ -169,7 +169,6 @@ def postFeedback():
 @login_required
 @endSession_required
 def commitSession():
-    
     #sessionID = request.form['sessionID']
     userSession = UserSession.query.get(request.args['sessionID'])
     _log("info", "mr usersessio: " + userSession.__str__())

@@ -3,18 +3,13 @@
 	<div class="col-md-4">
 		<form method="POST" action="/settings" class="form-signin">
 			<h2 class="form-signin-heading"> Verander uw accountgegevens</h2>
-			<input type="Username" class="form-control" placeholder="First name" name="name" required>
-			<input type="Username" class="form-control" placeholder="Last Name" name="lastname" required>
-			<!-- <select type="Education" class="form-control" placeholder="Institution" required>
-                <option>Institution</option>
-                <option>KULeuven</option>
-                <option>lol</option>
-                <option>lol2</option> --></select>
+			<input type="Username" class="form-control" placeholder="First name" name="name" value="{{user.name}}" required>
+			<input type="Username" class="form-control" placeholder="Last Name" name="lastname" value="{{user.surname}}" required>
 			<select type="text" class="form-control" placeholder="opleiding" required>
 				<option>Opleiding</option>
-				<option>1 bach Burgerlijk Ingenieur</option>
+				<option selected="selected">1 bach Burgerlijk Ingenieur</option>
 			</select>
-			<input type="email" class="form-control" placeholder="Email address" name="email" required>
+			<input type="email" class="form-control" placeholder="Email address" name="email" value="{{user.email}}" required>
 			<input type="password" class="form-control" placeholder="Password" name="pass1" required>
 			<input type="password" class="form-control" placeholder="Confirm password" name="pass2" required>
 
@@ -25,7 +20,7 @@
 		<h2>Verander uw profielfoto</h2>
 		<div class="profile">
 			<div class="profile-avatar-wrap">
-				<img src="{{url_for('static', filename='256.jpg')}}" id="profile-avatar" alt="Image for Profile">
+				<img src="{{user.picBig}}" id="profile-avatar" alt="Image for Profile">
 			</div>
 			<span class="btn btn-default btn-file">Browse
 				<input type="file" id="uploader">

@@ -17,10 +17,14 @@ angular.module('app', ['ngRoute', 'ngTouch']).config(function ($interpolateProvi
                     templateUrl: "panels.tpl",
                     //template: "<div>hello world</div>",
                     controller: "viewCtrl"
-            });
-}).
+            })
+            //Solution to make not app links work
+//            .when("/user/:action", /* /:user/:appviewstate */ {
+//            		redirectTo: function(skip, url) {window.location.href = url}
+//            });
+})
 
-controller('viewCtrl', function ($scope, $routeParams) {
+.controller('viewCtrl', function ($scope, $routeParams) {
 	console.log('rhoeteParamiëters');
 	console.log($routeParams.appviewstate);
 	$scope.$emit('routeChange', $routeParams);
@@ -48,113 +52,14 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
 		}
 	}
 
-
-	//	$scope.panelState = "view";
-	//	$scope.sessionType = "live";
-	//	$scope.activityType ="study";
-	$scope.courselist = [{"a": "b"}];
-	$scope.courselistcompare = [{
-        "data1": [
-            {
-                x: 0.2,
-                y: 0.2
-  },
-            {
-                x: 0.3,
-                y: 0.2
-  },
-            {
-                x: 0.4,
-                y: 0.2
-  },
-    ],
-        "data2": [
-            {
-                x: 0.2,
-                y: 0.3
-  },
-            {
-                x: 0.3,
-                y: 0.10
-  },
-            {
-                x: 0.4,
-                y: 0.12
-  },
-    ]
- }, {
-        "data1": [
-            {
-                x: 0.2,
-                y: 0.2
-  },
-            {
-                x: 0.3,
-                y: 0.4
-  },
-            {
-                x: 0.4,
-                y: 0.8
-  },
-    ],
-        "data2": [
-            {
-                x: 0.2,
-                y: 0.5
-  },
-            {
-                x: 0.3,
-                y: 0.9
-  },
-            {
-                x: 4,
-                y: 12
-  },
-    ]
- }, {
-        "data1": [
-            {
-                x: 0.2,
-                y: 0.2
-  },
-            {
-                x: 0.3,
-                y: 0.6
-  },
-            {
-                x: 0.4,
-                y: 0.6
-  },
-    ],
-        "data2": [
-            {
-                x: 0.2,
-                y: 0.5
-  },
-            {
-                x: 0.3,
-                y: 0.10
-  },
-            {
-                x: 0.4,
-                y: 0.12
-  },
-    ]
- }];
+	$scope.courselist = [];
+	$scope.courselistcompare = [];
 	$scope.sessionlist = null;
-	/*alert('zever');*/
-	$scope.name = "You";
-	$scope.commonStudents = [{
-		"name": "ik"
-	}, {
-		"name": "hij"
-	}, {
-		"name": "of zij"
-	}, {
-		"name": "jeroen"
-	}]
+	$scope.name = "";
+	$scope.commonStudents = [];
 	
-	$scope.courseFilter = {selected: ($location.search()).course};
+	$scope.courseFilter = {selected: parseInt(($location.search()).course)};
+	$scope.protput = ($location.search()).course;
 	
 	$scope.init = function(){		
 		serverConnectionService.getCoStudents(function(data){
@@ -165,6 +70,8 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
 		serverConnectionService.getCurrentUser(function(data){
 			$scope.loggedInProfile = data;
 		})
+		
+		//$scope.courseFilter.selected = parseInt(($location.search()).course);
 	}
 	
 	$scope.$watch('viewedProfile', function (newVal, oldVal) {		
@@ -172,19 +79,28 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
 		if(undefined == newVal || newVal == null || Object.keys(newVal).length == 0){
 			console.log("hey fa" + newVal + " " + oldVal);
 		}
-		else{								
+		else{							
 			serverConnectionService.getCoursesSimple($scope.viewedProfile.userID, function(data){
 				$scope.courselist = data;
+				
+				console.log("lolo");
+				console.log($scope.courseFilter);
 			});
 		}
     });
 	
+	/**
+	 * Filter which sessions are displayed
+	 */
 	$scope.courseFilterFunction = function(session){
-		console.log("van de filter: ");
-		console.log(session);
-		console.log(session.sessionData.course_id == $scope.courseFilter.selected);
-		
-		return session.sessionData.course_id == $scope.courseFilter.selected;
+		console.log("FUCK FUCK FUCK "  + $scope.courseFilter.selected);
+		if(undefined == $scope.courseFilter.selected || isNaN($scope.courseFilter.selected)){
+			//When no sessions are selected, show all the sessions
+			return true;
+		}
+		else{			
+			return session.sessionData.course_id == $scope.courseFilter.selected;
+		}		
 	}
 })
 
@@ -223,6 +139,14 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
 	this.URL_GET_CURRENT_USER = '/user/getCurrentUser';
 	this.URL_GET_ALL_SESSIONS = '/session/getAllSessions';
 	this.URL_GET_COURSES = '/user/courses';
+	this.URL_GET_SENSOR_DATA = '/sensorData/getSensordataForSession';
+	this.URL_SESSION_CREATE_TRACKED = '/session/createTracked';
+	this.URL_SESSION_START = '/session/start';
+	this.URL_SESSION_PAUSE = '/session/pause';
+	this.URL_SESSION_RESUME = '/session/resume';
+	this.URL_SESSION_POST_FEEDBACK = '/session/postFeedback';
+	this.URL_SESSION_END = '/session/end';
+	this.URL_SESSION_COMMIT = '/session/commit';
 	
 	// Basic method: call the server with the specified url, parameters and callback
 	this.requestData = function(path, parameters, callback){
@@ -272,7 +196,6 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
 	
 	// Get the general information of the user
 	this.getUserInfo = function(userid1, userid2, callback){
-		console.log(userid1 + " jkdfmqskflm " + userid2);
 		this.requestData(this.URL_GENERAL_USER_STATISTICS, {'userID1':userid1, 'userID2':userid2}, function(data){
 			callback(data);
 		})
@@ -316,7 +239,55 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
 	// Get the sessions of the user
 	this.getUserSessions = function(userID, callback){
 		this.requestData(this.URL_GET_ALL_SESSIONS, {'userID': userID}, function(data){
-			console.log("theeee user id: " + userID);
+			callback(data);
+		})
+	}
+	
+	// Get all the sensorvalues for a session
+	this.getSensorDataForSession = function(sessionID, callback){
+		this.requestData(this.URL_GET_SENSOR_DATA, {'sessionID': sessionID}, function(data){
+			callback(data);
+		})
+	}
+	
+	this.sessionCreateTracked = function(sessionName, courseID, callback){
+		this.requestData(this.URL_SESSION_CREATE_TRACKED, {'sessionName': sessionName, 'courseID': courseID}, function(data){
+			callback(data);
+		})
+	}
+	
+	this.sessionStart = function(callback){
+		this.requestData(this.URL_SESSION_START, {}, function(data){
+			callback(data);
+		})
+	}
+	
+	this.sessionPause = function(callback){
+		this.requestData(this.URL_SESSION_PAUSE, {}, function(data){
+			callback(data);
+		})
+	}
+	
+	this.sessionResume = function(callback){
+		this.requestData(this.URL_SESSION_RESUME, {}, function(data){
+			callback(data);
+		})
+	}
+	
+	this.sessionPostFeedback = function(sessionID, feedback, callback){
+		this.requestData(this.URL_SESSION_POST_FEEDBACK, {'sessionID': sessionID, 'feedback': feedback}, function(data){
+			callback(data);
+		})
+	}
+	
+	this.sessionEnd = function(sessionID, callback){
+		this.requestData(this.URL_SESSION_END, {'sessionID': sessionID}, function(data){
+			callback(data);
+		})
+	}
+	
+	this.sessionCommit = function(sessionID, callback){
+		this.requestData(this.URL_SESSION_COMMIT, {'sessionID': sessionID}, function(data){
 			callback(data);
 		})
 	}
@@ -329,8 +300,8 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
 		templateUrl: "dashboard_overview.tpl",
 		link: function(scope, element, attrs) {
 			//Watches the selector to change the plotted efficiency/sensor
-			scope.$watch('selectedItem', function (newVal, oldVal) {
-				if(typeof nevVal === "undefined" && newVal == null){
+			scope.$watch('selectedItem', function (newVal, oldVal) {				
+				if(undefined == newVal || newVal == null){
 					console.log("hey fa" + newVal + " " + oldVal);
 				}
 				else{
@@ -343,29 +314,24 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
 			
 			scope.$watch('viewedProfile', function (newVal, oldVal) {
 				//Voeg nog een exta if toe om te zien of het gegeven object neit leeg is :)
-				if(typeof nevVal === "undefined" && newVal == null){
-					console.log("hey fa" + newVal + " " + oldVal);
+				if(undefined == newVal || newVal == null || Object.keys(newVal).length == 0){
+					//Nothing interesting happened
 				}
 				else{					
 					//Get the data to fill in
-					serverConnectionService.getUserInfo(parseInt(scope.viewedProfile.userID), parseInt(scope.loggedInProfile.userID), function(data){
-						console.log(data);
-						
-						scope.user1 = {};
-						scope.user2 = {};
-						
-						for (var attrname in data.user1) { scope.user1[attrname] = data.user1[attrname]; }
-						
+					serverConnectionService.getUserInfo(parseInt(scope.viewedProfile.userID), parseInt(scope.loggedInProfile.userID), function(data){						
+						scope.user1 = data.user1;
+												
 						if(data.user2){
-							for (var attrname in data.user2) { scope.user2[attrname] = data.user2[attrname]; }
+							scope.user2 = data.user2;
 						}				
 					});	
 				}
             });
 		},
 		controller: function($scope, $http){
-			$scope.chartdata1 = [{x:0, y:0}, {x:1, y:1} ,{x:2, y:2}, {x:3, y:3}];
-            $scope.chartdata2 = [{x:0, y:0}, {x:1, y:5} ,{x:2, y:10}, {x:3, y:20}];
+			$scope.chartdata1 = [];
+            $scope.chartdata2 = [];
             $scope.chartdata = {
                 "profile": $scope.chartdata1,
                 "compare": $scope.chartdata2
@@ -373,8 +339,6 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
 			
 			$scope.title = "Overzicht"
 			
-			//$scope.chartdata = {x:0, y:0};
-
 			$scope.items = [
 			                { id: 'temperature', name: 'Temperatuur' },
 			                { id: 'illumination', name: 'Licht' },
@@ -476,7 +440,7 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
                         $scope.sessionType = "live";
                         $scope.data = {headerdata: {activityType: "class", sessionID: "5"}}; //Boris
                         $scope.course = "analyse";
-                        $scope.tracked = false;
+                        $scope.tracked = true;
                         
                         $scope.session.formattedStartDate = moment($scope.session.sessionData.start_date).format('DD/MM/YYYY')
                         $scope.session.formattedStartTime = moment($scope.session.sessionData.start_date).format('HH:mm')

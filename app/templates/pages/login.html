@@ -3,10 +3,14 @@
 		<div class="container">
 			<form method="POST" action="/user/login" class="form-signin">
 				<h2 class="form-signin-heading">Please sign in</h2>
+				{% if error%}
+				<div class="alert alert-danger">{{error}}</div>				
+				{% endif %}
 				<input type="text" class="form-control" placeholder="Email address" name="username" required autofocus>
 				<input type="password" class="form-control" placeholder="Password" name="password" required>
-				<label class="checkbox">
+				<!--<label class="checkbox">
 					<input type="checkbox" value="remember-me">Remember me</label>
+				 -->
 				<button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
 			</form>
 		</div>

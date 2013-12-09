@@ -112,12 +112,25 @@ class User(db.Model):
             self.picBig = pic_big
         db.session.commit()
     
-    def output(self):
+    def outputLarge(self):
         returndict = {}
         
         returndict["userID"] = self.id
         returndict["name"] = self.name
         returndict["surname"] = self.surname
+        returndict["pic_big"] = self.picBig
+        returndict["pic_small"] = self.picSmall
+        returndict["study"] = self.study
+        
+        return returndict
+    
+    def outputSmall(self):
+        returndict = {}
+        
+        returndict["userID"] = self.id
+        returndict["name"] = self.name
+        returndict["surname"] = self.surname
+        returndict["pic_small"] = self.picSmall
         
         return returndict
     

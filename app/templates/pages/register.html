@@ -3,13 +3,12 @@
 	<form method="POST" action="/user/register" class="form-signin">
 		<div class="col-md-4">
 			<h2 class="form-signin-heading">Uw accountgegevens</h2>
+			{% if error%}
+				<div class="alert alert-danger">{{error}}</div>				
+			{% endif %}
+			
 			<input type="Username" class="form-control" placeholder="First name" name="name" required>
 			<input type="Username" class="form-control" placeholder="Last Name" name="lastname" required>
-			<!-- <select type="Education" class="form-control" placeholder="Institution" required>
-                <option>Institution</option>
-                <option>KULeuven</option>
-                <option>lol</option>
-                <option>lol2</option> --></select>
 			<select type="text" class="form-control" placeholder="opleiding" name="study" required>
 				<option>Opleiding</option>
 				<option>1e Bach Burgerlijk Ingenieur</option>
