@@ -117,7 +117,7 @@ def createUntrackedSession():
         course = Course.query.get(courseID)
         randomStart = random.randint(1386264114,1416264114)
         start_date = datetime.fromtimestamp(randomStart)
-        randomEnd = randomStart + random.randint(900,14400)
+        randomEnd = randomStart + 20
         end_date = datetime.fromtimestamp(randomEnd)
         feedback_text = "dat was een lastige studeersessie"
         userSession = UserSession(user, course , "een untracked studeersessie", feedback_text, start_date, end_date)

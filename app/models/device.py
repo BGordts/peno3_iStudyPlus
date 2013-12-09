@@ -10,7 +10,7 @@ from app import db
 
 class Device(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    key = db.Column(db.String(50), unique=True)
+    key = db.Column(db.String(150), unique=True)
     
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     user = db.relationship('User', backref=db.backref('device', lazy='dynamic'))

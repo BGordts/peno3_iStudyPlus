@@ -6,6 +6,7 @@ from app.models.courseUsers import Courses_Users
 
 from aifc import Error
 from sqlalchemy.exc import IntegrityError
+from app.models.statistics import Statistics
 
 COURSES_1BACH_ING = ["analyse1" , "analyse2" , "algebra" , "algemene techniche scheikunde" , "mechanica 1" , "wijsbegeerte" ,
                     "toegepaste thermodynamica" , "materiaalkunde" ,"methodiek van de informatica" , "natuurkunde" , "elektrische netwerken"]
@@ -14,10 +15,23 @@ class Course(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     course = db.Column(db.String(500), unique=True)
-
+    nbSessions = db.Column(db.Integer)
+    
+    userStastics_id = db.Column(db.Integer, db.ForeignKey('statistics.id'))
+    statistics = db.relationship('Statistics', backref=db.backref('course', lazy='dynamic'))
+     
     def __init__(self, course):
+        newUS = Statistics()
+        db.session.add(newUS)
+        self.statistics = newUS
         self.course = course
         self.users = []
+        self.nbSessions = 0
+    
+    def updateStatistic(self, userSession):
+        n = self.nbSessions
+        self.statistics.updateGeneralStatistic(n, userSession)
+        self.nbSessions = n+1
 
     def getAllUsers(self):
         users = []
