@@ -4,10 +4,10 @@
 		<div class="navbar-collapse bs-navbar-collapse collapse is_navbar-btns" role="navigation">
 			<ul class="nav navbar-nav is_border-overlay-mobile">
 				<li>
-					<a href="/user/settings">Instellingen</a>
+					<a href="/user/settings" target="_self">Instellingen</a>
 				</li>
 				<li>
-					<a href="/user/logout">Afmelden</a>
+					<a href="/user/logout" target="_self">Afmelden</a>
 				</li>
 			</ul>
 			<!--<ul class="nav navbar-nav navbar-right is_border-overlay-mobile">
@@ -23,7 +23,7 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a href="../" class="navbar-brand is_border-overlay">
+			<a ng-href="/app/[[loggedInProfile.userID]]/dashboard" class="navbar-brand is_border-overlay" target="_self">
 				<img src="{{url_for('static', filename='is_logo40.png')}}" alt="iStudy+">
 			</a>
 		</div>

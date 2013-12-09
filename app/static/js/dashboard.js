@@ -1,11 +1,11 @@
 /*jslint browser: true*/
 /*global angular, $, jQuery*/
 /*global alert, console*/
-
+/* 'ui.bootstrap.tooltip', 'ui.bootstrap.accordion', 'ui.bootstrap.buttons', 'ui.bootstrap.carousel',  */
 'use strict';
 
 //alert('boe');
-angular.module('app', ['ngRoute', 'ngTouch']).config(function ($interpolateProvider, $locationProvider, $routeProvider) {
+angular.module('app', ['ngRoute', 'ngTouch', 'ui.utils', 'ui.bootstrap.transition', 'ui.bootstrap.collapse', 'ui.bootstrap.dropdownToggle', 'ui.bootstrap.position', 'ui.bootstrap.datepicker', 'ui.bootstrap.timepicker', 'ui.bootstrap.rating']).config(function ($interpolateProvider, $locationProvider, $routeProvider) {
     $interpolateProvider.startSymbol('[[').endSymbol(']]');
     $locationProvider.html5Mode(true);
     $routeProvider.when("/app/:user/:appviewstate", /* /:user/:appviewstate */ {
@@ -13,23 +13,43 @@ angular.module('app', ['ngRoute', 'ngTouch']).config(function ($interpolateProvi
                     //template: "<div>hello world</div>",
                     controller: "viewCtrl"
             })
-            .when("/app/:user/:appviewstate", /* /:user/:appviewstate */ {
-                    templateUrl: "panels.tpl",
-                    //template: "<div>hello world</div>",
-                    controller: "viewCtrl"
+            .when("/user/:page", /* /:user/:appviewstate */ {
+                    redirectTo: function(params) {
+                    	alert('/user/' + params.page);
+                    	return '/user/' + params.page;
+                    }
             });
-}).
+})
 
-controller('viewCtrl', function ($scope, $routeParams) {
-	console.log('rhoeteParamiëters');
+.controller('viewCtrl', function ($scope, $routeParams) {
+	console.log('rhoeteParamiters');
 	console.log($routeParams.appviewstate);
 	$scope.$emit('routeChange', $routeParams);
 	$scope.appViewState = $routeParams.appviewstate;
 
 	$scope.courselist = [{"a": "b"}];
-}).
+})
 
-controller('appCtrl', function ($scope, serverConnectionService, $location) {
+.controller('appCtrl', function ($scope, serverConnectionService, $location) {
+	// Jeroen
+	$scope.rate = 0;
+	$scope.hoveringOver = function(value) {
+    	$scope.overStar = value;
+    	$scope.percent = 100 * (value / 10);
+  	};
+  	$scope.leavereating = function() {
+  		$scope.percent = $scope.rate * 10;
+  	};
+  	// Jeroen
+
+	$scope.isCollapsedTopnav = { value: true };
+	$scope.isCollapsedSidepanel = { value: false };
+	$scope.isTransitioningSidepanel = { value: false,
+										func: function() {
+											$scope.isTransitioningSidepanel.value = true;
+											setTimeout(function(){$scope.isTransitioningSidepanel.value = false;}, 350); }
+									  };
+
 	console.log('rhoeteParams');
 	$scope.loggedInProfile = {};
 	$scope.viewedProfile = {};
@@ -153,37 +173,37 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
 	}, {
 		"name": "jeroen"
 	}]
-	
+
 	$scope.courseFilter = {selected: ($location.search()).course};
-	
-	$scope.init = function(){		
+
+	$scope.init = function(){
 		serverConnectionService.getCoStudents(function(data){
 			console.log("kaka");
 			$scope.commonStudents = data;
 		})
-		
+
 		serverConnectionService.getCurrentUser(function(data){
 			$scope.loggedInProfile = data;
 		})
 	}
-	
-	$scope.$watch('viewedProfile', function (newVal, oldVal) {		
+
+	$scope.$watch('viewedProfile', function (newVal, oldVal) {
 		//Voeg nog een exta if toe om te zien of het gegeven object neit leeg is :)
 		if(undefined == newVal || newVal == null || Object.keys(newVal).length == 0){
 			console.log("hey fa" + newVal + " " + oldVal);
 		}
-		else{								
+		else{
 			serverConnectionService.getCoursesSimple($scope.viewedProfile.userID, function(data){
 				$scope.courselist = data;
 			});
 		}
     });
-	
+
 	$scope.courseFilterFunction = function(session){
-		console.log("van de filter: ");
-		console.log(session);
-		console.log(session.sessionData.course_id == $scope.courseFilter.selected);
-		
+		//console.log("van de filter: ");
+		//console.log(session);
+		//console.log(session.sessionData.course_id == $scope.courseFilter.selected);
+
 		return session.sessionData.course_id == $scope.courseFilter.selected;
 	}
 })
@@ -195,13 +215,13 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
 	});
 })
 
-.controller('sessionscontroller', function ($scope, serverConnectionService ) {	
-	$scope.$watch('viewedProfile', function (newVal, oldVal) {		
+.controller('sessionscontroller', function ($scope, serverConnectionService ) {
+	$scope.$watch('viewedProfile', function (newVal, oldVal) {
 		//Voeg nog een exta if toe om te zien of het gegeven object neit leeg is :)
 		if(undefined == newVal || newVal == null || Object.keys(newVal).length == 0){
 			console.log("hey fa" + newVal + " " + oldVal);
 		}
-		else{								
+		else{
 			//Get the sessions
 			serverConnectionService.getUserSessions($scope.viewedProfile.userID, function(data){
 				$scope.sessionlist = data;
@@ -223,7 +243,7 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
 	this.URL_GET_CURRENT_USER = '/user/getCurrentUser';
 	this.URL_GET_ALL_SESSIONS = '/session/getAllSessions';
 	this.URL_GET_COURSES = '/user/courses';
-	
+
 	// Basic method: call the server with the specified url, parameters and callback
 	this.requestData = function(path, parameters, callback){
 		$http({method: 'GET', url: path, params: parameters})
@@ -234,16 +254,16 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
 	      	    console.log("Error on server request!");
 	  	  });
 	}
-	
+
 	// Get the efficiency for the specified sensor value
 	this.getEfficiencyForSensor = function(userID1, userID2, sensortype, courseID, callback){
 		this.requestData(this.URL_EFFICIENCY_FOR_SENSOR, {'userID1':userID1, 'userID2':userID2, 'sensor_type':sensortype, 'courseID':courseID}, function(data){
 			// Make a nice dictionary with x and y coordinates
 			var linePointArray = {'profile': new Array(), 'compare': new Array()};
-			
+
 			console.log("lolololololo-");
 			console.log(data);
-			
+
 			if(Object.keys(data['1']).length != 0){
 				for(var nextDataPoint in data['1']){
 					linePointArray.profile.push({x: parseFloat(nextDataPoint), y:parseFloat(data['1'][nextDataPoint])})
@@ -259,7 +279,7 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
 			} else{
 				linePointArray.compare = [];
 			}
-			
+
 			//The code to show the graph doesn't work with empty data for linePointArray.profile. Therefore, when linePointArray is empty,
 			//just give it the same data as the other graph so it is 'invisible'
 			if(linePointArray.profile.length == 0){
@@ -269,7 +289,7 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
 			callback(linePointArray);
 			})
 	}
-	
+
 	// Get the general information of the user
 	this.getUserInfo = function(userid1, userid2, callback){
 		console.log(userid1 + " jkdfmqskflm " + userid2);
@@ -277,42 +297,42 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
 			callback(data);
 		})
 	}
-	
+
 	// Get the costudents
 	this.getCoStudents = function(callback){
 		this.requestData(this.URL_GE_CO_STUDENTS, {}, function(data){
 			callback(data);
 		})
 	}
-	
+
 	// Get all the courses
 	this.getCourses = function(userid, callback){
 		this.requestData(this.URL_GET_DETAILED_COURSES, {"userID":userid}, function(data){
 			callback(data);
 		})
 	}
-	
+
 	// Get all the courses (simple)
 	this.getCoursesSimple = function(userid, callback){
 		this.requestData(this.URL_GET_COURSES, {"userID":userid}, function(data){
 			callback(data);
 		})
 	}
-	
+
 	// Get a user
 	this.getUser = function(userid, callback){
 		this.requestData(this.URL_GET_USER, {"userID":userid}, function(data){
 			callback(data);
 		})
 	}
-	
+
 	// Get the current user
 	this.getCurrentUser = function(callback){
 		this.requestData(this.URL_GET_CURRENT_USER, {}, function(data){
 			callback(data);
 		})
 	}
-	
+
 	// Get the sessions of the user
 	this.getUserSessions = function(userID, callback){
 		this.requestData(this.URL_GET_ALL_SESSIONS, {'userID': userID}, function(data){
@@ -340,26 +360,26 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
 					});
 				}
             });
-			
+
 			scope.$watch('viewedProfile', function (newVal, oldVal) {
 				//Voeg nog een exta if toe om te zien of het gegeven object neit leeg is :)
 				if(typeof nevVal === "undefined" && newVal == null){
 					console.log("hey fa" + newVal + " " + oldVal);
 				}
-				else{					
+				else{
 					//Get the data to fill in
 					serverConnectionService.getUserInfo(parseInt(scope.viewedProfile.userID), parseInt(scope.loggedInProfile.userID), function(data){
 						console.log(data);
-						
+
 						scope.user1 = {};
 						scope.user2 = {};
-						
+
 						for (var attrname in data.user1) { scope.user1[attrname] = data.user1[attrname]; }
-						
+
 						if(data.user2){
 							for (var attrname in data.user2) { scope.user2[attrname] = data.user2[attrname]; }
-						}				
-					});	
+						}
+					});
 				}
             });
 		},
@@ -370,9 +390,10 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
                 "profile": $scope.chartdata1,
                 "compare": $scope.chartdata2
             };
-			
+            $scope.isCollapsed = { value: true };
+
 			$scope.title = "Overzicht"
-			
+
 			//$scope.chartdata = {x:0, y:0};
 
 			$scope.items = [
@@ -396,7 +417,7 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
 		link: function(scope, element, attrs) {
 			console.log(element);
 			console.log(attrs);
-			
+
 			scope.$watch('selectedItem', function (newVal, oldVal) {
 				if(typeof nevVal === "undefined" && newVal == null){
 					console.log("hey fa" + newVal + " " + oldVal);
@@ -408,7 +429,7 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
 					});
 				}
             });
-			
+
 //			scope.$watch('courselist', function (newVal, oldVal) {
 //				if(typeof nevVal === "undefined" && newVal == null){
 //					console.log("hey fa" + newVal + " " + oldVal);
@@ -421,21 +442,22 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
 //				}
 //            });
 		},
-		controller: function($scope, $http, serverConnectionService){		
+		controller: function($scope, $http, serverConnectionService){
 			$scope.chartdata1 = [{x:0, y:0}, {x:1, y:1} ,{x:2, y:2}, {x:3, y:3}];
             $scope.chartdata2 = [{x:0, y:0}, {x:1, y:5} ,{x:2, y:10}, {x:3, y:20}];
             $scope.chartdata = {
                 "profile": $scope.chartdata1,
                 "compare": $scope.chartdata2
             };
-			
+            $scope.isCollapsed = { value: true };
+
 			$scope.title = $scope.course.name
-			
+
 			$scope.user1 = $scope.course.statistics;
-			
+
 			$scope.user2 = $scope.course.statistics;
 			//for (var attrname in $scope.course.statistics) { $scope.user1[attrname] = $scope.course.statistics[attrname]; }
-			
+
 			//$scope.chartdata = {x:0, y:0};
 
 			$scope.items = [
@@ -447,7 +469,7 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
 			            ];
 
 			$scope.selectedItem = null;
-			
+
 			console.log("hihihi");
 		}
 	}
@@ -469,7 +491,7 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
                                 }
                         });
                 },
-                controller: function ($scope) { 
+                controller: function ($scope) {
                 		console.log("searchfilter: ");
                 		console.log($scope.courseFilter);
                         $scope.panelState = "view";
@@ -477,13 +499,14 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
                         $scope.data = {headerdata: {activityType: "class", sessionID: "5"}}; //Boris
                         $scope.course = "analyse";
                         $scope.tracked = false;
-                        
+
                         $scope.session.formattedStartDate = moment($scope.session.sessionData.start_date).format('DD/MM/YYYY')
                         $scope.session.formattedStartTime = moment($scope.session.sessionData.start_date).format('HH:mm')
                         $scope.session.formattedEndTime = moment($scope.session.sessionData.end_date).format('HH:mm')
 
                         $scope.chartdata = $scope.session.data1;
-                        console.log($scope.chartdata)
+                        console.log($scope.chartdata);
+                        $scope.isCollapsed = { value: true };
 
                         $scope.items = [
                                         {
@@ -507,17 +530,17 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
 
                         console.log($scope.savethis);
                         $scope.save = function() {
-                    console.log("save");
-                    $scope.$broadcast($scope.savethis);
-                    $scope.panelState='view';
-            };
-            $scope.$on($scope.saveid, function(event, data) {console.log("remit"); console.log(data); $scope.data.headerdata = data})
-            $scope.cancel = function() {
-                                $scope.panelState='view';
-            };
-            $scope.delete = function() {
-                                //Boris
-            };
+							console.log("save");
+							$scope.$broadcast($scope.savethis);
+							$scope.panelState='view';
+						};
+						$scope.$on($scope.saveid, function(event, data) {console.log("remit"); console.log(data); $scope.data.headerdata = data})
+						$scope.cancel = function() {
+							$scope.panelState='view';
+						};
+						$scope.delete = function() {
+							//Boris
+						};
                 }
         }
 })
@@ -533,25 +556,62 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
                 templateUrl: "sessionEdit.tpl",
                 link: function (scope, element, attrs) {
                         scope.editeddata = angular.copy(scope.editdata);
-                        
+
                         scope.lol = "kut" + 'endtime';
-                        
+
                         scope.$watch(scope.lol, function (newVal, oldVal) {
                             console.log(" JAAAAAAA ");
                     });
                 },
-                controller: function ($scope) {
+                controller: function ($scope, $timeout) {
                 	console.log("ddfjkqlmsfjklm" + $scope);
                 	console.log($scope.editdata.sessionID + 'datepicker');
-//                        document.getElementById($scope.editdata.sessionID + 'datepicker').datetimepicker({
-//			                   pickTime: false
-//			                });
-//			            document.getElementById($scope.editdata.sessionID + 'starttime').datetimepicker({
-//			                    pickDate: false
-//			                });
-//			            document.getElementById($scope.editdata.sessionID + 'endtime').datetimepicker({
-//			                    pickDate: false
-//			                });
+
+                	// Datepicker
+                	//
+					 $scope.today = function() {
+						$scope.dt = new Date();
+					 };
+					 $scope.today();
+
+					 $scope.showWeeks = true;
+					 $scope.toggleWeeks = function () {
+					 	$scope.showWeeks = ! $scope.showWeeks;
+					 };
+
+					 $scope.open = function() {
+						$timeout(function() {
+						  $scope.opened = true;
+						});
+					  };
+
+					  $scope.dateOptions = {
+						'year-format': "'yy'",
+						'starting-day': 1
+					  };
+					  //
+					  // end
+
+                      // Timepicker
+                      //
+                      $scope.myStartTime = new Date();
+                      $scope.openST = function() {
+						$timeout(function() {
+						  $scope.openedST = true;
+						});
+					  };
+                      $scope.myEndTime = new Date();
+                      $scope.openET = function() {
+						$timeout(function() {
+						  $scope.openedET = true;
+						});
+					  };
+					  $scope.hstep = 1;
+					  $scope.mstep = 5;
+					  $scope.ismeridian = false;
+					  //
+					  // end
+
 
                         $scope.broadcastid = "saveedit" + $scope.editdata.sessionID;
                         $scope.emitid = "emitsave" + $scope.editdata.sessionID;
@@ -766,3 +826,38 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
 })
 
 //d3.custom = {};
+
+
+var DatepickerDemoCtrl = function ($scope, $timeout) {
+  $scope.today = function() {
+    $scope.dt = new Date();
+  };
+  $scope.today();
+
+  $scope.showWeeks = true;
+  $scope.toggleWeeks = function () {
+    $scope.showWeeks = ! $scope.showWeeks;
+  };
+
+  $scope.open = function() {
+    $timeout(function() {
+      $scope.opened = true;
+    });
+  };
+
+  $scope.dateOptions = {
+    'year-format': "'yy'",
+    'starting-day': 1
+  };
+
+};
+
+
+var TimepickerDemoCtrl = function ($scope) {
+  $scope.mytime = new Date();
+
+  $scope.hstep = 1;
+  $scope.mstep = 5;
+
+  $scope.ismeridian = false;
+};

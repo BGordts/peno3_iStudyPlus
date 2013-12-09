@@ -1,16 +1,196 @@
 {% extends "pages/base.html" %} {% block navigation %}
+<script type="text/ng-template" id="datepicker.tpl">
+	<table style="table-layout:fixed;" class="table-condensed">
+	  <thead class="text-center">
+		<tr>
+		  <th style="overflow: hidden; min-width: 26px">
+			<button type="button" class="btn btn-xs btn-link" ng-click="move(-1)">
+			  <span class="glyphicon glyphicon-chevron-left"> </span>
+			</button>
+		  </th>
+		  <th colspan="[[rows[0].length - 2 + showWeekNumbers]]"><button type="button" class="btn btn-md btn-link btn-block" ng-click="toggleMode()"><strong>[[title]]</strong></button></th></th>
+		  <th style="overflow: hidden; min-width: 26px">
+			<button type="button" class="btn btn-xs btn-link" ng-click="move(1)">
+			  <span class="glyphicon glyphicon-chevron-right"> </span>
+			</button>
+		  </th>
+		</tr>
+		<tr ng-show="labels.length > 0">
+		  <th class="text-center" ng-show="showWeekNumbers" style="overflow: hidden; min-width: 26px"><h6>#</h6></th>
+		  <th class="text-center" ng-repeat="label in labels" style="overflow: hidden; min-width: 26px"><h6>[[label]]</h6></th>
+		</tr>
+	  </thead>
+	  <tbody>
+		<tr ng-repeat="row in rows">
+		  <td ng-show="showWeekNumbers" class="text-center" style="overflow: hidden; min-width: 26px"><button type="button" class="btn btn-xs btn-link" disabled><strong><em>[[ getWeekNumber(row) ]]</em></strong></button></td>
+		  <td ng-repeat="dt in row" class="text-center" style="overflow: hidden; min-width: 26px">
+			<button type="button" style="width: 100%; border: 0px" class="btn btn-xs" ng-class="{'btn-primary': dt.selected, 'btn-default': !dt.selected}" ng-click="select(dt.date)" ng-disabled="dt.disabled"><span ng-class="{'text-muted': dt.secondary && !dt.selected}">[[dt.label]]</span></button>
+		  </td>
+		</tr>
+	  </tbody>
+	</table>
+</script>
+<script type="text/ng-template" id="datepopup.tpl">
+	<ul class="dropdown-menu" ng-style="{display: (isOpen && 'block') || 'none', top: position.top+'px', left: position.left+'px'}" class="dropdown-menu">
+		<li ng-transclude></li>
+		<li class="divider"></li>
+		<li style="padding: 9px;">
+			<span class="btn-group">
+				<button class="btn btn-xs btn-default" ng-click="today()">Today</button>
+				<button class="btn btn-xs btn-info" ng-click="showWeeks = ! showWeeks" ng-class="{active: showWeeks}">Weeks</button>
+				<button class="btn btn-xs btn-danger" ng-click="clear()">Clear</button>
+			</span>
+			<button class="btn btn-xs btn-success pull-right" ng-click="isOpen = false">Close</button>
+		</li>
+	</ul>
+</script>
+<script type="text/ng-template" id="timepicker.tpl">
+	<span>
+		<div class="row">
+			<div class="col-xs-5 text-center pull-left">
+				<a ng-click="incrementHours()" class="btn btn-link pull-right"><i class="glyphicon glyphicon-chevron-up"></i></a>
+			</div>
+			<div class="col-xs-5 text-center pull-right">
+				<a ng-click="incrementMinutes()" class="btn btn-link pull-left"><i class="glyphicon glyphicon-chevron-up"></i></a>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-xs-5 is_no-padding">
+				<div class="form-group" ng-class="{'has-error': invalidHours}" style="margin-bottom: 0px">
+					<input type="text" ng-model="max" ng-change="updateHours()" class="form-control text-center" ng-mousewheel="incrementHours()" ng-readonly="readonlyInput" maxlength="2">
+				</div>
+			</div>
+			<div class="col-xs-7 is_no-padding">
+				<div class="input-group" ng-class="{'has-error': invalidMinutes}">
+					<span class="input-group-addon">:</span>
+					<input type="text" ng-model="min" ng-change="updateMinutes()" class="form-control text-center" ng-readonly="readonlyInput" maxlength="2">
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-xs-5 text-center pull-left">
+				<a ng-click="decrementHours()" class="btn btn-link pull-right"><i class="glyphicon glyphicon-chevron-down"></i></a>
+			</div>
+			<div class="col-xs-5 text-center pull-right">
+				<a ng-click="decrementMinutes()" class="btn btn-link pull-left"><i class="glyphicon glyphicon-chevron-down"></i></a>
+			</div>
+		</div>
+	</span>
+</script>
+<script type="text/ng-template" id="timepopup.tpl">
+	<ul class="dropdown-menu" ng-style="{display: (isOpen && 'block') || 'none', top: position.top+'px', left: position.left+'px'}" class="dropdown-menu">
+		<li ng-transclude></li>
+		<li class="divider"></li>
+		<li style="padding: 9px;">
+			<button class="btn btn-xs btn-success pull-right" ng-click="isOpen = false">Close</button>
+		</li>
+	</ul>
+</script>
+<script type="text/ng-template" id="rating.tpl">
+	<span ng-mouseleave="reset()">
+		<i ng-repeat="r in range track by $index" ng-mouseenter="enter($index + 1)" ng-click="rate($index + 1)" ng-class="$index < val && (r.stateOn || 'glyphicon glyphicon-stop') || (r.stateOff || 'glyphicon glyphicon-minus')"></i>
+		<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="[[val]]" aria-valuemin="0" aria-valuemax="100" style="width: [[val]]%">
+			<span class="sr-only">[[val]]% Complete (success)</span>
+		</div>
+		<p>hallo</p>
+	</span>
+</script>
 <div class="navbar navbar-default navbar-fixed-top is_navbar" role="banner">
 	<div class="c">
-		<div class="navbar-collapse bs-navbar-collapse collapse is_navbar-btns" role="navigation">
+		<div class="navbar-collapse bs-navbar-collapse collapse is_navbar-btns" role="navigation" collapse="isCollapsedTopnav.value">
 			<ul class="nav navbar-nav is_border-overlay-mobile">
-				<li class="active">
-					<a href="/user/tracking">Sessie aanmaken</a>
+				<li class="dropdown active">
+					<a id="createSession-btn" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">Sessie aanmaken
+						<b class="caret"></b>
+					</a>
+					<div class="dropdown-menu pull-right" id="sessionCreator" role="menu" aria-labelledby="createSession-btn">
+						<div>
+							<div class="col-md-8 pull-left row">
+								<select class="form-control" ng-model="createSessionCourse" ng-options="course.id as course.name for course in courselist"></select>
+								<rating value="rate" state-on="'glyphicon glyphicon-stop'" state-off="'glyphicon glyphicon-minus'" max="10" readonly="false" on-hover="hoveringOver(value)" on-leave="leavereating()"></rating>
+    <span class="badge" ng-class="{'badge-warning': percent<30, 'badge-info': percent>=30 && percent<70, 'badge-success': percent>=70}" ng-show="overStar && !isReadonly">[[percent]]%</span>
+<div class="progress">
+			<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="[[percent]]" aria-valuemin="0" aria-valuemax="100" style="width: [[percent]]%">
+				<span class="sr-only">[[percent]]% Complete (success)</span>
+			</div>
+		</div>
+								<textarea class="form-control" rows="1" placeholder="Beschrijving"></textarea>
+								<div class="btn-group">
+									<label class="btn btn-primary" ng-class="{active : editeddata.activityType=='class'}">
+										<input type="radio" ng-model="editeddata.activityType" value="class">Les</label>
+									<label class="btn btn-primary" ng-class="{active : editeddata.activityType=='study'}">
+										<input type="radio" ng-model="editeddata.activityType" value="study">Studie</label>
+								</div>
+								<div class="row">
+									<div class="col-sm-4 input-group" id="datepicker" ng-controller="DatepickerDemoCtrl">
+										<input type="text" class="form-control" datepicker-popup="dd/MM/yyyy" ng-model="dt" is-open="opened" min="minDate" max="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Sluiten" ng-disabled="sessionType == 'live'"/>
+										<!--<input type="text" class="form-control" data-format="DD/MM/YYYY" placeholder="dd/mm/jjjj" ng-disabled="sessionType == 'live'">-->
+										<span class="input-group-btn">
+											<button type="button" class="btn btn-default" ng-click="open()" ng-disabled="sessionType == 'live'" id="[[session.id + 'datepicker']]">
+												<span class="glyphicon glyphicon-calendar"></span>
+											</button>
+										</span>
+									</div>
+									<div class="col-sm-4 input-group" id="starttimepicker">
+										<input type="text" class="form-control" placeholder="hh:mm" ng-disabled="sessionType == 'live'">
+										<span class="dropdown input-group-btn" ng-class="{open : pickStartTime}">
+											<button type="button" class="dropdown-toggle btn btn-default" ng-disabled="sessionType == 'live'" id="[[session.id + 'starttime']]">
+												<span class="glyphicon glyphicon-time"></span>
+											</button>
+											<div class="dropdown-menu">
+												<div ng-model="mytime" ng-change="changed()" class="well well-small" style="display:inline-block;">
+													<timepicker hour-step="1" minute-step="5" show-meridian="false"></timepicker>
+												</div>
+											</div>
+										</span>
+									</div>
+									<div class="col-sm-4 input-group" id="endtimepicker">
+										<input type="text" class="form-control" placeholder="hh:mm" ng-disabled="sessionType == 'live'">
+										<span class="dropdown input-group-btn" ng-class="{open : pickEndTime}">
+											<button type="button" class="dropdown-toggle btn btn-default" ng-disabled="sessionType == 'live'" id="[[session.id + 'endtime']]">
+												<span class="glyphicon glyphicon-time"></span>
+											</button>
+											<div class="dropdown-menu">
+												<div ng-model="mytime" ng-change="changed()" class="well well-small" style="display:inline-block;">
+													<timepicker hour-step="1" minute-step="5" show-meridian="false"></timepicker>
+												</div>
+											</div>
+										</span>
+									</div>
+								</div>
+							</div>
+							<div class="pull-right">
+								<div class="pull-right">
+									<div class="is_square-80">
+										<textarea class="form-control" rows="3" placeholder="Feedback gebruiker" ng-disabled="sessionType == 'live'"></textarea>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="btn-group-vertical menu-left">
+							<label class="btn btn-info" ng-class="{active : sessionType=='future'}">
+								<input type="radio" ng-model="sessionType" value="future" class="ng-pristine ng-valid" name="04I">
+								<span class="fi-future"></span>
+							</label>
+							<label class="btn btn-success active" ng-class="{active : sessionType=='live'}">
+								<input type="radio" ng-model="sessionType" value="live" class="ng-pristine ng-valid" name="04J">
+								<span class="glyphicon glyphicon-play"></span>
+							</label>
+							<label class="btn btn-warning" ng-class="{active : sessionType=='past'}">
+								<input type="radio" ng-model="sessionType" value="past" class="ng-pristine ng-valid" name="04K">
+								<span class="fi-history"></span>
+							</label>
+						</div>
+					</div>
+					<div class="clearfix xs-visible"></div>
 				</li>
 				<li>
-					<a href="/user/settings">Instellingen</a>
+					<a href="/user/settings" target="_self">Instellingen</a>
 				</li>
 				<li>
-					<a href="/user/logout">Afmelden</a>
+					<a href="/user/logout" target="_self">Afmelden</a>
 				</li>
 			</ul>
 			<!--<ul class="nav navbar-nav navbar-right is_border-overlay-mobile">
@@ -20,37 +200,37 @@
 </ul>-->
 		</div>
 		<div class="nav navbar-left">
-			<button class="navbar-toggle is_toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse" data-followers=".is_follow-navbar" data-follow-class="is_follow-navbar-style">
+			<button class="navbar-toggle is_toggle" type="button" ng-click="isCollapsedTopnav.value = !isCollapsedTopnav.value" data-toggle="collapse" data-target=".bs-navbar-collapse" data-followers=".is_follow_navbar" data-follow-class="is_follow_navbar_style">
 				<span class="sr-only">Toggle navigation</span>
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a href="../" class="navbar-brand is_border-overlay">
+			<a ng-href="/app/[[loggedInProfile.userID]]/dashboard" class="navbar-brand is_border-overlay">
 				<img src="{{url_for('static', filename='is_logo40.png')}}" alt="iStudy+">
 			</a>
-			<button class="navbar-toggle width pull-right is_toggle is_sidepanel-toggle" type="button" data-toggle="collapse" data-is-target=".is_sidepanel-collapse" data-followers=".is_follow-sidepanel" data-follow-class="is_follow-sidepanel-style">
+			<button class="navbar-toggle width pull-right is_toggle is_sidepanel-toggle" type="button" ng-click="isCollapsedSidepanel.value = !isCollapsedSidepanel.value; isTransitioningSidepanel.func()" data-toggle="collapse" data-is-target=".is_sidepanel-collapse" data-followers=".is_follow_sidepanel" data-follow-class="is_follow_sidepanel_style">
 				<span class="sr-only">Toggle navigation</span>
 				<i class="fi-results-demographics large"></i>
 			</button>
 		</div>
 	</div>
 </div>
-<div class="is_sidepanel-collapse is_sidepanel is_follow-navbar">
+<div class="is_sidepanel-collapse is_sidepanel is_follow_navbar" ng-class="{is_follow_navbar_style : !isCollapsedTopnav.value, is_off : isCollapsedSidepanel.value}">
 	<div class="is_sidepanel-content">
 		<div class="is_sidepanel-top">
-			<div class="is_sidepanel-list-item">
+			<a ng-href="/app/[[loggedInProfile.userID]]/dashboard" class="is_sidepanel-list-item">
 				<div class="is_profile-pic-container">
 					<img class="img-rounded img-responsive" src="https://graph.facebook.com/jacobspelle/picture?width=40&height=40"></img>
 				</div>
 				<h4>First name Last name</h4>
-			</div>
-			<div class="is_sidepanel-list-item">
+			</a>
+			<a ng-href="/app/[[Boris]]/dashboard" class="is_sidepanel-list-item">
 				<div class="is_profile-pic-container">
 					<img class="img-rounded img-responsive" src="https://graph.facebook.com/jacobspelle/picture?width=40&height=40"></img>
 				</div>
 				<h4>Student met de pet</h4>
-			</div>
+			</a>
 		</div>
 		<div>
 			<label class="is_user-search">
@@ -58,13 +238,13 @@
 				<input type="text" placeholder="Zoeken" ng-model="searchEntry">
 			</label>
 		</div>
-		<div class="is_sidepanel-student-list-wrap is_follow-navbar">
+		<div class="is_sidepanel-student-list-wrap is_follow_navbar" ng-class="{is_follow_navbar_style : !isCollapsedTopnav.value}">
 			<div class="is_sidepanel-student-list">
 				<a class="is_sidepanel-list-item" ng-repeat="student in commonStudents | filter:searchEntry" ng-cloak ng-href="/app/[[student.userID]]/[[appviewstate]]">
 					<div class="is_profile-pic-container">
 						<img class="img-rounded img-responsive" src=""></img>
 					</div>
-					<h4>[[student.name]]</h4>
+					<h4>[[student.name + ' ' + student.surname]]</h4>
 				</a>
 			</div>
 		</div>
