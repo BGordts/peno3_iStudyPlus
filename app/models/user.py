@@ -7,6 +7,7 @@ from werkzeug._internal import _log
 from app.models.statistics import Statistics
 from app.models.userSession import UserSession
 from app.models.device import Device
+from app.models.generalUser import GeneralUser
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -46,7 +47,8 @@ class User(db.Model):
         return userCourses
     
     def updateStatistics(self,userSession):
-        self.statistics.updateStatistics(userSession)   
+        self.statistics.updateStatistics(userSession)
+        GeneralUser.updateGeneralCase(userSession)   
     
     @staticmethod
     def getAdminUser():

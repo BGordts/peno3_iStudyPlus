@@ -80,10 +80,10 @@ def register():
         study = request.form['study']
         if not isValidPass(pass1,pass2):
             error = 'The passwords you entered did not match'
-            error.update({"password":error})
+            errors.update({"password":error})
         if not isValidEmail(email):
             error = 'The email-address you entered is already taken'
-            error.update({"email":error})
+            errors.update({"email":error})
         if not((errors and True) or False):
             user = User(email, lastname, name, pass1 , study, deviceID, pic_small , pic_big)
             db.session.add(user)
@@ -155,6 +155,7 @@ def getCoStudents():
         for nextCourseUser in courseUsers:
             if not(nextCourseUser.user in coStudents):
                 coStudents.append(nextCourseUser.user)
+    coStudents.remove(user)
     _log("info", "co students: " + coStudents.__str__())
     return json.dumps([cu.outputSmall() for cu in coStudents])
 

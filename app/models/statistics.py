@@ -34,7 +34,7 @@ class Statistics(db.Model):
         self.totalfocus= 0
         self.totalHumAv = 0
         self.lowestSessions = json.dumps([])
-        self.highestSessions = json.dumps([])        
+        self.highestSessions = json.dumps([])  
     
     def updateStatistics(self,newSession):
         self.updateTotals(newSession)
@@ -61,7 +61,12 @@ class Statistics(db.Model):
         self.totalSound = dataWeight * self.totalSound + sessionWeight * userSession.sessionSound
         self.totalTempAv = dataWeight * self.totalTempAv + sessionWeight * userSession.sessionTemp
         db.session.commit()
-    
+        
+    def updateGeneralStatistic(self,nbSessions, userSession):
+        self.totalTime = self.totalTime*nbSessions
+        self.updateStatistics(userSession)
+        self.totalTime = self.totalTime/(nbSessions+1)
+        
     def updateLowestSessions(self, userSession):
         lowestSessions = json.loads(self.lowestSessions)
         if(len(lowestSessions) < 5):
