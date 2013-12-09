@@ -11,7 +11,7 @@ from app import db
 from app.models.userSession import UserSession
 from app.models.course import Course
 from app.models.user import User
-
+from app.models.generalUser import GeneralUser
 from werkzeug._internal import _log
 
 '''
@@ -32,6 +32,14 @@ def getGeneralUserStatistics():
     if int(userID2) != -1:
         user2 = User.query.get(userID2)
         returndict["user2"] = user2.statistics.outputData()
+    
+    return json.dumps(returndict)
+
+@app.route('/statistics/getGeneralUserStatistics2')
+def getGeneralUserStatistics2():
+    returndict = {}
+    genUser = GeneralUser.query.first()
+    returndict["genUser"] = genUser.statistics.outputData()
     
     return json.dumps(returndict)
 
