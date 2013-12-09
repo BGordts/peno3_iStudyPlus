@@ -20,7 +20,10 @@ class Course(db.Model):
         self.users = []
 
     def getAllUsers(self):
-        return self.users
+        users = []
+        for i in Courses_Users.query.filter_by(course=self).all():
+           users.append(i.user)
+        return users 
 
     def addUserToCourse(self,user):
         association = Courses_Users(user,self)
@@ -55,7 +58,7 @@ class Course(db.Model):
         return Course.query.all()
 
     def hasAsUser(self,user):
-        if(user in self.users):
+        if(user in self.getAllUsers()):
             return True
         return False
 

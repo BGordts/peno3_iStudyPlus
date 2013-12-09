@@ -14,7 +14,7 @@ import time
 import random
 
 from werkzeug._internal import _log
-
+from app.resources.profilePic import *
 @app.route('/test/simulateData')
 def simulatedataBase():
     clearDataBase()
@@ -46,16 +46,33 @@ def createTestUsers():
         i = i+1
     db.session.commit()
     return data
- 
+
+@app.route('/test/createMakers')
+def createMakers():
+    sam = User('sam@example.com', 'Sam', 'Landuydt', 'sam' , "1e Bach Burgerlijk Ingenieur", "samDev",SAM_SMALL,SAM_BIG)
+    boris = User('boris@example.com', 'Boris', 'Gordts', 'boris' , "1e Bach Burgerlijk Ingenieur", "borisDev",BORIS_SMALL,BORIS_SMALL)
+    olivier = User('olivier@example.com', 'Olivier', 'Kamers', 'olivier' , "1e Bach Burgerlijk Ingenieur", "OlivierDev",OLIVIER_SMALL,OLIVIER_BIG)
+    jeroen = User('jeroen@example.com', 'Jeroen', 'Hermans', 'jeroen' , "1e Bach Burgerlijk Ingenieur", "jeroenDev",JEROEN_SMALL,JEROEN_BIG)
+    steven = User('steven@example.com', 'Steven', 'Elseviers', 'steven' , "1e Bach Burgerlijk Ingenieur", "stevenDev",STEVEN_SMALL,STEVEN_BIG)
+    christof = User('christof@example.com', 'Christof', 'Luyten', 'christof' , "1e Bach Burgerlijk Ingenieur", "christofDev",CHRISTOF_SMALL,CHRISTOF_BIG)
+    db.session.add(sam)
+    db.session.add(boris)
+    db.session.add(olivier)
+    db.session.add(jeroen)
+    db.session.add(steven)
+    db.session.add(christof)
+    db.session.commit()
+    return "De makers van deze applicatie zijn aangemaakt."
+
 @app.route('/test/createTestSessions')   
 def createTestSessions():
     x = 0
     data = ""
     while x < 5:
-        userID = 1
+        userID = random.randint(1,len(User.query.all())-1)
         user = User.query.get(userID)
-        courseID = 1
-        course = Course.query.get(courseID)
+        courses = user.getUserCourses()
+        course = courses[random.randint(0,len(courses)-1)]
         userSession = UserSession(user, course, "Ik ben aan het studeren, dus ik ben een goede student!")
         randomStart = random.randint(1386264114,1416264114)
         userSession.start_date = datetime.fromtimestamp(randomStart)
@@ -79,34 +96,6 @@ def createTestSessions():
         data = data + "\n"
         x = x+1
     return data
-
-@app.route('/test/createTestSession1')   
-def createTestSessions1():
-    admin = User.query.filter_by(email='admin@example.com').first()
-    course = Course.query.filter_by(id=1).first()
-    
-    session1 = UserSession(admin, course, "test")
-    session1.start()
-    session['isPauzed'] = None
-    db.session.add(session1)
-    db.session.commit()
-    i=0
-    while not(i==2):
-        generateTestData(session1)
-        i = i+1
-    endCreateTestData(session1)
-    
-    session2 = UserSession(admin, course, "test2")
-    session2.start()
-    session['isPauzed'] = None
-    db.session.add(session2)
-    db.session.commit()
-    i=0
-    while not(i==2):
-        generateTestData(session2)
-        i = i+1
-    endCreateTestData(session2)
-    return "ok"
 
 def generateTestData(usersession,timestamp):
     t = datetime.fromtimestamp(timestamp)
