@@ -762,3 +762,41 @@ canvas {
 	display: block;
 	margin: auto;
 }
+	.tracking {
+	padding-top: 55px;
+}
+	.tracking .btn-group {
+	margin: 50px;
+}
+	.rating-wrap i {
+	width: 10%;
+	height: 32px;
+	color: transparent;
+	top: -1px;
+}
+	.rating-wrap {
+	max-width: 400px;
+	position: relative;
+	margin: auto;
+}
+	.rating-wrap span:first-child {
+	position: absolute;
+	width: 100%;
+	left: 0;
+	z-index: 1;
+}
+	.rating-wrap .progress {
+	height: 32px;
+	border-radius: 0;
+}
+	.rating-wrap .badge {
+	position: absolute;
+	top: 0;
+	right: 0;
+	height: 32px;
+	line-height: 32px;
+	border-radius: 0;
+	color: #333;
+	background-color: transparent;
+	cursor: default;
+}
