@@ -1,13 +1,8 @@
 {% extends "pages/navigation_top.html" %} {% block fullwidth_content %}
-<div class="container is_content">
+<div class="container tracking text-center">
 	<div class="page-header">
 		<h1>Veel plezier met je sessie</h1>
 	</div>
-	<p>
-		<button type="button" class="btn btn-lg btn-success">Pauze</button>
-		<button type="button" class="btn btn-lg btn-warning">Beëindigen</button>
-		<button type="button" class="btn btn-lg btn-danger">Pauze</button>
-	</p>
 	<!-- SVG SOURCE -->
 	<svg height="30%" width="30%" style="display:none">
 		<g id="clock-icon">
@@ -45,6 +40,12 @@
 	<svg class="icon is-x10" viewBox="0 0 32 32">
 		<use xlink:href="#clock-icon"></use>
 	</svg>
+	<div class="btn-group">
+		<button type="button" class="btn btn-lg btn-warning" ng-class="{hidden : (trackingState != 'active')}" ng-click="trackingState = 'pause'">Pauze</button>
+		<button type="button" class="btn btn-lg btn-success" ng-class="{hidden : (trackingState != 'pause')}" ng-click="trackingState = 'active'">Hervatten</button>
+		<button type="button" class="btn btn-lg btn-danger" ng-class="{hidden : (trackingState == 'end')}" ng-click="trackingState = 'end'">Einde</button>
+	</div>
+<!--
 	<div class="page-header">
 		<div class="alert alert-warning">
 			<strong>Warning!</strong>Best check yo self, you're not looking too good.</div>
@@ -65,4 +66,19 @@
 			</div>
 		</div>
 	</div>
+-->
+	<div ng-class="{hidden : (trackingState != 'end')}" ng-cloak>
+		<h2>Hoe tevreden ben je over je sessie?</h2>
+		<div class="rating-wrap">
+			<rating value="rate" state-on="'glyphicon glyphicon-stop'" state-off="'glyphicon glyphicon-minus'" max="10" readonly="false" on-hover="hoveringOver(value)" on-leave="leavereating()"></rating>
+			<div class="progress">
+				<div class="progress-bar" ng-class="{'progress-bar-danger': percent<30, 'progress-bar-warning': percent>=30 && percent<70, 'progress-bar-success': percent>=70}" role="progressbar" aria-valuenow="[[percent]]" aria-valuemin="0" aria-valuemax="100" style="width: [[percent]]%">
+					<span class="sr-only">[[percent]]% Complete (success)</span>
+				</div>
+			</div>
+			<span class="badge" ng-show="overStar && !isReadonly">[[percent]]%</span>
+		</div>
+		<button type="button" class="btn btn-lg btn-success" ng-href="/app/[[]]/dashboard">Opslaan</button>
+	</div>
+
 	<!-- /container -->{% endblock %}

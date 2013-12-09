@@ -42,6 +42,8 @@ angular.module('app', ['ngRoute', 'ngTouch', 'ui.utils', 'ui.bootstrap.transitio
   	};
   	// Jeroen
 
+  	$scope.trackingState = 'active'
+
 	$scope.isCollapsedTopnav = { value: true };
 	$scope.isCollapsedSidepanel = { value: false };
 	$scope.isTransitioningSidepanel = { value: false,
