@@ -1,130 +1,121 @@
 // Required for drag and drop file access
-jQuery.event.props.push('dataTransfer');
+//jQuery.event.props.push('dataTransfer');
 
 // IIFE to prevent globals
-(function() {
+(function () {
 
-  var s;
-  var Avatar = {
+	var s;
+	var Avatar = {
 
-    settings: {
-      bod: $("body"),
-      img: $("#profile-avatar"),
-      fileInput: $("#uploader"),
-      imageStorage: []
-    },
+		settings: {
+			bod: document.getElementsByTagName("body")[0],
+			img: document.getElementById("profile-avatar"),
+			fileInput: document.getElementById("uploader"),
+			imageStorage: []
+		},
 
-    init: function() {
-      s = Avatar.settings;
-      Avatar.bindUIActions();
-    },
+		init: function () {
+			s = Avatar.settings;
+			Avatar.bindUIActions();
+		},
 
-    bindUIActions: function() {
+		bindUIActions: function () {
 
-      var timer;
+			var timer;
 
-      s.bod.on("dragover", function(event) {
-        clearTimeout(timer);
-        if (event.currentTarget == s.bod[0]) {
-          Avatar.showDroppableArea();
-        }
+			function dragEnterLeave(event) {
+				event.stopPropagation();
+				event.preventDefault();
+			}
+			window.addEventListener("dragenter", dragEnterLeave, false);
+			window.addEventListener("dragleave", dragEnterLeave, false);
+			window.addEventListener("dragover", function (event) {
+				event.stopPropagation()
+				event.preventDefault()
+				var clazz = 'not-available'
+				var ok = event.dataTransfer && event.dataTransfer.types && event.dataTransfer.types.indexOf('Files') >= 0
+			}, false)
+			window.addEventListener("drop", function (event) {
+				console.log('drop event:', JSON.parse(JSON.stringify(event.dataTransfer)))
+				event.stopPropagation()
+				event.preventDefault()
 
-        // Required for drop to work
-        return false;
-      });
+				Avatar.handleDrop(event.dataTransfer.files);
+			}, false)
 
-      s.bod.on('dragleave', function(event) {
-        if (event.currentTarget == s.bod[0]) {
-          // Flicker protection
-          timer = setTimeout(function() {
-            Avatar.hideDroppableArea();
-          }, 200);
-        }
-      });
+			s.fileInput.addEventListener('change', function (event) {
+				Avatar.handleDrop(event.target.files);
+			});
+		},
 
-      s.bod.on('drop', function(event) {
-        // Or else the browser will open the file
-        event.preventDefault();
+		showDroppableArea: function () {
+			//      s.bod.addClass("droppable");
+		},
+		//
+		hideDroppableArea: function () {
+			//      s.bod.removeClass("droppable");
+		},
 
-        Avatar.handleDrop(event.dataTransfer.files);
-      });
+		handleDrop: function (files) {
 
-      s.fileInput.on('change', function(event) {
-        Avatar.handleDrop(event.target.files);
-      });
-    },
+			Avatar.hideDroppableArea();
 
-    showDroppableArea: function() {
-      s.bod.addClass("droppable");
-    },
+			// Multiple files can be dropped. Lets only deal with the "first" one.
+			var file = files[0];
 
-    hideDroppableArea: function() {
-      s.bod.removeClass("droppable");
-    },
+			if (typeof file !== 'undefined' && file.type.match('image.*')) {
 
-    handleDrop: function(files) {
-
-      Avatar.hideDroppableArea();
-
-      // Multiple files can be dropped. Lets only deal with the "first" one.
-      var file = files[0];
-
-      if (typeof file !== 'undefined' && file.type.match('image.*')) {
-
-        Avatar.resizeImage(file, 256, function(data) {
-          Avatar.placeImage(data);
-          //Avatar.storeImage(data);
-          $("#profile-img_large").val(data);
-          //console.log($("#profile-img_large").val())
-        });
-        Avatar.resizeImage(file, 40, function(data) {
-          //Avatar.storeImage(data);
-          $("#profile-img_small").val(data);
-          //console.log($("#profile-img_small").val())
-        });
+				Avatar.resizeImage(file, 256, function (data) {
+					Avatar.placeImage(data);
+				});
+				Avatar.resizeImage(file, 125, function (data) {
+					document.getElementById("profile-img_large").value = data;
+				});
+				Avatar.resizeImage(file, 32, function (data) {
+					document.getElementById("profile-img_small").value = data;
+				});
 
 
-      } else {
+			} else {
 
-        alert("That file wasn't an image.");
+				alert("That file wasn't an image.");
 
-      }
+			}
 
-    },
+		},
 
-    resizeImage: function(file, size, callback) {
+		resizeImage: function (file, size, callback) {
 
-      var fileTracker = new FileReader;
-      fileTracker.onload = function() {
-        Resample(
-         this.result,
-         size,
-         size,
-         callback
-       );
-      }
-      fileTracker.readAsDataURL(file);
+			var fileTracker = new FileReader;
+			fileTracker.onload = function () {
+				Resample(
+				this.result,
+				size,
+				size,
+				callback);
+			}
+			fileTracker.readAsDataURL(file);
 
-      fileTracker.onabort = function() {
-        alert("The upload was aborted.");
-      }
-      fileTracker.onerror = function() {
-        alert("An error occured while reading the file.");
-      }
+			fileTracker.onabort = function () {
+				alert("The upload was aborted.");
+			}
+			fileTracker.onerror = function () {
+				alert("An error occured while reading the file.");
+			}
 
-    },
+		},
 
-    placeImage: function(data) {
-      s.img.attr("src", data)
-    },
+		placeImage: function (data) {
+			s.img.setAttribute("src", data)
+		},
 
-    storeImage: function(data) {
-      s.imageStorage.push(data)
-      console.log(data)
-    }
+		storeImage: function (data) {
+			s.imageStorage.push(data)
+			console.log(data)
+		}
 
-  }
+	}
 
-  Avatar.init();
+	Avatar.init();
 
 })();

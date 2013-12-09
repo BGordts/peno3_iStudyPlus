@@ -1,0 +1,62 @@
+<span>
+    <div class="row">
+        <div class="col-xs-5 text-center pull-left">
+            <a ng-click="incrementHours()" class="btn btn-link pull-right"><i class="glyphicon glyphicon-chevron-up"></i></a>
+        </div>
+        <div class="col-xs-5 text-center pull-right">
+            <a ng-click="incrementMinutes()" class="btn btn-link pull-left"><i class="glyphicon glyphicon-chevron-up"></i></a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-5">
+            <div class="form-group" ng-class="{'has-error': invalidHours}" style="margin-bottom: 0px">
+                <input type="text" ng-model="hours" ng-change="updateHours()" class="form-control text-center" ng-mousewheel="incrementHours()" ng-readonly="readonlyInput" maxlength="2">
+            </div>
+        </div>
+        <div class="col-xs-7">
+            <div class="input-group" ng-class="{'has-error': invalidMinutes}">
+                <span class="input-group-addon">:</span>
+                <input type="text" ng-model="minutes" ng-change="updateMinutes()" class="form-control text-center" ng-readonly="readonlyInput" maxlength="2">
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-5 text-center pull-left">
+            <a ng-click="decrementHours()" class="btn btn-link pull-right"><i class="glyphicon glyphicon-chevron-down"></i></a>
+        </div>
+        <div class="col-xs-5 text-center pull-right">
+            <a ng-click="decrementMinutes()" class="btn btn-link pull-left"><i class="glyphicon glyphicon-chevron-down"></i></a>
+        </div>
+    </div>
+</span>
+
+
+<span>
+    <div class="row">
+        <div class="col-xs-12 text-center">
+            <a ng-click="incrementHours()" class="btn btn-link"><i class="glyphicon glyphicon-chevron-up"></i></a>
+            <a ng-click="incrementMinutes()" class="btn btn-link"><i class="glyphicon glyphicon-chevron-up"></i></a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="form-group" ng-class="{'has-error': invalidHours}" style="margin-bottom: 0px">
+                <input type="text" ng-model="hours" ng-change="updateHours()" class="form-control text-center" ng-mousewheel="incrementHours()" ng-readonly="readonlyInput" maxlength="2">
+            </div>
+            <span class="input-group-addon">:</span>
+            <div class="input-group" ng-class="{'has-error': invalidMinutes}">
+                <input type="text" ng-model="minutes" ng-change="updateMinutes()" class="form-control text-center" ng-readonly="readonlyInput" maxlength="2">
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12 text-center">
+            <a ng-click="decrementHours()" class="btn btn-link"><i class="glyphicon glyphicon-chevron-down"></i></a>
+            <a ng-click="decrementMinutes()" class="btn btn-link"><i class="glyphicon glyphicon-chevron-down"></i></a>
+        </div>
+    </div>
+</span>
