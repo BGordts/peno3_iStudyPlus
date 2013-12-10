@@ -12,25 +12,10 @@ from werkzeug._internal import _log
 from app.controllers.baseController import welcome
 from app.models.courseUsers import Courses_Users
 
-def login_required(test):
-    @wraps(test)
-    def wrap(*args, **kwargs):
-        if 'userID' in session:
-            return test(*args, **kwargs)
-        else:
-            flash('you need to login first.')
-            return redirect(url_for('login'))
-    return wrap
-
-def logout_required(test):
-    @wraps(test)
-    def wrap(*args, **kwargs):
-        if not 'userID' in session:
-            return test(*args, **kwargs)
-        else:
-            flash('you need to logout first.')
-            return redirect(url_for('home'))
-    return wrap
+from app.controllers.filters import login_required
+from app.controllers.filters import logout_required
+from app.controllers.filters import session_required
+from app.controllers.filters import endSession_required
 
 @app.route('/user/login' , methods=['GET','POST'])
 @logout_required
@@ -50,19 +35,13 @@ def isValidLogin( username, password):
         return False
     return True
 
-from app.controllers.sessionController import endSession_required
+#from app.controllers.sessionController import endSession_required
 
 @app.route('/user/logout')
 @endSession_required
 def logout():
     session.pop('userID',None)
     return redirect(url_for('login'))
-
-
-@app.route('/user/tracking')
-@login_required
-def tracking():
-    return render_template('pages/tracking_page.html')
 
 @app.route('/user/register' , methods = ['GET','POST'])
 @logout_required
@@ -103,6 +82,7 @@ def isValidPass(pass1 , pass2):
 
 @app.route('/user/settings' , methods = ['GET','POST'])
 @login_required
+@endSession_required
 def changeUserinfo():
     user = User.getUserFromSession()
     

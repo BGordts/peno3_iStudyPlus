@@ -69,7 +69,8 @@ def createTestSessions():
     x = 0
     data = ""
     while x < 5:
-        userID = random.randint(1,len(User.query.all())-1)
+        #userID = random.randint(1,len(User.query.all())-1)
+        userID = 1
         user = User.query.get(userID)
         courses = user.getUserCourses()
         course = courses[random.randint(0,len(courses)-1)]

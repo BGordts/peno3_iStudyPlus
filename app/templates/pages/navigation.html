@@ -88,15 +88,6 @@
 		</li>
 	</ul>
 </script>
-<script type="text/ng-template" id="rating.tpl">
-	<span ng-mouseleave="reset()">
-		<i ng-repeat="r in range track by $index" ng-mouseenter="enter($index + 1)" ng-click="rate($index + 1)" ng-class="$index < val && (r.stateOn || 'glyphicon glyphicon-stop') || (r.stateOff || 'glyphicon glyphicon-minus')"></i>
-		<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="[[val]]" aria-valuemin="0" aria-valuemax="100" style="width: [[val]]%">
-			<span class="sr-only">[[val]]% Complete (success)</span>
-		</div>
-		<p>hallo</p>
-	</span>
-</script>
 <div class="navbar navbar-default navbar-fixed-top is_navbar" role="banner">
 	<div class="c">
 		<div class="navbar-collapse bs-navbar-collapse collapse is_navbar-btns" role="navigation" collapse="isCollapsedTopnav.value">
@@ -109,13 +100,6 @@
 						<div>
 							<div class="col-md-8 pull-left row">
 								<select class="form-control" ng-model="createSessionCourse" ng-options="course.id as course.name for course in courselist"></select>
-								<rating value="rate" state-on="'glyphicon glyphicon-stop'" state-off="'glyphicon glyphicon-minus'" max="10" readonly="false" on-hover="hoveringOver(value)" on-leave="leavereating()"></rating>
-    <span class="badge" ng-class="{'badge-warning': percent<30, 'badge-info': percent>=30 && percent<70, 'badge-success': percent>=70}" ng-show="overStar && !isReadonly">[[percent]]%</span>
-<div class="progress">
-			<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="[[percent]]" aria-valuemin="0" aria-valuemax="100" style="width: [[percent]]%">
-				<span class="sr-only">[[percent]]% Complete (success)</span>
-			</div>
-		</div>
 								<textarea class="form-control" rows="1" placeholder="Beschrijving"></textarea>
 								<div class="btn-group">
 									<label class="btn btn-primary" ng-class="{active : editeddata.activityType=='class'}">
@@ -159,6 +143,10 @@
 											</div>
 										</span>
 									</div>
+								</div>
+								<div class="btn-group">
+									<button type="button" class="btn btn-lg btn-success" ng-class="{}" ng-click="trackingState = 'active'">Starten</button>
+									<button type="button" class="btn btn-lg btn-success" ng-class="{}">Opslaan</button>
 								</div>
 							</div>
 							<div class="pull-right">

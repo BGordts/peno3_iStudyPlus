@@ -41,7 +41,8 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
               $scope.percent = $scope.rate * 10;
       };
       // Jeroen
-
+      $scope.trackingState = 'active'
+    	  
     $scope.isCollapsedTopnav = { value: true };
     $scope.isCollapsedSidepanel = { value: false };
     $scope.isTransitioningSidepanel = { value: false,

@@ -17,27 +17,20 @@ from app.models.userSession import UserSession
 from app.models.course import Course
 
 from app.models.sensordata import *
-from app.controllers.userController import login_required
 
-def session_required(test):
-    @wraps(test)
-    def wrap(*args, **kwargs):
-        if 'sessionID' in session:
-            return test(*args, **kwargs)
-        else:
-            flash('need to create a session first')
-            return redirect(url_for('create'))
-    return wrap
+from app.controllers.filters import login_required
+from app.controllers.filters import logout_required
+from app.controllers.filters import session_required
+from app.controllers.filters import endSession_required
 
-def endSession_required(test):
-    @wraps(test)
-    def wrap(*args, **kwargs):
-        if not 'sessionID' in session:
-            return test(*args, **kwargs)
-        else:
-            flash('you need to end session first')
-            return redirect(url_for('home'))
-    return wrap
+'''
+Redirects to the sessions that's being tracked
+'''
+@app.route('/session/tracking')
+@login_required
+#@session_required
+def tracking():
+    return render_template('pages/tracking_page.html')
 
 @app.route('/session/createTracked' , methods = ['GET'])
 @endSession_required
@@ -173,7 +166,8 @@ def commitSession():
     userSession = UserSession.query.get(request.args['sessionID'])
     _log("info", "mr usersessio: " + userSession.__str__())
     userSession.commitSession()
-    return render_template('pages/dashboard.html')
+    
+    return redirect("app/" + session["userID"] + "/dashboard")
 
 '''
 Get all the sensordata for the spified session and sensor

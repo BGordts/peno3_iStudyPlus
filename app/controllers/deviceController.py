@@ -8,14 +8,11 @@ from app import db
 
 from app.models.device import Device
 from app.models.user import User
-
-from app.controllers.userController import login_required
    
 '''
 Method to link a pi and its user. Can also be used to change the device
 '''
 @app.route('/device/register', methods = ['GET']) 
-@login_required
 def registerDevice():
     device_key = request.args["devicekey"]
         

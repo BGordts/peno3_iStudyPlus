@@ -17,7 +17,6 @@ def getAllFollowers():
     return course.getAllUsers().__str__()
 
 @app.route('/course/followCourse' , methods=['GET', 'POST'])
-@login_required
 def followCourse():
     error = None
     user = User.query.filter_by(id=session['userID']).first()
@@ -29,7 +28,6 @@ def followCourse():
     return error
 
 @app.route('/course/unFollowCourse' , methods=['GET', 'POST'])
-@login_required
 def unfollowCourse():
     error = None
     user = User.query.filter_by(id=session['userID']).first()
