@@ -8,7 +8,7 @@ def session_required(test):
             return test(*args, **kwargs)
         else:
             flash('need to create a session first')
-            return redirect(url_for('create'))
+            return redirect(url_for('welcome'))
     return wrap
 
 def endSession_required(test):

@@ -40,9 +40,7 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
       $scope.leavereating = function() {
               $scope.percent = $scope.rate * 10;
       };
-      // Jeroen
-      $scope.trackingState = 'active'
-    $scope.tracking = { state : 'active'};	  
+      // Jeroen	  
     $scope.isCollapsedTopnav = { value: true };
     $scope.isCollapsedSidepanel = { value: false };
     $scope.isTransitioningSidepanel = { value: false,
@@ -131,7 +129,7 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
 	}
 })
 
-.controller('CreateSessionCtrl', function ($scope, $timeout) {
+.controller('CreateSessionCtrl', function ($scope, $timeout, serverConnectionService) {
         $scope.activityType = '';
         $scope.sessionType = '';
         $scope.newSession = {
@@ -140,20 +138,36 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
                 course: ''
         };
         $scope.myStartTime = new Date();
-          $scope.openST = function() {
-                $timeout(function() {
-                          $scope.openedST = true;
-                });
-          };
-          $scope.myEndTime = new Date();
-          $scope.openET = function() {
-                $timeout(function() {
-                          $scope.openedET = true;
-                });
-          };
-          $scope.hstep = 1;
-          $scope.mstep = 5;
-          $scope.ismeridian = false;
+		  $scope.openST = function() {
+		        $timeout(function() {
+		                  $scope.openedST = true;
+		        });
+		  };
+		  $scope.myEndTime = new Date();
+		  $scope.openET = function() {
+		        $timeout(function() {
+		                  $scope.openedET = true;
+		        });
+		  };
+		  $scope.hstep = 1;
+		  $scope.mstep = 5;
+		  $scope.ismeridian = false;
+		  
+		  $scope.description = "";
+		  
+		  $scope.startButtonClicked = function(){
+			  //sessionName, courseID, callback
+			  serverConnectionService.sessionCreateTracked($scope.description, $scope.newSession.course, function(data){
+				  serverConnectionService.sessionStart(function(data){
+					  console.log("session created and started");
+					  console.log(data);
+					  
+					  window.location.href = "/session/tracking";
+				  })
+			  })
+		  }
+          
+         
 })
 
 .controller('coursecontroller', function ($scope, serverConnectionService ) {
@@ -180,6 +194,41 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
 	//$scope.courseFilter.selected = parseInt(($location.search()).course);
 })
 
+.controller('sessionTrackingCtrl', function($scope, serverConnectionService){
+	$scope.tracking = { state : 'active'};
+	$scope.sessionID = -1;
+	$scope.rate = {value: 0};
+	
+	$scope.pause = function(){
+		serverConnectionService.sessionPause(function(data){
+			console.log("Paused");
+			$scope.tracking.state = 'pause';
+		});
+	}
+	
+	$scope.resume = function(){
+		serverConnectionService.sessionResume(function(data){
+			console.log("Resume");
+			$scope.tracking.state = 'active';
+		});
+	}
+	
+	$scope.end = function(){
+		serverConnectionService.sessionEnd(function(data){
+			$scope.sessionID = data;
+			$scope.tracking.state = 'end';
+		});
+	}
+	
+	$scope.commit = function(){
+		serverConnectionService.sessionPostFeedback($scope.rate.value/10, function(data){
+			serverConnectionService.sessionCommit(function(data){
+				window.location.href = "/";
+			});
+		});
+	}
+})
+
 /**
  * A service that provides the connection with the server. Every call with the server
  * should pas here.
@@ -204,7 +253,14 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
 	
 	// Basic method: call the server with the specified url, parameters and callback
 	this.requestData = function(path, parameters, callback){
-		$http({method: 'GET', url: path, params: parameters})
+		var httpParameters = {method: 'GET', url: path};
+		
+		var params = {};
+		if(Object.keys(parameters) != 0){
+			httpParameters['params'] = parameters;
+		}
+		
+		$http(httpParameters)
 	  	  .success(function(data, status, headers, config) {
 	  		  callback(data);
 	  	  })
@@ -218,9 +274,6 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
 		this.requestData(this.URL_EFFICIENCY_FOR_SENSOR, {'userID1':userID1, 'userID2':userID2, 'sensor_type':sensortype, 'courseID':courseID}, function(data){
 			// Make a nice dictionary with x and y coordinates
 			var linePointArray = {'profile': new Array(), 'compare': new Array()};
-			
-			console.log("lolololololo-");
-			console.log(data);
 			
 			if(Object.keys(data['1']).length != 0){
 				for(var nextDataPoint in data['1']){
@@ -328,20 +381,20 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
 		})
 	}
 	
-	this.sessionPostFeedback = function(sessionID, feedback, callback){
-		this.requestData(this.URL_SESSION_POST_FEEDBACK, {'sessionID': sessionID, 'feedback': feedback}, function(data){
+	this.sessionPostFeedback = function(feedback, callback){
+		this.requestData(this.URL_SESSION_POST_FEEDBACK, {'feedback': feedback}, function(data){
 			callback(data);
 		})
 	}
 	
-	this.sessionEnd = function(sessionID, callback){
-		this.requestData(this.URL_SESSION_END, {'sessionID': sessionID}, function(data){
+	this.sessionEnd = function(callback){
+		this.requestData(this.URL_SESSION_END, {}, function(data){
 			callback(data);
 		})
 	}
 	
-	this.sessionCommit = function(sessionID, callback){
-		this.requestData(this.URL_SESSION_COMMIT, {'sessionID': sessionID}, function(data){
+	this.sessionCommit = function(callback){
+		this.requestData(this.URL_SESSION_COMMIT, {}, function(data){
 			callback(data);
 		})
 	}

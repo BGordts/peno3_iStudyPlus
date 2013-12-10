@@ -62,11 +62,11 @@ def getSensordataForSession():
     
     returndict = {}
     
-    returndict["illumination"] = session.outputSensorData("illumination")
-    returndict["temperature"] = session.outputSensorData("temperature")
-    returndict["humidity"] = session.outputSensorData("humidity")
-    returndict["sound"] = session.outputSensorData("sound")
-    returndict["focus"] = session.outputSensorData("focus")
+    returndict["illumination"] = session.outputSensorDataXY("illumination")
+    returndict["temperature"] = session.outputSensorDataXY("temperature")
+    returndict["humidity"] = session.outputSensorDataXY("humidity")
+    returndict["sound"] = session.outputSensorDataXY("sound")
+    returndict["focus"] = session.outputSensorDataXY("focus")
     
     return json.dumps(returndict)
     

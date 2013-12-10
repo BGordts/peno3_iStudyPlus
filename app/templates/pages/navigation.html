@@ -99,7 +99,7 @@
 					<div class="dropdown-menu pull-right" id="sessionCreator" role="menu" aria-labelledby="createSession-btn">
 						<form>
 							<select class="form-control" ng-model="newSession.course" ng-options="course.id as course.name for course in courselist"></select>
-							<textarea class="form-control" rows="1" placeholder="Beschrijving"></textarea>
+							<textarea ng-model="description" class="form-control" rows="1" placeholder="Beschrijving"></textarea>
 							<div class="btn-group">
 								<label class="btn btn-primary" ng-class="{active : newSession.activityType=='class'}" ng-click="newSession.activityType = 'class'">
 									<input type="radio" ng-checked="newSession.activityType == 'class'" value="class" name="activityType">Les</label>
@@ -131,7 +131,7 @@
 								</span>
 							</div>
 							<rating value="rate" state-on="'glyphicon glyphicon-stop'" state-off="'glyphicon glyphicon-minus'" max="10" readonly="false" ng-class="{hidden : newSession.sessionType == 'live'}"></rating>
-							<button type="button" class="btn btn-lg btn-success" ng-class="{hidden : newSession.sessionType == 'past'}" ng-click="trackingState = 'active'">Starten</button>
+							<button type="button" class="btn btn-lg btn-success" ng-class="{hidden : newSession.sessionType == 'past'}" ng-click="startButtonClicked()">Starten</button>
 							<button type="button" class="btn btn-lg btn-success" ng-class="{hidden : newSession.sessionType == 'live'}">Opslaan</button>
 							<div class="btn-group-vertical menu-left">
 								<label class="btn btn-success" ng-class="{active : newSession.sessionType=='live'}" ng-click="newSession.sessionType = 'live'">

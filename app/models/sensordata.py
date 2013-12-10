@@ -32,6 +32,9 @@ class Sensordata(db.Model):
         timeInMilis = unix_time_millis(self.date)
         
         return  {"sensor_type": self.sensor_type, "value": self.value, "date": timeInMilis, "session_id": self.session_id}
+    
+    def outputXY(self):
+        return {"x": unix_time_millis(self.date), "y": self.value}
 
     def __repr__(self):
         return '<Sensordata %r>' % self.sensor_type

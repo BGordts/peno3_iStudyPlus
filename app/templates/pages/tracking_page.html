@@ -1,5 +1,8 @@
 {% extends "pages/navigation_top.html" %} {% block fullwidth_content %}
-<div class="container tracking text-center">
+<div class="container tracking text-center" ng-controller="sessionTrackingCtrl" ng-init="session.sessionID={{session.sessionID}}; tracking.state='{{state}}'">
+	<!--  <input ng-model="sessionID" value="{{session.sessionID}}" class="hidden"> -->
+	<!-- <input ng-model="tracking.state" value="{{state}}" class="hidden"> -->
+	
 	<div class="page-header">
 		<h1>Veel plezier met je sessie</h1>
 	</div>
@@ -41,15 +44,15 @@
 		<use xlink:href="#clock-icon"></use>
 	</svg>
 	<div class="btn-group" ng-if="tracking.state != 'end'" >
-		<button type="button" class="btn btn-lg btn-warning" ng-if="tracking.state == 'active'" ng-click="tracking.state = 'pause'">Pauze</button>
-		<button type="button" class="btn btn-lg btn-success" ng-if="tracking.state == 'pause'" ng-click="tracking.state = 'active'">Hervatten</button>
-		<button type="button" class="btn btn-lg btn-danger" ng-click="tracking.state = 'end'">Einde</button>
+		<button type="button" class="btn btn-lg btn-warning" ng-if="tracking.state == 'active'" ng-click="pause()">Pauze</button>
+		<button type="button" class="btn btn-lg btn-success" ng-if="tracking.state == 'pause'" ng-click="resume()">Hervatten</button>
+		<button type="button" class="btn btn-lg btn-danger" ng-click="end()">Einde</button>
 	</div>
 	<div ng-if="tracking.state == 'end'" ng-cloak>
 		<h2>Hoe tevreden ben je over je sessie?</h2>
-		<rating value="rate" state-on="'glyphicon glyphicon-stop'" state-off="'glyphicon glyphicon-minus'" max="10" readonly="false"></rating>
+		<rating value="rate.value" state-on="'glyphicon glyphicon-stop'" state-off="'glyphicon glyphicon-minus'" max="10" readonly="false"></rating>
 		<div class="btn-group0">
-			<button type="button" class="btn btn-lg btn-success" ng-href="/app/[['hallo']]/dashboard">Opslaan</button>
+			<button type="button" class="btn btn-lg btn-success" ng-click="commit()">Opslaan</button>
 			<tweet text="'Ik heb net een sessie afgewerkt met #iStudy+'" tweeturl="'www.istudyplus.tk/app/' + loggedInProfile.userID + '/dashboard'"></tweet>
 		</div>
 	</div>

@@ -78,7 +78,7 @@ class User(db.Model):
     '''
     
     def getRunningSession(self):
-        userSession = UserSession.query.filter_by(user=self).order_by(UserSession.start_date.desc()).first()
+        userSession = UserSession.query.filter_by(user=self).filter_by(end_date=None).order_by(UserSession.start_date.desc()).first()
         
         # See if there is a session and the session is already started
         if userSession and userSession.start_date:

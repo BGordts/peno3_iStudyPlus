@@ -107,8 +107,8 @@ class UserSession(db.Model):
     End the timer of the session
     '''
     def end(self):
-        if(not session['isPauzed'] == None):
-            self.endPauze()
+        if(self.isPaused()):
+            self.endPause()
         if not self.start_date == None:
             self.end_date = datetime.now()
         else:
@@ -128,10 +128,67 @@ class UserSession(db.Model):
         db.session.commit()
         
     def outputSensorData(self, sensor):
+        loadedPauses = json.loads(self.pauses)
+        
+        nextPause = None
+        nextPauseIndex = 0
+        
+        if len(loadedPauses) > 0:
+            nextPause = float(loadedPauses[0][0])
+            
+        _log("info", "De pauses: " +  json.loads(self.pauses).__str__())
+        
         sensorData = Sensordata.query.filter_by(userSession=self).filter_by(sensor_type=sensor).all()
         returnList = []
+        
         for i in range(0,len(sensorData)):
+            _log("info", "De volgende pause: " +  nextPause.__str__())
+            _log("info", "Tijd van de volgende sensorwaarde: " +  unix_time_millis(sensorData[i].date).__str__())
+                 
+            if nextPause and nextPause < unix_time_millis(sensorData[i].date):
+                _log("info", "verschil: " +  ((unix_time_millis(sensorData[i].date) - nextPause)/1000).__str__())
+                returnList.append({"sensor_type": sensor, "value": None, "date": nextPause, "session_id": self.id})
+                nextPauseIndex += 1
+                
+                if nextPauseIndex < len(loadedPauses):
+                    nextPause = float(loadedPauses[nextPauseIndex][0])
+                else:
+                    nextPause = None
+                    
             returnList.append(sensorData[i].output())
+            
+        return returnList
+    
+    def outputSensorDataXY(self, sensor):
+        loadedPauses = json.loads(self.pauses)
+        
+        nextPause = None
+        nextPauseIndex = 0
+        
+        if len(loadedPauses) > 0:
+            nextPause = float(loadedPauses[0][0])
+            
+        _log("info", "De pauses: " +  json.loads(self.pauses).__str__())
+        
+        sensorData = Sensordata.query.filter_by(userSession=self).filter_by(sensor_type=sensor).all()
+        returnList = []
+        
+        for i in range(0,len(sensorData)):
+            _log("info", "De volgende pause: " +  nextPause.__str__())
+            _log("info", "Tijd van de volgende sensorwaarde: " +  unix_time_millis(sensorData[i].date).__str__())
+                 
+            if nextPause and nextPause < unix_time_millis(sensorData[i].date):
+                _log("info", "verschil: " +  ((unix_time_millis(sensorData[i].date) - nextPause)/1000).__str__())
+                returnList.append({"x": nextPause, "y":None})
+                nextPauseIndex += 1
+                
+                if nextPauseIndex < len(loadedPauses):
+                    nextPause = float(loadedPauses[nextPauseIndex][0])
+                else:
+                    nextPause = None
+                    
+            returnList.append(sensorData[i].outputXY())
+            
         return returnList
     
     def outputSession(self):

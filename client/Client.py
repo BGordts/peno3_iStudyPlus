@@ -4,7 +4,7 @@ import time
 import random
 
 #HOST
-HOST = "http://54.200.177.96"
+HOST = "http://localhost:5000"
 #Local: http://localhost:5000
 #Remote: http://54.200.177.96
 
@@ -26,7 +26,7 @@ def postSensorData(sensor, value):
     print html
 
 for i in range(0,5):
-    postSensorData(SENSOR_FOCUS, random.randint(0,1))
+    postSensorData(SENSOR_TEMPERATURE, random.randint(0,1))
     postSensorData(SENSOR_HUMIDITY, random.randint(200,800))
 
 

@@ -28,9 +28,18 @@ Redirects to the sessions that's being tracked
 '''
 @app.route('/session/tracking')
 @login_required
-#@session_required
+@session_required
 def tracking():
-    return render_template('pages/tracking_page.html')
+    userSession = UserSession.query.get(session["sessionID"])
+    
+    state = "active"
+    
+    if userSession.end_date:
+        state = "end"
+    elif userSession.isPaused():
+        state = "pause"
+    #_log("info", "sessino: " + session['sessionID']);
+    return render_template('pages/tracking_page.html', state = state)
 
 @app.route('/session/createTracked' , methods = ['GET'])
 @endSession_required
@@ -142,32 +151,37 @@ def endSession():
     sessionID = session['sessionID']
     UserSession.query.filter_by(id=session['sessionID']).first().end()
     
-    sessionID = session.pop('sessionID',None)
-    session.pop('isPauzed',None)
+    #sessionID = session.pop('sessionID',None)
+    #session.pop('isPauzed',None)
     
     return json.dumps(sessionID)
 
 @app.route('/session/postFeedback' , methods = ['GET'])
 @login_required
 def postFeedback():
-    _log("info", "input= " + request.args['sessionID'])
-    _log("info", "input= " + request.args['feedback'])
-    sessionID = request.args['sessionID']
+    #_log("info", "input= " + request.args['sessionID'])
+    #_log("info", "input= " + request.args['feedback'])
+    #sessionID = request.args['sessionID']
     feedback = request.args['feedback']
     
+    sessionID = session['sessionID']
+    
     UserSession.query.get(sessionID).setFeedback(feedback)
-    return render_template('pages/dashboard.html')
+    return "ok"
 
 @app.route('/session/commit', methods = ['GET'])    
 @login_required
-@endSession_required
 def commitSession():
-    #sessionID = request.form['sessionID']
-    userSession = UserSession.query.get(request.args['sessionID'])
+    sessionID = session['sessionID']
+    userSession = UserSession.query.get(sessionID)
     _log("info", "mr usersessio: " + userSession.__str__())
     userSession.commitSession()
     
-    return redirect("app/" + session["userID"] + "/dashboard")
+    sessionID = session.pop('sessionID',None)
+    session.pop('isPauzed',None)
+    
+    #return redirect("app/" + session["userID"].__str__() + "/dashboard")
+    return "Yolo"
 
 '''
 Get all the sensordata for the spified session and sensor
