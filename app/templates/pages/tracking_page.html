@@ -41,33 +41,11 @@
 		<use xlink:href="#clock-icon"></use>
 	</svg>
 	<div class="btn-group">
-		<button type="button" class="btn btn-lg btn-warning" ng-class="{hidden : (trackingState != 'active')}" ng-click="trackingState = 'pause'">Pauze</button>
-		<button type="button" class="btn btn-lg btn-success" ng-class="{hidden : (trackingState != 'pause')}" ng-click="trackingState = 'active'">Hervatten</button>
-		<button type="button" class="btn btn-lg btn-danger" ng-class="{hidden : (trackingState == 'end')}" ng-click="trackingState = 'end'">Einde</button>
+		<button type="button" class="btn btn-lg btn-warning" ng-if="tracking.state == 'active'" ng-click="tracking.state = 'pause'">Pauze</button>
+		<button type="button" class="btn btn-lg btn-success" ng-if="tracking.state == 'pause'" ng-click="tracking.state = 'active'">Hervatten</button>
+		<button type="button" class="btn btn-lg btn-danger" ng-if="tracking.state != 'end'" ng-click="tracking.state = 'end'">Einde</button>
 	</div>
-<!--
-	<div class="page-header">
-		<div class="alert alert-warning">
-			<strong>Warning!</strong>Best check yo self, you're not looking too good.</div>
-		<div class="progress">
-			<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
-				<span class="sr-only">40% Complete (success)</span>
-			</div>
-		</div>
-		<div class="progress">
-			<div class="progress-bar progress-bar-success" style="width: 35%">
-				<span class="sr-only">35% Complete (success)</span>
-			</div>
-			<div class="progress-bar progress-bar-warning" style="width: 20%">
-				<span class="sr-only">20% Complete (warning)</span>
-			</div>
-			<div class="progress-bar progress-bar-danger" style="width: 10%">
-				<span class='sr-only'>10% Complete (danger)</span>
-			</div>
-		</div>
-	</div>
--->
-	<div ng-class="{hidden : (trackingState != 'end')}" ng-cloak>
+	<div ng-if="tracking.state == 'end'" ng-cloak>
 		<h2>Hoe tevreden ben je over je sessie?</h2>
 		<div class="rating-wrap">
 			<rating value="rate" state-on="'glyphicon glyphicon-stop'" state-off="'glyphicon glyphicon-minus'" max="10" readonly="false" on-hover="hoveringOver(value)" on-leave="leavereating()"></rating>
@@ -78,7 +56,10 @@
 			</div>
 			<span class="badge" ng-show="overStar && !isReadonly">[[percent]]%</span>
 		</div>
-		<button type="button" class="btn btn-lg btn-success" ng-href="/app/[[]]/dashboard">Opslaan</button>
+		<div class="btn-group0">
+			<button type="button" class="btn btn-lg btn-success" ng-href="/app/[['hallo']]/dashboard">Opslaan</button>
+		<tweet text="'Ik heb net een sessie afgewerkt met #iStudy+'" tweeturl="'www.istudyplus.tk/app/' + '/dashboard'" ng-if="trackingState == 'end'"></tweet>
+		</div>
 	</div>
 
 	<!-- /container -->{% endblock %}

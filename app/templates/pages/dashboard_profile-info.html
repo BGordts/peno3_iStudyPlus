@@ -726,13 +726,15 @@
 											</div>
 										</span>
 									</div>
+			<div class="btn-group">
+										<label class="btn btn-primary" ng-class="{active : activityType=='class'}">
+											<input type="radio" ng-model="activityType" value="class" name="activityType">Les</label>
+										<label class="btn btn-primary" ng-class="{active : activityType=='study'}">
+											<input type="radio" ng-model="activityType" value="study" name="activityType">Studie</label>
+									</div>
 									<div class="clearfix xs-visible"></div>
 			<ng-view></ng-view>
 		</div>
-<!--
-		<a href="https://twitter.com/share" class="twitter-share-button" data-text="Look how good i can study!" data-count="none" data-hashtags="iStudyPlus">Tweet</a>
-<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
--->
 		<div class="is_footer">
 			<div class="container" style="max-width:100%">
 				<img src="{{url_for('static', filename='footer-top.svg')}}"></img>
