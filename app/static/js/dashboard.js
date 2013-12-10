@@ -97,33 +97,26 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
 		serverConnectionService.getCurrentUser(function(data){
 			$scope.loggedInProfile = data;
 		})
-		
-		//Fill in the course list selector. First get the courses:
-		serverConnectionService.getCourses(1, function(data){
-			//$scope.courselist = data;
-			var courseList = data;
-			
-			//Now add the option to see the sessions of all the courses
-			courseList.unshift({"id":0, "name": "Alle vakken"})
-			
-			$scope.selectableCourseList = courseList;
-		});
 	}
 	
-//	$scope.$watch('viewedProfile', function (newVal, oldVal) {		
-//		//Voeg nog een exta if toe om te zien of het gegeven object neit leeg is :)
-//		if(undefined == newVal || newVal == null || Object.keys(newVal).length == 0){
-//			console.log("hey fa" + newVal + " " + oldVal);
-//		}
-//		else{							
-//			serverConnectionService.getCoursesSimple($scope.viewedProfile.userID, function(data){
-//				$scope.courselist = data;
-//				
-//				console.log("lolo");
-//				console.log($scope.courseFilter);
-//			});
-//		}
-//    });
+	$scope.$watch('viewedProfile', function (newVal, oldVal) {		
+		//Voeg nog een exta if toe om te zien of het gegeven object neit leeg is :)
+		if(undefined == newVal || newVal == null || Object.keys(newVal).length == 0){
+			console.log("hey fa" + newVal + " " + oldVal);
+		}
+		else{							
+			serverConnectionService.getCoursesSimple($scope.viewedProfile.userID, function(data){
+				//Fill in the courselist
+				$scope.courselist = data;
+				
+				//Fill in the options for the courseselector in the sessionspanel
+				$scope.selectableCourseList = data;
+				
+				//Now add the option to see the sessions of all the courses
+				$scope.selectableCourseList.unshift({"id":0, "name": "Alle vakken"})
+			});
+		}
+    });
 	
 	/**
 	 * Filter which sessions are displayed
