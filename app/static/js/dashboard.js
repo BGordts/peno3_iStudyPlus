@@ -254,17 +254,8 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
 		else{
 			return session.sessionData.course_id == $scope.courseFilter.selected;
 		}
-			});
-		}
-    });
-
-	$scope.courseFilterFunction = function(session){
-		//console.log("van de filter: ");
-		//console.log(session);
-		//console.log(session.sessionData.course_id == $scope.courseFilter.selected);
-
-		return session.sessionData.course_id == $scope.courseFilter.selected;
-	}
+	};
+}
 })
 
 .controller('CreateSessionCtrl', function ($scope, $timeout) {

@@ -35,17 +35,17 @@
 	</head>
 	<body ng-app="app" ng-controller="appCtrl" ng-init="init()">{% block navigation %}{% endblock %}
 		<script type="text/ng-template" id="rating.tpl">
-			<span>
-			<span ng-mouseleave="reset()">
-				<i ng-repeat="r in range track by $index" ng-mouseenter="enter($index + 1)" ng-click="rate($index + 1)" ng-class="$index < val && (r.stateOn || 'glyphicon glyphicon-stop') || (r.stateOff || 'glyphicon glyphicon-minus')"></i>
-			</span>
-			<div class="progress">
-				<div class="progress-bar" ng-class="{'progress-bar-danger': val*10<30, 'progress-bar-warning': val*10>=30 && val*10<70, 'progress-bar-success': val*10>=70}" role="progressbar" aria-valuenow="[[val*10]]" aria-valuemin="0" aria-valuemax="100" style="width: [[val*10]]%">
-					<span class="sr-only">[[val*10]]% Complete (success)</span>
+			<div class="rating-wrap">
+				<span ng-mouseleave="reset()">
+					<i ng-repeat="r in range track by $index" ng-mouseenter="enter($index + 1)" ng-click="rate($index + 1)" ng-class="$index < val && (r.stateOn || 'glyphicon glyphicon-stop') || (r.stateOff || 'glyphicon glyphicon-minus')"></i>
+				</span>
+				<div class="progress">
+					<div class="progress-bar" ng-class="{'progress-bar-danger': val*10<30, 'progress-bar-warning': val*10>=30 && val*10<70, 'progress-bar-success': val*10>=70}" role="progressbar" aria-valuenow="[[val*10]]" aria-valuemin="0" aria-valuemax="100" style="width: [[val*10]]%">
+						<span class="sr-only">[[val*10]]% Complete (success)</span>
+					</div>
 				</div>
+				<span class="badge" ng-show="!isReadonly">[[val * 10]]%</span>
 			</div>
-			<span class="badge" ng-show="!isReadonly">[[val * 10]]%</span>
-			</span>
 		</script>
 		<script type="text/ng-template" id="tweet.tpl">
 			<button type="button" ng-click="fbs_click()" class="btn btn-lg btn-info tweet" target="_blank">Tweet this!</button>

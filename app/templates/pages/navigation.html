@@ -55,7 +55,7 @@
 			</div>
 		</div>
 
-		<div class="row">
+		<div>
 			<div class="col-xs-5 is_no-padding">
 				<div class="form-group" ng-class="{'has-error': invalidHours}" style="margin-bottom: 0px">
 					<input type="text" ng-model="hours" ng-change="updateHours()" class="form-control text-center" ng-mousewheel="incrementHours()" ng-readonly="readonlyInput" maxlength="2">
@@ -63,7 +63,7 @@
 			</div>
 			<div class="col-xs-7 is_no-padding">
 				<div class="input-group" ng-class="{'has-error': invalidMinutes}">
-					<span class="input-group-addon">:</span>
+					<span class="input-group-addon" style="width: 28%">:</span>
 					<input type="text" ng-model="minutes" ng-change="updateMinutes()" class="form-control text-center" ng-readonly="readonlyInput" maxlength="2">
 				</div>
 			</div>
@@ -98,55 +98,48 @@
 					</a>
 					<div class="dropdown-menu pull-right" id="sessionCreator" role="menu" aria-labelledby="createSession-btn">
 						<form>
-							<div>
-								<div class="col-md-8 pull-left row">
-									<select class="form-control" ng-model="newSession.course" ng-options="course.id as course.name for course in courselist"></select>
-									<textarea class="form-control" rows="1" placeholder="Beschrijving"></textarea>
-									<div class="btn-group">
-										<label class="btn btn-primary" ng-class="{active : newSession.activityType=='class'}">
-											<input type="radio" ng-model="newSession.activityType" value="class">Les</label>
-										<label class="btn btn-primary" ng-class="{active : newSession.activityType=='study'}">
-											<input type="radio" ng-model="newSession.activityType" value="study">Studie</label>
-									</div>
-									<div class="row">
-										<div class="col-md-4 input-group" id="datepicker" ng-controller="DatepickerDemoCtrl">
-											<input type="text" class="form-control" datepicker-popup="dd/MM/yyyy" ng-model="dt" is-open="opened" min="minDate" max="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Sluiten" ng-disabled="newSession.sessionType == 'live'"/>
-											<span class="input-group-btn">
-												<button type="button" class="btn btn-default" ng-click="open()" ng-disabled="newSession.sessionType == 'live'" id="newSessionD">
-													<span class="glyphicon glyphicon-calendar"></span>
-												</button>
-											</span>
-										</div>
-										<div class="col-md-4 input-group" id="starttimepicker">
-											<input type="text" class="form-control" timepicker-popup="dd/MM/yyyy" ng-model="STP.myStartTime" is-open="openedST" min="STP.myStartTime.getHours()" max="STP.myStartTime.getMinutes()" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Sluiten" ng-disabled="sessionType == 'live'"/>
-											<span class="dropdown open input-group-btn">
-												<button type="button" class="btn btn-default" ng-click="openST()" ng-disabled="sessionType == 'live'" id="[[session.id + 'starttime']]">
-													<span class="glyphicon glyphicon-time"></span>
-												</button>
-											</span>
-										</div>
-										<div class="col-md-4 input-group" id="endtimepicker">
-											<input type="text" class="form-control" timepicker-popup="dd/MM/yyyy" ng-model="myEndTime" is-open="openedET" min="myEndTime" max="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Sluiten" ng-disabled="sessionType == 'live'"/>
-											<span class="dropdown open input-group-btn">
-												<button type="button" class="btn btn-default" ng-click="openET()" ng-disabled="sessionType == 'live'" id="[[session.id + 'starttime']]">
-													<span class="glyphicon glyphicon-time"></span>
-												</button>
-											</span>
-										</div>
-									</div>
-									<div class="btn-group">
-										<button type="button" class="btn btn-lg btn-success" ng-class="{}" ng-click="trackingState = 'active'">Starten</button>
-										<button type="button" class="btn btn-lg btn-success" ng-class="{}">Opslaan</button>
-									</div>
-								</div>
+							<select class="form-control" ng-model="newSession.course" ng-options="course.id as course.name for course in courselist"></select>
+							<textarea class="form-control" rows="1" placeholder="Beschrijving"></textarea>
+							<div class="btn-group">
+								<label class="btn btn-primary" ng-class="{active : newSession.activityType=='class'}" ng-click="newSession.activityType = 'class'">
+									<input type="radio" ng-checked="newSession.activityType == 'class'" value="class" name="activityType">Les</label>
+								<label class="btn btn-primary" ng-class="{active : newSession.activityType=='study'}" ng-click="newSession.activityType = 'study'">
+									<input type="radio" ng-checked="newSession.activityType == 'study'" value="study" name="activityType">Studie</label>
 							</div>
+							<div class="input-group" id="datepicker" ng-controller="DatepickerDemoCtrl">
+								<input type="text" class="form-control" datepicker-popup="dd/MM/yyyy" ng-model="dt" is-open="opened" min="minDate" max="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Sluiten" ng-disabled="newSession.sessionType == 'live'"/>
+								<span class="input-group-btn">
+									<button type="button" class="btn btn-default" ng-click="open()" ng-disabled="newSession.sessionType == 'live'">
+										<span class="glyphicon glyphicon-calendar"></span>
+									</button>
+								</span>
+							</div>
+							<div class="input-group" id="starttimepicker">
+								<input type="text" class="form-control" timepicker-popup="dd/MM/yyyy" ng-model="STP.myStartTime" is-open="openedST" min="STP.myStartTime.getHours()" max="STP.myStartTime.getMinutes()" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Sluiten" ng-disabled="newSession.sessionType == 'live'"/>
+								<span class="dropdown open input-group-btn">
+									<button type="button" class="btn btn-default" ng-click="openST()" ng-disabled="newSession.sessionType == 'live'">
+										<span class="glyphicon glyphicon-time"></span>
+									</button>
+								</span>
+							</div>
+							<div class="input-group" id="endtimepicker" ng-class="{hidden : newSession.sessionType == 'live'}">
+								<input type="text" class="form-control" timepicker-popup="dd/MM/yyyy" ng-model="myEndTime" is-open="openedET" min="myEndTime" max="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Sluiten" ng-disabled="newSession.sessionType == 'live'"/>
+								<span class="dropdown open input-group-btn">
+									<button type="button" class="btn btn-default" ng-click="openET()" ng-disabled="newSession.sessionType == 'live'">
+										<span class="glyphicon glyphicon-time"></span>
+									</button>
+								</span>
+							</div>
+							<rating value="rate" state-on="'glyphicon glyphicon-stop'" state-off="'glyphicon glyphicon-minus'" max="10" readonly="false" ng-class="{hidden : newSession.sessionType == 'live'}"></rating>
+							<button type="button" class="btn btn-lg btn-success" ng-class="{hidden : newSession.sessionType == 'past'}" ng-click="trackingState = 'active'">Starten</button>
+							<button type="button" class="btn btn-lg btn-success" ng-class="{hidden : newSession.sessionType == 'live'}">Opslaan</button>
 							<div class="btn-group-vertical menu-left">
-								<label class="btn btn-success active" ng-class="{active : newSession.sessionType=='live'}">
-									<input type="radio" ng-model="newSession.sessionType" value="live" class="ng-pristine ng-valid" name="04J">
+								<label class="btn btn-success" ng-class="{active : newSession.sessionType=='live'}" ng-click="newSession.sessionType = 'live'">
+									<input type="radio" ng-checked="newSession.sessionType == 'live'" value="live" name="sessionType">
 									<span class="glyphicon glyphicon-play"></span>
 								</label>
-								<label class="btn btn-warning" ng-class="{active : newSession.sessionType=='past'}">
-									<input type="radio" ng-model="newSession.sessionType" value="past" class="ng-pristine ng-valid" name="04K">
+								<label class="btn btn-warning" ng-class="{active : newSession.sessionType=='past'}" ng-click="newSession.sessionType = 'past'">
+									<input type="radio" ng-checked="newSession.sessionType == 'past'" value="past" name="sessionType">
 									<span class="fi-history"></span>
 								</label>
 							</div>
@@ -191,7 +184,7 @@
 				<div class="is_profile-pic-container">
 					<img class="img-rounded img-responsive" src="[[loggedInProfile.pic_small]]"></img>
 				</div>
-				<a href="/app/[[loggedInProfile.userID]]/dashboard"> <h4>[[loggedInProfile.name]] [[loggedInProfile.surname]]</h4></a>
+				<h4>[[loggedInProfile.name]] [[loggedInProfile.surname]]</h4>
 			</a>
 			<a ng-href="/app/[[Boris]]/dashboard" class="is_sidepanel-list-item">
 				<div class="is_profile-pic-container">
