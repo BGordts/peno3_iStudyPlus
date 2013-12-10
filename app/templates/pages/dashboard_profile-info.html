@@ -709,7 +709,7 @@
   				<label class="btn btn-primary" ng-class="{active : compareToggle==true, hidden : (appviewstate != 'courses') }">
     				<input type="checkbox" ng-model="compareToggle">Vergelijken
   				</label>
-  				<select class="form-control" ng-model="courseFilter.selected" ng-options="course.id as course.name for course in courselist" ng-class="{ hidden : (appviewstate != 'sessions') }"></select> <!-- Boris -->
+  				<select class="form-control" ng-model="courseFilter.selected" ng-options="course.id as course.name for course in selectableCourseList" ng-class="{ hidden : (appviewstate != 'sessions') }"></select> <!-- Boris -->
 			</div>
 		</div>
 		<div class="container" ng-class="{compare: compareToggle}" style="max-width:100%">

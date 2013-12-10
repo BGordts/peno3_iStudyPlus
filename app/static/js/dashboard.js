@@ -27,7 +27,7 @@ angular.module('app', ['ngRoute', 'ngTouch', 'ui.utils', 'ui.bootstrap.transitio
 	$scope.$emit('routeChange', $routeParams);
 	$scope.appViewState = $routeParams.appviewstate;
 
-	$scope.courselist = [{"a": "b"}];
+	//$scope.courselist = [{"a": "b"}];
 }).
 
 controller('appCtrl', function ($scope, serverConnectionService, $location) {
@@ -67,16 +67,26 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
 		if (data.appviewstate != $scope.appviewstate || $scope.appviewstate == undefined) {
 			$scope.appviewstate = data.appviewstate;
 		}
+		
+		//In sessionsview, make sure the correct course is selected
+		var urlParameter = parseInt(($location.search()).course);	
+		
+		if(undefined == urlParameter || isNaN(urlParameter)){
+			$scope.courseFilter.selected = 0;
+		}
+		else{
+			$scope.courseFilter.selected = urlParameter;
+		}
 	}
 
 	$scope.courselist = [];
 	$scope.courselistcompare = [];
+	$scope.selectableCourseList = [];
 	$scope.sessionlist = null;
 	$scope.name = "";
 	$scope.commonStudents = [];
 	
-	$scope.courseFilter = {selected: parseInt(($location.search()).course)};
-	$scope.protput = ($location.search()).course;
+	$scope.courseFilter = {selected: -1};
 	
 	$scope.init = function(){		
 		serverConnectionService.getCoStudents(function(data){
@@ -87,35 +97,44 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
 		serverConnectionService.getCurrentUser(function(data){
 			$scope.loggedInProfile = data;
 		})
+		
+		//Fill in the course list selector. First get the courses:
+		serverConnectionService.getCourses(1, function(data){
+			//$scope.courselist = data;
+			var courseList = data;
+			
+			//Now add the option to see the sessions of all the courses
+			courseList.unshift({"id":0, "name": "Alle vakken"})
+			
+			$scope.selectableCourseList = courseList;
+		});
 	}
 	
-	$scope.$watch('viewedProfile', function (newVal, oldVal) {		
-		//Voeg nog een exta if toe om te zien of het gegeven object neit leeg is :)
-		if(undefined == newVal || newVal == null || Object.keys(newVal).length == 0){
-			console.log("hey fa" + newVal + " " + oldVal);
-		}
-		else{							
-			serverConnectionService.getCoursesSimple($scope.viewedProfile.userID, function(data){
-				$scope.courselist = data;
-				
-				console.log("lolo");
-				console.log($scope.courseFilter);
-			});
-		}
-    });
+//	$scope.$watch('viewedProfile', function (newVal, oldVal) {		
+//		//Voeg nog een exta if toe om te zien of het gegeven object neit leeg is :)
+//		if(undefined == newVal || newVal == null || Object.keys(newVal).length == 0){
+//			console.log("hey fa" + newVal + " " + oldVal);
+//		}
+//		else{							
+//			serverConnectionService.getCoursesSimple($scope.viewedProfile.userID, function(data){
+//				$scope.courselist = data;
+//				
+//				console.log("lolo");
+//				console.log($scope.courseFilter);
+//			});
+//		}
+//    });
 	
 	/**
 	 * Filter which sessions are displayed
 	 */
-	$scope.courseFilterFunction = function(session){
-		console.log("FUCK FUCK FUCK "  + $scope.courseFilter.selected);
-		if(undefined == $scope.courseFilter.selected || isNaN($scope.courseFilter.selected)){
-			//When no sessions are selected, show all the sessions
+	$scope.courseFilterFunction = function(session){		
+		if($scope.courseFilter.selected == 0){
 			return true;
 		}
-		else{			
+		else{
 			return session.sessionData.course_id == $scope.courseFilter.selected;
-		}		
+		}
 	}
 })
 
@@ -164,10 +183,8 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
 			});
 		}
     });
-	
+
 	//$scope.courseFilter.selected = parseInt(($location.search()).course);
-	
-	console.log("HEY HEY HEY");
 })
 
 /**
