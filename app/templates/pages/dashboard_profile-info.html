@@ -447,72 +447,108 @@
     <!--start panel body-->
     <div id="[['session' + $index]]" class="" collapse="isCollapsed.value">
         <div class="panel-body" ng-if="tracked">
-            <div class="row">
-                <div class="col-md-6 is_no-padding">
-                    <div class="col-sm-6">licht
-						<div>light svg</div>
-                        <div class="is_row-square">
-                            <div class="pull-left">
-                                <div class="is_square-40">[[session.sessionData.sessionIll]]</div>
-                            </div>
-                        </div>
-                        <div class="clearfix xs-visible"></div>
-                    </div>
-                    <div class="col-sm-6">geluid
-						<div>sound svg</div>
-                        <div class="is_row-square">
-                            <div class="pull-left">
-                                <div class="is_square-40">[[session.sessionData.sessionSound]]</div>
-                            </div>
-                        </div>
-                        <div class="clearfix xs-visible"></div>
-                    </div>
-                </div>
-                <div class="col-md-6 is_no-padding">
-                    <div class="col-sm-6">temperatuur
-                        <div>thermometer svg</div>
-                        <div class="is_row-square">
-                            <div class="pull-left">
-                                <div class="is_square-40">[[session.sessionData.sessionTemp]]</div>
-                            </div>
-                        </div>
-                        <div class="clearfix xs-visible"></div>
-                    </div>
-                    <div class="col-sm-6">luchtvochtigheid
-                        <div>water drop svg</div>
-                        <div class="is_row-square">
-                            <div class="pull-left">
-                                <div class="is_square-40">[[session.sessionData.sessionHum]]</div>
-                            </div>
-                        </div>
-                        <div class="clearfix xs-visible"></div>
-                    </div>
-                </div>
-            </div>
-            <!--end sensor data-->
-            <div class="row">
-                <div class="col-sm-12">Focuspercentage</div>
-                <div class="col-sm-6">efficiëntie%
-                    <div class="is_row-square">
-                        <div class="pull-left">
-                            <div class="is_square-40">[[session.sessionData.sessionFocus]]</div>
-                        </div>
-                    </div>
-                    <div class="clearfix xs-visible"></div>
-                </div>
-                <div class="col-sm-6">pauze%
-                    <div class="is_row-square">
-                        <div class="pull-left">
-                            <div class="is_square-40">best</div>
-                        </div>
-                        <div class="pull-left">
-                            <div class="is_square-40">worst</div>
-                        </div>
-                    </div>
-                    <div class="clearfix xs-visible"></div>
-                </div>
-            </div>
-            <!--end camera stats-->
+
+<div class="pull-left graphpanel" >
+
+	<div class="is_square name" >Licht</div>
+	<div class="is_square-80">[[session.sessionData.sessionIll]]</div>
+    <static-graph class="chart" chartdata="[
+            {
+			x: 0.2,
+			y: 0.3
+		},
+            {
+			x: 0.3,
+			y: undefined
+		},
+            {
+			x: 0.4,
+			y: 0.12
+		}
+    ]">
+	</static-graph>
+</div>
+<div class="pull-left graphpanel" >
+
+	<div class="is_square name" >Geluid</div>
+	<div class="is_square-80">[[session.sessionData.sessionSound]]</div>
+    <static-graph class="chart" chartdata="[
+            {
+			x: 0.2,
+			y: 0.3
+		},
+            {
+			x: 0.3,
+			y: undefined
+		},
+            {
+			x: 0.4,
+			y: 0.12
+		}
+    ]">
+	</static-graph>
+</div>
+<div class="pull-left graphpanel" >
+
+	<div class="is_square name" >Temperatuur</div>
+	<div class="is_square-80">[[session.sessionData.sessionTemp]]</div>
+    <static-graph class="chart" chartdata="[
+            {
+			x: 0.2,
+			y: 0.3
+		},
+            {
+			x: 0.3,
+			y: undefined
+		},
+            {
+			x: 0.4,
+			y: 0.12
+		}
+    ]">
+	</static-graph>
+</div>
+<div class="pull-left graphpanel" >
+
+	<div class="is_square name" >Luchtvochtigheid</div>
+	<div class="is_square-80">[[session.sessionData.sessionHum]]</div>
+    <static-graph class="chart" chartdata="[
+            {
+			x: 0.2,
+			y: 0.3
+		},
+            {
+			x: 0.3,
+			y: undefined
+		},
+            {
+			x: 0.4,
+			y: 0.12
+		}
+    ]">
+	</static-graph>
+</div>
+<div class="pull-left graphpanel" >
+
+	<div class="is_square name" >Efficiëntie</div>
+	<div class="is_square-80">[[session.sessionData.sessionFocus]]</div>
+    <static-graph class="chart" chartdata="[
+            {
+			x: 0.2,
+			y: 0.3
+		},
+            {
+			x: 0.3,
+			y: undefined
+		},
+            {
+			x: 0.4,
+			y: 0.12
+		}
+    ]">
+	</static-graph>
+</div>
+
         </div>
         <!--panelbody-->
     </div>

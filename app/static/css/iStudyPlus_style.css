@@ -311,9 +311,6 @@
 	float: left;
 	height: 43px;
 }
-	.breadcrumb li:last-child span {
-	cursor: default !important;
-}
 	.breadcrumb span {
 	height: inherit;
 	float: left;
@@ -824,5 +821,22 @@ canvas {
 	.is_content-actions select {
 	background-color: transparent;
 	height: 42px;
+	color: #333;
+}
+	.graphpanel {
+	background-color: #eee;
+	border: 1px solid #ccc;
+	min-width: 320px;
+	-webkit-box-sizing: content-box;
+	-moz-box-sizing: content-box;
+	box-sizing: content-box;
+	margin: 10px;
+}
+	.graphpanel .name {
+	float: left;
+	width: 240px;
+	height: 80px;
+	margin: 0;
 	color: #fff;
+	background-color: #333;
 }
