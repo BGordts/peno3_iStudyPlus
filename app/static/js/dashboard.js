@@ -87,8 +87,6 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
 		serverConnectionService.getCurrentUser(function(data){
 			$scope.loggedInProfile = data;
 		})
-		
-		//$scope.courseFilter.selected = parseInt(($location.search()).course);
 	}
 	
 	$scope.$watch('viewedProfile', function (newVal, oldVal) {		
@@ -166,6 +164,10 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
 			});
 		}
     });
+	
+	//$scope.courseFilter.selected = parseInt(($location.search()).course);
+	
+	console.log("HEY HEY HEY");
 })
 
 /**
