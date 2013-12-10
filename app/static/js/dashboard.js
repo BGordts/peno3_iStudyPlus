@@ -110,7 +110,7 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
 				$scope.courselist = data;
 				
 				//Fill in the options for the courseselector in the sessionspanel
-				$scope.selectableCourseList = data;
+				$scope.selectableCourseList = angular.copy(data);
 				
 				//Now add the option to see the sessions of all the courses
 				$scope.selectableCourseList.unshift({"id":0, "name": "Alle vakken"})

@@ -420,7 +420,7 @@
                     <div class="is_square-80">[[session.sessionData.feedback_score]]</div>
                 </div>
                 <div class="pull-right" ng-if="sessionType=='live'">
-                    <div class="is_square-80">efficiëntiescore</div>
+                    <div class="is_square-80">[[session.sessionData.sessionEff]]</div>
                 </div>
             </div>
             <div class="clearfix xs-visible"></div>
@@ -453,53 +453,40 @@
         <div class="panel-body" ng-if="tracked">
             <div class="row">
                 <div class="col-md-6 is_no-padding">
-                    <div class="col-sm-6">light
-                        <div>lamp svg</div>
+                    <div class="col-sm-6">licht
+						<div>light svg</div>
                         <div class="is_row-square">
                             <div class="pull-left">
-                                <div class="is_square-40">best</div>
-                            </div>
-                            <div class="pull-left">
-                                <div class="is_square-40">worst</div>
+                                <div class="is_square-40">[[session.sessionData.sessionIll]]</div>
                             </div>
                         </div>
                         <div class="clearfix xs-visible"></div>
                     </div>
-                    <div class="col-sm-6">sound
-                        <div>speaker svg</div>
+                    <div class="col-sm-6">geluid
+						<div>sound svg</div>
                         <div class="is_row-square">
                             <div class="pull-left">
-                                <div class="is_square-40">best</div>
-                            </div>
-                            <div class="pull-left">
-                                <div class="is_square-40">worst</div>
+                                <div class="is_square-40">[[session.sessionData.sessionSound]]</div>
                             </div>
                         </div>
                         <div class="clearfix xs-visible"></div>
                     </div>
                 </div>
                 <div class="col-md-6 is_no-padding">
-                    <div class="col-sm-6">temperature
+                    <div class="col-sm-6">temperatuur
                         <div>thermometer svg</div>
                         <div class="is_row-square">
                             <div class="pull-left">
-                                <div class="is_square-40">best</div>
-                            </div>
-                            <div class="pull-left">
-                                <div class="is_square-40">worst</div>
-                                <static-graph chartdata="chartdata"></static-graph>
+                                <div class="is_square-40">[[session.sessionData.sessionTemp]]</div>
                             </div>
                         </div>
                         <div class="clearfix xs-visible"></div>
                     </div>
-                    <div class="col-sm-6">humidity
+                    <div class="col-sm-6">luchtvochtigheid
                         <div>water drop svg</div>
                         <div class="is_row-square">
                             <div class="pull-left">
-                                <div class="is_square-40">best</div>
-                            </div>
-                            <div class="pull-left">
-                                <div class="is_square-40">worst</div>
+                                <div class="is_square-40">[[session.sessionData.sessionHum]]</div>
                             </div>
                         </div>
                         <div class="clearfix xs-visible"></div>
@@ -508,14 +495,11 @@
             </div>
             <!--end sensor data-->
             <div class="row">
-                <div class="col-sm-12">Cameragegevens</div>
+                <div class="col-sm-12">Focuspercentage</div>
                 <div class="col-sm-6">efficiëntie%
                     <div class="is_row-square">
                         <div class="pull-left">
-                            <div class="is_square-40">best</div>
-                        </div>
-                        <div class="pull-left">
-                            <div class="is_square-40">worst</div>
+                            <div class="is_square-40">[[session.sessionData.sessionFocus]]</div>
                         </div>
                     </div>
                     <div class="clearfix xs-visible"></div>
@@ -533,34 +517,6 @@
                 </div>
             </div>
             <!--end camera stats-->
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="pull-left">
-                        <h2>Title</h2>
-                    </div>
-                    <div class="pull-right">select x-axis</div>
-                    <div class="clearfix xs-visible"></div>
-                    <div>graph met 2 lijnen
-                        <div>
-                        <div>
-                            <!--<select>
-                                <option ng-model="graphOptions" value="option1">option1
-                                </option>
-                                <option ng-model="graphOptions" value="option2">option2
-                                </option>
-                                <option ng-model="graphOptions" value="option3">option3
-                                </option>
-                            </select>-->
-
-							<select ng-model="selectedItem" ng-options="item as item.name for item in items"></select>
-
-                            <dynamic-graph chartdata="chartdata"></dynamic-graph>
-                            <!--<bar-chart height="300" data="data" hovered="hovered(args)></bar-chart>-->
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--variable graph-->
         </div>
         <!--panelbody-->
     </div>
