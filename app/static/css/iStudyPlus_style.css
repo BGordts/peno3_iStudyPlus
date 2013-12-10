@@ -174,7 +174,6 @@
 	-webkit-transition: 0ms;
 	transition: 0ms;
 	padding-top: 55px;
-	margin: 0 15px 0 15px;
 }
 	@media (min-width: 768px) {
 	.is_content {
@@ -343,6 +342,7 @@
 }
 	.is_content-actions .btn-group {
 	float: right;
+	background-color: #ff8417;
 	-webkit-transition: margin-right 350ms;
 	transition: margin-right 350ms;
 }
@@ -452,7 +452,7 @@
 	.is_follow_sidepanel_style {
 	-webkit-transition: 350ms;
 	transition: 350ms;
-	margin-right: 265px;
+	margin-right: 250px;
 }
 	@media (max-width: 768px) {
 	.is_follow_sidepanel_style {
@@ -633,13 +633,14 @@
 .fi-history {
 	margin: -1px -8px;
 }
-	.panel-heading .btn-group-vertical:first-child .btn {
-	height: 33.33%;
+	.panel-heading .btn-group-vertical:first-child .btn,
+form .btn-group-vertical .btn {
+	height: 50%;
 }
-	.panel-heading .btn-group-vertical .btn-info:not(:hover):not(.active),
-.panel-heading .btn-group-vertical .btn-success:not(:hover):not(.active),
+	.panel-heading .btn-group-vertical .btn-success:not(:hover):not(.active),
+form .btn-group-vertical .btn-success:not(:hover):not(.active),
 .panel-heading .btn-group-vertical .btn-warning:not(:hover):not(.active),
-.panel-heading .btn-group-vertical .btn-danger:not(:hover):not(.active) {
+form .btn-group-vertical .btn-warning:not(:hover):not(.active) {
 	background-color: #333;
 	border: none;
 }
@@ -708,12 +709,14 @@
 	border-top-color: #fff;
 }
 	#createSession-btn + .dropdown-menu {
-	width: 500px;
+	width: 400px;
 	padding: 10px 10px 10px 50px;
+	background-color: #fff;
 }
 	@media (max-width: 768px) {
 	#createSession-btn + .dropdown-menu {
 	max-width: 100%;
+	position: relative;
 	}
 }
 	.settingsform,
@@ -777,7 +780,8 @@ canvas {
 	.rating-wrap {
 	max-width: 400px;
 	position: relative;
-	margin: auto;
+	margin: 20px auto;
+	height: 32px;
 }
 	.rating-wrap span:first-child {
 	position: absolute;
@@ -799,4 +803,26 @@ canvas {
 	color: #333;
 	background-color: transparent;
 	cursor: default;
+}
+	body > .row {
+	margin: 0;
+}
+	.dropdown-menu form > .form-control,
+.dropdown-menu form > .btn-group,
+.dropdown-menu form > .input-group {
+	margin-bottom: 10px;
+}
+	.input-group-btn {
+	vertical-align: top;
+}
+	@media (max-width: 768px) {
+	.dropdown-menu form {
+	overflow: auto;
+	max-height: 320px;
+	}
+}
+	.is_content-actions select {
+	background-color: transparent;
+	height: 42px;
+	color: #fff;
 }

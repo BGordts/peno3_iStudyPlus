@@ -52,12 +52,12 @@ angular.module('ui.bootstrap.rating', [])
   };
 
   $scope.reset = function() {
-    $scope.val = angular.copy($scope.value);
+    $scope.val = $scope.value == null ? 0 : angular.copy($scope.value);
     $scope.onLeave();
   };
 
   $scope.$watch('value', function(value) {
-    $scope.val = value;
+    $scope.val = value == null ? 0 : value;
   });
 
   $scope.readonly = false;

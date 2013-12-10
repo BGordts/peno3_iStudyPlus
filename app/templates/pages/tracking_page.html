@@ -40,25 +40,17 @@
 	<svg class="icon is-x10" viewBox="0 0 32 32">
 		<use xlink:href="#clock-icon"></use>
 	</svg>
-	<div class="btn-group">
+	<div class="btn-group" ng-if="tracking.state != 'end'" >
 		<button type="button" class="btn btn-lg btn-warning" ng-if="tracking.state == 'active'" ng-click="tracking.state = 'pause'">Pauze</button>
 		<button type="button" class="btn btn-lg btn-success" ng-if="tracking.state == 'pause'" ng-click="tracking.state = 'active'">Hervatten</button>
-		<button type="button" class="btn btn-lg btn-danger" ng-if="tracking.state != 'end'" ng-click="tracking.state = 'end'">Einde</button>
+		<button type="button" class="btn btn-lg btn-danger" ng-click="tracking.state = 'end'">Einde</button>
 	</div>
 	<div ng-if="tracking.state == 'end'" ng-cloak>
 		<h2>Hoe tevreden ben je over je sessie?</h2>
-		<div class="rating-wrap">
-			<rating value="rate" state-on="'glyphicon glyphicon-stop'" state-off="'glyphicon glyphicon-minus'" max="10" readonly="false" on-hover="hoveringOver(value)" on-leave="leavereating()"></rating>
-			<div class="progress">
-				<div class="progress-bar" ng-class="{'progress-bar-danger': percent<30, 'progress-bar-warning': percent>=30 && percent<70, 'progress-bar-success': percent>=70}" role="progressbar" aria-valuenow="[[percent]]" aria-valuemin="0" aria-valuemax="100" style="width: [[percent]]%">
-					<span class="sr-only">[[percent]]% Complete (success)</span>
-				</div>
-			</div>
-			<span class="badge" ng-show="overStar && !isReadonly">[[percent]]%</span>
-		</div>
+		<rating value="rate" state-on="'glyphicon glyphicon-stop'" state-off="'glyphicon glyphicon-minus'" max="10" readonly="false"></rating>
 		<div class="btn-group0">
 			<button type="button" class="btn btn-lg btn-success" ng-href="/app/[['hallo']]/dashboard">Opslaan</button>
-		<tweet text="'Ik heb net een sessie afgewerkt met #iStudy+'" tweeturl="'www.istudyplus.tk/app/' + '/dashboard'" ng-if="trackingState == 'end'"></tweet>
+			<tweet text="'Ik heb net een sessie afgewerkt met #iStudy+'" tweeturl="'www.istudyplus.tk/app/' + loggedInProfile.userID + '/dashboard'"></tweet>
 		</div>
 	</div>
 

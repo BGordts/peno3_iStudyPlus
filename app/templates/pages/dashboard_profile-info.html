@@ -389,16 +389,12 @@
     <div class="row panel-heading" ng-class="{edit : panelState=='edit'}" ng-switch="panelState">
         <!--start left menu-->
         <div class="btn-group-vertical menu-left">
-            <label class="btn btn-info" ng-class="{active : sessionType=='future'}">
-                <input type="radio" ng-model="sessionType" value="future">
-                <span class="fi-future"></span>
-            </label>
             <label class="btn btn-success" ng-class="{active : sessionType=='live'}">
-                <input type="radio" ng-model="sessionType" value="live">
+                <input type="radio" ng-model="sessionType" value="live" disabled>
                 <span class="glyphicon glyphicon-play"></span>
             </label>
             <label class="btn btn-warning" ng-class="{active : sessionType=='past'}">
-                <input type="radio" ng-model="sessionType" value="past">
+                <input type="radio" ng-model="sessionType" value="past" disabled>
                 <span class="fi-history"></span>
             </label>
         </div>
@@ -669,26 +665,6 @@
 			</div>
 		</div>
 		<div class="container" ng-class="{compare: compareToggle}" style="max-width:100%">
-			<div class="col-sm-4 input-group" id="starttimepicker">
-										<input type="text" class="form-control" placeholder="hh:mm" ng-disabled="sessionType == 'live'">
-										<span class="dropdown input-group-btn" ng-controller="TimepickerDemoCtrl">
-											<button type="button" class="dropdown-toggle btn btn-default" ng-disabled="sessionType == 'live'" id="[[session.id + 'starttime']]">
-												<span class="glyphicon glyphicon-time"></span>
-											</button>
-											<div class="dropdown-menu">
-												<div ng-model="mytime" ng-change="changed()" class="well well-small" style="display:inline-block;">
-													<timepicker hour-step="1" minute-step="5" show-meridian="false"></timepicker>
-												</div>
-											</div>
-										</span>
-									</div>
-			<div class="btn-group">
-										<label class="btn btn-primary" ng-class="{active : activityType=='class'}">
-											<input type="radio" ng-model="activityType" value="class" name="activityType">Les</label>
-										<label class="btn btn-primary" ng-class="{active : activityType=='study'}">
-											<input type="radio" ng-model="activityType" value="study" name="activityType">Studie</label>
-									</div>
-									<div class="clearfix xs-visible"></div>
 			<ng-view></ng-view>
 		</div>
 		<div class="is_footer">

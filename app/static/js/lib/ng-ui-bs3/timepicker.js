@@ -143,7 +143,7 @@ angular.module('ui.bootstrap.timepicker', ['ui.bootstrap.position'])
     link: function(scope, element, attrs, ctrls) { // ngModel
       // from date
       //
-      var timepickerCtrl = ctrls[0], ngModel = ctrls[1];
+      var /*timepickerCtrl = ctrls[0],*/ ngModel = ctrls[1];
       // end
 
       if ( !ngModel ) {
@@ -536,9 +536,9 @@ function ($compile, $parse, $document, $position, dateFilter, timepickerPopupCon
       };
 
       // popup element used to display calendar
-      var popupEl = angular.element('<timepicker-popup-wrap ng-model="max">[[max]]<timepicker></timepicker></timepicker-popup-wrap>');
+      var popupEl = angular.element('<timepicker-popup-wrap>[[max]]<div ng-model="STP.myStartTime"><timepicker hour-step="5" minute-step="20" show-meridian="false"></timepicker></div></timepicker-popup-wrap>');
       popupEl.attr({
-        'ng-model': 'myStartTime',
+        'ng-model': 'STP.myStartTime',
         'ng-change': 'dateSelection()'
       });
       var datepickerEl = popupEl.find('timepicker');
