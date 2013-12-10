@@ -777,7 +777,8 @@ canvas {
 	.rating-wrap {
 	max-width: 400px;
 	position: relative;
-	margin: auto;
+	margin: 20px auto;
+	height: 32px;
 }
 	.rating-wrap span:first-child {
 	position: absolute;

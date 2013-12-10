@@ -118,7 +118,7 @@
 											</span>
 										</div>
 										<div class="col-md-4 input-group" id="starttimepicker">
-											<input type="text" class="form-control" timepicker-popup="dd/MM/yyyy" ng-model="myStartTime" is-open="openedST" min="myStartTime.getHours()" max="myStartTime.getMinutes()" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Sluiten" ng-disabled="sessionType == 'live'"/>
+											<input type="text" class="form-control" timepicker-popup="dd/MM/yyyy" ng-model="STP.myStartTime" is-open="openedST" min="STP.myStartTime.getHours()" max="STP.myStartTime.getMinutes()" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Sluiten" ng-disabled="sessionType == 'live'"/>
 											<span class="dropdown open input-group-btn">
 												<button type="button" class="btn btn-default" ng-click="openST()" ng-disabled="sessionType == 'live'" id="[[session.id + 'starttime']]">
 													<span class="glyphicon glyphicon-time"></span>
