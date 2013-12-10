@@ -490,6 +490,8 @@ function ($compile, $parse, $document, $position, dateFilter, timepickerPopupCon
     restrict: 'EA',
     require: 'ngModel',
     link: function(originalScope, element, attrs, ngModel) {
+//      scope.hours = ngModel.getHours();
+//      scope.minutes = ngModel.getMinutes();
 
       var closeOnTimeSelection = angular.isDefined(attrs.closeOnTimeSelection) ? scope.$eval(attrs.closeOnTimeSelection) : timepickerPopupConfig.closeOnTimeSelection;
       var dateFormat = attrs.datepickerPopup || timepickerPopupConfig.dateFormat;
@@ -672,4 +674,21 @@ function ($compile, $parse, $document, $position, dateFilter, timepickerPopupCon
       });
     }
   };
+}])
+
+.directive('timeDisplay', [function() {
+	return {
+	  require: 'ngModel',
+	  link: function(scope, element, attrs, ngModelController) {
+		ngModelController.$parsers.push(function(data) {
+		  //convert data from view format to model format
+		  return data; //converted
+		});
+
+		ngModelController.$formatters.push(function(data) {
+		  //convert data from model format to view format
+		  return data; //converted
+		});
+	  }
+	}
 }]);

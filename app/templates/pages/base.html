@@ -39,6 +39,9 @@
 				<i ng-repeat="r in range track by $index" ng-mouseenter="enter($index + 1)" ng-click="rate($index + 1)" ng-class="$index < val && (r.stateOn || 'glyphicon glyphicon-stop') || (r.stateOff || 'glyphicon glyphicon-minus')"></i>
 			</span>
 		</script>
+		<script type="text/ng-template" id="tweet.tpl">
+			<button type="button" ng-click="fbs_click()" class="btn btn-lg btn-info tweet" target="_blank">Tweet this!</button>
+		</script>
 		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 		<!--<script src="{{url_for('static', filename='js/lib/jquery/jquery-1.10.2.js')}}"></script>-->
 		<!-- Include all compiled plugins (below), or include individual files as needed -->

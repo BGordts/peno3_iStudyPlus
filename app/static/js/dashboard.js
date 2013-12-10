@@ -12,13 +12,13 @@ angular.module('app', ['ngRoute', 'ngTouch', 'ui.utils', 'ui.bootstrap.transitio
                     templateUrl: "panels.tpl",
                     //template: "<div>hello world</div>",
                     controller: "viewCtrl"
-            })
-            .when("/user/:page", /* /:user/:appviewstate */ {
-                    redirectTo: function(params) {
-                    	alert('/user/' + params.page);
-                    	return '/user/' + params.page;
-                    }
             });
+//            .when("/user/:page", /* /:user/:appviewstate */ {
+//                    redirectTo: function(params) {
+//                    	alert('/user/' + params.page);
+//                    	return '/user/' + params.page;
+//                    }
+//            });
 })
 
 .controller('viewCtrl', function ($scope, $routeParams) {
@@ -42,7 +42,8 @@ angular.module('app', ['ngRoute', 'ngTouch', 'ui.utils', 'ui.bootstrap.transitio
   	};
   	// Jeroen
 
-  	$scope.trackingState = 'active'
+  	$scope.trackingState = 'active';
+  	$scope.tracking = { state : 'active'};
 
 	$scope.isCollapsedTopnav = { value: true };
 	$scope.isCollapsedSidepanel = { value: false };
@@ -208,6 +209,31 @@ angular.module('app', ['ngRoute', 'ngTouch', 'ui.utils', 'ui.bootstrap.transitio
 
 		return session.sessionData.course_id == $scope.courseFilter.selected;
 	}
+})
+
+.controller('CreateSessionCtrl', function ($scope, $timeout) {
+	$scope.activityType = '';
+	$scope.sessionType = '';
+	$scope.newSession = {
+		sessionType: 'past',
+		activityType: '',
+		course: ''
+	};
+	$scope.myStartTime = new Date();
+  	$scope.openST = function() {
+		$timeout(function() {
+	  		$scope.openedST = true;
+		});
+  	};
+  	$scope.myEndTime = new Date();
+  	$scope.openET = function() {
+		$timeout(function() {
+	  		$scope.openedET = true;
+		});
+  	};
+  	$scope.hstep = 1;
+  	$scope.mstep = 5;
+  	$scope.ismeridian = false;
 })
 
 .controller('coursecontroller', function ($scope, serverConnectionService ) {
@@ -827,7 +853,33 @@ angular.module('app', ['ngRoute', 'ngTouch', 'ui.utils', 'ui.bootstrap.transitio
 	}
 })
 
-//d3.custom = {};
+
+.directive('tweet', function() {
+        return {
+                restrict: 'EA',
+                replace: true,
+                scope: {
+                		text: "=",
+                        hashtags: "=",
+                        tweeturl: "="
+                },
+                templateUrl: "tweet.tpl",
+                controller: function ($scope, $timeout) {
+                	console.log($scope.text);
+					$scope.fbs_click = function() {
+						var twtText = $scope.text;
+						console.log(twtText.length);
+						var maxLength = 140 - ($scope.tweeturl.length + 1);
+						if (twtText.length > maxLength) {
+							twtText = twtText.substr(0, (maxLength - 3)) + '...';
+						}
+						console.log(twtText)
+						var twtLink = 'http://twitter.com/home?status=' + encodeURIComponent(twtText + ' ' + $scope.tweeturl);
+						window.open(twtLink);
+					}
+                }
+        }
+});
 
 
 var DatepickerDemoCtrl = function ($scope, $timeout) {
