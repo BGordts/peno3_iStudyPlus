@@ -78,6 +78,7 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
 	}
 
 	$scope.courselist = [];
+	$scope.courselist2 = [];
 	$scope.courselistcompare = [];
 	$scope.selectableCourseList = [];
 	$scope.sessionlist = null;
@@ -114,6 +115,12 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
 				
 				//Now add the option to see the sessions of all the courses
 				$scope.selectableCourseList.unshift({"id":0, "name": "Alle vakken"})
+			});
+			
+			serverConnectionService.getCourses($scope.viewedProfile.userID, $scope.loggedInProfile.userID, function(data){
+				console.log("de data");
+				console.log(data);
+				$scope.courselist2 = data;
 			});
 		}
     });
@@ -227,17 +234,19 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
 })
 
 .controller('coursecontroller', function ($scope, serverConnectionService ) {
-	$scope.$watch('viewedProfile', function (newVal, oldVal) {		
-		if(undefined == newVal || newVal == null || Object.keys(newVal).length == 0){
-			console.log("hey fa" + newVal + " " + oldVal);
-		}
-		else{								
-			//Get the courses
-			serverConnectionService.getCourses($scope.viewedProfile.userID, function(data){
-				$scope.courselist = data;
-			});
-		}
-    });
+//	$scope.$watch('viewedProfile', function (newVal, oldVal) {		
+//		if(undefined == newVal || newVal == null || Object.keys(newVal).length == 0){
+//			console.log("hey fa" + newVal + " " + oldVal);
+//		}
+//		else{								
+//			//Get the courses
+//			serverConnectionService.getCourses($scope.viewedProfile.userID, $scope.loggedInProfile.userID, function(data){
+//				console.log("de data");
+//				console.log(data);
+//				$scope.courselist = data;
+//			});
+//		}
+//    });
 })
 
 .controller('sessionscontroller', function ($scope, serverConnectionService ) {	
@@ -383,8 +392,8 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
 	}
 	
 	// Get all the courses
-	this.getCourses = function(userid, callback){
-		this.requestData(this.URL_GET_DETAILED_COURSES, {"userID":userid}, function(data){
+	this.getCourses = function(userid1, userid2, callback){
+		this.requestData(this.URL_GET_DETAILED_COURSES, {"userID1":userid1, "userID2":userid2}, function(data){
 			callback(data);
 		})
 	}
@@ -569,12 +578,12 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
 			console.log(attrs);
 			
 			scope.$watch('selectedItem', function (newVal, oldVal) {
-				if(typeof nevVal === "undefined" && newVal == null){
+				if(undefined == newVal || newVal == null || Object.keys(newVal) == 0){
 					console.log("hey fa" + newVal + " " + oldVal);
 				}
 				else{
 					//Download the new sensordata
-					serverConnectionService.getEfficiencyForSensor(scope.viewedProfile.userID, scope.loggedInProfile.userID, newVal.id, scope.course.id, function(sensorData){
+					serverConnectionService.getEfficiencyForSensor(scope.viewedProfile.userID, scope.loggedInProfile.userID, newVal.id, scope.course.user1.id, function(sensorData){
 						scope.chartdata = sensorData;
 					});
 				}
@@ -597,11 +606,14 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
                 "compare": $scope.chartdata2
             };
             $scope.isCollapsed = { value: true };
-			$scope.title = $scope.course.name;
+			$scope.title = $scope.course.user1.name;
 			
-			$scope.user1 = $scope.course.statistics;
+			console.log("de statistieken");
+			console.log($scope.course);
 			
-			$scope.user2 = $scope.course.statistics;
+			$scope.user1 = $scope.course.user1.statistics;
+			
+			$scope.user2 = $scope.course.user2.statistics;
 			//for (var attrname in $scope.course.statistics) { $scope.user1[attrname] = $scope.course.statistics[attrname]; }
 			
 			//$scope.chartdata = {x:0, y:0};

@@ -160,14 +160,23 @@ def getUserCourses():
 
 @app.route('/user/getDetailedCourses')
 def getDetailedUserCourses():
-    userID = request.args['userID']
+    userID1 = request.args['userID1']
+    userID2 = request.args['userID2']
     
     returndict = []
     
-    userCourses = Courses_Users.query.filter_by(user_id=userID).all()
+    userCourses1 = Courses_Users.query.filter_by(user_id=userID1).order_by(Courses_Users.course_id.desc()).all()
+    userCourses2 = Courses_Users.query.filter_by(user_id=userID2).order_by(Courses_Users.course_id.desc()).all()
     
-    for nextUserCourse in userCourses:
-        returndict.append({"id":nextUserCourse.course_id, "name":nextUserCourse.course.course, "statistics":nextUserCourse.courseStatistics.outputData()})
+    for i in range(0, len(userCourses1)):
+        nextUserCourse1 = userCourses1[i]
+        nextUserCourse2 = userCourses2[i]
+        
+        interdict = {}
+        interdict["user1"] = {"id":nextUserCourse1.course_id, "name":nextUserCourse1.course.course, "statistics":nextUserCourse1.courseStatistics.outputData()}
+        interdict["user2"] = {"id":nextUserCourse2.course_id, "name":nextUserCourse2.course.course, "statistics":nextUserCourse2.courseStatistics.outputData()}
+        
+        returndict.append(interdict)
     
     return json.dumps(returndict)
 

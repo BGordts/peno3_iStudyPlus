@@ -486,7 +486,7 @@
 			<dashboardpanel></dashboardpanel>
 		</div>
 		<div class="panel-group" id="accordion" ng-switch-when="courses" ng-controller="coursecontroller">
-			<coursepanel ng-repeat="course in courselist"></coursepanel>
+			<coursepanel ng-repeat="course in courselist2"></coursepanel>
 		</div>
 		<div class="panel-group" id="accordion" ng-switch-when="sessions" ng-controller="sessionscontroller">
 			<sessionpanel ng-repeat="session in sessionlist | filter:courseFilterFunction"></sessionpanel> <!-- Boris (session.sessionData.course_id == courseFilter.selected) -->
@@ -555,14 +555,7 @@
 				<img src="{{url_for('static', filename='footer-top.svg')}}"></img>
 			</div>
 			<div class="container is_no-padding" style="max-width:100%">
-				<div class="col-sm-6 is_no-padding">
-					<div class="col-xs-6">logo</div>
-					<div class="col-xs-6">sociaal</div>
-				</div>
-				<div class="col-sm-6 is_no-padding">
-					<div class="col-xs-6">over</div>
-					<div class="col-xs-6">contact</div>
-				</div>
+				<a href="https://github.com/BGordts/peno3_iStudyPlus">Check us on Github!</a>
 				<div class="clearfix xs-visible"></div>
 				<div class="is_legal">Copyright 2013 - iStudy+</div>
 			</div>

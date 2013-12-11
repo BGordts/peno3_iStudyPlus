@@ -9,7 +9,7 @@ HOST = "http://localhost:5000"
 #Remote: http://54.200.177.96
 
 #The identifier of this device
-DEVICE_KEY = "umoeder"
+DEVICE_KEY = "pepe"
 
 #Sensors
 SENSOR_ILLUMINATION = "illumination"
@@ -26,7 +26,7 @@ def postSensorData(sensor, value):
     html = response.read()
     print html
 
-for i in range(0,20):
+for i in range(0,15):
     print i
     postSensorData(SENSOR_FOCUS, random.randint(0,1))
     postSensorData(SENSOR_HUMIDITY, random.randint(200,800))
