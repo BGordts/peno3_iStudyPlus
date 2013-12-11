@@ -621,11 +621,13 @@
 	.btn-group-vertical.menu-right {
 	background-color: #333;
 	right: -41px;
-	-webkit-transition: right 350ms;
-	transition: right 350ms;
+	opacity: 0;
+	-webkit-transition: right 350ms, opacity 350ms;
+	transition: right 350ms, opacity 350ms;
 }
 	.edit .btn-group-vertical.menu-right {
 	right: -1px;
+	opacity: 1;
 }
 	.fi-future,
 .fi-history {

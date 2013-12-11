@@ -107,6 +107,8 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
 				//Fill in the courselist
 				$scope.courselist = data;
 				
+				 $scope.sessionCourses = { courses : data };
+				
 				//Fill in the options for the courseselector in the sessionspanel
 				$scope.selectableCourseList = angular.copy(data);
 				
@@ -647,13 +649,22 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
                 	
                 		console.log("searchfilter: ");
                 		console.log($scope.courseFilter);
-                        $scope.panelState = "view";
-                        $scope.sessionType = "live";
+                        
                         $scope.data = {headerdata: {activityType: "class", sessionID: "5"}}; //Boris
                         $scope.course = "analyse";
                         console.log("the il: ");
                         console.log($scope.session.sessionData.sessionIll);
                         $scope.tracked = $scope.session.sessionData.sessionIll != 0;
+                        
+                        $scope.panelState = "view";
+                        
+                        if($scope.tracked){
+                        	$scope.sessionType = "live";
+                        } else{
+                        	$scope.sessionType = "past";
+                        }
+                        
+                        
                         
                         $scope.session.formattedStartDate = moment($scope.session.sessionData.start_date).format('DD/MM/YYYY')
                         $scope.session.formattedStartTime = moment($scope.session.sessionData.start_date).format('HH:mm')
@@ -677,25 +688,80 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
                         $scope.selectedItem = null;
 
 
-                        $scope.savethis = "saveedit" + $scope.data.headerdata.sessionID;
-                        $scope.saveid = "emitsave" + $scope.data.headerdata.sessionID;
+                        $scope.savethis = "saveedit" + $scope.session.sessionID;
+                        $scope.saveid = "emitsave" + $scope.session.sessionID;
 
                         console.log($scope.savethis);
                         $scope.save = function() {
 		                    console.log("save");
 		                    $scope.$broadcast($scope.savethis);
 		                    $scope.panelState='view';
+		                    
+		                    $scope.session.sessionData.feedback_score = $scope.session.sessionData.feedback_score/10;
+		                    
+		                    var description = $scope.session.sessionData.description;
+                        	var sessionID = $scope.session.sessionID;
+                        	var courseID = $scope.session.sessionData.course_id;
+                        	var feedback = $scope.session.sessionData.feedback_score;
+                        	
+                        	if($scope.tracked){
+                        		serverConnectionService.sessionModifyTracked(sessionID, description, courseID,function(data){
+                            		console.log("saved!");
+                            		console.log(data);
+                            	});
+                        	} else{
+                        		console.log("is dit een date:");
+                        		console.log($scope.session);
+                        		console.log($scope.session.sessionData.start_date);
+                        		console.log($scope.session.formattedStartTime);
+                        		console.log($scope.session.formattedEndTime);
+                        		console.log(feedback);
+                        		
+                        		  var theDate = moment($scope.session.sessionData.start_date);
+                        		  
+                        		  if(isNaN($scope.session.formattedStartTime)){
+                        			  var stHour = parseInt(("" + $scope.session.formattedStartTime).substring(0,2));
+    	                  			  var stMinute = parseInt(("" + $scope.session.formattedStartTime).substring(3,5));
+                        		  } else{
+                        			  var stHour = parseInt(("" + $scope.session.formattedStartTime).substring(0,2));
+    	                  			  var stMinute = parseInt(("" + $scope.session.formattedStartTime).substring(2,4));
+                        		  }
+                        		  
+                        		  if(isNaN($scope.session.formattedEndTime)){
+                        			  var etHour = parseInt(("" + $scope.session.formattedEndTime).substring(0,2));
+    	                  			  var etMinute = parseInt(("" + $scope.session.formattedEndTime).substring(3,5));
+                        		  } else{
+                        			  var etHour = parseInt(("" + $scope.session.formattedEndTime).substring(0,2));
+    	                  			  var etMinute = parseInt(("" + $scope.session.formattedEndTime).substring(2,4));
+                        		  }
+
+	                  			  var startCopy = moment(theDate);
+	                  			  startCopy.hours(stHour);
+	                  			  startCopy.minutes(stMinute);
+	                  			  
+	                  			  var endCopy = moment(theDate);
+	                  			  endCopy.hours(etHour);
+	                  			  endCopy.minutes(etMinute);
+	                  			  
+	                  			  console.log(startCopy.format("dddd, MMMM Do YYYY, h:mm:ss a"));
+	                  			  console.log(endCopy.format("dddd, MMMM Do YYYY, h:mm:ss a"));
+                        		
+                        		serverConnectionService.sessionModifyUntrackedTracked(sessionID, description, courseID, feedback, startCopy.valueOf(), endCopy.valueOf(), function(data){
+                            		console.log("saved!");
+                            		console.log(data);
+                            	});
+                        	}        
                         };
-			            $scope.$on($scope.saveid, function(event, data) {console.log("remit"); console.log(data); $scope.data.headerdata = data})
+                        $scope.$on($scope.saveid, function(event, data) {console.log("remit"); console.log(data); $scope.session = data})
 			            $scope.cancel = function() {
 			                                $scope.panelState='view';
 			            };
 			            $scope.delete = function() {
-			            	console.log("please delete");
-			            					serverConnectionService.sessionDeleteUntracked($scope.session.sessionID, function(data){
-			            						console.log("Deleted!");
-			            						location.reload();
-			            					})
+//			            	console.log("please delete");
+//			            					serverConnectionService.sessionDeleteUntracked($scope.session.sessionID, function(data){
+//			            						console.log("Deleted!");
+//			            						location.reload();
+//			            					})
 			            };
 			            
 			            $scope.collapseController = function(){
@@ -706,24 +772,6 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
 			            		$scope.chartdata = data;
 			            	})
 			            }
-			            
-			            $scope.saveChanges = function(){
-                        	console.log($scope.description);
-                        	sessionID = 1;
-                        	courseID = 1;
-                        	
-                        	if($scope.tracked){
-                        		serverConnectionService.sessionModifyTracked(sessionID, $scope.description, courseID,function(data){
-                            		console.log("saved!");
-                            		console.log(data);
-                            	});
-                        	} else{
-                        		serverConnectionService.sessionModifyUntrackedTracked(sessionID, $scope.description, courseID, feedback, startDate, endDate, function(data){
-                            		console.log("saved!");
-                            		console.log(data);
-                            	});
-                        	}                        	
-                        }
                 }
         }
 })
@@ -734,19 +782,20 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
                 replace: true,
                 scope: {
                                 sessiontype: "=",
-                        editdata: "="
+                        editdata: "=",
+                        courses: "="
                 },
                 templateUrl: "sessionEdit.tpl",
                 link: function (scope, element, attrs) {
                         scope.editeddata = angular.copy(scope.editdata);
+                        scope.editeddata.sessionData.feedback_score = scope.editeddata.sessionData.feedback_score * 10;
+                        
+                        console.log("lescope");
+                        console.log(scope);
 
-                        scope.lol = "kut" + 'endtime';
-
-                        scope.$watch(scope.lol, function (newVal, oldVal) {
-                            console.log(" JAAAAAAA ");
-                    });
                 },
                 controller: function ($scope, $timeout, serverConnectionService) {
+                		
                 		$scope.description = "";
                         // Datepicker
                         //

@@ -42,16 +42,16 @@ class UserSession(db.Model):
     sessionFocus = db.Column(db.Float)
     sessionHum = db.Column(db.Float)
     
-    def __init__(self, user, course , description , feedback_text = None, start_date =None, end_date=None):
+    def __init__(self, user, course , description , feedback_score = None, start_date =None, end_date=None):
         self.description = description
-        self.feedback_text = feedback_text
+        self.feedback_text = None
         self.user = user
         self.course = course
         self.pauses = json.dumps([])
         #self.paused = False
         self.start_date = start_date
         self.end_date = end_date
-        self.feedback_score = 0
+        self.feedback_score = feedback_score
         self.sessionEff = 0
         self.sessionTemp = 0
         self.sessionIll = 0
