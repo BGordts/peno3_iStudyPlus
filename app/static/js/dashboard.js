@@ -312,6 +312,9 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
 	this.URL_SESSION_POST_FEEDBACK = '/session/postFeedback';
 	this.URL_SESSION_END = '/session/end';
 	this.URL_SESSION_COMMIT = '/session/commit';
+	this.URL_MODIFY_TRACKED_SESSION = '/session/modifyTSession';
+	this.URL_MODIFY_UNTRACKED_SESSION = '/session/modifyUSession';
+	this.URL_SESSION_DELETE = '/session/deleteUSession';
 	
 	// Basic method: call the server with the specified url, parameters and callback
 	this.requestData = function(path, parameters, callback){
@@ -463,6 +466,24 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
 	
 	this.sessionCommit = function(callback){
 		this.requestData(this.URL_SESSION_COMMIT, {}, function(data){
+			callback(data);
+		})
+	}
+	
+	this.sessionModifyTracked = function(sessionID, description, courseID,callback){
+		this.requestData(this.URL_MODIFY_TRACKED_SESSION, {"sessionID":sessionID, "description":description, "courseID":courseID}, function(data){
+			callback(data);
+		})
+	}
+	
+	this.sessionModifyUntrackedTracked = function(sessionID, description, courseID, feedback, startDate, endDate, callback){
+		this.requestData(this.URL_MODIFY_UNTRACKED_SESSION, {"sessionID":sessionID, "description":description, "courseID":courseID, "feedback":feedback, "startDate":startDate, "endDate":endDate}, function(data){
+			callback(data);
+		})
+	}
+	
+	this.sessionDeleteUntracked = function(sessionID,callback){
+		this.requestData(this.URL_SESSION_DELETE, {"sessionID":sessionID}, function(data){
 			callback(data);
 		})
 	}
@@ -630,7 +651,9 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
                         $scope.sessionType = "live";
                         $scope.data = {headerdata: {activityType: "class", sessionID: "5"}}; //Boris
                         $scope.course = "analyse";
-                        $scope.tracked = true;
+                        console.log("the il: ");
+                        console.log($scope.session.sessionData.sessionIll);
+                        $scope.tracked = $scope.session.sessionData.sessionIll != 0;
                         
                         $scope.session.formattedStartDate = moment($scope.session.sessionData.start_date).format('DD/MM/YYYY')
                         $scope.session.formattedStartTime = moment($scope.session.sessionData.start_date).format('HH:mm')
@@ -668,7 +691,11 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
 			                                $scope.panelState='view';
 			            };
 			            $scope.delete = function() {
-			                                //Boris
+			            	console.log("please delete");
+			            					serverConnectionService.sessionDeleteUntracked($scope.session.sessionID, function(data){
+			            						console.log("Deleted!");
+			            						location.reload();
+			            					})
 			            };
 			            
 			            $scope.collapseController = function(){
@@ -679,6 +706,24 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
 			            		$scope.chartdata = data;
 			            	})
 			            }
+			            
+			            $scope.saveChanges = function(){
+                        	console.log($scope.description);
+                        	sessionID = 1;
+                        	courseID = 1;
+                        	
+                        	if($scope.tracked){
+                        		serverConnectionService.sessionModifyTracked(sessionID, $scope.description, courseID,function(data){
+                            		console.log("saved!");
+                            		console.log(data);
+                            	});
+                        	} else{
+                        		serverConnectionService.sessionModifyUntrackedTracked(sessionID, $scope.description, courseID, feedback, startDate, endDate, function(data){
+                            		console.log("saved!");
+                            		console.log(data);
+                            	});
+                        	}                        	
+                        }
                 }
         }
 })
@@ -701,39 +746,37 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
                             console.log(" JAAAAAAA ");
                     });
                 },
-                controller: function ($scope, $timeout) {
-                        console.log("ddfjkqlmsfjklm" + $scope);
-                        console.log($scope.editdata.sessionID + 'datepicker');
-
+                controller: function ($scope, $timeout, serverConnectionService) {
+                		$scope.description = "";
                         // Datepicker
                         //
-                                         $scope.today = function() {
-                                                $scope.dt = new Date();
-                                         };
-                                         $scope.today();
+                         $scope.today = function() {
+                                $scope.dt = new Date();
+                         };
+                         $scope.today();
 
-                                         $scope.showWeeks = true;
-                                         $scope.toggleWeeks = function () {
-                                                 $scope.showWeeks = ! $scope.showWeeks;
-                                         };
+                         $scope.showWeeks = true;
+                         $scope.toggleWeeks = function () {
+                                 $scope.showWeeks = ! $scope.showWeeks;
+                         };
 
-                                         $scope.open = function() {
-                                                $timeout(function() {
-                                                  $scope.opened = true;
-                                                });
-                                          };
+                         $scope.open = function() {
+                                $timeout(function() {
+                                  $scope.opened = true;
+                                });
+                          };
 
-                                          $scope.dateOptions = {
-                                                'year-format': "'yy'",
-                                                'starting-day': 1
-                                          };
-                                          //
-                                          // end
+                          $scope.dateOptions = {
+                                'year-format': "'yy'",
+                                'starting-day': 1
+                          };
+                          //
+                          // end
 
 
                         $scope.broadcastid = "saveedit" + $scope.editdata.sessionID;
                         $scope.emitid = "emitsave" + $scope.editdata.sessionID;
-                        console.log("console");
+                        
                    $scope.$on($scope.broadcastid, function(event) {$scope.$emit($scope.emitid, $scope.editeddata)}); //$scope.editdata = angular.copy($scope.editeddata);
                 }
         }

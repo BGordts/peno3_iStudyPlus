@@ -444,7 +444,7 @@
 	<div>
 		<div class="col-md-8 pull-left">
 			<select class="form-control" ng-model="newSession.course" ng-options="course.id as course.name for course in courselist"></select>
-			<textarea class="form-control" rows="1" placeholder="Beschrijving"></textarea>
+			<textarea ng-model="description" class="form-control" rows="1" placeholder="Beschrijving"></textarea>
 			<div class="row">
 				<div class="col-lg-4 input-group" id="datepicker" ng-controller="DatepickerDemoCtrl">
 					<input type="text" class="form-control" datepicker-popup="dd/MM/yyyy" ng-model="dt" is-open="opened" min="minDate" max="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Sluiten" ng-disabled="sessiontype == 'live'"/>

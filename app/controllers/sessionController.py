@@ -77,37 +77,58 @@ def createUntracked():
     db.session.commit()
     return "ok"
     
-@app.route('/session/modifieSession' , methods = ['POST' , 'GET'])
+@app.route('/session/modifyUSession' , methods = ['POST' , 'GET'])
 @login_required
 @endSession_required
-def modifieUSession():
-    uSession = Session.query.get(request.args['sessionID'])
+def modifyUSession():
+    uSession = UserSession.query.get(request.args['sessionID'])
     newDescription = uSession.description
     newFeedBack_score = uSession.feedback_score
     newStart_date = uSession.start_date
     newEnd_date = uSession.end_date
+    newCourse = Course.query.get(request.args["courseID"])
     if not(newDescription == request.args['description']):
         newDescription = request.args['description']
     if not(newFeedBack_score == request.args['feedback']):
         newFeedBack_score = request.args['feedback']
-    if not(newStart_date == datetime.fromtimestamp(request.args['startDate'])):
-        newStart_date = datetime.fromtimestamp(request.args['startDate'])
-    if not(newEnd_date == datetime.fromtimestamp(request.args['endDate'])):
-        newEnd_date = datetime.fromtimestamp(request.args['endDate'])
-    newSession = UserSession(uSession.user, uSession.course, newDescription, newFeedBack_score, newStart_date, newEnd_date)
+    from datetime import datetime
+    if not(newStart_date == datetime.fromtimestamp(float(request.args['startDate'])/1000)):
+        newStart_date = datetime.fromtimestamp(float(request.args['startDate'])/1000)
+    if not(newEnd_date == datetime.fromtimestamp(float(request.args['endDate'])/1000)):
+        newEnd_date = datetime.fromtimestamp(float(request.args['endDate'])/1000)
+    newSession = UserSession(uSession.user, newCourse, newDescription, newFeedBack_score, newStart_date, newEnd_date)
     oldId =uSession.id
     db.session.delete(uSession)
     db.session.commit()
     newSession.id = oldId
     db.session.add(newSession)
     db.session.commit()
+    
+    return "done"
+    
+@app.route('/session/modifyTSession' , methods = ['POST' , 'GET'])
+@login_required
+def modifyTSession():
+    sessionID = request.args["sessionID"]
+    newDescription = request.args["description"]
+    courseID = request.args["courseID"]
+    
+    userSession = UserSession.query.get(sessionID)
+    userSession.description = newDescription
+    userSession.course = Course.query.get(courseID)
+    
+    db.session.commit()
+    
+    return "done"
 
-@app.route('/session/modifieSession' , methods = ['POST' , 'GET'])
+@app.route('/session/deleteUSession' , methods = ['POST' , 'GET'])
 @login_required
 @endSession_required
 def deleteUSession():
-    uSession = Session.query.get(request.args['sessionID'])
-    uSession.deleteUntrackedSession()       
+    uSession = UserSession.query.get(request.args['sessionID'])
+    uSession.deleteUntrackedSession()      
+    
+    return "deleted" 
 
 @app.route('/session/start')
 @session_required
