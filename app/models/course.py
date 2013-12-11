@@ -54,7 +54,8 @@ class Course(db.Model):
                 
     @staticmethod    
     def changeStudy(user, study):
-        coursAssQuery = CourseUsers.query.filter_by(user=user)
+        from app.models.courseUsers import Courses_Users
+        coursAssQuery = Courses_Users.query.filter_by(user=user)
         for associationCU in coursAssQuery:
             db.session.delete(associationCU)
         if( study == "1e Bach Burgerlijk Ingenieur"):

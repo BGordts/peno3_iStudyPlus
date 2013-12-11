@@ -35,17 +35,31 @@ def clearDataBase():
 
 @app.route('/test/createTestUsers')
 def createTestUsers():
-    admin = User('admin@example.com', 'admin', 'admin', 'admin' , "1e Bach Burgerlijk Ingenieur", "adminDev")
-    i = 0;
-    data = admin.email +'\n'
-    while i < 20:
-        str = i.__str__()
-        testUser = User('test'+str+'@example.com','voornaam'+str,'achternaam'+str,'passwoord',"1e Bach Burgerlijk Ingenieur",'device'+str)
-        db.session.add(testUser)
-        data = data + testUser.email +'\n'
-        i = i+1
+#    admin = User('admin@example.com', 'admin', 'admin', 'admin' , "1e Bach Burgerlijk Ingenieur", "adminDev")
+#    i = 0;
+#    data = admin.email +'\n'
+#    while i < 20:
+#        str = i.__str__()
+#        testUser = User('test'+str+'@example.com','voornaam'+str,'achternaam'+str,'passwoord',"1e Bach Burgerlijk Ingenieur",'device'+str)
+#        db.session.add(testUser)
+#        data = data + testUser.email +'\n'
+#        i = i+1
+#    db.session.commit()
+    
+    boris = User('boris@example.com', 'Boris', 'Gordts', 'boris' , "1e Bach Burgerlijk Ingenieur", "borisDev",BORIS_SMALL,BORIS_BIG)
+    sam = User('sam@example.com', 'Sam', 'Landuydt', 'sam' , "1e Bach Burgerlijk Ingenieur", "samDev",SAM_SMALL,SAM_BIG)
+    olivier = User('olivier@example.com', 'Olivier', 'Kamers', 'olivier' , "1e Bach Burgerlijk Ingenieur", "OlivierDev",OLIVIER_SMALL,OLIVIER_BIG)
+    jeroen = User('jeroen@example.com', 'Jeroen', 'Hermans', 'jeroen' , "1e Bach Burgerlijk Ingenieur", "jeroenDev",JEROEN_SMALL,JEROEN_BIG)
+    steven = User('steven@example.com', 'Steven', 'Elseviers', 'steven' , "1e Bach Burgerlijk Ingenieur", "stevenDev",STEVEN_SMALL,STEVEN_BIG)
+    christof = User('christof@example.com', 'Christof', 'Luyten', 'christof' , "1e Bach Burgerlijk Ingenieur", "christofDev",CHRISTOF_SMALL,CHRISTOF_BIG)
+    db.session.add(sam)
+    db.session.add(boris)
+    db.session.add(olivier)
+    db.session.add(jeroen)
+    db.session.add(steven)
+    db.session.add(christof)
     db.session.commit()
-    return data
+    return "data"
 
 @app.route('/test/createMakers')
 def createMakers():
@@ -112,7 +126,7 @@ def createUntrackedSession():
     x=0
     data =""
     while x <2:
-        userID = random.randint(1,21)
+        userID = random.randint(1,5)
         user = User.query.get(userID)
         courseID = random.randint(1,11)
         course = Course.query.get(courseID)

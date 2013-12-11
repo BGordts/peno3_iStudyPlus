@@ -130,6 +130,27 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
 })
 
 .controller('CreateSessionCtrl', function ($scope, $timeout, serverConnectionService) {
+	$scope.today = function() {
+	    $scope.dt = new Date();
+	  };
+	  $scope.today();
+
+	  $scope.showWeeks = true;
+	  $scope.toggleWeeks = function () {
+	    $scope.showWeeks = ! $scope.showWeeks;
+	  };
+
+	  $scope.open = function() {
+	    $timeout(function() {
+	      $scope.opened = true;
+	    });
+	  };
+
+	  $scope.dateOptions = {
+	    'year-format': "'yy'",
+	    'starting-day': 1
+	  };
+	
         $scope.activityType = '';
         $scope.sessionType = '';
         $scope.newSession = {
@@ -166,8 +187,41 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
 				  })
 			  })
 		  }
-          
-         
+		  
+		  $scope.saveButtonClicked = function(){
+			  console.log($scope.description);
+			  console.log($scope.newSession.course);
+			  console.log($scope.dt);
+			  console.log($scope.newSession.ST);
+			  console.log($scope.newSession.ET);
+			  console.log($scope.rate.value / 10);
+			  
+			  var theDate = moment($scope.dt.getTime())
+			  var stHour = parseInt(("" + $scope.newSession.ST).substring(0,2));
+			  var stMinute = parseInt(("" + $scope.newSession.ST).substring(2,4));
+			  
+			  var etHour = parseInt(("" + $scope.newSession.ET).substring(0,2));
+			  var etMinute = parseInt(("" + $scope.newSession.ET).substring(2,4));
+			  
+			  var startCopy = moment(theDate);
+			  startCopy.hours(stHour);
+			  startCopy.minutes(stMinute);
+			  
+			  var endCopy = moment(theDate);
+			  endCopy.hours(etHour);
+			  endCopy.minutes(etMinute);
+			  
+			  console.log(startCopy.format("dddd, MMMM Do YYYY, h:mm:ss a"));
+			  console.log(endCopy.format("dddd, MMMM Do YYYY, h:mm:ss a"));
+			  
+			  serverConnectionService.sessionCreateUntracked($scope.description, $scope.newSession.course, $scope.rate.value / 10, startCopy.valueOf(), endCopy.valueOf(), function(data){
+				  console.log("SENT");
+				  console.log(data);
+				  
+				  //Refresh the page so the user gets visual feedback of the completion
+				  location.reload();
+			  })
+		  }        
 })
 
 .controller('coursecontroller', function ($scope, serverConnectionService ) {
@@ -251,6 +305,7 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
 	this.URL_GET_COURSES = '/user/courses';
 	this.URL_GET_SENSOR_DATA = '/sensorData/getSensordataForSession';
 	this.URL_SESSION_CREATE_TRACKED = '/session/createTracked';
+	this.URL_SESSION_CREATE_UNTRACKED = '/session/createUntracked';
 	this.URL_SESSION_START = '/session/start';
 	this.URL_SESSION_PAUSE = '/session/pause';
 	this.URL_SESSION_RESUME = '/session/resume';
@@ -366,6 +421,12 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
 	
 	this.sessionCreateTracked = function(sessionName, courseID, callback){
 		this.requestData(this.URL_SESSION_CREATE_TRACKED, {'sessionName': sessionName, 'courseID': courseID}, function(data){
+			callback(data);
+		})
+	}
+	
+	this.sessionCreateUntracked = function(sessionName, courseID, feedback, start_time, end_time, callback){
+		this.requestData(this.URL_SESSION_CREATE_UNTRACKED, {'sessionName': sessionName, 'courseID': courseID, 'feedback': feedback, 'start_time':start_time, 'end_time':end_time}, function(data){
 			callback(data);
 		})
 	}

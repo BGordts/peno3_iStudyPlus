@@ -16,6 +16,7 @@ from app.controllers.filters import login_required
 from app.controllers.filters import logout_required
 from app.controllers.filters import session_required
 from app.controllers.filters import endSession_required
+from app.models.device import Device
 
 @app.route('/user/login' , methods=['GET','POST'])
 @logout_required
@@ -85,45 +86,50 @@ def isValidPass(pass1 , pass2):
 @endSession_required
 def changeUserinfo():
     user = User.getUserFromSession()
+    device = Device.query.filter_by(user=user).first()
+    error = None
     
     if request.method == 'POST':
         errors = {}
-        email = request.form['email']
         name = request.form['name']
         lastname = request.form['lastname']
-        oldPass = request.form['oldPass']
         pass1 = request.form['pass1']
         pass2 = request.form['pass2']
         deviceID = request.form['deviceID']
         study = request.form['study']
         pic_small = request.form['profile-img_small']
         pic_big = request.form['profile-img_large']
-        if(email == None):
-            email = user.email
-        if(name == None):
+        email = user.email #You can't change your email!
+        if(name == ""):
             name = user.surname
-        if(lastName == None):
-            lastName = user.name
-        if(oldPass == None):
+        if(lastname == ""):
+            lastname = user.name
+        if(pass1 == ""):
             pass1 = user.password
             pass2 = user.password
-        if(deviceID == None):
-            deviceID = user.device
-        if(pic_small == None):
+        if(deviceID == ""):
+            deviceID = Device.query.filter_by(user=user).first().key
+        if(pic_small == ""):
             pic_small = user.picSmall
             pic_big = user.picBig
         if not isValidEmail:
                 error = 'The email-address you entered is already taken'
-        if not(user.password == oldPass):
-            error = 'The old password you entered did not match'
         if not isValidPass(pass1,pass2):
-            error = 'The passwords you entered did not match'
-            errors = errors + {"password" : error}
-        if not((errors and True) or False):
-            user.changeSetting( email , lastname , name , pass1,study,deviceID,pic_small,pic_big)    
-        return render_template('pages/settings_page.html' , errors = errors)
+            error = 'De passwoorden waren niet gelijk'
+            
+        #Serieus Sam? :) if not((errors and True) or False)
+        if error:
+            _log("info", "kaka error" + error.__str__())
+            
+            return render_template('pages/settings_page.html' , error = error, user=user, device=device)
+        else:
+            _log("info", "kaka geen error")
+            user.changeSetting( email , lastname , name , pass1,study,deviceID,pic_small,pic_big)   
+            
+            return redirect("app/" + user.id.__str__() + "/dashboard")
+       
     else:
-        return render_template('pages/settings_page.html', user = user)
+        return render_template('pages/settings_page.html', user = user, device=device)
 
 @app.route('/user/getCoStudents', methods = ['GET'])
 def getCoStudents():

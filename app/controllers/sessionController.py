@@ -67,9 +67,10 @@ def createUntracked():
     description = request.args["sessionName"]
     courseID = request.args["courseID"]
     course=Course.query.get(courseID)
+    from datetime import datetime
     feedback_text = request.args["feedback"]
-    start_date = datetime.fromtimestamp(request.args["start_time"])
-    end_date = datetime.fromtimestamp(request.args["start_time"])
+    start_date = datetime.fromtimestamp(float(request.args["start_time"])/1000)
+    end_date = datetime.fromtimestamp(float(request.args["end_time"])/1000)
     user = User.getUserFromSession()
     usession = UserSession(user, course , description, feedback_text, start_date, end_date)
     db.session.add(usession)

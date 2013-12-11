@@ -102,16 +102,22 @@ class User(db.Model):
             self.surname = surname
         if not (password == self.password):
             self.password = password
-        if not (study == self.study):
-            self.study = study
-            Course.changeStudy(self,study)
-        device = Device.query.get(deviceID)
-        if not (device == self.device and device == None):
-            Device.registerDevice(deviceID, self)
+        #if not (study == self.study):
+            #self.study = study
+            #Course.changeStudy(self,study)
+#        if not (device == self.device and device == None):
+#            Device.registerDevice(deviceID, self)
         if not (pic_small == self.picSmall):
             self.picSmall = pic_small
         if not (pic_big == self.picBig):
             self.picBig = pic_big
+        
+        db.session.commit()
+        
+        
+        _log("info", "kaka device" + Device.query.filter_by(user=self).first().key.__str__())
+        
+        device = Device.query.filter_by(user=self).first().key = deviceID
         db.session.commit()
     
     def outputLarge(self):

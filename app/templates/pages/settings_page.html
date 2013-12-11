@@ -1,15 +1,17 @@
 {% extends "pages/navigation_top.html" %} {% block fullwidth_content %}
 <div class="container settingsform">
-	<form method="POST" action="/settings">
+	<form method="POST" action="/user/settings">
 		<div class="col-md-4">
 			<h2 class="form-signin-heading">Verander uw accountgegevens</h2>
+			{% if error%}
+			<div class="alert alert-danger">{{error}}</div>
+			{% endif %}
 			<input type="Username" class="form-control" placeholder="First name" name="name" value="{{user.name}}" required>
 			<input type="Username" class="form-control" placeholder="Last Name" name="lastname" value="{{user.surname}}" required>
-			<select type="text" class="form-control" placeholder="opleiding" required>
+			<select type="text" class="form-control" placeholder="opleiding" name="study" required>
 				<option>Opleiding</option>
 				<option selected="selected">1 bach Burgerlijk Ingenieur</option>
 			</select>
-			<input type="email" class="form-control" placeholder="Email address" name="email" value="{{user.email}}" required>
 			<input type="password" class="form-control" placeholder="Password" name="pass1" required>
 			<input type="password" class="form-control" placeholder="Confirm password" name="pass2" required>
 			<button class="btn btn-lg btn-primary btn-block" type="submit">Change Accountsettings</button>
@@ -42,7 +44,7 @@
 					</video>
 				</div>
 				<div id="out"></div>
-				<input type="text" name="deviceID" id="deviceID" class="form-control">
+				<input type="text" name="deviceID" id="deviceID" class="form-control" value="{{device.key}}">
 			</div>
 			<!-- Uses https://github.com/LazarSoft/jsqrcode LazarSoft's jsQRcode implementation -->
 			<script src="{{url_for('static', filename='js/lib/qr.min.js')}}"></script>

@@ -62,7 +62,7 @@
 								<label class="btn btn-primary" ng-class="{active : newSession.activityType=='study'}" ng-click="newSession.activityType = 'study'">
 									<input type="radio" ng-checked="newSession.activityType == 'study'" value="study" name="activityType">Studie</label>
 							</div>
-							<div class="input-group" id="datepicker" ng-controller="DatepickerDemoCtrl">
+							<div class="input-group" id="datepicker" >
 								<input type="text" class="form-control" datepicker-popup="dd/MM/yyyy" ng-model="dt" is-open="opened" min="minDate" max="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Sluiten" ng-disabled="newSession.sessionType == 'live'"/>
 								<span class="input-group-btn">
 									<button type="button" class="btn btn-default" ng-click="open()" ng-disabled="newSession.sessionType == 'live'">
@@ -86,9 +86,9 @@
 									</button>
 								</span>
 							</div>
-							<rating value="rate" state-on="'glyphicon glyphicon-stop'" state-off="'glyphicon glyphicon-minus'" max="10" readonly="false" ng-class="{hidden : newSession.sessionType == 'live'}"></rating>
+							<rating value="rate.value" state-on="'glyphicon glyphicon-stop'" state-off="'glyphicon glyphicon-minus'" max="10" readonly="false" ng-class="{hidden : newSession.sessionType == 'live'}"></rating>
 							<button type="button" class="btn btn-lg btn-success" ng-class="{hidden : newSession.sessionType == 'past'}" ng-click="startButtonClicked()">Starten</button>
-							<button type="button" class="btn btn-lg btn-success" ng-class="{hidden : newSession.sessionType == 'live'}">Opslaan</button>
+							<button type="button" class="btn btn-lg btn-success" ng-class="{hidden : newSession.sessionType == 'live'}" ng-click="saveButtonClicked()">Opslaan</button>
 							<div class="btn-group-vertical menu-left">
 								<label class="btn btn-success" ng-class="{active : newSession.sessionType=='live'}" ng-click="newSession.sessionType = 'live'">
 									<input type="radio" ng-checked="newSession.sessionType == 'live'" value="live" name="sessionType">
