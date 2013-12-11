@@ -634,9 +634,9 @@
 form .btn-group-vertical .btn {
 	height: 50%;
 }
-	.panel-heading .btn-group-vertical .btn-success:not(:hover):not(.active),
+	.panel-heading .btn-group-vertical .btn-success:not(.active),
 form .btn-group-vertical .btn-success:not(:hover):not(.active),
-.panel-heading .btn-group-vertical .btn-warning:not(:hover):not(.active),
+.panel-heading .btn-group-vertical .btn-warning:not(.active),
 form .btn-group-vertical .btn-warning:not(:hover):not(.active) {
 	background-color: #333;
 	border: none;
