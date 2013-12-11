@@ -68,15 +68,7 @@ class User(db.Model):
     @staticmethod
     def getUserByID(ID):
         return User.query.filter_by(id = ID).first()
-    
-    '''
-    def getRunningSessionOld(self):
-        if session['sessionID']:
-            if session['isPauzed']:
-                return UserSession.getSessionByID(session['sessionID'])
-        return None
-    '''
-    
+
     def getRunningSession(self):
         userSession = UserSession.query.filter_by(user=self).filter_by(end_date=None).order_by(UserSession.start_date.desc()).first()
         
@@ -102,22 +94,12 @@ class User(db.Model):
             self.surname = surname
         if not (password == self.password):
             self.password = password
-        #if not (study == self.study):
-            #self.study = study
-            #Course.changeStudy(self,study)
-#        if not (device == self.device and device == None):
-#            Device.registerDevice(deviceID, self)
         if not (pic_small == self.picSmall):
             self.picSmall = pic_small
         if not (pic_big == self.picBig):
             self.picBig = pic_big
-        
-        db.session.commit()
-        
-        
-        _log("info", "kaka device" + Device.query.filter_by(user=self).first().key.__str__())
-        
-        device = Device.query.filter_by(user=self).first().key = deviceID
+        db.session.commit()       
+        Device.query.filter_by(user=self).first().key = deviceID
         db.session.commit()
     
     def outputLarge(self):

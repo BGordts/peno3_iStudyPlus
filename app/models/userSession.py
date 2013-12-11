@@ -60,7 +60,7 @@ class UserSession(db.Model):
         self.sessionHum = 0
         if not (end_date== None):
             user.statistics.addUntrackedSession(self)
-            CUStatistic = Courses_Users.query.filter_by(course=self.course).first().courseStatistics
+            CUStatistic = Courses_Users.query.filter_by(course=self.course,user=self.user).first().courseStatistics
             CUStatistic.addUntrackedSession(self)
 
     def deleteUntrackedSession(self):
@@ -135,18 +135,11 @@ class UserSession(db.Model):
         
         if len(loadedPauses) > 0:
             nextPause = float(loadedPauses[0][0])
-            
-        _log("info", "De pauses: " +  json.loads(self.pauses).__str__())
-        
         sensorData = Sensordata.query.filter_by(userSession=self).filter_by(sensor_type=sensor).all()
         returnList = []
         
-        for i in range(0,len(sensorData)):
-            _log("info", "De volgende pause: " +  nextPause.__str__())
-            _log("info", "Tijd van de volgende sensorwaarde: " +  unix_time_millis(sensorData[i].date).__str__())
-                 
+        for i in range(0,len(sensorData)):                 
             if nextPause and nextPause < unix_time_millis(sensorData[i].date):
-                _log("info", "verschil: " +  ((unix_time_millis(sensorData[i].date) - nextPause)/1000).__str__())
                 returnList.append({"sensor_type": sensor, "value": None, "date": nextPause, "session_id": self.id})
                 nextPauseIndex += 1
                 
@@ -166,19 +159,12 @@ class UserSession(db.Model):
         nextPauseIndex = 0
         
         if len(loadedPauses) > 0:
-            nextPause = float(loadedPauses[0][0])
-            
-        _log("info", "De pauses: " +  json.loads(self.pauses).__str__())
-        
+            nextPause = float(loadedPauses[0][0])        
         sensorData = Sensordata.query.filter_by(userSession=self).filter_by(sensor_type=sensor).all()
         returnList = []
         
-        for i in range(0,len(sensorData)):
-            _log("info", "De volgende pause: " +  nextPause.__str__())
-            _log("info", "Tijd van de volgende sensorwaarde: " +  unix_time_millis(sensorData[i].date).__str__())
-                 
+        for i in range(0,len(sensorData)):   
             if nextPause and nextPause < unix_time_millis(sensorData[i].date):
-                _log("info", "verschil: " +  ((unix_time_millis(sensorData[i].date) - nextPause)/1000).__str__())
                 returnList.append({"x": nextPause, "y":None})
                 nextPauseIndex += 1
                 
@@ -241,6 +227,3 @@ class UserSession(db.Model):
     @classmethod
     def getSessionByID(sessionID):
         return Session.query.filter_by(id = sessionID).first()
-        
-#    def __repr__(self):
-#        return '<UserSession %r>' % self.title
