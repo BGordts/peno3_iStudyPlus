@@ -112,7 +112,7 @@ class Statistics(db.Model):
     def outputData(self):
         returnData = {}
         
-        returnData['total_time'] = self.totalTime
+        returnData['total_time'] = float(self.totalTime)/3600
         returnData['total_efficiency'] = self.totalEff
         returnData['total_focus'] = self.totalfocus
         returnData['total_illumination_average'] = self.totalIllum

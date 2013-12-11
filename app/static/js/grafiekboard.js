@@ -43,7 +43,7 @@ controller('appCtrl', function ($scope) {
             {
 			x: 0.4,
 			y: 0.12
-		},
+		}
     ]
 	}, {
 		"data1": [
@@ -133,7 +133,7 @@ controller('appCtrl', function ($scope) {
 			y: 0.12
 		},
     ],
-	
+
 		"data3": [
             {
 			x: 0.2,
@@ -190,7 +190,7 @@ controller('appCtrl', function ($scope) {
 			x: 0.4,
 			y: 0.12
 		},
-    ] 
+    ]
     },{
 		"data1": [
             {
@@ -300,8 +300,8 @@ directive('dashboardPanel', function ($scope) {
 		controller: function($scope){
 			$scope.chartdata = $scope.item.data2;
 			console.log($scope.chartdata)
-            
-            			
+
+
             $scope.items = [
 			                { id: 1, name: 'Efficiëntie' },
 			                { id: 2, name: 'Temperatuur' },
@@ -471,6 +471,9 @@ directive('dashboardPanel', function ($scope) {
         },
         link: function (scope, element, attrs) {
             d3.custom = {};
+            window.onresize = function() {
+            	scope.$apply(d3.custom.barChart());
+          	};
             d3.custom.barChart = function module() {
                 var margin = {
                     top: 20,
@@ -478,8 +481,8 @@ directive('dashboardPanel', function ($scope) {
                     bottom: 40,
                     left: 40
                 },
-                    width = 500,
-                    height = 500,
+                    width = 100,
+                    height = 10,
                     gap = 0,
                     ease = 'cubic-in-out';
                 var svg, duration = 500;

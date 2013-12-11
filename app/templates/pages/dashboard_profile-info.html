@@ -11,10 +11,10 @@
 			</div>
 			<div class="pull-right">
 				<div class="pull-right">
-					<div class="is_square-80">[[user1.total_time]]</div>
+					<div class="is_square-80">[[formatTime(user1.total_time)]]</div>
 				</div>
 				<div class="pull-right">
-					<div class="is_square-80">[[user1.total_efficiency]]</div>
+					<div class="is_square-80">[[Math.round(user1.total_efficiency*100)]] %</div>
 				</div>
 			</div>
 			<div class="clearfix xs-visible"></div>
@@ -28,8 +28,7 @@
 		<div class="panel-body">
 			<div class="row">
 				<div class="col-md-6 is_no-padding">
-					<div class="col-sm-6">light
-						<div>lamp svg</div>
+					<div class="col-sm-6">Licht
 						<div class="is_row-square">
 							<div class="pull-left">
 								<div class="is_square-40">[[user1.highest_illumination]]</div>
@@ -48,8 +47,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-sm-6">sound
-						<div>speaker svg</div>
+					<div class="col-sm-6">Geluid
 						<div class="is_row-square">
 							<div class="pull-left">
 								<div class="is_square-40">[[user1.highest_sound]]</div>
@@ -70,8 +68,7 @@
 					</div>
 				</div>
 				<div class="col-md-6 is_no-padding">
-					<div class="col-sm-6">temperature
-						<div>thermometer svg</div>
+					<div class="col-sm-6">Temperatuur
 						<div class="is_row-square">
 							<div class="pull-left">
 								<div class="is_square-40">[[user1.highest_temperature]]</div>
@@ -90,8 +87,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-sm-6">humidity
-						<div>water drop svg</div>
+					<div class="col-sm-6">Luchtvochtigheid
 						<div class="is_row-square">
 							<div class="pull-left">
 								<div class="is_square-40">[[user1.highest_humidity]]</div>
@@ -114,42 +110,22 @@
 			</div>
 			<!--end sensor data-->
 			<div class="row">
-				<div class="col-sm-12">Cameragegevens</div>
-				<div class="col-sm-6">efficiëntie%
+				<div class="col-sm-6">Focuspercentage
 					<div class="is_row-square">
 						<div class="pull-left">
-							<div class="is_square-40">[[user1.highest_focus]]</div>
+							<div class="is_square-40">[[Math.round(user1.highest_focus*100)]]</div>
 						</div>
 						<div class="pull-left">
-							<div class="is_square-40">[[user1.lowest_focus]]</div>
+							<div class="is_square-40">[[Math.round(user1.lowest_focus*100)]]</div>
 						</div>
 					</div>
 					<div class="clearfix xs-visible"></div>
 					<div class="is_row-square is_compare" ng-if="user2">
 						<div class="pull-left">
-							<div class="is_square-40">[[user2.highest_focus]]</div>
+							<div class="is_square-40">[[Math.round(user2.highest_focus*100)]]</div>
 						</div>
 						<div class="pull-left">
-							<div class="is_square-40">[[user2.lowest_focus]]</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-sm-6">pauze%
-					<div class="is_row-square">
-						<div class="pull-left">
-							<div class="is_square-40">best</div>
-						</div>
-						<div class="pull-left">
-							<div class="is_square-40">worst</div>
-						</div>
-					</div>
-					<div class="clearfix xs-visible"></div>
-					<div class="is_row-square is_compare" ng-if="user2">
-						<div class="pull-left">
-							<div class="is_square-40">best</div>
-						</div>
-						<div class="pull-left">
-							<div class="is_square-40">worst</div>
+							<div class="is_square-40">[[Math.round(user2.lowest_focus*100)]]</div>
 						</div>
 					</div>
 				</div>
@@ -202,10 +178,10 @@
 			</div>
 			<div class="pull-right">
 				<div class="pull-right">
-					<div class="is_square-80">[[user1.total_time]]</div>
+					<div class="is_square-80">[[formatTime(user1.total_time)]]</div>
 				</div>
 				<div class="pull-right">
-					<div class="is_square-80">[[user1.total_efficiency]]</div>
+					<div class="is_square-80">[[Math.round(user1.total_efficiency*100)]] %</div>
 				</div>
 			</div>
 			<div class="clearfix xs-visible"></div>
@@ -222,8 +198,7 @@
 		<div class="panel-body">
 			<div class="row">
 				<div class="col-md-6 is_no-padding">
-					<div class="col-sm-6">light
-						<div>lamp svg</div>
+					<div class="col-sm-6">Licht
 						<div class="is_row-square">
 							<div class="pull-left">
 								<div class="is_square-40">[[user1.highest_illumination]]</div>
@@ -242,8 +217,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-sm-6">sound
-						<div>speaker svg</div>
+					<div class="col-sm-6">Geluid
 						<div class="is_row-square">
 							<div class="pull-left">
 								<div class="is_square-40">[[user1.highest_sound]]</div>
@@ -264,8 +238,7 @@
 					</div>
 				</div>
 				<div class="col-md-6 is_no-padding">
-					<div class="col-sm-6">temperature
-						<div>thermometer svg</div>
+					<div class="col-sm-6">Temperatuur
 						<div class="is_row-square">
 							<div class="pull-left">
 								<div class="is_square-40">[[user1.highest_temperature]]</div>
@@ -274,7 +247,6 @@
 								<div class="is_square-40">[[user1.lowest_temperature]]</div>
 							</div>
 						</div>
-						<div class="clearfix xs-visible"></div>
 						<div class="is_row-square is_compare" ng-if="user2">
 							<div class="pull-left">
 								<div class="is_square-40">[[user2.highest_temperature]]</div>
@@ -284,8 +256,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-sm-6">humidity
-						<div>water drop svg</div>
+					<div class="col-sm-6">Luchtvochtigheid
 						<div class="is_row-square">
 							<div class="pull-left">
 								<div class="is_square-40">[[user1.highest_humidity]]</div>
@@ -308,42 +279,22 @@
 			</div>
 			<!--end sensor data-->
 			<div class="row">
-				<div class="col-sm-12">Cameragegevens</div>
-				<div class="col-sm-6">efficiëntie%
+				<div class="col-sm-6">Focuspercentage
 					<div class="is_row-square">
 						<div class="pull-left">
-							<div class="is_square-40">[[user1.highest_focus]]</div>
+							<div class="is_square-40">[[Math.round(user1.highest_focus*100)]]</div>
 						</div>
 						<div class="pull-left">
-							<div class="is_square-40">[[user1.lowest_focus]]</div>
+							<div class="is_square-40">[[Math.round(user1.lowest_focus*100)]]</div>
 						</div>
 					</div>
 					<div class="clearfix xs-visible"></div>
 					<div class="is_row-square is_compare" ng-if="user2">
 						<div class="pull-left">
-							<div class="is_square-40">[[user2.highest_focus]]</div>
+							<div class="is_square-40">[[Math.round(user2.highest_focus*100)]]</div>
 						</div>
 						<div class="pull-left">
-							<div class="is_square-40">[[user2.lowest_focus]]</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-sm-6">pauze%
-					<div class="is_row-square">
-						<div class="pull-left">
-							<div class="is_square-40">best</div>
-						</div>
-						<div class="pull-left">
-							<div class="is_square-40">worst</div>
-						</div>
-					</div>
-					<div class="clearfix xs-visible"></div>
-					<div class="is_row-square is_compare" ng-if="user2">
-						<div class="pull-left">
-							<div class="is_square-40">best</div>
-						</div>
-						<div class="pull-left">
-							<div class="is_square-40">worst</div>
+							<div class="is_square-40">[[Math.round(user2.lowest_focus*100)]]</div>
 						</div>
 					</div>
 				</div>
@@ -401,7 +352,7 @@
         <!--end left menu-->
         <!--start panel-heading content-->
         <!--start view mode-->
-        <div ng-switch-when="view" data-toggle="collapse" data-parent="#accordion" href="[['#session' + $index]]" ng-click="isCollapsed.value = !isCollapsed.value">
+        <div ng-click="collapseController()" ng-switch-when="view" data-toggle="collapse" data-parent="#accordion" href="[['#session' + $index]]">
             <div class="col-md-8 pull-left row">
                 <h2 class="panel-title">[[session.sessionData.description]]</h2>
                 <span class="label label-default">[[data.headerdata.activityType]]</span>
@@ -413,10 +364,10 @@
             </div>
             <div class="pull-right">
                 <div class="pull-right">
-                    <div class="is_square-80">[[session.sessionData.feedback_score]]</div>
+                    <div class="is_square-80">[[Math.round(session.sessionData.feedback_score*100)]] %</div>
                 </div>
                 <div class="pull-right" ng-if="sessionType=='live'">
-                    <div class="is_square-80">[[session.sessionData.sessionEff]]</div>
+                    <div class="is_square-80">[[Math.round(session.sessionData.sessionEff*100)]] %</div>
                 </div>
             </div>
             <div class="clearfix xs-visible"></div>
@@ -447,72 +398,43 @@
     <!--start panel body-->
     <div id="[['session' + $index]]" class="" collapse="isCollapsed.value">
         <div class="panel-body" ng-if="tracked">
-            <div class="row">
-                <div class="col-md-6 is_no-padding">
-                    <div class="col-sm-6">licht
-						<div>light svg</div>
-                        <div class="is_row-square">
-                            <div class="pull-left">
-                                <div class="is_square-40">[[session.sessionData.sessionIll]]</div>
-                            </div>
-                        </div>
-                        <div class="clearfix xs-visible"></div>
-                    </div>
-                    <div class="col-sm-6">geluid
-						<div>sound svg</div>
-                        <div class="is_row-square">
-                            <div class="pull-left">
-                                <div class="is_square-40">[[session.sessionData.sessionSound]]</div>
-                            </div>
-                        </div>
-                        <div class="clearfix xs-visible"></div>
-                    </div>
-                </div>
-                <div class="col-md-6 is_no-padding">
-                    <div class="col-sm-6">temperatuur
-                        <div>thermometer svg</div>
-                        <div class="is_row-square">
-                            <div class="pull-left">
-                                <div class="is_square-40">[[session.sessionData.sessionTemp]]</div>
-                            </div>
-                        </div>
-                        <div class="clearfix xs-visible"></div>
-                    </div>
-                    <div class="col-sm-6">luchtvochtigheid
-                        <div>water drop svg</div>
-                        <div class="is_row-square">
-                            <div class="pull-left">
-                                <div class="is_square-40">[[session.sessionData.sessionHum]]</div>
-                            </div>
-                        </div>
-                        <div class="clearfix xs-visible"></div>
-                    </div>
-                </div>
-            </div>
-            <!--end sensor data-->
-            <div class="row">
-                <div class="col-sm-12">Focuspercentage</div>
-                <div class="col-sm-6">efficiëntie%
-                    <div class="is_row-square">
-                        <div class="pull-left">
-                            <div class="is_square-40">[[session.sessionData.sessionFocus]]</div>
-                        </div>
-                    </div>
-                    <div class="clearfix xs-visible"></div>
-                </div>
-                <div class="col-sm-6">pauze%
-                    <div class="is_row-square">
-                        <div class="pull-left">
-                            <div class="is_square-40">best</div>
-                        </div>
-                        <div class="pull-left">
-                            <div class="is_square-40">worst</div>
-                        </div>
-                    </div>
-                    <div class="clearfix xs-visible"></div>
-                </div>
-            </div>
-            <!--end camera stats-->
+
+<div class="pull-left graphpanel" >
+
+	<div class="is_square name" >Licht</div>
+	<div class="is_square-80">[[session.sessionData.sessionIll]]</div>
+    <static-graph class="chart" chartdata="chartdata.illumination">
+	</static-graph>
+</div>
+<div class="pull-left graphpanel" >
+
+	<div class="is_square name" >Geluid</div>
+	<div class="is_square-80">[[session.sessionData.sessionSound]]</div>
+    <static-graph class="chart" chartdata="chartdata.sound">
+	</static-graph>
+</div>
+<div class="pull-left graphpanel" >
+
+	<div class="is_square name" >Temperatuur</div>
+	<div class="is_square-80">[[session.sessionData.sessionTemp]]</div>
+    <static-graph class="chart" chartdata="chartdata.temperature">
+	</static-graph>
+</div>
+<div class="pull-left graphpanel" >
+
+	<div class="is_square name" >Luchtvochtigheid</div>
+	<div class="is_square-80">[[session.sessionData.sessionHum]]</div>
+    <static-graph class="chart" chartdata="chartdata.humidity">
+	</static-graph>
+</div>
+<div class="pull-left graphpanel" >
+
+	<div class="is_square name" >Focus</div>
+	<div class="is_square-80">[[session.sessionData.sessionFocus]]</div>
+    <static-graph class="chart" chartdata="chartdata.focus">
+	</static-graph>
+</div>
+
         </div>
         <!--panelbody-->
     </div>
@@ -658,7 +580,7 @@
 				</li>
 			</ol>
 			<div class="btn-group">
-  				<label class="btn btn-primary" ng-class="{active : compareToggle==true, hidden : (appviewstate != 'courses') }">
+  				<label class="btn btn-primary" ng-class="{active : compareToggle==true, hidden : (appviewstate == 'sessions') }">
     				<input type="checkbox" ng-model="compareToggle">Vergelijken
   				</label>
   				<select class="form-control" ng-model="courseFilter.selected" ng-options="course.id as course.name for course in selectableCourseList" ng-class="{ hidden : (appviewstate != 'sessions') }"></select> <!-- Boris -->

@@ -171,10 +171,17 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
 })
 
 .controller('coursecontroller', function ($scope, serverConnectionService ) {
-	//Get the courses
-	serverConnectionService.getCourses(1, function(data){
-		$scope.courselist = data;
-	});
+	$scope.$watch('viewedProfile', function (newVal, oldVal) {		
+		if(undefined == newVal || newVal == null || Object.keys(newVal).length == 0){
+			console.log("hey fa" + newVal + " " + oldVal);
+		}
+		else{								
+			//Get the courses
+			serverConnectionService.getCourses($scope.viewedProfile.userID, function(data){
+				$scope.courselist = data;
+			});
+		}
+    });
 })
 
 .controller('sessionscontroller', function ($scope, serverConnectionService ) {	
@@ -437,6 +444,15 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
             });
 		},
 		controller: function($scope, $http){
+			$scope.Math = window.Math;
+			
+			$scope.formatTime = function(timeint){
+				var hours = ~~timeint;
+				var minutes = Math.round((timeint - hours)*100);
+				
+				return hours + "u " + minutes + "min";
+			};
+			
 			$scope.chartdata1 = [];
             $scope.chartdata2 = [];
             $scope.chartdata = {
@@ -480,7 +496,16 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
 				}
             });
 		},
-		controller: function($scope, $http, serverConnectionService){		
+		controller: function($scope, $http, serverConnectionService){	
+			$scope.Math = window.Math;
+			
+			$scope.formatTime = function(timeint){
+				var hours = ~~timeint;
+				var minutes = Math.round((timeint - hours)*100);
+				
+				return hours + "u " + minutes + "min";
+			};
+			
 			$scope.chartdata1 = [];
             $scope.chartdata2 = [];
             $scope.chartdata = {
@@ -488,7 +513,7 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
                 "compare": $scope.chartdata2
             };
             $scope.isCollapsed = { value: true };
-			$scope.title = $scope.course.name
+			$scope.title = $scope.course.name;
 			
 			$scope.user1 = $scope.course.statistics;
 			
@@ -528,7 +553,16 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
                                 }
                         });
                 },
-                controller: function ($scope) { 
+                controller: function ($scope, serverConnectionService) { 
+                	$scope.Math = window.Math;
+        			
+        			$scope.formatTime = function(timeint){
+        				var hours = ~~timeint;
+        				var minutes = Math.round((timeint - hours)*100);
+        				
+        				return hours + "u " + minutes + "min";
+        			};
+                	
                 		console.log("searchfilter: ");
                 		console.log($scope.courseFilter);
                         $scope.panelState = "view";
@@ -575,6 +609,15 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
 			            $scope.delete = function() {
 			                                //Boris
 			            };
+			            
+			            $scope.collapseController = function(){
+			            	$scope.isCollapsed.value = !$scope.isCollapsed.value
+			            	console.log("collapse");
+			            	serverConnectionService.getSensorDataForSession($scope.session.sessionID, function(data){
+			            		console.log("jeej");
+			            		$scope.chartdata = data;
+			            	})
+			            }
                 }
         }
 })
@@ -859,7 +902,177 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
         }
 })
 
-//d3.custom = {};
+.directive('staticGraph', function () {
+    var integer = 0;
+    return {
+        restrict: 'E',
+        replace: true,
+        template: '<div class="chart"></div>',
+        scope: {
+            chartdata: '=',
+        },
+        link: function (scope, element, attrs) {
+            d3.custom = {};
+            d3.custom.barChart = function module() {
+                var margin = {
+                    top: 0,
+                    right: 0,
+                    bottom: 0,
+                    left: 0
+                },
+                    width = 320,
+                    height = 80,
+                    gap = 0,
+                    ease = 'cubic-in-out';
+                var svg, duration = 500;
+
+                var dispatch = d3.dispatch('customHover');
+
+                function exports(_selection) {
+                    _selection.each(function (_data) {
+
+                        var chartW = width - margin.left - margin.right,
+                            chartH = height - margin.top - margin.bottom;
+
+                        var x1 = d3.scale.linear()
+                            .domain([d3.min(_data, function (d, i) {
+                                return d.x
+                            }), d3.max(_data, function (d, i) {
+                                return d.x;
+                            })])
+                            .range([0, chartW]);
+
+                        var y1 = d3.scale.linear()
+                            .domain([0, d3.max(_data, function (d, i) {
+                                return d.y;
+                            })])
+                            .range([chartH, 0]);
+
+                        var xAxis = d3.svg.axis()
+                            .scale(x1)
+                            .orient('bottom');
+
+                        var yAxis = d3.svg.axis()
+                            .scale(y1)
+                            .orient('left');
+
+                        var line = d3.svg.line()
+                            .defined(function (d) {
+                                return d.y != null;
+                            })
+                            .x(function (d) {
+                                return x1(d.x);
+                            })
+                            .y(function (d) {
+                                return y1(d.y);
+                            });
+                        var area = d3.svg.area()
+                            .defined(line.defined())
+                            .x(line.x())
+                            .y(line.y())
+                            .y0(y1(0));
+
+
+
+                        //var barW = chartW / _data.length;
+
+                        if (!svg) {
+                            svg = d3.select(this)
+                                .append('svg')
+                                .classed('chart', true);
+
+                            var container = svg.append('g').classed('container-group', true);
+                            container.append('g').classed('chart-group', true);
+
+                            var path = svg.select('.chart-group')
+                                .append("path")
+                                .data([_data])
+                                .attr("class", "line")
+                                .attr("d", line);
+                        }
+
+                        svg.transition().duration(duration).attr({
+                            width: width,
+                            height: height
+                        })
+                        svg.select('.container-group')
+                            .attr({
+                                transform: 'translate(' + margin.left + ',' + margin.top + ')'
+                            });
+
+                        svg.select('.x-axis-group.axis')
+                            .transition()
+                            .duration(duration)
+                            .ease(ease)
+                            .attr({
+                                transform: 'translate(0,' + (chartH) + ')'
+                            })
+                            .call(xAxis);
+
+                        svg.select('.y-axis-group.axis')
+                            .transition()
+                            .duration(duration)
+                            .ease(ease)
+                            .call(yAxis);
+
+                        svg.select('.chart-group')
+                            .selectAll('.line')
+                            .data([_data])
+                            .transition()
+                            .attr("d", line);
+                        svg.select('.chart-group').append("path")
+                            .attr("class", "area")
+                            .attr("d", area);
+                        svg.select('.chart-group')
+                            .selectAll(".dot").data(_data.filter(function (d) {
+                                return d.y;
+                            }))
+                            .enter().append("circle")
+                            .attr("class", "dot")
+                            .attr("cx", line.x())
+                            .attr("cy", line.y())
+                            .attr("r", 3.5);
+
+                        duration = 500;
+
+                    });
+                }
+                exports.width = function (_x) {
+                    if (!arguments.length) return width;
+                    width = parseInt(_x);
+                    return this;
+                };
+                exports.height = function (_x) {
+                    if (!arguments.length) return height;
+                    height = parseInt(_x);
+                    duration = 0;
+                    return this;
+                };
+                exports.gap = function (_x) {
+                    if (!arguments.length) return gap;
+                    gap = _x;
+                    return this;
+                };
+                exports.ease = function (_x) {
+                    if (!arguments.length) return ease;
+                    ease = _x;
+                    return this;
+                };
+                d3.rebind(exports, dispatch, 'on');
+                return exports;
+            };
+
+            var chart = d3.custom.barChart();
+            var chartEl = d3.select(element[0]);
+
+            scope.$watch('chartdata', function (newVal, oldVal) {
+                chartEl.datum(newVal).call(chart);
+                integer = integer + 1;
+                console.log(integer)
+            });
+        }
+    }
+})
 
 .directive('tweet', function() {
         return {

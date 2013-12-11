@@ -12,10 +12,11 @@ HOST = "http://localhost:5000"
 DEVICE_KEY = "umoeder"
 
 #Sensors
-SENSOR_LIGHT = "light"
+SENSOR_ILLUMINATION = "illumination"
 SENSOR_TEMPERATURE = "temperature"
 SENSOR_HUMIDITY = "humidity"
 SENSOR_FOCUS = "focus"
+SENSOR_SOUND = "sound"
 
 def postSensorData(sensor, value):
     now = time.time()
@@ -25,9 +26,13 @@ def postSensorData(sensor, value):
     html = response.read()
     print html
 
-for i in range(0,5):
-    postSensorData(SENSOR_TEMPERATURE, random.randint(0,1))
+for i in range(0,20):
+    print i
+    postSensorData(SENSOR_FOCUS, random.randint(0,1))
     postSensorData(SENSOR_HUMIDITY, random.randint(200,800))
+    postSensorData(SENSOR_LIGHT, random.randint(100,1000))
+    postSensorData(SENSOR_TEMPERATURE, random.randint(20,30))
+    postSensorData(SENSOR_SOUND, random.randint(200,800))
 
 
 '''

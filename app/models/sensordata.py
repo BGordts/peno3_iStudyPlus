@@ -10,6 +10,7 @@ SENSOR_TEMPERATURE = "temperature"
 SENSOR_HUMIDITY = "humidity"
 SENSOR_SOUND = "sound"
 SENSOR_CAMERA = "camera"
+SENSOR_FOCUS = "focus"
 
 
 class Sensordata(db.Model):
@@ -34,6 +35,10 @@ class Sensordata(db.Model):
         return  {"sensor_type": self.sensor_type, "value": self.value, "date": timeInMilis, "session_id": self.session_id}
     
     def outputXY(self):
+        if self.sensor_type == SENSOR_FOCUS:
+            if self.value == 0:
+                return {"x": unix_time_millis(self.date), "y": None}
+        
         return {"x": unix_time_millis(self.date), "y": self.value}
 
     def __repr__(self):
