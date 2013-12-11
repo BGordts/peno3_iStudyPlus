@@ -373,7 +373,7 @@
         </div>
         <!--end view mode-->
         <!--start edit mode-->
-        <session-edit ng-switch-when="edit" sessiontype="sessionType" editdata="data.headerdata"></session-edit>
+        <session-edit ng-switch-when="edit" sessiontype="sessionType" editdata="session" courses="sessionCourses.courses"></session-edit>
         <!--end edit mode-->
         <button type="button" class="btn is_edit-btn" ng-click="panelState='edit'">
             <span class="glyphicon glyphicon-pencil"></span>
@@ -386,9 +386,9 @@
             <button type="button" class="btn btn-default" ng-click="cancel()">
                 <span class="glyphicon glyphicon-remove"></span>
             </button>
-            <button type="button" class="btn btn-default" ng-click="delete()" >
+            <!--<button type="button" class="btn btn-default" ng-click="delete()" >
                 <span class="glyphicon glyphicon-trash"></span>
-            </button>
+            </button>-->
         </div>
         <!--end right menu-->
         <div class="clearfix xs-visible"></div>
@@ -443,11 +443,11 @@
 <script type="text/ng-template" id="sessionEdit.tpl">
 	<div>
 		<div class="col-md-8 pull-left">
-			<select class="form-control" ng-model="newSession.course" ng-options="course.id as course.name for course in courselist"></select>
-			<textarea class="form-control" rows="1" placeholder="Beschrijving"></textarea>
+			<select class="form-control" ng-model="editeddata.sessionData.course_id" ng-options="course.id as course.name for course in courses"></select>
+			<textarea ng-model="editeddata.sessionData.description" class="form-control" rows="1" placeholder="Beschrijving"></textarea>
 			<div class="row">
 				<div class="col-lg-4 input-group" id="datepicker" ng-controller="DatepickerDemoCtrl">
-					<input type="text" class="form-control" datepicker-popup="dd/MM/yyyy" ng-model="dt" is-open="opened" min="minDate" max="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Sluiten" ng-disabled="sessiontype == 'live'"/>
+					<input type="text" class="form-control" datepicker-popup="dd/MM/yyyy" ng-model="editeddata.sessionData.start_date" is-open="opened" min="minDate" max="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Sluiten" ng-disabled="sessiontype == 'live'"/>
 					<span class="input-group-btn">
 						<button type="button" class="btn btn-default" ng-click="open()" ng-disabled="sessiontype == 'live'">
 							<span class="glyphicon glyphicon-calendar"></span>
@@ -455,7 +455,7 @@
 					</span>
 				</div>
 				<div class="col-lg-4 input-group" id="starttimepicker">
-					<input class="form-control" name="newSession.ST" ui-mask="99:99" ng-model="newSession.ST" placeholder="uu:mm" class="input-large ng-dirty ng-valid ng-valid-mask" ng-disabled="sessiontype == 'live'">
+					<input class="form-control" name="newSession.ST" ui-mask="99:99" ng-model="editeddata.formattedStartTime" placeholder="uu:mm" class="input-large ng-dirty ng-valid ng-valid-mask" ng-disabled="sessiontype == 'live'">
 					<span class="dropdown open input-group-btn">
 						<button type="button" class="btn btn-default" ng-disabled="sessiontype == 'live'">
 							<span class="glyphicon glyphicon-time"></span>
@@ -463,7 +463,7 @@
 					</span>
 				</div>
 				<div class="col-lg-4 input-group" id="endtimepicker" ng-class="{hidden : newSession.sessionType == 'live'}">
-					<input class="form-control" name="newSession.ET" ui-mask="99:99" ng-model="newSession.ET" placeholder="uu:mm" class="input-large ng-dirty ng-valid ng-valid-mask" ng-disabled="sessiontype == 'live'">
+					<input class="form-control" name="newSession.ET" ui-mask="99:99" ng-model="editeddata.formattedEndTime" placeholder="uu:mm" class="input-large ng-dirty ng-valid ng-valid-mask" ng-disabled="sessiontype == 'live'">
 					<span class="dropdown open input-group-btn">
 						<button type="button" class="btn btn-default" ng-disabled="sessiontype == 'live'">
 							<span class="glyphicon glyphicon-time"></span>
@@ -472,10 +472,12 @@
 				</div>
 			</div>
 		</div>
+		<div class="clearfix xs-visible"></div>
 		<div class="col-md-4">
 			<p>Feedback</p>
-			<rating value="rate" state-on="'glyphicon glyphicon-stop'" state-off="'glyphicon glyphicon-minus'" max="10" readonly="false" ng-class="{hidden : newSession.sessionType == 'live'}"></rating>
+			<rating value="editeddata.sessionData.feedback_score*10" state-on="'glyphicon glyphicon-stop'" state-off="'glyphicon glyphicon-minus'" max="10" readonly="false" ng-disabled="sessiontype == 'live'"></rating>
 		</div>
+		<div class="clearfix xs-visible"></div>
 	</div>
 </script>
 <script type="text/ng-template" id="panels.tpl">
