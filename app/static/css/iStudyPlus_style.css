@@ -877,3 +877,19 @@ canvas {
 	.panel-heading-overflow {
 	overflow: hidden !important;
 }
+	.line.profile {
+	stroke: #ff8417;
+}
+	.line.compare {
+	stroke: #888;
+}
+	.green,
+.red {
+	color: #fff;
+}
+	.green {
+	background-color: #5CB85C;
+}
+	.red {
+	background-color: #D9534F;
+}

@@ -11,7 +11,7 @@
 			</div>
 			<div class="pull-right">
 				<div class="pull-right">
-					<div class="is_square-80">[[formatTime(user1.total_time)]]</div>
+					<div class="is_square-80"><a><span tooltip-placement="bottom" tooltip="Totale studietijd">[[formatTime(user1.total_time)]]</span></a></div>
 				</div>
 				<div class="pull-right">
 					<div class="is_square-80">[[Math.round(user1.total_efficiency*100)]] %</div>
@@ -24,45 +24,45 @@
 	</div>
 	<!--end panel heading-->
 	<!--start panel body-->
-	<div id="[['course' + $index]]" class="" collapse="isCollapsed.value">
+	<div id="[['course' + $index]]" class="collapse in" collapse="isCollapsed.value" style="overflow:hidden">
 		<div class="panel-body">
 			<div class="row">
 				<div class="col-md-6 is_no-padding">
 					<div class="col-sm-6">Licht
 						<div class="is_row-square">
 							<div class="pull-left">
-								<div class="is_square-40">[[user1.highest_illumination]]</div>
+								<div class="is_square-40 green">[[user1.highest_illumination]]</div>
 							</div>
 							<div class="pull-left">
-								<div class="is_square-40">[[user1.lowest_illumination]]</div>
+								<div class="is_square-40 red">[[user1.lowest_illumination]]</div>
 							</div>
 						</div>
 						<div class="clearfix xs-visible"></div>
 						<div class="is_row-square is_compare" ng-if="user2">
 							<div class="pull-left">
-								<div class="is_square-40">[[user2.highest_illumination]]</div>
+								<div class="is_square-40 green">[[user2.highest_illumination]]</div>
 							</div>
 							<div class="pull-left">
-								<div class="is_square-40">[[user2.lowest_illumination]]</div>
+								<div class="is_square-40 red">[[user2.lowest_illumination]]</div>
 							</div>
 						</div>
 					</div>
 					<div class="col-sm-6">Geluid
 						<div class="is_row-square">
 							<div class="pull-left">
-								<div class="is_square-40">[[user1.highest_sound]]</div>
+								<div class="is_square-40 green">[[user1.highest_sound]]</div>
 							</div>
 							<div class="pull-left">
-								<div class="is_square-40">[[user1.lowest_sound]]</div>
+								<div class="is_square-40 red">[[user1.lowest_sound]]</div>
 							</div>
 						</div>
 						<div class="clearfix xs-visible"></div>
 						<div class="is_row-square is_compare" ng-if="user2">
 							<div class="pull-left">
-								<div class="is_square-40">[[user2.highest_sound]]</div>
+								<div class="is_square-40 green">[[user2.highest_sound]]</div>
 							</div>
 							<div class="pull-left">
-								<div class="is_square-40">[[user2.lowest_sound]]</div>
+								<div class="is_square-40 red">[[user2.lowest_sound]]</div>
 							</div>
 						</div>
 					</div>
@@ -71,38 +71,38 @@
 					<div class="col-sm-6">Temperatuur
 						<div class="is_row-square">
 							<div class="pull-left">
-								<div class="is_square-40">[[user1.highest_temperature]]</div>
+								<div class="is_square-40 green">[[user1.highest_temperature]]</div>
 							</div>
 							<div class="pull-left">
-								<div class="is_square-40">[[user1.lowest_temperature]]</div>
+								<div class="is_square-40 red">[[user1.lowest_temperature]]</div>
 							</div>
 						</div>
 						<div class="clearfix xs-visible"></div>
 						<div class="is_row-square is_compare" ng-if="user2">
 							<div class="pull-left">
-								<div class="is_square-40">[[user2.highest_temperature]]</div>
+								<div class="is_square-40 green">[[user2.highest_temperature]]</div>
 							</div>
 							<div class="pull-left">
-								<div class="is_square-40">[[user2.lowest_temperature]]</div>
+								<div class="is_square-40 red">[[user2.lowest_temperature]]</div>
 							</div>
 						</div>
 					</div>
 					<div class="col-sm-6">Luchtvochtigheid
 						<div class="is_row-square">
 							<div class="pull-left">
-								<div class="is_square-40">[[user1.highest_humidity]]</div>
+								<div class="is_square-40 green">[[user1.highest_humidity]]</div>
 							</div>
 							<div class="pull-left">
-								<div class="is_square-40">[[user1.lowest_humidity]]</div>
+								<div class="is_square-40 red">[[user1.lowest_humidity]]</div>
 							</div>
 						</div>
 						<div class="clearfix xs-visible"></div>
 						<div class="is_row-square is_compare" ng-if="user2">
 							<div class="pull-left">
-								<div class="is_square-40">[[user2.highest_humidity]]</div>
+								<div class="is_square-40 green">[[user2.highest_humidity]]</div>
 							</div>
 							<div class="pull-left">
-								<div class="is_square-40">[[user2.lowest_humidity]]</div>
+								<div class="is_square-40 red">[[user2.lowest_humidity]]</div>
 							</div>
 						</div>
 					</div>
@@ -113,19 +113,19 @@
 				<div class="col-sm-6">Focuspercentage
 					<div class="is_row-square">
 						<div class="pull-left">
-							<div class="is_square-40">[[Math.round(user1.highest_focus*100)]]</div>
+							<div class="is_square-40 green">[[Math.round(user1.highest_focus*100)]]</div>
 						</div>
 						<div class="pull-left">
-							<div class="is_square-40">[[Math.round(user1.lowest_focus*100)]]</div>
+							<div class="is_square-40 red">[[Math.round(user1.lowest_focus*100)]]</div>
 						</div>
 					</div>
 					<div class="clearfix xs-visible"></div>
 					<div class="is_row-square is_compare" ng-if="user2">
 						<div class="pull-left">
-							<div class="is_square-40">[[Math.round(user2.highest_focus*100)]]</div>
+							<div class="is_square-40 green">[[Math.round(user2.highest_focus*100)]]</div>
 						</div>
 						<div class="pull-left">
-							<div class="is_square-40">[[Math.round(user2.lowest_focus*100)]]</div>
+							<div class="is_square-40 red">[[Math.round(user2.lowest_focus*100)]]</div>
 						</div>
 					</div>
 				</div>
@@ -134,11 +134,11 @@
 			<div class="row">
 				<div class="col-sm-12">
 					<div class="pull-left">
-						<h2>Title</h2>
+						<h2>Efficiëntieplot</h2>
 					</div>
-					<div class="pull-right">select x-axis</div>
+					<div class="pull-right">efficiëntiescore in functie van de gemeten sensorwaarden</div>
 					<div class="clearfix xs-visible"></div>
-					<div>graph met 2 lijnen
+					<div>
                         <div>
                         <div>
                             <!--<select>
@@ -201,38 +201,38 @@
 					<div class="col-sm-6">Licht
 						<div class="is_row-square">
 							<div class="pull-left">
-								<div class="is_square-40">[[user1.highest_illumination]]</div>
+								<div class="is_square-40 green">[[user1.highest_illumination]]</div>
 							</div>
 							<div class="pull-left">
-								<div class="is_square-40">[[user1.lowest_illumination]]</div>
+								<div class="is_square-40 red">[[user1.lowest_illumination]]</div>
 							</div>
 						</div>
 						<div class="clearfix xs-visible"></div>
 						<div class="is_row-square is_compare" ng-if="user2">
 							<div class="pull-left">
-								<div class="is_square-40">[[user2.highest_illumination]]</div>
+								<div class="is_square-40 green">[[user2.highest_illumination]]</div>
 							</div>
 							<div class="pull-left">
-								<div class="is_square-40">[[user2.lowest_illumination]]</div>
+								<div class="is_square-40 red">[[user2.lowest_illumination]]</div>
 							</div>
 						</div>
 					</div>
 					<div class="col-sm-6">Geluid
 						<div class="is_row-square">
 							<div class="pull-left">
-								<div class="is_square-40">[[user1.highest_sound]]</div>
+								<div class="is_square-40 green">[[user1.highest_sound]]</div>
 							</div>
 							<div class="pull-left">
-								<div class="is_square-40">[[user1.lowest_sound]]</div>
+								<div class="is_square-40 red">[[user1.lowest_sound]]</div>
 							</div>
 						</div>
 						<div class="clearfix xs-visible"></div>
 						<div class="is_row-square is_compare" ng-if="user2">
 							<div class="pull-left">
-								<div class="is_square-40">[[user2.highest_sound]]</div>
+								<div class="is_square-40 green">[[user2.highest_sound]]</div>
 							</div>
 							<div class="pull-left">
-								<div class="is_square-40">[[user2.lowest_sound]]</div>
+								<div class="is_square-40 red">[[user2.lowest_sound]]</div>
 							</div>
 						</div>
 					</div>
@@ -241,37 +241,37 @@
 					<div class="col-sm-6">Temperatuur
 						<div class="is_row-square">
 							<div class="pull-left">
-								<div class="is_square-40">[[user1.highest_temperature]]</div>
+								<div class="is_square-40 green">[[user1.highest_temperature]]</div>
 							</div>
 							<div class="pull-left">
-								<div class="is_square-40">[[user1.lowest_temperature]]</div>
+								<div class="is_square-40 red">[[user1.lowest_temperature]]</div>
 							</div>
 						</div>
 						<div class="is_row-square is_compare" ng-if="user2">
 							<div class="pull-left">
-								<div class="is_square-40">[[user2.highest_temperature]]</div>
+								<div class="is_square-40 green">[[user2.highest_temperature]]</div>
 							</div>
 							<div class="pull-left">
-								<div class="is_square-40">[[user2.lowest_temperature]]</div>
+								<div class="is_square-40 red">[[user2.lowest_temperature]]</div>
 							</div>
 						</div>
 					</div>
 					<div class="col-sm-6">Luchtvochtigheid
 						<div class="is_row-square">
 							<div class="pull-left">
-								<div class="is_square-40">[[user1.highest_humidity]]</div>
+								<div class="is_square-40 green">[[user1.highest_humidity]]</div>
 							</div>
 							<div class="pull-left">
-								<div class="is_square-40">[[user1.lowest_humidity]]</div>
+								<div class="is_square-40 red">[[user1.lowest_humidity]]</div>
 							</div>
 						</div>
 						<div class="clearfix xs-visible"></div>
 						<div class="is_row-square is_compare" ng-if="user2">
 							<div class="pull-left">
-								<div class="is_square-40">[[user2.highest_humidity]]</div>
+								<div class="is_square-40 green">[[user2.highest_humidity]]</div>
 							</div>
 							<div class="pull-left">
-								<div class="is_square-40">[[user2.lowest_humidity]]</div>
+								<div class="is_square-40 red">[[user2.lowest_humidity]]</div>
 							</div>
 						</div>
 					</div>
@@ -282,19 +282,19 @@
 				<div class="col-sm-6">Focuspercentage
 					<div class="is_row-square">
 						<div class="pull-left">
-							<div class="is_square-40">[[Math.round(user1.highest_focus*100)]]</div>
+							<div class="is_square-40 green">[[Math.round(user1.highest_focus*100)]]</div>
 						</div>
 						<div class="pull-left">
-							<div class="is_square-40">[[Math.round(user1.lowest_focus*100)]]</div>
+							<div class="is_square-40 red">[[Math.round(user1.lowest_focus*100)]]</div>
 						</div>
 					</div>
 					<div class="clearfix xs-visible"></div>
 					<div class="is_row-square is_compare" ng-if="user2">
 						<div class="pull-left">
-							<div class="is_square-40">[[Math.round(user2.highest_focus*100)]]</div>
+							<div class="is_square-40 green">[[Math.round(user2.highest_focus*100)]]</div>
 						</div>
 						<div class="pull-left">
-							<div class="is_square-40">[[Math.round(user2.lowest_focus*100)]]</div>
+							<div class="is_square-40 red">[[Math.round(user2.lowest_focus*100)]]</div>
 						</div>
 					</div>
 				</div>
