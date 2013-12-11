@@ -154,7 +154,7 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
         $scope.activityType = '';
         $scope.sessionType = '';
         $scope.newSession = {
-                sessionType: 'past',
+                sessionType: 'live',
                 activityType: '',
                 course: ''
         };
@@ -730,26 +730,6 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
                                           //
                                           // end
 
-                      // Timepicker
-                      //
-                      $scope.myStartTime = new Date();
-                      $scope.openST = function() {
-                                                $timeout(function() {
-                                                  $scope.openedST = true;
-                                                });
-                                          };
-                      $scope.myEndTime = new Date();
-                      $scope.openET = function() {
-                                                $timeout(function() {
-                                                  $scope.openedET = true;
-                                                });
-                                          };
-                                          $scope.hstep = 1;
-                                          $scope.mstep = 5;
-                                          $scope.ismeridian = false;
-                                          //
-                                          // end
-
 
                         $scope.broadcastid = "saveedit" + $scope.editdata.sessionID;
                         $scope.emitid = "emitsave" + $scope.editdata.sessionID;
@@ -976,7 +956,7 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
             d3.custom = {};
             d3.custom.barChart = function module() {
                 var margin = {
-                    top: 0,
+                    top: 10,
                     right: 0,
                     bottom: 0,
                     left: 0

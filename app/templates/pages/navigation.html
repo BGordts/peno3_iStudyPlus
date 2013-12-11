@@ -56,12 +56,6 @@
 						<form>
 							<select class="form-control" ng-model="newSession.course" ng-options="course.id as course.name for course in courselist"></select>
 							<textarea ng-model="description" class="form-control" rows="1" placeholder="Beschrijving"></textarea>
-							<div class="btn-group">
-								<label class="btn btn-primary" ng-class="{active : newSession.activityType=='class'}" ng-click="newSession.activityType = 'class'">
-									<input type="radio" ng-checked="newSession.activityType == 'class'" value="class" name="activityType">Les</label>
-								<label class="btn btn-primary" ng-class="{active : newSession.activityType=='study'}" ng-click="newSession.activityType = 'study'">
-									<input type="radio" ng-checked="newSession.activityType == 'study'" value="study" name="activityType">Studie</label>
-							</div>
 							<div class="input-group" id="datepicker" >
 								<input type="text" class="form-control" datepicker-popup="dd/MM/yyyy" ng-model="dt" is-open="opened" min="minDate" max="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Sluiten" ng-disabled="newSession.sessionType == 'live'"/>
 								<span class="input-group-btn">
@@ -71,7 +65,7 @@
 								</span>
 							</div>
 							<div class="input-group" id="starttimepicker">
-								<input class="form-control" name="newSession.ST" ui-mask="99:99" ng-model="newSession.ST" placeholder="uu:mm" class="input-large ng-dirty ng-valid ng-valid-mask">
+								<input class="form-control" name="newSession.ST" ui-mask="99:99" ng-model="newSession.ST" placeholder="uu:mm" class="input-large ng-dirty ng-valid ng-valid-mask" ng-disabled="newSession.sessionType == 'live'">
 								<span class="dropdown open input-group-btn">
 									<button type="button" class="btn btn-default" ng-disabled="newSession.sessionType == 'live'">
 										<span class="glyphicon glyphicon-time"></span>
@@ -79,7 +73,7 @@
 								</span>
 							</div>
 							<div class="input-group" id="endtimepicker" ng-class="{hidden : newSession.sessionType == 'live'}">
-								<input class="form-control" name="newSession.ET" ui-mask="99:99" ng-model="newSession.ET" placeholder="uu:mm" class="input-large ng-dirty ng-valid ng-valid-mask">
+								<input class="form-control" name="newSession.ET" ui-mask="99:99" ng-model="newSession.ET" placeholder="uu:mm" class="input-large ng-dirty ng-valid ng-valid-mask" ng-disabled="newSession.sessionType == 'live'">
 								<span class="dropdown open input-group-btn">
 									<button type="button" class="btn btn-default" ng-disabled="newSession.sessionType == 'live'">
 										<span class="glyphicon glyphicon-time"></span>

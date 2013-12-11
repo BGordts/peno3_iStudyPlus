@@ -30,7 +30,7 @@ for i in range(0,20):
     print i
     postSensorData(SENSOR_FOCUS, random.randint(0,1))
     postSensorData(SENSOR_HUMIDITY, random.randint(200,800))
-    postSensorData(SENSOR_LIGHT, random.randint(100,1000))
+    postSensorData(SENSOR_ILLUMINATION, random.randint(100,1000))
     postSensorData(SENSOR_TEMPERATURE, random.randint(20,30))
     postSensorData(SENSOR_SOUND, random.randint(200,800))
 
