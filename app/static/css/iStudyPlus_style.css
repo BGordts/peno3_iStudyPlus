@@ -117,6 +117,7 @@
 	border: 1px solid #292929;
 	border-width: 1px 1px 2px 0;
 	color: #ccc;
+	height: 44px;
 }
 	.is_user-search .fi-magnifying-glass {
 	position: absolute;
@@ -132,6 +133,7 @@
 	color: #fff;
 	-webkit-box-shadow: inset 5px 0px 10px -5px #888;
 	box-shadow: inset 5px 0px 10px -5px #333;
+	height: 40px;
 }
 	.is_sidepanel-student-list-wrap {
 	height: inherit;
@@ -381,11 +383,31 @@
 	height: 80px;
 	line-height: 80px;
 	font-size: 22px;
+	display: block;
+	text-decoration: none !important;
+	color: #333 !important;
 }
 	.is_square-40 {
 	width: 40px;
 	height: 40px;
 	line-height: 40px;
+	display: block;
+	text-decoration: none !important;
+}
+	.is_square-80 span {
+	width: 80px;
+	height: 80px;
+	line-height: 80px;
+	font-size: 22px;
+	display: block;
+	text-decoration: none !important;
+}
+	.is_square-40 span {
+	width: 40px;
+	height: 40px;
+	line-height: 40px;
+	display: block;
+	text-decoration: none !important;
 }
 	.is_compare {
 	width: 250%;
@@ -885,11 +907,15 @@ canvas {
 }
 	.green,
 .red {
-	color: #fff;
+	color: #fff !important;
 }
 	.green {
 	background-color: #5CB85C;
 }
 	.red {
 	background-color: #D9534F;
+}
+	.is_no-padding a {
+	color: #fff !important;
+	font: 18px;
 }
