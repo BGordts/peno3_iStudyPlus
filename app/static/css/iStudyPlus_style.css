@@ -380,6 +380,7 @@
 	width: 80px;
 	height: 80px;
 	line-height: 80px;
+	font-size: 22px;
 }
 	.is_square-40 {
 	width: 40px;
@@ -668,16 +669,16 @@ form .btn-group-vertical .btn-warning:not(:hover):not(.active) {
 	shape-rendering: crispEdges;
 }
 	.area {
-	fill: lightsteelblue;
+	fill: rgba(255, 132, 23, 0.75);
 }
 	.line {
 	fill: none;
-	stroke: steelblue;
+	stroke: #ff8417;
 	stroke-width: 1.5px;
 }
 	.dot {
 	fill: white;
-	stroke: steelblue;
+	stroke: #ff8417;
 	stroke-width: 1.5px;
 }
 	.btn > input[type="checkbox"] {
@@ -831,12 +832,46 @@ canvas {
 	-moz-box-sizing: content-box;
 	box-sizing: content-box;
 	margin: 10px;
+	position: relative;
 }
-	.graphpanel .name {
-	float: left;
+	.graphpanel .name,
+.graphpanel .icon {
 	width: 240px;
 	height: 80px;
 	margin: 0;
-	color: #fff;
+	padding: 5px 10px;
+}
+	.graphpanel .icon {
+	float: left;
 	background-color: #333;
+	font-size: 100px;
+	line-height: 0.5;
+	color: rgba(255,255,255,0.2);
+	margin: -1px 0 0 0;
+	text-align: left;
+}
+	.graphpanel .name {
+	position: absolute;
+	top: 0;
+	left: 0;
+	font-size: 18px;
+	color: #fff;
+	background-color: transparent;
+	text-align: right;
+}
+	.panel-heading .form-control {
+	margin-bottom: 10px;
+}
+	.panel-heading .rating-wrap {
+	margin-top: 0;
+}
+	.panel-heading .progress {
+	background-color: #fff;
+	border: 1px solid #ccc;
+}
+	.panel-group .panel {
+	overflow: visible;
+}
+	.panel-heading-overflow {
+	overflow: hidden !important;
 }
