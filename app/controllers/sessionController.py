@@ -194,19 +194,6 @@ def commitSession():
     return "Yolo"
 
 '''
-Get all the sensordata for the spified session and sensor
-'''
-@app.route('/session/getData', methods = ['GET'])    
-@login_required
-def getData():
-    sessionID = request.args["sessionID"]
-    sensor_type = request.args["sensor_type"]
-    
-    session = Session.query.get(sessionID)
-    
-    return json.dumps(session.outputSensorData(sensor_type))
-
-'''
 Returns all the sessions created by this user
 '''
 @app.route('/session/getAllSessions', methods = ['GET'])    
