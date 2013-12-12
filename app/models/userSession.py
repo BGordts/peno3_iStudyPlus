@@ -16,9 +16,10 @@ from app.utils.utils import *
 from app.models.courseUsers import Courses_Users
 
 '''
-een userSession is een klasse met id, beschrijving, feedback text, feedback score, start date, eind datum,
-pauzes, gepauzeerd,cursus, gebruiker, sessie efficientie, sessie temperatuur, sessie belichting,
-sessie geluid, sessie focus en sessie vochtigheid. 
+een userSession is een klasse met id, beschrijving, feedback text, feedback score,
+start date, eind datum,pauzes, gepauzeerd,cursus, gebruiker, sessie efficientie,
+sessie temperatuur, sessie belichting,sessie geluid, sessie focus en
+sessie vochtigheid. 
 '''
 class UserSession(db.Model):
     __tablename__ = 'usersessions'
@@ -53,18 +54,22 @@ class UserSession(db.Model):
     @param User user: de user voor deze UserSession.
     @param Course course: de cursus voor deze UserSession.
     @param String description: de beschrijving voor deze UserSession.
-    @param Integer feedback_score: de feedback score voor deze userSession, deze is standaard None.
+    @param Integer feedback_score: de feedback score voor deze userSession,
+           deze is standaard None.
     @param Datetime start_date: de start datum voor deze UserSession, deze is standaard None.
     @param Datetime end_date: de eind datum voor deze UserSession, deze is standaard None.
     
     @postcondition: de user van deze userSession is gelijk aan user.
     @postcondition: de course van deze userSession is gelijk aan course.
     @postcondition: de beschrijving van deze userSession is gelijk aan description.
-    @postcondition: de feedback score van deze userSession is gelijk aan feedback_score of None.
-    @postcondition: de start datum score van deze userSession is gelijk aan start_datum of None.
+    @postcondition: de feedback score van deze userSession is gelijk aan feedback_score
+                    of None.
+    @postcondition: de start datum score van deze userSession is gelijk aan start_datum
+                    of None.
     @postcondition: de eind datum van deze userSession is gelijk aan end_date of None.
     
-    @postcondition: Als end_datum niet gelijk is aan None, dan wordt de userSession toegevoegd de course statistics en userStatistics.
+    @postcondition: Als end_datum niet gelijk is aan None, dan wordt de userSession
+                    toegevoegd de course statistics en userStatistics.
     @postcondition: Dit userSession object wordt toegevoegd aan de database.
     '''
     def __init__(self, user, course , description , feedback_score = None, start_date =None, end_date=None):
@@ -149,9 +154,11 @@ class UserSession(db.Model):
     '''
     beëindigd de timer van de sessie.
     
-    @postcondition: als de start tijd niet None is, is de eind tijd van de sessie is gelijk aan de huidige tijd.
+    @postcondition: als de start tijd niet None is, is de eind tijd van de
+                    sessie is gelijk aan de huidige tijd.
     @postcondition: als de pauze nog gepauzeerd was, is de pauze ook beëindigd.
-    @postcondition: als de start tijd van deze sessie None is, wordt de sessie verwijdert uit de database.
+    @postcondition: als de start tijd van deze sessie None is, wordt de sessie
+                    verwijdert uit de database.
     '''
     def end(self):
         if(self.isPaused()):
@@ -163,8 +170,9 @@ class UserSession(db.Model):
         db.session.commit()
 
     '''
-    berekent de gemiddelde waarden van de temperatuur, vochtigheid, geluid, lichtsterkte,
-    focus en efficientie. Ook de userStatistieken en de course user statistieken worden geupdate.
+    berekent de gemiddelde waarden van de temperatuur, vochtigheid, geluid,
+    lichtsterkte,focus en efficientie. Ook de userStatistieken en de course
+    user statistieken worden geupdate.
     
     @postcondition: het gemiddelde van de temperatuur data van deze sessie is berekent.
     @postcondition: het gemiddelde van de vochtigheid data van deze sessie is berekent.
@@ -223,9 +231,10 @@ class UserSession(db.Model):
     '''
     geeft een dictionary met al de data van deze sessie terug.
     
-    @return: een dictionary terug met de beschrijving, feedback text, feedback score, start datum,
-    eind datum, course id, efficientie, gemiddelde temperatuur, gemiddelde belichting,
-    gemiddelde geluid, gemiddelde focus en gemiddelde vochtigheid van deze sessie. 
+    @return: een dictionary terug met de beschrijving, feedback text, feedback score,
+             start datum, eind datum, course id, efficientie, gemiddelde temperatuur,
+             gemiddelde belichting, gemiddelde geluid, gemiddelde focus en gemiddelde
+             vochtigheid van deze sessie. 
     '''
     def outputSession(self):
         returnSession = {}
@@ -256,7 +265,8 @@ class UserSession(db.Model):
     '''
     berekent de gemiddelde vochtigheid van deze sessie.
     
-    @postcondition: de session vochtigheid van deze sessie is het gemiddelde van al de vochtigheid data.
+    @postcondition: de session vochtigheid van deze sessie is het gemiddelde
+                    van al de vochtigheid data.
     '''
     def calcSessionHum(self):
         tempdata = Sensordata.query.filter_by(session_id=self.id, sensor_type="humidity").all()
@@ -265,7 +275,8 @@ class UserSession(db.Model):
     '''
     berekent de gemiddelde temperatuur van deze sessie.
     
-    @postcondition: de session temperatuur van deze sessie is het gemiddelde van al de temperatuur data.
+    @postcondition: de session temperatuur van deze sessie is het gemiddelde
+                    van al de temperatuur data.
     '''
     def calcSessionTemp(self):
         tempdata = Sensordata.query.filter_by(session_id=self.id, sensor_type="temperature").all()
@@ -274,7 +285,8 @@ class UserSession(db.Model):
     '''
     berekent het gemiddelde geluid van deze sessie.
     
-    @postcondition: het session geluid van deze sessie is het gemiddelde van al de geluids data.
+    @postcondition: het session geluid van deze sessie is het gemiddelde van al
+                    de geluids data.
     '''
     def calcSessionSound(self):
         tempdata = Sensordata.query.filter_by(session_id=self.id, sensor_type="sound").all()
@@ -283,7 +295,8 @@ class UserSession(db.Model):
     '''
     berekent de gemiddelde belichting van deze sessie.
     
-    @postcondition: de session illumination van deze sessie is het gemiddelde van al de belichting data.
+    @postcondition: de session illumination van deze sessie is het gemiddelde
+                    van al de belichting data.
     '''
     def calcSessionIll(self):
         tempdata = Sensordata.query.filter_by(session_id=self.id, sensor_type="illumination").all()
