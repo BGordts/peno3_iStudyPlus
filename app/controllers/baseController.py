@@ -17,7 +17,6 @@ def welcome():
     try:
         user = User.query.get(session["userID"])
         return redirect("app/" + user.id.__str__() + "/dashboard")
-        #return render_template('pages/dashboard_profile-info2.html', user=user)
     except KeyError:
         return render_template('index.html')
     
@@ -29,7 +28,6 @@ def home():
     try:
         user = User.query.get(session["userID"])
         return redirect("app/" + user.id + "/dashboard")
-        #return render_template('pages/dashboard_profile-info2.html', user=user)
     except KeyError:
         return redirect(url_for('login'))
     

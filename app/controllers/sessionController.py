@@ -38,7 +38,6 @@ def tracking():
         state = "end"
     elif userSession.isPaused():
         state = "pause"
-    #_log("info", "sessino: " + session['sessionID']);
     return render_template('pages/tracking_page.html', state = state)
 
 @app.route('/session/createTracked' , methods = ['GET'])
@@ -52,7 +51,6 @@ def createTracked():
     
     #sessionName = request.form['sessionName']
     course = Course.query.get(courseID)
-    _log('info', 'lecourse: ' +  course.__str__())
     session1 = UserSession(user, course, sessionName)    
     db.session.add(session1)
     db.session.commit()  
@@ -97,6 +95,7 @@ def modifyUSession():
     if not(newEnd_date == datetime.fromtimestamp(float(request.args['endDate'])/1000)):
         newEnd_date = datetime.fromtimestamp(float(request.args['endDate'])/1000)
     newSession = UserSession(uSession.user, newCourse, newDescription, newFeedBack_score, newStart_date, newEnd_date)
+    uSession.deleteUntrackedSession()
     oldId =uSession.id
     db.session.delete(uSession)
     db.session.commit()
@@ -142,7 +141,6 @@ def startSession():
 @login_required
 def pauseSession():
     u = User.query.get(session['userID'])
-    _log("info", u.__str__())
     s = u.getRunningSession()
     s.startPause()
     
@@ -171,19 +169,12 @@ def isPauzed():
 @login_required
 def endSession():
     sessionID = session['sessionID']
-    UserSession.query.filter_by(id=session['sessionID']).first().end()
-    
-    #sessionID = session.pop('sessionID',None)
-    #session.pop('isPauzed',None)
-    
+    UserSession.query.filter_by(id=session['sessionID']).first().end()    
     return json.dumps(sessionID)
 
 @app.route('/session/postFeedback' , methods = ['GET'])
 @login_required
 def postFeedback():
-    #_log("info", "input= " + request.args['sessionID'])
-    #_log("info", "input= " + request.args['feedback'])
-    #sessionID = request.args['sessionID']
     feedback = request.args['feedback']
     
     sessionID = session['sessionID']
@@ -196,27 +187,11 @@ def postFeedback():
 def commitSession():
     sessionID = session['sessionID']
     userSession = UserSession.query.get(sessionID)
-    _log("info", "mr usersessio: " + userSession.__str__())
     userSession.commitSession()
     
     sessionID = session.pop('sessionID',None)
     session.pop('isPauzed',None)
-    
-    #return redirect("app/" + session["userID"].__str__() + "/dashboard")
     return "Yolo"
-
-'''
-Get all the sensordata for the spified session and sensor
-'''
-@app.route('/session/getData', methods = ['GET'])    
-@login_required
-def getData():
-    sessionID = request.args["sessionID"]
-    sensor_type = request.args["sensor_type"]
-    
-    session = Session.query.get(sessionID)
-    
-    return json.dumps(session.outputSensorData(sensor_type))
 
 '''
 Returns all the sessions created by this user
@@ -226,10 +201,7 @@ Returns all the sessions created by this user
 def getAllSessions():
     userID = request.args["userID"]
     
-    user = User.query.get(userID);
-    
-    _log("info", user.sessions.all().__str__())
-    
+    user = User.query.get(userID);    
     #Move to UserSesssion
     returnList = []
     for nextSession in user.sessions.all():        

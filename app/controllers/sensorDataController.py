@@ -29,14 +29,10 @@ def postSensorData():
     
     #Check if there is a device found
     if device:
-        _log('info', "device: " + device.__repr__())
         user = Device.getDeviceByKey(device_key).getUser()
-        _log('info', "user: " + user.__repr__())
         userSession = user.getRunningSession()
-        _log('info', "userSession: " + userSession.__repr__())
         
         date = datetime.datetime.fromtimestamp(dateInMilis/1000.0)
-        _log('info', "date: " + date.__repr__())
         
         #Check whether the user has a running session
         if userSession:

@@ -35,31 +35,17 @@ def clearDataBase():
 
 @app.route('/test/createTestUsers')
 def createTestUsers():
-#    admin = User('admin@example.com', 'admin', 'admin', 'admin' , "1e Bach Burgerlijk Ingenieur", "adminDev")
-#    i = 0;
-#    data = admin.email +'\n'
-#    while i < 20:
-#        str = i.__str__()
-#        testUser = User('test'+str+'@example.com','voornaam'+str,'achternaam'+str,'passwoord',"1e Bach Burgerlijk Ingenieur",'device'+str)
-#        db.session.add(testUser)
-#        data = data + testUser.email +'\n'
-#        i = i+1
-#    db.session.commit()
-    
-    boris = User('boris@example.com', 'Boris', 'Gordts', 'boris' , "1e Bach Burgerlijk Ingenieur", "borisDev",BORIS_SMALL,BORIS_BIG)
-    sam = User('sam@example.com', 'Sam', 'Landuydt', 'sam' , "1e Bach Burgerlijk Ingenieur", "samDev",SAM_SMALL,SAM_BIG)
-    olivier = User('olivier@example.com', 'Olivier', 'Kamers', 'olivier' , "1e Bach Burgerlijk Ingenieur", "OlivierDev",OLIVIER_SMALL,OLIVIER_BIG)
-    jeroen = User('jeroen@example.com', 'Jeroen', 'Hermans', 'jeroen' , "1e Bach Burgerlijk Ingenieur", "jeroenDev",JEROEN_SMALL,JEROEN_BIG)
-    steven = User('steven@example.com', 'Steven', 'Elseviers', 'steven' , "1e Bach Burgerlijk Ingenieur", "stevenDev",STEVEN_SMALL,STEVEN_BIG)
-    christof = User('christof@example.com', 'Christof', 'Luyten', 'christof' , "1e Bach Burgerlijk Ingenieur", "christofDev",CHRISTOF_SMALL,CHRISTOF_BIG)
-    db.session.add(sam)
-    db.session.add(boris)
-    db.session.add(olivier)
-    db.session.add(jeroen)
-    db.session.add(steven)
-    db.session.add(christof)
+    admin = User('admin@example.com', 'admin', 'admin', 'admin' , "1e Bach Burgerlijk Ingenieur", "adminDev")
+    i = 0;
+    data = admin.email +'\n'
+    while i < 20:
+        str = i.__str__()
+        testUser = User('test'+str+'@example.com','voornaam'+str,'achternaam'+str,'passwoord',"1e Bach Burgerlijk Ingenieur",'device'+str)
+        db.session.add(testUser)
+        data = data + testUser.email +'\n'
+        i = i+1
     db.session.commit()
-    return "data"
+    return data
 
 @app.route('/test/createMakers')
 def createMakers():
@@ -82,16 +68,15 @@ def createMakers():
 def createTestSessions():
     x = 0
     data = ""
-    while x < 5:
-        #userID = random.randint(1,len(User.query.all())-1)
-        userID = 1
+    while x < 10:
+        userID = random.randint(1,len(User.query.all())-1)
         user = User.query.get(userID)
         courses = user.getUserCourses()
         course = courses[random.randint(0,len(courses)-1)]
         userSession = UserSession(user, course, "Ik ben aan het studeren, dus ik ben een goede student!")
         randomStart = random.randint(1386264114,1416264114)
         userSession.start_date = datetime.fromtimestamp(randomStart)
-        randomEnd = randomStart + 20
+        randomEnd = randomStart + random.randint(0,7200)
         userSession.end_date = datetime.fromtimestamp(randomEnd)
         db.session.add(userSession)
         db.session.commit()
@@ -125,14 +110,14 @@ def generateTestData(usersession,timestamp):
 def createUntrackedSession():
     x=0
     data =""
-    while x <2:
+    while x <4:
         userID = random.randint(1,5)
         user = User.query.get(userID)
         courseID = random.randint(1,11)
         course = Course.query.get(courseID)
         randomStart = random.randint(1386264114,1416264114)
         start_date = datetime.fromtimestamp(randomStart)
-        randomEnd = randomStart + 20
+        randomEnd = randomStart + random.randint(0,7200)
         end_date = datetime.fromtimestamp(randomEnd)
         feedback_text = "dat was een lastige studeersessie"
         userSession = UserSession(user, course , "een untracked studeersessie", feedback_text, start_date, end_date)

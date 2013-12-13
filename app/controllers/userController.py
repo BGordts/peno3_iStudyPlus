@@ -116,14 +116,9 @@ def changeUserinfo():
                 error = 'The email-address you entered is already taken'
         if not isValidPass(pass1,pass2):
             error = 'De passwoorden waren niet gelijk'
-            
-        #Serieus Sam? :) if not((errors and True) or False)
         if error:
-            _log("info", "kaka error" + error.__str__())
-            
             return render_template('pages/settings_page.html' , error = error, user=user, device=device)
         else:
-            _log("info", "kaka geen error")
             user.changeSetting( email , lastname , name , pass1,study,deviceID,pic_small,pic_big)   
             
             return redirect("app/" + user.id.__str__() + "/dashboard")
@@ -142,7 +137,6 @@ def getCoStudents():
             if not(nextCourseUser.user in coStudents):
                 coStudents.append(nextCourseUser.user)
     coStudents.remove(user)
-    _log("info", "co students: " + coStudents.__str__())
     return json.dumps([cu.outputSmall() for cu in coStudents])
 
 @app.route('/user/courses')
