@@ -83,7 +83,7 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
 	$scope.name = "";
 	$scope.commonStudents = [];
 
-	$scope.courseFilter = {selected: 0};
+	$scope.courseFilter = {selected: parseInt(($location.search()).course)};
 
 	$scope.init = function(){
 		serverConnectionService.getCoStudents(function(data){

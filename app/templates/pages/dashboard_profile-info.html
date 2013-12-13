@@ -188,7 +188,7 @@
 			<div class="clearfix xs-visible"></div>
 		</div>
 		<!--end view mode-->
-		<a type="button" class="btn is_session-btn" ng-href="/app/[[viewedProfile.userID]]/sessions?[['course=' + course.id]]"> <!--/app/[[viewedProfile.id]]/sessions?-->
+		<a type="button" class="btn is_session-btn" ng-href="/app/[[viewedProfile.userID]]/sessions?[['course=' + course.user1.id]]"> <!--/app/[[viewedProfile.id]]/sessions?-->
             <span class="glyphicon glyphicon-list"></span>
         </a>
 		<div class="clearfix xs-visible"></div>
@@ -517,7 +517,7 @@
 		</div>
 		<div class="is_user-abstract is_follow_navbar" ng-class="{is_follow_navbar_style : !isCollapsedTopnav.value}" ui-scrollfix="+212"> <!--affix-top" data-spy="affix" data-offset-top="309"-->
 			<div class="is_profile-pic-container">
-				<img class="img-rounded img-responsive" src="[[loggedInProfile.pic_small]]"></img>
+				<img class="img-rounded img-responsive" src="[[viewedProfile.pic_small]]"></img>
 			</div>
 			<h4>[[viewedProfile.name]] [[viewedProfile.surname]]</h4>
 		</div>
