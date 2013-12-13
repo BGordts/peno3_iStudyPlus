@@ -11,10 +11,10 @@
 			</div>
 			<div class="pull-right">
 				<div class="pull-right">
-					<div class="is_square-80"><a><span tooltip-placement="bottom" tooltip="Totale studietijd">[[formatTime(user1.total_time)]]</span></a></div
+					<a class="is_square-80"><span tooltip-placement="bottom" tooltip="Totale studietijd">[[formatTime(user1.total_time)]]</span></a>
 				</div>
 				<div class="pull-right">
-					<div class="is_square-80">[[Math.round(user1.total_efficiency*100)]] %</div>
+					<a class="is_square-80"><span tooltip-placement="bottom" tooltip="Efficiëntieprocent">[[Math.round(user1.total_efficiency*100)]] %</span></a>
 				</div>
 			</div>
 			<div class="clearfix xs-visible"></div>
@@ -24,45 +24,45 @@
 	</div>
 	<!--end panel heading-->
 	<!--start panel body-->
-	<div id="[['course' + $index]]" class="collapse in" collapse="false" style="overflow:hidden">
+	<div id="[['course' + $index]]" class="collapse in" style="overflow:hidden">
 		<div class="panel-body">
 			<div class="row">
 				<div class="col-md-6 is_no-padding">
 					<div class="col-sm-6">Licht
 						<div class="is_row-square">
 							<div class="pull-left">
-								<div class="is_square-40 green">[[user1.highest_illumination]]</div>
+								<a class="is_square-40 green"><span tooltip-placement="bottom" tooltip="Gemiddelde beste">[[user1.highest_illumination]]</span></a>
 							</div>
 							<div class="pull-left">
-								<div class="is_square-40 red">[[user1.lowest_illumination]]</div>
+								<a class="is_square-40 red"><span tooltip-placement="bottom" tooltip="Gemiddelde slechtste">[[user1.lowest_illumination]]</span></a>
 							</div>
 						</div>
 						<div class="clearfix xs-visible"></div>
 						<div class="is_row-square is_compare" ng-if="user2">
 							<div class="pull-left">
-								<div class="is_square-40 green">[[user2.highest_illumination]]</div>
+								<a class="is_square-40 green"><span tooltip-placement="bottom" tooltip="Gemiddelde beste">[[user2.highest_illumination]]</span></a>
 							</div>
 							<div class="pull-left">
-								<<div class="is_square-40 red">[[user2.lowest_illumination]]</div>
+								<a class="is_square-40 red"><span tooltip-placement="bottom" tooltip="Gemiddelde slechtste">[[user2.lowest_illumination]]</span></a>
 							</div>
 						</div>
 					</div>
 					<div class="col-sm-6">Geluid
 						<div class="is_row-square">
 							<div class="pull-left">
-								<div class="is_square-40 green">[[user1.highest_sound]]</div>
+								<a class="is_square-40 green"><span tooltip-placement="bottom" tooltip="Gemiddelde beste">[[user1.highest_sound]]</span></a>
 							</div>
 							<div class="pull-left">
-								<div class="is_square-40 red">[[user1.lowest_sound]]</div>
+								<a class="is_square-40 red"><span tooltip-placement="bottom" tooltip="Gemiddelde slechtste">[[user1.lowest_sound]]</span></a>
 							</div>
 						</div>
 						<div class="clearfix xs-visible"></div>
 						<div class="is_row-square is_compare" ng-if="user2">
 							<div class="pull-left">
-								<div class="is_square-40 green">[[user2.highest_sound]]</div>
+								<a class="is_square-40 green"><span tooltip-placement="bottom" tooltip="Gemiddelde beste">[[user2.highest_sound]]</span></a>
 							</div>
 							<div class="pull-left">
-								<div class="is_square-40 red">[[user2.lowest_sound]]</div>
+								<a class="is_square-40 red"><span tooltip-placement="bottom" tooltip="Gemiddelde slechtste">[[user2.lowest_sound]]</span></a>
 							</div>
 						</div>
 					</div>
@@ -71,38 +71,38 @@
 					<div class="col-sm-6">Temperatuur
 						<div class="is_row-square">
 							<div class="pull-left">
-								<div class="is_square-40 green">[[user1.highest_temperature]]</div>
+								<a class="is_square-40 green"><span tooltip-placement="bottom" tooltip="Gemiddelde beste">[[user1.highest_temperature]]</span></a>
 							</div>
 							<div class="pull-left">
-								<div class="is_square-40 red">[[user1.lowest_temperature]]</div>
+								<a class="is_square-40 red"><span tooltip-placement="bottom" tooltip="Gemiddelde slechtste">[[user1.lowest_temperature]]</span></a>
 							</div>
 						</div>
 						<div class="clearfix xs-visible"></div>
 						<div class="is_row-square is_compare" ng-if="user2">
 							<div class="pull-left">
-								<div class="is_square-40 green">[[user2.highest_temperature]]</div>
+								<a class="is_square-40 green"><span tooltip-placement="bottom" tooltip="Gemiddelde beste">[[user2.highest_temperature]]</span></a>
 							</div>
 							<div class="pull-left">
-								<div class="is_square-40 red">[[user2.lowest_temperature]]</div>
+								<a class="is_square-40 red"><span tooltip-placement="bottom" tooltip="Gemiddelde slechtste">[[user2.lowest_temperature]]</span></a>
 							</div>
 						</div>
 					</div>
 					<div class="col-sm-6">Luchtvochtigheid
 						<div class="is_row-square">
 							<div class="pull-left">
-								<div class="is_square-40 green">[[user1.highest_humidity]]</div>
+								<a class="is_square-40 green"><span tooltip-placement="bottom" tooltip="Gemiddelde beste">[[user1.highest_humidity]]</span></a>
 							</div>
 							<div class="pull-left">
-								<div class="is_square-40 red">[[user1.lowest_humidity]]</div>
+								<a class="is_square-40 red"><span tooltip-placement="bottom" tooltip="Gemiddelde slechtste">[[user1.lowest_humidity]]</span></a>
 							</div>
 						</div>
 						<div class="clearfix xs-visible"></div>
 						<div class="is_row-square is_compare" ng-if="user2">
 							<div class="pull-left">
-								<div class="is_square-40 green">[[user2.highest_humidity]]</div>
+								<a class="is_square-40 green"><span tooltip-placement="bottom" tooltip="Gemiddelde beste">[[user2.highest_humidity]]</span></a>
 							</div>
 							<div class="pull-left">
-								<div class="is_square-40 red">[[user2.lowest_humidity]]</div>
+								<a class="is_square-40 red"><span tooltip-placement="bottom" tooltip="Gemiddelde slechtste">[[user2.lowest_humidity]]</span></a>
 							</div>
 						</div>
 					</div>
@@ -113,19 +113,19 @@
 				<div class="col-sm-6">Focuspercentage
 					<div class="is_row-square">
 						<div class="pull-left">
-							<div class="is_square-40 green">[[Math.round(user1.highest_focus*100)]]</div>
+							<a class="is_square-40 green"><span tooltip-placement="bottom" tooltip="Gemiddelde beste">[[Math.round(user1.highest_focus*100)]]</span></a>
 						</div>
 						<div class="pull-left">
-							<div class="is_square-40 red">[[Math.round(user1.lowest_focus*100)]]</div>
+							<a class="is_square-40 red"><span tooltip-placement="bottom" tooltip="Gemiddelde slechtste">[[Math.round(user1.lowest_focus*100)]]</span></a>
 						</div>
 					</div>
 					<div class="clearfix xs-visible"></div>
 					<div class="is_row-square is_compare" ng-if="user2">
 						<div class="pull-left">
-							<div class="is_square-40 green">[[Math.round(user2.highest_focus*100)]]</div>
+							<a class="is_square-40 green"><span tooltip-placement="bottom" tooltip="Gemiddelde beste">[[Math.round(user2.highest_focus*100)]]</span></a>
 						</div>
 						<div class="pull-left">
-							<div class="is_square-40 red">[[Math.round(user2.lowest_focus*100)]]</div>
+							<a class="is_square-40 red"><span tooltip-placement="bottom" tooltip="Gemiddelde slechtste">[[Math.round(user2.lowest_focus*100)]]</span></a>
 						</div>
 					</div>
 				</div>
@@ -134,9 +134,10 @@
 			<div class="row">
 				<div class="col-sm-12">
 					<div class="pull-left">
+
 						<h2>Efficientieplot</h2>
 					</div>
-					 <div class="pull-right">efficientiescore in functie van de gemeten sensorwaarden</div>
+					<div class="pull-right">efficientiescore in functie van de gemeten sensorwaarden</div>
 					<div class="clearfix xs-visible"></div>
 					<div>
                         <div>
@@ -178,10 +179,10 @@
 			</div>
 			<div class="pull-right">
 				<div class="pull-right">
-					<div class="is_square-80">[[formatTime(user1.total_time)]]</div>
+					<a class="is_square-80"><span tooltip-placement="bottom" tooltip="Totale studietijd voor dit vak">[[formatTime(user1.total_time)]]</span></a>
 				</div>
 				<div class="pull-right">
-					<div class="is_square-80">[[Math.round(user1.total_efficiency*100)]] %</div>
+					<a class="is_square-80"><span tooltip-placement="bottom" tooltip="Efficiëntieprocent">[[Math.round(user1.total_efficiency*100)]] %</span></a>
 				</div>
 			</div>
 			<div class="clearfix xs-visible"></div>
@@ -201,38 +202,38 @@
 					<div class="col-sm-6">Licht
 						<div class="is_row-square">
 							<div class="pull-left">
-								<div class="is_square-40 green">[[user1.highest_illumination]]</div>
+								<a class="is_square-40 green"><span tooltip-placement="bottom" tooltip="Gemiddelde beste">[[user1.highest_illumination]]</span></a>
 							</div>
 							<div class="pull-left">
-								<div class="is_square-40 red">[[user1.lowest_illumination]]</div>
+								<a class="is_square-40 red"><span tooltip-placement="bottom" tooltip="Gemiddelde slechtste">[[user1.lowest_illumination]]</span></a>
 							</div>
 						</div>
 						<div class="clearfix xs-visible"></div>
 						<div class="is_row-square is_compare" ng-if="user2">
 							<div class="pull-left">
-								<div class="is_square-40 green">[[user2.highest_illumination]]</div>
+								<a class="is_square-40 green"><span tooltip-placement="bottom" tooltip="Gemiddelde beste">[[user2.highest_illumination]]</span></a>
 							</div>
 							<div class="pull-left">
-								<div class="is_square-40 red">[[user2.lowest_illumination]]</div>
+								<a class="is_square-40 red"><span tooltip-placement="bottom" tooltip="Gemiddelde slechtste">[[user2.lowest_illumination]]</span></a>
 							</div>
 						</div>
 					</div>
 					<div class="col-sm-6">Geluid
 						<div class="is_row-square">
 							<div class="pull-left">
-								<div class="is_square-40 green">[[user1.highest_sound]]</div>
+								<a class="is_square-40 green"><span tooltip-placement="bottom" tooltip="Gemiddelde beste">[[user1.highest_sound]]</span></a>
 							</div>
 							<div class="pull-left">
-								<div class="is_square-40 red">[[user1.lowest_sound]]</div>
+								<a class="is_square-40 red"><span tooltip-placement="bottom" tooltip="Gemiddelde slechtste">[[user1.lowest_sound]]</span></a>
 							</div>
 						</div>
 						<div class="clearfix xs-visible"></div>
 						<div class="is_row-square is_compare" ng-if="user2">
 							<div class="pull-left">
-								 <div class="is_square-40 green">[[user2.highest_sound]]</div>
+								<a class="is_square-40 green"><span tooltip-placement="bottom" tooltip="Gemiddelde beste">[[user2.highest_sound]]</span></a>
 							</div>
 							<div class="pull-left">
-								 <div class="is_square-40 red">[[user2.lowest_sound]]</div>
+								<a class="is_square-40 red"><span tooltip-placement="bottom" tooltip="Gemiddelde slechtste">[[user2.lowest_sound]]</span></a>
 							</div>
 						</div>
 					</div>
@@ -241,37 +242,37 @@
 					<div class="col-sm-6">Temperatuur
 						<div class="is_row-square">
 							<div class="pull-left">
-								 <div class="is_square-40 green">[[user1.highest_temperature]]</div>
+								<a class="is_square-40 green"><span tooltip-placement="bottom" tooltip="Gemiddelde beste">[[user1.highest_temperature]]</span></a>
 							</div>
 							<div class="pull-left">
-								<div class="is_square-40 red">[[user1.lowest_temperature]]</div>
+								<a class="is_square-40 red"><span tooltip-placement="bottom" tooltip="Gemiddelde slechtste">[[user1.lowest_temperature]]</span></a>
 							</div>
 						</div>
 						<div class="is_row-square is_compare" ng-if="user2">
 							<div class="pull-left">
-								<div class="is_square-40 green">[[user2.highest_temperature]]</div>
+								<a class="is_square-40 green"><span tooltip-placement="bottom" tooltip="Gemiddelde beste">[[user2.highest_temperature]]</span></a>
 							</div>
 							<div class="pull-left">
-								<div class="is_square-40 red">[[user2.lowest_temperature]]</div>
+								<a class="is_square-40 red"><span tooltip-placement="bottom" tooltip="Gemiddelde slechtste">[[user2.lowest_temperature]]</span></a>
 							</div>
 						</div>
 					</div>
 					<div class="col-sm-6">Luchtvochtigheid
 						<div class="is_row-square">
 							<div class="pull-left">
-								<div class="is_square-40 green">[[user1.highest_humidity]]</div>
+								<a class="is_square-40 green"><span tooltip-placement="bottom" tooltip="Gemiddelde beste">[[user1.highest_humidity]]</span></a>
 							</div>
 							<div class="pull-left">
-								<div class="is_square-40 red">[[user1.lowest_humidity]]</div>
+								<a class="is_square-40 red"><span tooltip-placement="bottom" tooltip="Gemiddelde slechtste">[[user1.lowest_humidity]]</span></a>
 							</div>
 						</div>
 						<div class="clearfix xs-visible"></div>
 						<div class="is_row-square is_compare" ng-if="user2">
 							<div class="pull-left">
-								 <div class="is_square-40 green">[[user2.highest_humidity]]</div>
+								<a class="is_square-40 green"><span tooltip-placement="bottom" tooltip="Gemiddelde beste">[[user2.highest_humidity]]</span></a>
 							</div>
 							<div class="pull-left">
-								<div class="is_square-40 red">[[user2.lowest_humidity]]</div>
+								<a class="is_square-40 red"><span tooltip-placement="bottom" tooltip="Gemiddelde slechtste">[[user2.lowest_humidity]]</span></a>
 							</div>
 						</div>
 					</div>
@@ -282,19 +283,19 @@
 				<div class="col-sm-6">Focuspercentage
 					<div class="is_row-square">
 						<div class="pull-left">
-							<div class="is_square-40 green">[[Math.round(user1.highest_focus*100)]]</div>
+							<a class="is_square-40 green"><span tooltip-placement="bottom" tooltip="Gemiddelde beste">[[Math.round(user1.highest_focus*100)]]</span></a>
 						</div>
 						<div class="pull-left">
-							<div class="is_square-40 red">[[Math.round(user1.lowest_focus*100)]]</div>
+							<a class="is_square-40 red"><span tooltip-placement="bottom" tooltip="Gemiddelde slechtste">[[Math.round(user1.lowest_focus*100)]]</span></a>
 						</div>
 					</div>
 					<div class="clearfix xs-visible"></div>
 					<div class="is_row-square is_compare" ng-if="user2">
 						<div class="pull-left">
-							<div class="is_square-40 green">[[Math.round(user2.highest_focus*100)]]</div>
+							<a class="is_square-40 green"><span tooltip-placement="bottom" tooltip="Gemiddelde beste">[[Math.round(user2.highest_focus*100)]]</span></a>
 						</div>
 						<div class="pull-left">
-							<div class="is_square-40 red">[[Math.round(user2.lowest_focus*100)]]</div>
+							<a class="is_square-40 red"><span tooltip-placement="bottom" tooltip="Gemiddelde slechtste">[[Math.round(user2.lowest_focus*100)]]</span></a>
 						</div>
 					</div>
 				</div>
@@ -303,11 +304,12 @@
 			<div class="row">
 				<div class="col-sm-12">
 					<div class="pull-left">
-						<h2>Title</h2>
+
+						<h2>Efficientieplot</h2>
 					</div>
 					<div class="pull-right">efficientiescore in functie van de gemeten sensorwaarden</div>
 					<div class="clearfix xs-visible"></div>
-					<div>graph met 2 lijnen
+					<div>
                         <div>
                         <div>
                             <!--<select>
@@ -375,7 +377,7 @@
         <!--start edit mode-->
         <session-edit ng-switch-when="edit" sessiontype="sessionType" editdata="session" courses="sessionCourses.courses"></session-edit>
         <!--end edit mode-->
-        <button type="button" class="btn is_edit-btn" ng-click="panelState='edit'">
+        <button type="button" class="btn is_edit-btn" ng-click="panelState='edit'" ng-class="{ hidden : (loggedInProfile.userID != viewedProfile.userID) }">
             <span class="glyphicon glyphicon-pencil"></span>
         </button>
         <!--start right menu-->
@@ -489,7 +491,7 @@
 			<coursepanel ng-repeat="course in courselist2"></coursepanel>
 		</div>
 		<div class="panel-group" id="accordion" ng-switch-when="sessions" ng-controller="sessionscontroller">
-			<sessionpanel ng-repeat="session in sessionlist | filter:courseFilterFunction"></sessionpanel> <!-- Boris (session.sessionData.course_id == courseFilter.selected) -->
+			<sessionpanel ng-repeat="session in sessionlist | filter:courseFilterFunction"></sessionpanel>
 		</div>
 	</div>
 </script>
@@ -515,7 +517,7 @@
 		</div>
 		<div class="is_user-abstract is_follow_navbar" ng-class="{is_follow_navbar_style : !isCollapsedTopnav.value}" ui-scrollfix="+212"> <!--affix-top" data-spy="affix" data-offset-top="309"-->
 			<div class="is_profile-pic-container">
-				<img class="img-rounded img-responsive" src="https://graph.facebook.com/jacobspelle/picture?width=200&height=200"></img>
+				<img class="img-rounded img-responsive" src="[[loggedInProfile.pic_small]]"></img>
 			</div>
 			<h4>[[viewedProfile.name]] [[viewedProfile.surname]]</h4>
 		</div>
@@ -554,7 +556,7 @@
 			<div class="container" style="max-width:100%">
 				<img src="{{url_for('static', filename='footer-top.svg')}}"></img>
 			</div>
-			<div class="container is_no-padding" style="max-width:100%">
+			<div class="container is_no-padding" style="max-width:100%; text-align: center">
 				<a href="https://github.com/BGordts/peno3_iStudyPlus">Check us on Github!</a>
 				<div class="clearfix xs-visible"></div>
 				<div class="is_legal">Copyright 2013 - iStudy+</div>

@@ -462,7 +462,9 @@
 }
 	@media (max-width: 768px) {
 	.is_follow_navbar_style {
-	margin-top: 216px;
+	margin-top: 136px;
+	-webkit-transition: 350ms;
+	transition: 350ms;
 	}
 	.is_follow_navbar_style.is_sidepanel-student-list-wrap {
 	margin-top: 0;
