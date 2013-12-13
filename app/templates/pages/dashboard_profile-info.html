@@ -377,7 +377,7 @@
         <!--start edit mode-->
         <session-edit ng-switch-when="edit" sessiontype="sessionType" editdata="session" courses="sessionCourses.courses"></session-edit>
         <!--end edit mode-->
-        <button type="button" class="btn is_edit-btn" ng-click="panelState='edit'">
+        <button type="button" class="btn is_edit-btn" ng-click="panelState='edit'" ng-class="{ hidden : (loggedInProfile.userID != viewedProfile.userID) }">
             <span class="glyphicon glyphicon-pencil"></span>
         </button>
         <!--start right menu-->
