@@ -20,17 +20,6 @@ def welcome():
     except KeyError:
         return render_template('index.html')
     
-'''
-TO REMOVE
-'''
-@app.route('/home') 
-def home():
-    try:
-        user = User.query.get(session["userID"])
-        return redirect("app/" + user.id + "/dashboard")
-    except KeyError:
-        return redirect(url_for('login'))
-    
 @app.route('/app/<path:path>')
 @app.route('/app')
 @login_required

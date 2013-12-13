@@ -33,14 +33,6 @@ def getGeneralUserStatistics():
     
     return json.dumps(returndict)
 
-@app.route('/statistics/getGeneralUserStatistics2')
-def getGeneralUserStatistics2():
-    returndict = {}
-    genUser = GeneralUser.query.first()
-    returndict["genUser"] = genUser.statistics.outputData()
-    
-    return json.dumps(returndict)
-
 @app.route('/statistics/getEfficiencyForSensor', methods = ['GET'])   
 def getEfficiencyForSensor():
     userID1 = request.args["userID1"]

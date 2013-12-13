@@ -9,9 +9,7 @@ SENSOR_LIGHT = "light"
 SENSOR_TEMPERATURE = "temperature"
 SENSOR_HUMIDITY = "humidity"
 SENSOR_SOUND = "sound"
-SENSOR_CAMERA = "camera"
 SENSOR_FOCUS = "focus"
-
 
 class Sensordata(db.Model):
     id = db.Column(db.Integer, primary_key=True)

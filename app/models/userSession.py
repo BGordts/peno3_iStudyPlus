@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from __future__ import division
 from flask import *
 from flask.ext.sqlalchemy import SQLAlchemy 
@@ -127,7 +128,7 @@ class UserSession(db.Model):
         session['isPauzed'] = time.time()
             
     '''
-    beëindigd de pauze.
+    beÃ«indigd de pauze.
     
     @postcondition: de sessie is terug hervat.
     @postcondition: de volledige pauze is toegevoegd aan de userSession.
@@ -152,11 +153,11 @@ class UserSession(db.Model):
         return self.paused
                  
     '''
-    beëindigd de timer van de sessie.
+    beï¿½indigd de timer van de sessie.
     
     @postcondition: als de start tijd niet None is, is de eind tijd van de
                     sessie is gelijk aan de huidige tijd.
-    @postcondition: als de pauze nog gepauzeerd was, is de pauze ook beëindigd.
+    @postcondition: als de pauze nog gepauzeerd was, is de pauze ook beï¿½indigd.
     @postcondition: als de start tijd van deze sessie None is, wordt de sessie
                     verwijdert uit de database.
     '''
@@ -198,7 +199,11 @@ class UserSession(db.Model):
     
     '''
     geeft een lijst terug waarin dictionaries staan van de te plotten data,
-    met x-key: de tijd en y-key:de sensorwaarde.
+    met x-key: de tijd en y-key:de sensorwaarde. Om een pauze weer te geven 
+    wordt tussen de laatste sensorwaarde voor de pauze en de eerste sensorwaarde
+    na de pauze een een lege 'senorwaarde' gestoken. Hierdoor zal de grafiek de 
+    laatste waarde voor de pauze en de eerste waarde na de pauze niet verbinden en onstaat
+    er zo een gat in de grafiek.
     
     @param String sensor: het type sensor waarvoor de waarden moeten worden teruggeven.
     @return: een lijst met dictionaries waarin het tijdsstip en de sensorwaarde staat.
