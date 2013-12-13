@@ -234,19 +234,7 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
 })
 
 .controller('coursecontroller', function ($scope, serverConnectionService ) {
-//	$scope.$watch('viewedProfile', function (newVal, oldVal) {		
-//		if(undefined == newVal || newVal == null || Object.keys(newVal).length == 0){
-//			console.log("hey fa" + newVal + " " + oldVal);
-//		}
-//		else{								
-//			//Get the courses
-//			serverConnectionService.getCourses($scope.viewedProfile.userID, $scope.loggedInProfile.userID, function(data){
-//				console.log("de data");
-//				console.log(data);
-//				$scope.courselist = data;
-//			});
-//		}
-//    });
+
 })
 
 .controller('sessionscontroller', function ($scope, serverConnectionService ) {	
@@ -262,8 +250,6 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
 			});
 		}
     });
-
-	//$scope.courseFilter.selected = parseInt(($location.search()).course);
 })
 
 .controller('sessionTrackingCtrl', function($scope, serverConnectionService){
