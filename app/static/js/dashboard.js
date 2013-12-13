@@ -5,7 +5,7 @@
 'use strict';
 
 //alert('boe');
-angular.module('app', ['ngRoute', 'ngTouch', 'ui.utils', 'ui.bootstrap.transition', 'ui.bootstrap.collapse', 'ui.bootstrap.dropdownToggle', 'ui.bootstrap.position', 'ui.bootstrap.datepicker', 'ui.bootstrap.rating']).config(function ($interpolateProvider, $locationProvider, $routeProvider) {
+angular.module('app', ['ngRoute', 'ngTouch', 'ui.utils', 'ui.bootstrap.transition', 'ui.bootstrap.collapse', 'ui.bootstrap.dropdownToggle', 'ui.bootstrap.position', 'ui.bootstrap.datepicker', 'ui.bootstrap.bindHtml', 'ui.bootstrap.tooltip', 'ui.bootstrap.rating']).config(function ($interpolateProvider, $locationProvider, $routeProvider){
     $interpolateProvider.startSymbol('[[').endSymbol(']]');
     $locationProvider.html5Mode(true);
     $routeProvider.when("/app/:user/:appviewstate", /* /:user/:appviewstate */ {

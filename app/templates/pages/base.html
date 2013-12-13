@@ -34,6 +34,12 @@
 		<meta name="msapplication-square310x310logo" content="{{url_for('static', filename='favicons/mstile-310x310.png')}}" />
 	</head>
 	<body ng-app="app" ng-controller="appCtrl" ng-init="init()">{% block navigation %}{% endblock %}
+		<script type="text/ng-template" id="tooltippopup.tpl">
+			<div class="tooltip [[placement]]" ng-class="{ in: isOpen(), fade: animation() }">
+		  		<div class="tooltip-arrow"></div>
+		  		<div class="tooltip-inner" ng-bind="content"></div>
+			</div>
+		</script>
 		<script type="text/ng-template" id="rating.tpl">
 			<div class="rating-wrap">
 				<span ng-mouseleave="reset()">
@@ -62,7 +68,7 @@
 		<script src="{{url_for('static', filename='js/lib/ng-ui-bs3/datepicker.js')}}"></script>
 		<script src="{{url_for('static', filename='js/lib/ng-ui-bs3/rating.js')}}"></script>
 		<script src="{{url_for('static', filename='js/lib/ng-ui-bs3/buttons.js')}}"></script>
-		<!--<script src="{{url_for('static', filename='js/lib/ng-ui-bs3/tooltip.js')}}"></script>-->
+		<script src="{{url_for('static', filename='js/lib/ng-ui-bs3/tooltip.js')}}"></script>
 		<script src="{{url_for('static', filename='js/avatar.js')}}"></script>
 		<script src="{{url_for('static', filename='js/resample.js')}}"></script>
 		<script src="{{url_for('static', filename='js/lib/moment.min.js')}}"></script>

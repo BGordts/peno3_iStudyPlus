@@ -60,7 +60,7 @@ class UserSession(db.Model):
         self.sessionHum = 0
         if not (end_date== None):
             user.statistics.addUntrackedSession(self)
-            CUStatistic = Courses_Users.query.filter_by(course=self.course).first().courseStatistics
+            CUStatistic = Courses_Users.query.filter_by(course=self.course,user=self.user).first().courseStatistics
             CUStatistic.addUntrackedSession(self)
 
     def deleteUntrackedSession(self):
