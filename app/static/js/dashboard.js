@@ -68,7 +68,7 @@ controller('appCtrl', function ($scope, serverConnectionService, $location) {
 		}
 	}
 	$scope.$watch("courseFilter.selected", function (newVal, oldVal) {
-		if ($scope.courseFilter.selected != 0) {
+		if ($scope.courseFilter.selected != 0 && $location.path().substr($location.path().lastIndexOf("/")+1) == 'sessions') {
 			$location.search("course", $scope.courseFilter.selected);
 		} else {
 			$location.search("course", null);
